@@ -1,0 +1,118 @@
+
+.video-control-feed{
+
+}
+.video-feed{
+    width: 60%;
+    height: auto;
+    position: relative;
+    max-width: fit-content;
+    min-width: 200px;
+}
+.video-feed-item {
+    position: absolute;
+    /* right: 200px; */
+    /* bottom: 0px; */
+    bottom: 70px !important;
+
+    /* display: flex; */
+    z-index: 999;
+}
+@media only screen and (min-width: 1200px ) {
+    .video-feed-item {
+        right: 200px !important;
+    }
+}
+@media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    .video-feed-item {
+        right: 160px !important;
+    }
+}
+@media only screen and (max-width: 1000px) and (min-width: 576px) {
+    .video-feed-item {
+        right: 100px !important;
+    }
+}
+@media only screen and (max-width: 576px) {
+    .video-feed-item {
+        right: 30px !important;
+        bottom: 70px !important
+    }
+    .engagement-icon-v23 {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    .engagement-icon-v23 svg{
+        width: 20px !important;
+        height: 20px !important;
+        transform: translateY(0%);
+    }
+    .btn-follow{
+        position: relative !important;
+    }
+}
+@media only screen and (min-width: 576px){
+    .engagement-icon-v23 {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    .engagement-icon-v23 svg{
+        margin: 0;
+        transform: translateY(40%);
+    }
+}
+.engagement-icon-v23{
+    text-align: center;
+    margin: 0;
+    background-color: #F1F1F2;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+
+.item-action-bar p{
+    text-align: center;
+}
+
+.btn-follow{
+    background-color: white !important;
+    color: #FE2C55 !important;
+    border-radius: 50px !important;
+    padding-top: 2px !important; 
+    padding-bottom: 2px !important;
+    font-weight: 600 !important;
+}
+
+.button{
+    cursor: pointer;
+}
+.liked-text{
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  right: 0;
+  visibility: hidden;
+  transition: 0.6s;
+  /* z-index: -2; */
+  font-size: 15px;
+  /* color: transparent; */
+  font-weight: 400;
+}
+.press{
+  top: -50px;
+  font-size: 14px;
+  visibility: visible;
+  animation: fade 1s;
+}
+
+@keyframes fade {
+  0% {
+    color: transparent;
+  }
+  50% {
+    color: #e23b3b;
+  }
+  100% {
+    color: transparent;
+  }
+}

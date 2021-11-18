@@ -1,0 +1,28 @@
+
+.autocomplete{
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 50px;
+}
+
+.input-container {
+    background: #E7ECF0 !important;
+    border-radius: 50px !important;
+    border: 1px solid transparent !important;
+}
+.input-container:focus {
+  background-color: yellow !important;
+  border: 1px solid red !important;
+}
+input[type="search"], input[type="text"], textarea, select { 
+   outline: none;
+}
+
+  
+.icon {
+    color:  #828282;
+    text-align: center;
+    margin: auto;
+    margin-right: 5px;
+}

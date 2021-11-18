@@ -1,0 +1,61 @@
+
+
+.container-post{
+    margin-right: 50px !important;
+}
+.btn-follow{
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}
+.avatar{
+    margin-right: 10px;
+}
+.m-r-10{
+    margin-right: 5px;
+}
+.non-border{
+    border: 1px solid transparent !important;
+}
+.post-card{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+}
+
+.heart-icon path.active{
+    fill:#F14B4B !important;
+    stroke: transparent !important;
+}
+.heart-icon{
+    cursor: pointer;
+}
+.heart-icon.animate {
+    animation: fave-like-btn-svg 1s steps(28);
+  }
+  
+  @keyframes fave-like-btn-svg {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale(1);
+    }
+  }
+@keyframes change-love-button-color {
+    0% {
+        display: block;
+        fill: #F14B4B;
+    }
+    50% {
+        display: block;
+        fill: #F14B4B;
+    }
+    100% {
+        display: block;
+        fill: #F14B4B;
+    }
+}

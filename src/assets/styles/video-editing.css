@@ -1,0 +1,28 @@
+.headline-video{
+    margin-top: 30px;
+}
+
+.video-title .form-control{
+    border: 1px solid #ffffff !important;
+}
+
+#video-element{
+    border-radius: 12px;
+    /* width: 320px; */
+    height: 300px;
+}
+@media only screen and (max-width: 768px){
+    .trim{
+        margin-bottom: 20px;
+    }
+    #video-controls{
+        margin-bottom: 20px;
+    }
+    
+}
+
+@media only screen and (min-width: 768px){
+    #video-element{
+        /* margin-top: 50px; */
+    }
+}
