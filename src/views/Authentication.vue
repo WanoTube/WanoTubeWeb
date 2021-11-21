@@ -61,7 +61,7 @@
 <script>
 import axios from 'axios';
 import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
-const UsersRepository = RepositoryFactory.get('users')
+const UsersRepository = RepositoryFactory.get('auth')
 export default {
 	data () {
 		return {
@@ -80,7 +80,9 @@ export default {
 	methods: {
 		async fetch() {
 			this.isLoading = true;
-			const { data } = await UsersRepository.get()
+			const loginInfo = { email: "test1@gmail.com", password: "12345678" };
+
+			const { data } = await UsersRepository.login(loginInfo)
 			this.isLoading = false;
 			this.info = data
 		}

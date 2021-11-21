@@ -1,7 +1,8 @@
 import UsersRepository from './UsersRepository';
-
+import AuthRepository from './AuthRepository'
 const repositories = {
-    users: UsersRepository
+    users: UsersRepository,
+    auth: AuthRepository
 };
 
 export const RepositoryFactory = {
