@@ -1,5 +1,8 @@
 <template>
     <section class="ftco-section">
+		<div>
+			{{info}}
+		</div>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -20,12 +23,6 @@
 							<div class="d-flex">
 								<div class="w-100">
 									<h3 class="mb-4">Sign In</h3>
-								</div>
-								<div class="w-100">
-									<p class="social-media d-flex justify-content-end">
-										<!-- <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a> -->
-										<!-- <a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a> -->
-									</p>
 								</div>
 							</div>
 							<form action="#" class="signin-form">
@@ -62,6 +59,31 @@
 <style src="../assets/styles/authentication.css">
 </style>
 <script>
+import axios from 'axios';
+import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
+const UsersRepository = RepositoryFactory.get('users')
 export default {
+	data () {
+		return {
+			info: [],
+			isLoading: false
+		}
+	},
+	created() {
+		this.fetch()
+	},
+	// mounted () {
+	// 	axios
+	// 	.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+	// 	.then(response => (this.info = response))
+	// }
+	methods: {
+		async fetch() {
+			this.isLoading = true;
+			const { data } = await UsersRepository.get()
+			this.isLoading = false;
+			this.info = data
+		}
+	}
 }
 </script>
