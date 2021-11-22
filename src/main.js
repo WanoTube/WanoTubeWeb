@@ -22,6 +22,10 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 library.add(faCoffee)
 
+// let token = JSON.parse( localStorage.getItem('token') );
+// if( token ){
+//      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+// }
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

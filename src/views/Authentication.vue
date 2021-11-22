@@ -1,8 +1,5 @@
 <template>
     <section class="ftco-section">
-		<div>
-			{{info}}
-		</div>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -25,14 +22,14 @@
 									<h3 class="mb-4">Sign In</h3>
 								</div>
 							</div>
-							<form action="#" class="signin-form">
+							<form @submit.prevent="submit" class="signin-form">
 								<div class="form-group mb-3">
-									<label class="label" for="name">Username</label>
-									<input type="text" class="form-control" placeholder="Username" required>
+									<label class="label" for="name">Email</label>
+									<input v-model="email" type="email" class="form-control" placeholder="Email" required>
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="password">Password</label>
-								<input type="password" class="form-control" placeholder="Password" required>
+								<input v-model="password" type="password" class="form-control" placeholder="Password" required>
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
@@ -59,7 +56,6 @@
 <style src="../assets/styles/authentication.css">
 </style>
 <script>
-import axios from 'axios';
 import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
 const UsersRepository = RepositoryFactory.get('auth')
 export default {
@@ -69,22 +65,14 @@ export default {
 			isLoading: false
 		}
 	},
-	created() {
-		this.fetch()
-	},
-	// mounted () {
-	// 	axios
-	// 	.get('https://api.coindesk.com/v1/bpi/currentprice.json')
-	// 	.then(response => (this.info = response))
-	// }
 	methods: {
-		async fetch() {
+		async submit() {
 			this.isLoading = true;
-			const loginInfo = { email: "test1@gmail.com", password: "12345678" };
-
-			const { data } = await UsersRepository.login(loginInfo)
+			const loginInfo = { email: this.email, password: this.password };
+			const { data } = await UsersRepository.login(loginInfo);
+			localStorage.setItem( 'token', JSON.stringify(data) );
 			this.isLoading = false;
-			this.info = data
+			this.info = data;
 		}
 	}
 }
