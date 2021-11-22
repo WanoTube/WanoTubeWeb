@@ -1,5 +1,14 @@
 <template>
     <section class="ftco-section">
+        <loading-bar
+			id="loading-bar-id"
+			custom-class="custom-class"
+			:on-error-done="errorDone"
+			:on-progress-done="progressDone"
+			:progress="progress"
+			:direction="direction"
+			:error="error" >
+        </loading-bar>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -62,7 +71,8 @@ export default {
 	data () {
 		return {
 			info: [],
-			isLoading: false
+			isLoading: false,
+			progress: 50
 		}
 	},
 	methods: {
@@ -73,6 +83,7 @@ export default {
 			localStorage.setItem( 'token', JSON.stringify(data) );
 			this.isLoading = false;
 			this.info = data;
+			this.$router.push({ path: 'post' })
 		}
 	}
 }
