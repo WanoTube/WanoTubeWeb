@@ -6,6 +6,11 @@ function login(payload) {
     return Repository.post(`${resource}/login`, payload);
 }
 
+function signup(payload) {
+    return Repository.post(`${resource}/register`, payload);
+}
+
 export default {
-    login
+    login,
+    signup
 }

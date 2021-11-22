@@ -1,6 +1,6 @@
 <template>
     <section class="ftco-section">
-        <loading-bar
+        <!-- <loading-bar
 			id="loading-bar-id"
 			custom-class="custom-class"
 			:on-error-done="errorDone"
@@ -8,7 +8,7 @@
 			:progress="progress"
 			:direction="direction"
 			:error="error" >
-        </loading-bar>
+        </loading-bar> -->
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -22,7 +22,7 @@
 							<div class="text w-100">
 								<h2>Welcome to login</h2>
 								<p>Don't have an account?</p>	
-								<a href="#" class="btn btn-white btn-outline-white text-white">Sign Up</a>
+								<a v-on:click="register" class="btn btn-white btn-outline-white text-white">Sign Up</a>
 							</div>
 						</div>
 						<div class="login-wrap p-4 p-lg-5">
@@ -72,7 +72,9 @@ export default {
 		return {
 			info: [],
 			isLoading: false,
-			progress: 50
+			progress: 50,
+			email: "",
+			password: ""
 		}
 	},
 	methods: {
@@ -84,6 +86,9 @@ export default {
 			this.isLoading = false;
 			this.info = data;
 			this.$router.push({ path: 'post' })
+		},
+		register() {
+			this.$router.push({ path: 'signup' })
 		}
 	}
 }

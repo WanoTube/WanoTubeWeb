@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Authentication from './views/Authentication.vue'
+import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
 import UploadVideo from './views/UploadVideo.vue'
@@ -41,6 +42,7 @@ export const router = new VueRouter({
             ]
         },
         {path: '/login/', component: Authentication },
+        {path: '/signup/', component: Register },
         {path: '/comment', component: Comment},
         {path: '/upload', component: UploadVideo},
         // {path: '/browsefile', component: BrowseFile}
