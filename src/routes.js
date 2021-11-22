@@ -16,6 +16,7 @@ import BrowseFile from './components/video-editing/browse-files/BrowseFile.vue'
 Vue.use(VueRouter)
 
 export const router = new VueRouter({
+    mode: 'history',
     routes: [
         {
             path: '/', 
