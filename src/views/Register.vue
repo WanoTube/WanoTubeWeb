@@ -1,5 +1,5 @@
 <template>
-    <section class="ftco-section">
+	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-6 text-center mb-5">
@@ -23,17 +23,17 @@
 								</div>
 							</div>
 							<form @submit.prevent="submit" class="signin-form">
-                                <div class="form-group mb-3">
+								<div class="form-group mb-3">
 									<label class="label" for="name">First Name</label>
-									<input v-model="first_name" type="text" class="form-control" placeholder="First Name" >
+									<input v-model="first_name" type="text" class="form-control" placeholder="First Name" required>
 								</div>
-                                <div class="form-group mb-3">
+								<div class="form-group mb-3">
 									<label class="label" for="lastName">Last Name</label>
-									<input v-model="last_name" type="text" class="form-control" placeholder="Last Name" >
+									<input v-model="last_name" type="text" class="form-control" placeholder="Last Name" required>
 								</div>
-                                <div class="form-group mb-3">
+								<div class="form-group mb-3">
 									<label class="label" for="username">Username</label>
-									<input v-model="username" type="text" class="form-control" placeholder="Username" >
+									<input v-model="username" type="text" class="form-control" placeholder="Username" required>
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="email">Email</label>
@@ -41,7 +41,7 @@
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="password">Password</label>
-								<input v-model="password" type="password" class="form-control" placeholder="Password" >
+								<input v-model="password" type="password" class="form-control" placeholder="Password" required>
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
@@ -65,49 +65,51 @@
 		</div>
 	</section>
 </template>
+
 <style src="../assets/styles/authentication.css">
 </style>
+
 <script>
-import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
-const UsersRepository = RepositoryFactory.get('auth')
-export default {
-	data () {
-		return {
-			info: [],
-			isLoading: false,
-			progress: 50,
-            first_name: "",
-            last_name: "",
-            username: "",
-			email: "",
-			password: ""
-		}
-	},
-	methods: {
-		async submit() {
-			this.isLoading = true;
-			const signUpInfo = { 
-                first_name: this.first_name, 
-                last_name: this.last_name, 
-                username: this.username,
-                email: this.email, 
-                password: this.password 
-            };
-			const { data } = await UsersRepository.signup(signUpInfo);
-            const dataString = JSON.stringify(data)
-            const dataObject = JSON.parse(dataString);
-            if (!dataObject.error) {
-                this.isLoading = false;
-                this.info = data;
-                this.$router.push({ path: 'post' })
-            } else {
-                const errorString = JSON.stringify(dataObject.error)
-                console.log(errorString)
-            }
+	import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
+	import { convertJSONToObject } from '../utils/utils'
+	const UsersRepository = RepositoryFactory.get('auth')
+	export default {
+		data () {
+			return {
+				info: [],
+				isLoading: false,
+				progress: 50,
+				first_name: "",
+				last_name: "",
+				username: "",
+				email: "",
+				password: ""
+			}
 		},
-        login() {
-			this.$router.push({ path: 'login' })
+		methods: {
+			async submit() {
+				this.isLoading = true;
+				const signUpInfo = { 
+					first_name: this.first_name, 
+					last_name: this.last_name, 
+					username: this.username,
+					email: this.email, 
+					password: this.password 
+				};
+				const { data } = await UsersRepository.signup(signUpInfo);
+				const dataObject = convertJSONToObject(data)
+				if (!dataObject.error) {
+					this.isLoading = false;
+					this.info = data;
+					this.$router.push({ path: 'post' })
+				} else {
+					const errorString = JSON.stringify(dataObject.error)
+					console.log(errorString)
+				}
+			},
+			login() {
+				this.$router.push({ path: 'login' })
+			}
 		}
 	}
-}
 </script>

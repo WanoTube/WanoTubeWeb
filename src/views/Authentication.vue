@@ -66,11 +66,11 @@
 </style>
 <script>
 import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../utils/utils'
 const UsersRepository = RepositoryFactory.get('auth')
 export default {
 	data () {
 		return {
-			info: [],
 			isLoading: false,
 			progress: 50,
 			email: "",
@@ -82,10 +82,16 @@ export default {
 			this.isLoading = true;
 			const loginInfo = { email: this.email, password: this.password };
 			const { data } = await UsersRepository.login(loginInfo);
-			localStorage.setItem( 'token', JSON.stringify(data) );
-			this.isLoading = false;
-			this.info = data;
-			this.$router.push({ path: 'post' })
+			const dataObject = convertJSONToObject(data)
+			if (!dataObject.error) {
+				localStorage.setItem( 'token', JSON.stringify(data) );
+				this.isLoading = false;
+				this.$router.push({ path: 'post' })
+			} else {
+				// TO-DO: Validation
+				const errorString = JSON.stringify(dataObject.error)
+				console.log(errorString)
+			}
 		},
 		register() {
 			this.$router.push({ path: 'signup' })
