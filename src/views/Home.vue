@@ -1,16 +1,16 @@
 <template>
   <div class="">
      <NavBar ref="navbar"></NavBar>
-     <div class="container">
+     <div class="">
          <br>
          <br>
          <br>
          <br>
-         <div class="d-flex">
-           <div class="">
+         <div class="row">
+           <div class="col-3">
               <SideBar></SideBar>
             </div>
-            <div class="">
+            <div class="col-9">
                <router-view></router-view>
             </div>
          </div>

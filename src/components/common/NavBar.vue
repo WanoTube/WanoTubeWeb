@@ -1,6 +1,6 @@
 <template>
   <header class="blog-header">
-    <div class="container">
+    <div class="container-navbar">
         <div class="row  justify-content-between align-items-center">
           <div class="col-4 pt-1 order-md-1 order-1">
             <router-link to="/" id="navbar-brand" class="navbar-brand">

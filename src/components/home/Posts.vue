@@ -1,9 +1,6 @@
 <template>
     <div class="d-flex" style="flex-direction: column">
         <Post></Post>
-        <Post></Post>
-        <Post></Post>
-        <Post></Post>
     </div>
 </template>
 <script>
