@@ -101,7 +101,7 @@
 				if (!dataObject.error) {
 					this.isLoading = false;
 					this.info = data;
-					this.$router.push({ path: 'post' })
+					this.$router.push({ path: 'home' })
 				} else {
 					const errorString = JSON.stringify(dataObject.error)
 					console.log(errorString)

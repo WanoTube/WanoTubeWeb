@@ -1,14 +1,13 @@
 <template>
-    <div class="container post-card">
+    <div class="container post-card" v-cloak>
         <div class="card non-border">
             <div class="card-header container bg-white non-border">
                 <PostCaption isPost="true" avatar_img="Liuyu.png" name="INTO1–刘宇" username="@into1_liuyu_" caption="Relatively cool" bg_music="Crazy Frog"></PostCaption>
             </div>
             <div class="card-body video-control-feed">
                 <router-link to="/comment">
-                    <video class="video video-wrapper video-feed"  controls >
-                        <source src="../../assets/videos/LiuYu_Tiktok1.webm" type="video/webm">
-                    Your browser does not support the video tag.
+                    <video v-html="src" autoplay="" controls="" loop="" muted="" frameborder="0" class="ideo video-wrapper video-feed">
+                        Your browser does not support HTML videos.
                     </video>
                 </router-link>
                 
@@ -59,9 +58,11 @@ export default {
     components: {
         PostCaption
     },
+    props: ['videoKey'],
     data(){
         return {
-            likes: 0
+            likes: 0,
+            src: '',
         }
     },
     methods: {
@@ -79,7 +80,12 @@ export default {
                 this.likes = this.likes -1;
         }
     },
+    created: function() {
+        const key = 'into1_617a508f7e3e601cad80531d_1638728684.webm';
+        this.src = '<source src="http://localhost:8000/v1/videos/stream/'+ key + '" type="video/webm">'
+    },
     mounted(){
+       
         $('.button').mouseenter(function(i,obj){
             ($(this)).find('circle').css("fill", "white");
             ($(this)).find('path').css("fill", "#FE2C55");

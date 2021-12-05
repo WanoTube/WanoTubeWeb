@@ -86,7 +86,7 @@ export default {
 			if (!dataObject.error) {
 				localStorage.setItem( 'token', JSON.stringify(data) );
 				this.isLoading = false;
-				this.$router.push({ path: 'post' })
+				this.$router.push({ path: 'home' })
 			} else {
 				// TO-DO: Validation
 				const errorString = JSON.stringify(dataObject.error)

@@ -22,11 +22,11 @@ export const router = new VueRouter({
         {
             path: '/', 
             component: Home,
-            redirect: '/post',
+            redirect: '/home',
             children: [
                 {path: '/search/:id', component: Search },
                 {path: '/search', component: Search },
-                {path: '/post', component: Posts },
+                {path: '/home', component: Posts },
                 {path: '/trending/:id', component: Trending},
                 {path: '/trending', component: Trending}
             ]
