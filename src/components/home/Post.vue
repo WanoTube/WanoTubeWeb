@@ -81,8 +81,7 @@ export default {
         }
     },
     created: function() {
-        const key = 'into1_617a508f7e3e601cad80531d_1638728684.webm';
-        this.src = '<source src="http://localhost:8000/v1/videos/stream/'+ key + '" type="video/webm">'
+        this.src = '<source src="http://localhost:8000/v1/videos/stream/'+ this.videoKey + '" type="video/webm">'
     },
     mounted(){
        
