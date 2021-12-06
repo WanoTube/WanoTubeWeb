@@ -19,6 +19,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import vuetify from './plugins/vuetify'
 
 library.add(faCoffee)
 
@@ -33,6 +34,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
   router,
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')
 
