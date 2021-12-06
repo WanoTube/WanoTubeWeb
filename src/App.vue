@@ -1,7 +1,15 @@
 <template>
-  <div>
-        <router-view/>
-  </div>
+  <v-app dark>
+    <v-content>
+      <v-container>
+        <div>
+              <router-view/>
+        </div>
+        <!-- The player components go here -->
+      </v-container>
+    </v-content>
+  </v-app>
+  
 </template>
 
 <script>
