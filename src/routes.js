@@ -5,6 +5,8 @@ import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
 import UploadVideo from './views/UploadVideo.vue'
+import Upload from './components/upload-video/Upload.vue'
+
 import Comment from './views/Comment.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
@@ -44,7 +46,7 @@ export const router = new VueRouter({
         {path: '/login/', component: Authentication },
         {path: '/signup/', component: Register },
         {path: '/comment', component: Comment},
-        {path: '/upload', component: UploadVideo},
+        {path: '/upload', component: Upload},
         // {path: '/browsefile', component: BrowseFile}
     ]
 })
