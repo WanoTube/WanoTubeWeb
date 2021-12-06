@@ -1,12 +1,9 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-content>
-      <v-container>
-        <div>
+      <div>
               <router-view/>
         </div>
-        <!-- The player components go here -->
-      </v-container>
     </v-content>
   </v-app>
   

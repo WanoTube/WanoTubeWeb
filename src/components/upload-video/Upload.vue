@@ -1,5 +1,7 @@
 <template>
-   <div>
+   <div class="upload-video">
+        <NavBar></NavBar>
+        <br> <br> <br>
         <v-stepper non-linear v-model="e1">
             <v-stepper-header>
                 <v-stepper-step
@@ -93,7 +95,12 @@
 </template>
 
 <script>
+import NavBar from '../../components/common/NavBar.vue'
+
 export default {
+    components:{
+       NavBar,
+    },
     data () {
       return {
         e1: 1,
