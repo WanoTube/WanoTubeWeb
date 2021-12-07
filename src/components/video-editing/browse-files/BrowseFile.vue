@@ -1,6 +1,6 @@
 <template>
     <b-modal ref="browseFile"  id="browseFile" title="Browse File" hide-header hide-footer>
-        <div class="drop  drag-component"> 
+      <div class="drop  drag-component"> 
         <div class="helper"></div>
         <div class="drop display-inline align-center p-5" @dragover.prevent @drop="onDrop">
             <div class="helper"></div>
@@ -10,14 +10,8 @@
             <p class="padding-20">Drag and drop files from your computer, or <b>browse files</b></p>
                 <input type="file" name="video" @change="onChange">
             </label>
-            <!-- <div class="display-inline align-center">
-                <video  id="video-drag" alt="" class="img"/>
-                <br>
-                <br>
-                <button class="btn" @click="removeFile">REMOVE</button>
-            </div> -->
         </div>
-    </div>
+      </div>
     </b-modal>
 
     
