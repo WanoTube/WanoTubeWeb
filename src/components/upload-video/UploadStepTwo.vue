@@ -1,16 +1,19 @@
 <template>
     <div>
+        {{video}}
         <h1>Details</h1>
         <div class="row">
             <div class="col-md-8">
                 <div>
                     <v-text-field
+                        v-model="title"
                         label="Title"
                         placeholder="Placeholder"
                         outlined
                     ></v-text-field>
                     <br>
                     <v-textarea
+                        v-model="description"
                         outlined
                         name="input-7-4"
                         label="Description"
@@ -53,9 +56,12 @@
 <script>
 
 export default {
+    props: ['video'],
     data() {
         return {
-            video: ''
+            title: '',
+            description: '',
+            thumbnailVideo: this.video
         }
     },
     rules: [
@@ -72,20 +78,20 @@ export default {
                 let vm = this;
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                vm.video = e.target.result;
+                    vm.thumbnailVideo = e.target.result;
 
-                  // The file reader gives us an ArrayBuffer:
-                  let buffer = e.target.result;
-                  var uint8Array  = new Uint8Array(buffer);
-                  var arrayBuffer = uint8Array.buffer;
-                  var blob        = new Blob([arrayBuffer]);
-                  let url = URL.createObjectURL(blob);
-                  var vid = document.getElementById('video-drag')
-                  vid.src = url
-                  vid.load()
+                    // The file reader gives us an ArrayBuffer:
+                    let buffer = e.target.result;
+                    var uint8Array  = new Uint8Array(buffer);
+                    var arrayBuffer = uint8Array.buffer;
+                    var blob        = new Blob([arrayBuffer]);
+                    let url = URL.createObjectURL(blob);
+                    var vid = document.getElementById('video-drag')
+                    vid.src = url
+                    vid.load()
                 }
                 reader.readAsArrayBuffer(file);
-                this.save()
+                // this.save()
                 // this.$router.push('/editing/mymedia')
                 // reader.readAsDataURL(file);
             }
@@ -97,8 +103,6 @@ export default {
                 this.createFile(val);
             }
         }
-    },
-    mounted() {
     }
 }
 </script>

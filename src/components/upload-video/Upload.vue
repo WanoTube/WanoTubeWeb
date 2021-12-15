@@ -50,7 +50,7 @@
                     </v-stepper-content>
 
                 <v-stepper-content step="2">
-                    <UploadStepTwo  :video.sync="video" />
+                    <UploadStepTwo  v-bind:video="video" />
                     <v-btn
                     color="primary"
                     @click="e1 = 3"
