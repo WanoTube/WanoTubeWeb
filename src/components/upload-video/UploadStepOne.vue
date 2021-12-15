@@ -29,19 +29,13 @@ export default {
         e.stopPropagation();
         e.preventDefault();
         let files = e.dataTransfer.files;
-        // this.$parent.video = files[0];
         this.mulableVideo = files[0];
-        // this.video = this.mulableVideo
 
       },
       onChange(e) {
         let files = e.target.files;
-        // this.$parent.video = files[0];
-        // this.$parent.e1 = 2;
         this.mulableVideo = files[0];
-        // this.video = this.mulableVideo
         this.$emit('videoWasUpdated', this.mulableVideo)
-
       }
     }
 }

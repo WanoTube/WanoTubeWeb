@@ -107,18 +107,11 @@ export default {
       }
     },
     watch: {
-        video() {
-            console.log("video is changed")
+        video(newVal) {
+            console.log("Video is changed: ", newVal)
+            this.e1 = 2;
         }
     }
-    // watch: {
-    //   handle(newData) {
-	// 		// your method here...
-    //         console.log(newData)
-	// 	},
-	// 	deep: true, // deep watch
-    // }
-    
 }
 </script>
 
