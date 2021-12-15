@@ -2,7 +2,7 @@
     <div>
         <h1>Details</h1>
         <div class="row">
-            <div class="col-8">
+            <div class="col-md-8">
                 <div>
                     <v-text-field
                         label="Title"
@@ -18,8 +18,11 @@
                     ></v-textarea>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
+                    <video id="video-drag" src="">
+
+                    </video>
                     <div class="page-hero d-flex align-items-center justify-content-center">
                         <p>Processing video... </p>
                     </div>
@@ -50,9 +53,52 @@
 <script>
 
 export default {
+    data() {
+        return {
+            video: ''
+        }
+    },
     rules: [
         value => !!value || 'Required.',
         value => (value && value.length >= 3) || 'Min 3 characters',
       ],
+    methods: {
+        createFile(file) {
+            if (!file) { 
+                console.log("Failed to load file");
+            } else {
+                // console.log("File: ", file)
+
+                let vm = this;
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                vm.video = e.target.result;
+
+                  // The file reader gives us an ArrayBuffer:
+                  let buffer = e.target.result;
+                  var uint8Array  = new Uint8Array(buffer);
+                  var arrayBuffer = uint8Array.buffer;
+                  var blob        = new Blob([arrayBuffer]);
+                  let url = URL.createObjectURL(blob);
+                  var vid = document.getElementById('video-drag')
+                  vid.src = url
+                  vid.load()
+                }
+                reader.readAsArrayBuffer(file);
+                this.save()
+                // this.$router.push('/editing/mymedia')
+                // reader.readAsDataURL(file);
+            }
+        }
+    },
+    watch: {
+        video: function (val) {
+            if (val) {
+                this.createFile(val);
+            }
+        }
+    },
+    mounted() {
+    }
 }
 </script>

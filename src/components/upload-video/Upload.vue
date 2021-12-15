@@ -2,6 +2,7 @@
    <div class="upload-video">
         <NavBar></NavBar>
         <br> <br> <br>
+        {{this.video}}
         <div class="container">
             <v-stepper non-linear v-model="e1">
                 <v-stepper-header>
@@ -35,7 +36,7 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
-                        <UploadStepOne></UploadStepOne>
+                        <UploadStepOne v-bind:video="video" @videoWasUpdated="video = $event"></UploadStepOne>
                         <v-btn
                         color="primary"
                         @click="e1 = 2"
@@ -49,7 +50,7 @@
                     </v-stepper-content>
 
                 <v-stepper-content step="2">
-                    <UploadStepTwo></UploadStepTwo>
+                    <UploadStepTwo  :video.sync="video" />
                     <v-btn
                     color="primary"
                     @click="e1 = 3"
@@ -101,69 +102,23 @@ export default {
     },
     data () {
       return {
-        e1: 3,
-        video: ''
+        e1: 1,
+        video: {},
       }
     },
-    methods: {
-      save: function(){
-        this.$refs['browseFile'].hide()
-      },
-      onDrop: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var files = e.dataTransfer.files;
-        this.createFile(files[0]);
-      },
-      onChange(e) {
-        var files = e.target.files;
-        this.createFile(files[0]);
-      },
-      createFile(file) {
-        // if (!file.type.match('video.*')) {
-        //   alert('Select an video');
-        //   return;
-        // }
-        if (!file)
-        { 
-            alert("Failed to load file");
+    watch: {
+        video() {
+            console.log("video is changed")
         }
-        else
-        {
-            var reader = new FileReader();
-
-            var vm = this;
-
-            reader.onload = function(e) {
-              // vm.video = e.target.result;
-
-              // The file reader gives us an ArrayBuffer:
-              let buffer = e.target.result;
-              var uint8Array  = new Uint8Array(buffer);
-              var arrayBuffer = uint8Array.buffer;
-              var blob        = new Blob([arrayBuffer]);
-              let url = URL.createObjectURL(blob);
-              vm.video= url;
-
-              var vid = document.getElementById('video-drag')
-              vid.src = url
-              vid.load()
-            }
-            reader.readAsArrayBuffer(file);
-            this.save()
-            // this.$router.push('/editing/mymedia')
-            // reader.readAsDataURL(file);
-
-        }
-       
-
-      },
-      removeFile() {
-        this.video = '';
-      }
-    },
-    mounted(){
     }
+    // watch: {
+    //   handle(newData) {
+	// 		// your method here...
+    //         console.log(newData)
+	// 	},
+	// 	deep: true, // deep watch
+    // }
+    
 }
 </script>
 
