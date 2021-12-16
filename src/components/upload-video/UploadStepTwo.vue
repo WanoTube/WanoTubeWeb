@@ -40,6 +40,16 @@
                 </div>
             </div>
         </div>
+        <v-btn
+            color="primary"
+            @click="onContinue"
+        >
+            Continue
+        </v-btn>
+
+        <v-btn text>
+            Cancel
+        </v-btn>
     </div>
 </template>
 
@@ -94,6 +104,9 @@ export default {
             const dragElement = document.getElementById("video-drag");
             dragElement.classList.remove("d-none");
             dragElement.classList.add("d-block");
+        },
+        onContinue() {
+            this.$emit('onContinue', 3)
         }
     },
     watch: {

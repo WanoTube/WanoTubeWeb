@@ -5,6 +5,16 @@
 
         <h2>Copyright</h2>
         <p>Checking if your edited video contains any copyright content.</p>
+        <v-btn
+        color="primary"
+        @click="onContinue"
+        >
+        Continue
+        </v-btn>
+
+        <v-btn text>
+        Cancel
+        </v-btn>
     </div>
 </template>
 
@@ -14,6 +24,11 @@ export default {
     data () {
       return {
         video: {},
+      }
+    },
+    methods: {
+      onContinue() {
+        this.$emit('onContinue', 1)
       }
     },
     watch: {

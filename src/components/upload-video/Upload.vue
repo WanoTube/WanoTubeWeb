@@ -35,46 +35,15 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
-                        <UploadStepOne v-bind:video="video" @videoWasUpdated="video = $event"></UploadStepOne>
-                        <v-btn
-                        color="primary"
-                        @click="e1 = 2"
-                        >
-                            Continue
-                        </v-btn>
-
-                        <v-btn text>
-                            Cancel
-                        </v-btn>
+                        <UploadStepOne @videoWasUpdated="video = $event" @onContinue="e1 = $event"/>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
-                        <UploadStepTwo  v-bind:video="video" />
-                        <v-btn
-                        color="primary"
-                        @click="e1 = 3"
-                        >
-                        Continue
-                        </v-btn>
-
-                        <v-btn text>
-                        Cancel
-                        </v-btn>
+                        <UploadStepTwo  v-bind:video="video" @onContinue="e1 = $event"/>
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
-                        <UploadStepThree></UploadStepThree>
-
-                        <v-btn
-                        color="primary"
-                        @click="e1 = 1"
-                        >
-                        Continue
-                        </v-btn>
-
-                        <v-btn text>
-                        Cancel
-                        </v-btn>
+                        <UploadStepThree @onContinue="e1 = $event"/>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
