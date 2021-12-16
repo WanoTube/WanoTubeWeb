@@ -2,7 +2,6 @@
    <div class="upload-video">
         <NavBar></NavBar>
         <br> <br> <br>
-        {{this.video}}
         <div class="container">
             <v-stepper non-linear v-model="e1">
                 <v-stepper-header>

@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{video}}
         <h1>Details</h1>
         <div class="row">
             <div class="col-md-8">
@@ -23,10 +22,10 @@
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
-                    <video id="video-drag" src="">
+                    <video id="video-drag" src="" class="d-none">
 
                     </video>
-                    <div class="page-hero d-flex align-items-center justify-content-center">
+                    <div id="process-video" class="page-hero d-flex align-items-center justify-content-center">
                         <p>Processing video... </p>
                     </div>
                     <div class="card-body">
@@ -94,7 +93,19 @@ export default {
                 // this.save()
                 // this.$router.push('/editing/mymedia')
                 // reader.readAsDataURL(file);
+
+                // process-video
+                // video-drag
+                this.showThumbnail()
             }
+        },
+        showThumbnail() {
+            const processElement = document.getElementById("process-video");
+            processElement.classList.remove("d-flex");
+            processElement.classList.add("d-none");
+            const dragElement = document.getElementById("video-drag");
+            dragElement.classList.remove("d-none");
+            dragElement.classList.add("d-block");
         }
     },
     watch: {
