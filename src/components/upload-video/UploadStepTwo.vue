@@ -61,12 +61,16 @@
 </style>
 <script>
 
+import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../../utils/utils'
+const VideoRepository = RepositoryFactory.get('video')
+
 export default {
     props: ['video'],
     data() {
         return {
-            title: '',
-            description: '',
+            title: 'INTO1',
+            description: 'INTO1',
             thumbnailVideo: this.video
         }
     },
@@ -105,8 +109,37 @@ export default {
             dragElement.classList.remove("d-none");
             dragElement.classList.add("d-block");
         },
-        onContinue() {
-            this.$emit('onContinue', 3)
+        async onContinue() {
+            const data = await this.uploadVideo();
+            console.log("data: ", data);
+            if (data) {
+                this.$emit('onContinue', 3)
+            } else {
+                alert("Oh no, failed")
+                this.$emit('onContinue', 2)
+            }
+        },
+        async uploadVideo() {
+            if (this.title && this.description && this.video) {
+                let formData = new FormData();
+                formData.append("title", this.title);
+                formData.append("description", this.video);
+                formData.append("video", this.video);
+                const { data } = await VideoRepository.upload(formData);
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    console.log(dataObject);
+                    if (!dataObject.error) {
+                        return dataObject;
+                    } else {
+                        return null;
+                    }
+                }
+                return null;
+            } else {
+                alert("Please input all the require fields")
+                return null;
+            }
         }
     },
     watch: {
