@@ -44,9 +44,6 @@
 </template>
 
 <style scoped>
- .card {
-
- }
  .page-hero {
   height: 150px;
   background-color: #E9E9E9;

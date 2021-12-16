@@ -7,3 +7,20 @@
         <p>Checking if your edited video contains any copyright content.</p>
     </div>
 </template>
+
+
+<script>
+export default {
+    data () {
+      return {
+        video: {},
+      }
+    },
+    watch: {
+        video(newVal) {
+            console.log("Video is changed: ", newVal)
+            this.e1 = 2;
+        }
+    }
+}
+</script>
