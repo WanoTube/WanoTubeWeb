@@ -48,34 +48,34 @@
                         </v-btn>
                     </v-stepper-content>
 
-                <v-stepper-content step="2">
-                    <UploadStepTwo  v-bind:video="video" />
-                    <v-btn
-                    color="primary"
-                    @click="e1 = 3"
-                    >
-                    Continue
-                    </v-btn>
+                    <v-stepper-content step="2">
+                        <UploadStepTwo  v-bind:video="video" />
+                        <v-btn
+                        color="primary"
+                        @click="e1 = 3"
+                        >
+                        Continue
+                        </v-btn>
 
-                    <v-btn text>
-                    Cancel
-                    </v-btn>
-                </v-stepper-content>
+                        <v-btn text>
+                        Cancel
+                        </v-btn>
+                    </v-stepper-content>
 
-                <v-stepper-content step="3">
-                    <UploadStepThree></UploadStepThree>
+                    <v-stepper-content step="3">
+                        <UploadStepThree></UploadStepThree>
 
-                    <v-btn
-                    color="primary"
-                    @click="e1 = 1"
-                    >
-                    Continue
-                    </v-btn>
+                        <v-btn
+                        color="primary"
+                        @click="e1 = 1"
+                        >
+                        Continue
+                        </v-btn>
 
-                    <v-btn text>
-                    Cancel
-                    </v-btn>
-                </v-stepper-content>
+                        <v-btn text>
+                        Cancel
+                        </v-btn>
+                    </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
         </div>

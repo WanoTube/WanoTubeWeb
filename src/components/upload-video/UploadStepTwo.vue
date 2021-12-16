@@ -72,13 +72,10 @@ export default {
             if (!file) { 
                 console.log("Failed to load file");
             } else {
-                // console.log("File: ", file)
-
                 let vm = this;
                 let reader = new FileReader();
                 reader.onload = function(e) {
                     vm.thumbnailVideo = e.target.result;
-
                     // The file reader gives us an ArrayBuffer:
                     let buffer = e.target.result;
                     var uint8Array  = new Uint8Array(buffer);
@@ -90,12 +87,6 @@ export default {
                     vid.load()
                 }
                 reader.readAsArrayBuffer(file);
-                // this.save()
-                // this.$router.push('/editing/mymedia')
-                // reader.readAsDataURL(file);
-
-                // process-video
-                // video-drag
                 this.showThumbnail()
             }
         },
