@@ -162,7 +162,12 @@ export default {
         }
     },
     mounted() {
-        
+        this.socket.on('connect', () => {
+            this.socket.on('hi', function (msg) {
+                console.log(msg)
+            });
+            this.socket.emit('chat message', "Alo");
+        });
     }
 }
 </script>
