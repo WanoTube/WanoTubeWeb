@@ -1,5 +1,7 @@
 <template>
     <div>
+        <progress-bar size="tiny" :val=progressVal :text=progressStatus>
+        </progress-bar>
         <h1>Details</h1>
         <div class="row">
             <div class="col-md-8">
@@ -64,10 +66,15 @@ import io from 'socket.io-client';
 
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
+import ProgressBar from 'vue-simple-progress'
+
 const VideoRepository = RepositoryFactory.get('video')
 
 export default {
     props: ['video'],
+    components: {
+        ProgressBar
+    },
     data() {
         return {
             title: 'INTO1',
@@ -75,7 +82,9 @@ export default {
             thumbnailVideo: this.video,
             socket: io("http://localhost:8000", {
                 withCredentials: true,
-            })  
+            }),
+            progressVal: 0,
+            progressStatus: ''  
         }
     },
     rules: [
@@ -162,17 +171,26 @@ export default {
         }
     },
     mounted() {
+        const vm = this;
         this.socket.on('connect', () => {
             this.socket.on('Compress video', function (progress) {
-                if (progress)
+                vm.progressStatus = "Start compressing video"
+                if (progress) {
                     console.log('Compress video: ' + progress.percent + '%');
-                else {
+                    vm.progressVal = progress.percent;
+                } else {
                     console.log("Non progress")
                 }
             });
 
             this.socket.on('Convert to Webm Format', function (progress) {
-                console.log("Convert to Webm Format: " + progress.percent + ' %')
+                vm.progressStatus = "Start converting to webm format"
+                if (progress) {
+                    console.log("Convert to Webm Format: " + progress.percent + ' %')
+                    vm.progressVal = progress.percent;
+                } else {
+                    console.log("Non progress")
+                }
             });
 
             this.socket.on('Convert to audio', function (progress) {
@@ -180,7 +198,13 @@ export default {
             });
 
             this.socket.on('Upload to S3', function (progressPercentage) {
-                console.log("Upload to S3: " + progressPercentage + "%");
+                vm.progressStatus = "Start uploading to S3"
+                if (progressPercentage) {
+                    console.log("Upload to S3: " + progressPercentage + "%");
+                    vm.progressVal = progressPercentage;
+                } else {
+                    console.log("Non progress")
+                }
             });
         });
     }
