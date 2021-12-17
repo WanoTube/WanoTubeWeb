@@ -155,11 +155,41 @@ export default {
             }
         },
         async trackingUploadProgress() {
+            const vm = this;
             this.socket.on('connect', () => {
-                this.socket.on('chat message', function (msg) {
-                    console.log("Hello")
+                this.socket.on('Compress video', function (progress) {
+                    vm.progressStatus = "Start compressing video"
+                    if (progress) {
+                        console.log('Compress video: ' + progress.percent + '%');
+                        vm.progressVal = progress.percent;
+                    } else {
+                        console.log("Non progress")
+                    }
                 });
-                this.socket.emit('chat message', "Alo");
+
+                this.socket.on('Convert to Webm Format', function (progress) {
+                    vm.progressStatus = "Start converting to webm format"
+                    if (progress) {
+                        console.log("Convert to Webm Format: " + progress.percent + ' %')
+                        vm.progressVal = progress.percent;
+                    } else {
+                        console.log("Non progress")
+                    }
+                });
+
+                this.socket.on('Convert to audio', function (progress) {
+                    console.log("Convert to audio: " + progress.percent + ' %')
+                });
+
+                this.socket.on('Upload to S3', function (progressPercentage) {
+                    vm.progressStatus = "Start uploading to S3"
+                    if (progressPercentage) {
+                        console.log("Upload to S3: " + progressPercentage + "%");
+                        vm.progressVal = progressPercentage;
+                    } else {
+                        console.log("Non progress")
+                    }
+                });
             });
         }
      },
@@ -171,42 +201,7 @@ export default {
         }
     },
     mounted() {
-        const vm = this;
-        this.socket.on('connect', () => {
-            this.socket.on('Compress video', function (progress) {
-                vm.progressStatus = "Start compressing video"
-                if (progress) {
-                    console.log('Compress video: ' + progress.percent + '%');
-                    vm.progressVal = progress.percent;
-                } else {
-                    console.log("Non progress")
-                }
-            });
-
-            this.socket.on('Convert to Webm Format', function (progress) {
-                vm.progressStatus = "Start converting to webm format"
-                if (progress) {
-                    console.log("Convert to Webm Format: " + progress.percent + ' %')
-                    vm.progressVal = progress.percent;
-                } else {
-                    console.log("Non progress")
-                }
-            });
-
-            this.socket.on('Convert to audio', function (progress) {
-                console.log("Convert to audio: " + progress.percent + ' %')
-            });
-
-            this.socket.on('Upload to S3', function (progressPercentage) {
-                vm.progressStatus = "Start uploading to S3"
-                if (progressPercentage) {
-                    console.log("Upload to S3: " + progressPercentage + "%");
-                    vm.progressVal = progressPercentage;
-                } else {
-                    console.log("Non progress")
-                }
-            });
-        });
+        this.trackingUploadProgress();
     }
 }
 </script>
