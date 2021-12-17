@@ -163,10 +163,25 @@ export default {
     },
     mounted() {
         this.socket.on('connect', () => {
-            this.socket.on('hi', function (msg) {
-                console.log(msg)
+            this.socket.on('Compress video', function (progress) {
+                if (progress)
+                    console.log('Compress video: ' + progress.percent + '%');
+                else {
+                    console.log("Non progress")
+                }
             });
-            this.socket.emit('chat message', "Alo");
+
+            this.socket.on('Convert to Webm Format', function (progress) {
+                console.log("Convert to Webm Format: " + progress.percent + ' %')
+            });
+
+            this.socket.on('Convert to audio', function (progress) {
+                console.log("Convert to audio: " + progress.percent + ' %')
+            });
+
+            this.socket.on('Upload to S3', function (progressPercentage) {
+                console.log("Upload to S3: " + progressPercentage + "%");
+            });
         });
     }
 }
