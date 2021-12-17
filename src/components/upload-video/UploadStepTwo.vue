@@ -126,11 +126,12 @@ export default {
             const data = await this.uploadVideo();
             console.log("data: ", data);
             if (data) {
-                this.$emit('uploadResult', data)
-                this.$emit('onContinue', 3)
+                this.progressStatus = 'Completed';
+                this.$emit('uploadResult', data);
+                this.$emit('onContinue', 3);
             } else {
-                alert("Oh no, failed")
-                this.$emit('onContinue', 2)
+                alert("Oh no, failed");
+                this.$emit('onContinue', 2);
             }
         },
         async uploadVideo() {
@@ -183,7 +184,11 @@ export default {
                 });
 
                 this.socket.on('Upload to S3', function (progressPercentage) {
-                    vm.progressStatus = "Start uploading to S3"
+                    if (progressPercentage < 100) 
+                        vm.progressStatus = "Start uploading to S3"
+                    else
+                        vm.progressStatus = 'Completed';
+
                     if (progressPercentage) {
                         console.log("Upload to S3: " + progressPercentage + "%");
                         vm.progressVal = progressPercentage;
