@@ -60,6 +60,7 @@
 }
 </style>
 <script>
+import io from 'socket.io-client';
 
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
@@ -71,7 +72,7 @@ export default {
         return {
             title: 'INTO1',
             description: 'INTO1',
-            thumbnailVideo: this.video
+            thumbnailVideo: this.video,
         }
     },
     rules: [
@@ -148,6 +149,22 @@ export default {
                 this.createFile(val);
             }
         }
+    },
+    mounted() {
+        const socket = io("http://localhost:8000", {
+        withCredentials: true,
+        // extraHeaders: {
+        //     "my-custom-header": "abcd"
+        // }
+        });  
+        socket.on('connect', function () {
+            socket.send('hi');
+
+            socket.on('message', function (msg) {
+            // my msg
+            });
+        });
+        console.log(socket)      
     }
 }
 </script>

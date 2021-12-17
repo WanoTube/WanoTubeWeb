@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "interactjs": "^1.10.11",
+    "socket.io-client": "^4.4.0",
     "vue": "^2.6.11",
     "vue-lazyload-video": "^0.1.15",
     "vue-router": "^3.5.2",
