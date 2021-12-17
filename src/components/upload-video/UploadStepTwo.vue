@@ -73,6 +73,9 @@ export default {
             title: 'INTO1',
             description: 'INTO1',
             thumbnailVideo: this.video,
+            socket: io("http://localhost:8000", {
+                withCredentials: true,
+            })  
         }
     },
     rules: [
@@ -141,8 +144,16 @@ export default {
                 alert("Please input all the require fields")
                 return null;
             }
+        },
+        async trackingUploadProgress() {
+            this.socket.on('connect', () => {
+                this.socket.on('chat message', function (msg) {
+                    console.log("Hello")
+                });
+                this.socket.emit('chat message', "Alo");
+            });
         }
-    },
+     },
     watch: {
         video: function (val) {
             if (val) {
@@ -151,20 +162,7 @@ export default {
         }
     },
     mounted() {
-        const socket = io("http://localhost:8000", {
-        withCredentials: true,
-        // extraHeaders: {
-        //     "my-custom-header": "abcd"
-        // }
-        });  
-        socket.on('connect', function () {
-            socket.send('hi');
-
-            socket.on('message', function (msg) {
-            // my msg
-            });
-        });
-        console.log(socket)      
+        
     }
 }
 </script>
