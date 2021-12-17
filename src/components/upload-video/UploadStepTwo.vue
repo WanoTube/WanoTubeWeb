@@ -126,6 +126,7 @@ export default {
             const data = await this.uploadVideo();
             console.log("data: ", data);
             if (data) {
+                this.$emit('uploadResult', data)
                 this.$emit('onContinue', 3)
             } else {
                 alert("Oh no, failed")
@@ -136,7 +137,7 @@ export default {
             if (this.title && this.description && this.video) {
                 let formData = new FormData();
                 formData.append("title", this.title);
-                formData.append("description", this.video);
+                formData.append("description", this.description);
                 formData.append("video", this.video);
                 const { data } = await VideoRepository.upload(formData);
                 if (data) {

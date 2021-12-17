@@ -39,11 +39,11 @@
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
-                        <UploadStepTwo  v-bind:video="video" @onContinue="e1 = $event"/>
+                        <UploadStepTwo  v-bind:video="video" @onContinue="e1 = $event" @uploadResult="videoUploadResult = $event"/>
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
-                        <UploadStepThree @onContinue="e1 = $event"/>
+                        <UploadStepThree v-bind:videoUploadResult="videoUploadResult" @onContinue="e1 = $event"/>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
@@ -72,12 +72,16 @@ export default {
       return {
         e1: 1,
         video: {},
+        videoUploadResult: {}
       }
     },
     watch: {
         video(newVal) {
             console.log("Video is changed: ", newVal)
             this.e1 = 2;
+        },
+        videoUploadResult(newVal){
+            console.log("videoUploadResult is changed: ", newVal)
         }
     }
 }
