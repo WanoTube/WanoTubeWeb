@@ -26,6 +26,7 @@
                     item-key="name"
                     show-select
                     class="elevation-1"
+                    @click:row="handleClick"
                 >
                     <template v-slot:item.title="{ item }">
                         <div class="row">
@@ -96,7 +97,7 @@ export default {
           },
           { 
               text: 'Likes', 
-              value: 'likes'
+              value: 'likes1'
           },
         ],
         videos: []
@@ -118,7 +119,10 @@ export default {
             //     alert("Please input all the require fields")
             //     return null;
             // }
-        }
+        },
+        handleClick(row) {
+			this.$router.push({ path: `videos/${row._id}`})
+        },
     },
     async mounted() {
         //TO-DO: Check if videos is ull
@@ -126,3 +130,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.selected {
+    background-color: red
+}
+</style>

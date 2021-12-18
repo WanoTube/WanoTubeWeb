@@ -7,7 +7,7 @@ function get() {
 }
 
 function getAllVideoInfosWithUserId(authorId) {
-    return Repository.get(`${resource}/${authorId}`);
+    return Repository.get(`${resource}/users/${authorId}`);
 }
 
 function getVideoById(videoId) {

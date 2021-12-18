@@ -7,6 +7,7 @@ import Home from './views/Home.vue'
 import UploadVideo from './views/UploadVideo.vue'
 import Upload from './components/upload-video/Upload.vue'
 import VideoManagement from './components/video-management/VideoLists.vue'
+import VideoDetails from './components/video-management/VideoDetails.vue'
 
 import Comment from './views/Comment.vue'
 import Search from './components/discover/Search.vue'
@@ -44,11 +45,8 @@ export const router = new VueRouter({
                 {path: '/editing/browsefile', component: BrowseFile}
             ]
         },
-        {
-            path: '/videos', 
-            component: VideoManagement,
-            // redirect: '/videos/mymedia',
-        },
+        {path: '/videos/', component: VideoManagement },
+        {path: '/videos/:id', component: VideoDetails },
         {path: '/login/', component: Authentication },
         {path: '/signup/', component: Register },
         {path: '/comment', component: Comment},
