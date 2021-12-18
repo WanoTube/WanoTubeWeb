@@ -27,11 +27,14 @@
         color="primary"
         @click="onContinue"
         >
-        Continue
+        Complete
         </v-btn>
 
-        <v-btn text>
-        Cancel
+        <v-btn 
+        text
+        @click="onReturn"
+        >
+        Back
         </v-btn>
     </div>
 </template>
@@ -49,7 +52,10 @@ export default {
     },
     methods: {
       onContinue() {
-        this.$emit('onContinue', 1)
+        this.$router.push({ path: `/heoboi/videos/`})
+      },
+      onReturn() {
+          this.$emit('onReturn', 2)
       },
       musicIncluded(musics) {
         const first = musics[0];

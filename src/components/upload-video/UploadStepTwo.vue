@@ -31,13 +31,12 @@
                         <p>Processing video... </p>
                     </div>
                     <div class="card-body">
-                        <p class="card-text text-secondary">Video link </p>
-                        <p>
-                            <a class="card-text text-primary" href="https://getbootstrap.com/docs/4.0/content/typography/">https://getbootstrap.com/docs/4.0/content/typography/ </a>
-                        </p>
-
-                        <p class="card-text text-secondary">Filename </p>
-                        <p class="card-text text-primary">Wonderland Party</p>
+                        <p class="card-text text-secondary">Video's size </p>
+                        <p class="card-text text-primary"> {{size}} MB </p>
+                        <div v-if="type">
+                            <p class="card-text text-secondary">Video's type </p>
+                            <p class="card-text text-primary"> {{type}} </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,11 +45,14 @@
             color="primary"
             @click="onContinue"
         >
-            Continue
+            Upload
         </v-btn>
 
-        <v-btn text>
-            Cancel
+        <v-btn 
+            text
+            @click="onReturn"
+        >
+            Back
         </v-btn>
     </div>
 </template>
@@ -77,14 +79,16 @@ export default {
     },
     data() {
         return {
-            title: 'INTO1',
-            description: 'INTO1',
+            title: '',
+            description: '',
             thumbnailVideo: this.video,
             socket: io("http://localhost:8000", {
                 withCredentials: true,
             }),
             progressVal: 0,
-            progressStatus: ''  
+            progressStatus: '',
+            size: 0,
+            type: ''
         }
     },
     rules: [
@@ -92,6 +96,9 @@ export default {
         value => (value && value.length >= 3) || 'Min 3 characters',
       ],
     methods: {
+        onReturn() {
+            this.$emit('onContinue', 1)
+        },
         createFile(file) {
             if (!file) { 
                 console.log("Failed to load file");
@@ -202,6 +209,9 @@ export default {
     watch: {
         video: function (val) {
             if (val) {
+                this.title = val.name.split(".")[0];
+                this.size = Math.round((val.size)/(1024*1024) * 100) / 100;
+                this.type = val.type;
                 this.createFile(val);
             }
         }

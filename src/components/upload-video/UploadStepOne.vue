@@ -21,7 +21,10 @@
       Continue
     </v-btn>
 
-    <v-btn text>
+    <v-btn 
+    text
+    @click="onReturn"
+    >
         Cancel
     </v-btn>
   </div>
@@ -50,6 +53,9 @@ export default {
       },
       onContinue() {
         this.$emit('onContinue', 2)
+      },
+      onReturn() {
+        this.$router.push({ path: `/`})
       }
     }
 }

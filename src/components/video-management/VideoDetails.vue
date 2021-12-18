@@ -32,13 +32,12 @@
                         <p>Processing video... </p>
                     </div> -->
                     <div class="card-body">
-                        <p class="card-text text-secondary">Video link </p>
-                        <p>
-                            <a class="card-text text-primary" href="https://getbootstrap.com/docs/4.0/content/typography/">https://getbootstrap.com/docs/4.0/content/typography/ </a>
-                        </p>
-
-                        <p class="card-text text-secondary">Filename </p>
-                        <p class="card-text text-primary">Wonderland Party</p>
+                        <p class="card-text text-secondary">Video's size </p>
+                        <p class="card-text text-primary"> {{size}} MB </p>
+                        <div v-if="type">
+                            <p class="card-text text-secondary">Video's type </p>
+                            <p class="card-text text-primary"> {{type}} </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,7 +74,9 @@ export default {
             title: '',
             description: '',
             thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
-            videoId: this.$route.params.id
+            videoId: this.$route.params.id,
+            size: 0,
+            type: 'webm'
         }
     },
     methods: {
@@ -97,6 +98,7 @@ export default {
             const video = this.video;
             this.title = video.title;
             this.description = video.description;
+            this.size = Math.round((video.size)/(1024*1024) * 100) / 100;
         }
     },
     watch: {

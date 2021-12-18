@@ -39,11 +39,11 @@
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
-                        <UploadStepTwo  v-bind:video="video" @onContinue="e1 = $event" @uploadResult="videoUploadResult = $event"/>
+                        <UploadStepTwo  v-bind:video="video" @onContinue="e1 = $event" @uploadResult="videoUploadResult = $event" @onReturn="e1 = $event"/>
                     </v-stepper-content>
 
                     <v-stepper-content step="3">
-                        <UploadStepThree v-bind:videoUploadResult="videoUploadResult" @onContinue="e1 = $event"/>
+                        <UploadStepThree v-bind:videoUploadResult="videoUploadResult" @onReturn="e1 = $event"/>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-stepper>
