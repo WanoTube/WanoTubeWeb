@@ -6,6 +6,10 @@ function get() {
     return Repository.get(`${resource}`);
 }
 
+function getAllVideoInfosWithUserId(authorId) {
+    return Repository.get(`${resource}/${authorId}`);
+}
+
 function getVideoById(videoId) {
     return Repository.get(`${resource}/${videoId}`);
 }
@@ -16,6 +20,7 @@ function upload(payload) {
 
 export default {
     get,
+    getAllVideoInfosWithUserId,
     getVideoById,
     upload
 }
