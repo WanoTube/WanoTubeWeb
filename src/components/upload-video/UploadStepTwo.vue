@@ -8,7 +8,7 @@
                 <div>
                     <v-text-field
                         v-model="title"
-                        label="Title"
+                        label="Title (required)"
                         placeholder="Placeholder"
                         outlined
                     ></v-text-field>
