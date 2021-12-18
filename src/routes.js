@@ -45,8 +45,8 @@ export const router = new VueRouter({
                 {path: '/editing/browsefile', component: BrowseFile}
             ]
         },
-        {path: '/videos/', component: VideoManagement },
-        {path: '/videos/:id', component: VideoDetails },
+        {path: '/:username/videos/', component: VideoManagement },
+        {path: '/:username/videos/:id', component: VideoDetails },
         {path: '/login/', component: Authentication },
         {path: '/signup/', component: Register },
         {path: '/comment', component: Comment},

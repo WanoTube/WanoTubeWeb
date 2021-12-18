@@ -93,13 +93,16 @@ export default {
     },
     async created() {
         this.video = await this.getVideo();
+        if (this.video) {
+            const video = this.video;
+            this.title = video.title;
+            this.description = video.description;
+        }
     },
     watch: {
         video: function (val) {
             if (val) {
-                // this.thumbnailVideoUrl = val.url;
-                // alert(this.thumbnailVideoUrl)
-
+                this.thumbnailVideoUrl = val.url;
             }
         }
     },

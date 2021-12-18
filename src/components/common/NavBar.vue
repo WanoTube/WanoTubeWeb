@@ -39,8 +39,8 @@
                   </defs>
                 </svg>
               </a>
-              <a class="text-muted" href="#">
-                <img src="../../assets/images/Account.png" width="41px" height="41px">
+              <a class="text-muted" href="/heoboi/videos">
+                  <img src="../../assets/images/Account.png" width="41px" height="41px">
               </a>
             </div>
            

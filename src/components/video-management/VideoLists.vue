@@ -26,7 +26,7 @@
                     item-key="name"
                     show-select
                     class="elevation-1"
-                    @click:row="handleClick"
+                    @click:row="handleRowClick"
                 >
                     <template v-slot:item.title="{ item }">
                         <div class="row">
@@ -41,6 +41,14 @@
                     </template>
                     <template v-slot:item.created_at="{ item }">
                         <p>{{ new Date(item.created_at).toLocaleString() }}</p>
+                    </template>
+                    <template v-slot:item.actions="{ item }">
+                        <v-btn class="mx-2" fab dark small color="blue" @click="onButtonClick(item)">
+                            <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
+                        <v-btn class="mx-2" fab dark small color="blue" @click="onButtonClick(item)">
+                            <v-icon>mdi-delete</v-icon>
+                        </v-btn>
                     </template>
                 </v-data-table>
             </div>
@@ -61,7 +69,6 @@ export default {
     },
     data () {
       return {
-        // singleSelect: false,
         selected: [],
         headers: [
           {
@@ -99,6 +106,10 @@ export default {
               text: 'Likes', 
               value: 'likes1'
           },
+          { 
+              text: 'Actions', 
+              value: 'actions'
+          },
         ],
         videos: []
       }
@@ -120,9 +131,13 @@ export default {
             //     return null;
             // }
         },
-        handleClick(row) {
-			this.$router.push({ path: `videos/${row._id}`})
+        handleRowClick(row) {
+            console.log(row)
+			this.$router.push({ path: `/heoboi/videos/${row._id}`})
         },
+        onButtonClick() {
+            alert("Hello")
+        }
     },
     async mounted() {
         //TO-DO: Check if videos is ull
