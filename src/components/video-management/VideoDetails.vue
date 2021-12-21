@@ -143,7 +143,6 @@ export default {
                     title: this.title, 
                     description: this.description
                 };
-                console.log("updateVideoInfo: ", updateVideoInfo)
                 const { data } = await VideoRepository.update(updateVideoInfo);
                 const dataObject = convertJSONToObject(data)
                 if (!dataObject.error) {
