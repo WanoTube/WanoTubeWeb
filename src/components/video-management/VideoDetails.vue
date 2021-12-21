@@ -3,13 +3,24 @@
     <NavBar></NavBar>
     <br><br><br>
     <div class="container">
+         <v-btn
+            tile
+            color="white"
+            @click="backToVideos"
+            >
+            <v-icon left>
+                mdi-arrow-left
+            </v-icon>
+                Back to videos
+            </v-btn>
         <div class="row ">
+           
             <div class="col padding-left-right-15">
-                <h1><b>Details</b></h1>
+                <h1><b>Video Details</b></h1>
             </div>
             <div class="col container row justify-content-end" >
-                <button class="btn btn-cancel">
-                    CANCEL
+                <button class="btn btn-cancel" @click="resetInputFields">
+                    RESET
                 </button>
                 <v-btn
                 class="ma-2 btn-save"
@@ -49,12 +60,6 @@
                     <div class="card-body">
                         <small class="card-text text-secondary">Video link </small>
                         <p class="card-text text-primary"> https://youtu.be/khzGZ2sTQ2g </p>
-                        <!-- <p class="card-text text-secondary">Video's size </p>
-                        <p class="card-text text-primary"> {{size}} MB </p>
-                        <div v-if="type">
-                            <p class="card-text text-secondary">Video's type </p>
-                            <p class="card-text text-primary"> {{type}} </p>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -81,8 +86,6 @@ export default {
             description: '',
             thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
             videoId: this.$route.params.id,
-            size: 0,
-            type: 'webm'
         }
     },
     methods: {
@@ -97,14 +100,19 @@ export default {
             } 
             return null;
         },
+        backToVideos() {
+            this.$router.push({ path: '/heoboi/videos' })
+        },
+        resetInputFields() {
+            this.title = this.video.title;
+            this.description = this.video.description;
+        }
     },
     async created() {
         this.video = await this.getVideo();
         if (this.video) {
-            const video = this.video;
-            this.title = video.title;
-            this.description = video.description;
-            this.size = Math.round((video.size)/(1024*1024) * 100) / 100;
+            this.title = this.video.title;
+            this.description = this.video.description;
         }
     },
     watch: {
