@@ -18,9 +18,13 @@ function upload(payload) {
     return Repository.post(`${resource}/upload`, payload);
 }
 
+function update(payload) {
+    return Repository.put(`${resource}/update`, payload);
+}
 export default {
     get,
     getAllVideoInfosWithUserId,
     getVideoById,
-    upload
+    upload,
+    update
 }

@@ -29,6 +29,7 @@
                     id="btn-save" 
                     class="ma-2 btn-save btn-save-inactive"
                     dark
+                    @click="saveChanges"
                 >
                     Save
                 </v-btn>
@@ -69,6 +70,24 @@
             </div>
         </div>
     </div>
+    <div>
+        <v-snackbar
+        v-model="snackbar"
+        >
+        {{ snackbarText }}
+
+        <template v-slot:action="{ attrs }">
+            <v-btn
+            color="pink"
+            text
+            v-bind="attrs"
+            @click="snackbar = false"
+            >
+            Close
+            </v-btn>
+        </template>
+        </v-snackbar>
+    </div>
 </div>
 </template>
 
@@ -91,7 +110,9 @@ export default {
             thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
             videoId: this.$route.params.id,
             activeButton: false,
-            changeInputCount: 0
+            changeInputCount: 0,
+            snackbar: false,
+            snackbarText: `Hello, I'm a snackbar`,
         }
     },
     methods: {
@@ -120,6 +141,31 @@ export default {
                 this.activeButton = !this.activeButton;
                 this.changeInputCount++;
             }
+        },
+        async saveChanges() {
+            if (this.activeButton && this.title && this.description) {
+                this.activeButton = false;
+                this.changeInputCount = 0;
+
+                const updateVideoInfo = { 
+                    id: this.video._id, 
+                    title: this.title, 
+                    description: this.description
+                };
+                console.log("updateVideoInfo: ", updateVideoInfo)
+                const { data } = await VideoRepository.update(updateVideoInfo);
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.error) {
+                    this.isLoading = false;
+                    this.info = data;
+                    console.log(dataObject);
+                    this.snackbar = true;
+                    this.snackbarText = 'Saved successfully'
+                } else {
+                    const errorString = JSON.stringify(dataObject.error)
+                    console.log(errorString)
+                }
+            }
         }
     },
     async created() {
@@ -140,7 +186,6 @@ export default {
                 this.updateActiveStatus();
             else 
                 this.changeInputCount = 0;
-
         }, 
         description: function(val) {
             if (val != this.video.title)
@@ -149,7 +194,6 @@ export default {
                 this.changeInputCount = 0;
         }, 
         activeButton: function() {
-            console.log("activeButton: ", this.activeButton)
             const btnReset = document.getElementById('btn-reset');
             const btnSave = document.getElementById('btn-save');
             if (this.activeButton) {
