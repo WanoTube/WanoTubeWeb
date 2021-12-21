@@ -3,57 +3,63 @@
     <NavBar></NavBar>
     <br><br><br>
     <div class="container">
-        <h1>Details</h1>
+        <div class="row ">
+            <div class="col padding-left-right-15">
+                <h1><b>Details</b></h1>
+            </div>
+            <div class="col container row justify-content-end" >
+                <button class="btn btn-cancel">
+                    CANCEL
+                </button>
+                <v-btn
+                class="ma-2 btn-save"
+                dark
+                >
+                    Save
+                </v-btn>
+            </div>
+        </div>
+        <div style="height: 10px"></div>
         <div class="row">
             <div class="col-md-8">
                 <div>
                     <v-text-field
                         v-model="title"
-                        label="Title"
-                        placeholder="Placeholder"
+                        label="Title (required)"
+                        placeholder="Add a title that describes your video"
                         outlined
                     ></v-text-field>
-                    <br>
                     <v-textarea
                         v-model="description"
                         outlined
                         name="input-7-4"
                         label="Description"
+                        placeholder="Tell viewers about your video"
                         value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                     ></v-textarea>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <video id="video-drag" v-bind:src="`http://localhost:8000/v1/videos/stream/${thumbnailVideoUrl}`" >
-
+            <div class="col-md-4 ">
+                <div class="card">
+                    <video 
+                        id="video-drag" 
+                        controls
+                        v-bind:src="`http://localhost:8000/v1/videos/stream/${thumbnailVideoUrl}`" >
                     </video>
-                    <!-- <div id="process-video" class="page-hero d-flex align-items-center justify-content-center">
-                        <p>Processing video... </p>
-                    </div> -->
                     <div class="card-body">
-                        <p class="card-text text-secondary">Video's size </p>
+                        <small class="card-text text-secondary">Video link </small>
+                        <p class="card-text text-primary"> https://youtu.be/khzGZ2sTQ2g </p>
+                        <!-- <p class="card-text text-secondary">Video's size </p>
                         <p class="card-text text-primary"> {{size}} MB </p>
                         <div v-if="type">
                             <p class="card-text text-secondary">Video's type </p>
                             <p class="card-text text-primary"> {{type}} </p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- <v-btn
-        color="primary"
-        @click="onContinue"
-    >
-        Continue
-    </v-btn>
-
-    <v-btn text>
-        Cancel
-    </v-btn> -->
 </div>
 </template>
 
@@ -110,3 +116,23 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.v-btn--is-elevated {
+    box-shadow: none !important;
+}
+.btn-cancel {
+    font-weight: 500 !important;
+    color: #065FD4
+}
+.btn-save {
+    background-color: #065FD4 !important;
+}
+.padding-left-right-15 {
+    padding: 0 15px;
+}
+.padding-right-0 {
+    padding: 0 0 !important;
+    margin: 0 0 !important;
+}
+</style>
