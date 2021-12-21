@@ -72,20 +72,10 @@
     </div>
     <div>
         <v-snackbar
-        v-model="snackbar"
+            v-model="snackbar"
+            :timeout="snackbarTimeOut"
         >
-        {{ snackbarText }}
-
-        <template v-slot:action="{ attrs }">
-            <v-btn
-            color="pink"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-            >
-            Close
-            </v-btn>
-        </template>
+            {{ snackbarText }}
         </v-snackbar>
     </div>
 </div>
@@ -113,6 +103,7 @@ export default {
             changeInputCount: 0,
             snackbar: false,
             snackbarText: `Hello, I'm a snackbar`,
+            snackbarTimeOut: 3000
         }
     },
     methods: {
@@ -160,7 +151,7 @@ export default {
                     this.info = data;
                     console.log(dataObject);
                     this.snackbar = true;
-                    this.snackbarText = 'Saved successfully'
+                    this.snackbarText = 'Updated successfully'
                 } else {
                     const errorString = JSON.stringify(dataObject.error)
                     console.log(errorString)
