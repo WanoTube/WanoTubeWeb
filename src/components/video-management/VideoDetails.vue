@@ -19,12 +19,16 @@
                 <h1><b>Video Details</b></h1>
             </div>
             <div class="col container row justify-content-end" >
-                <button class="btn btn-cancel" @click="resetInputFields">
+                <button 
+                    id="btn-reset" 
+                    class="btn btn-reset btn-reset-inactive" 
+                    @click="resetInputFields">
                     RESET
                 </button>
                 <v-btn
-                class="ma-2 btn-save"
-                dark
+                    id="btn-save" 
+                    class="ma-2 btn-save btn-save-inactive"
+                    dark
                 >
                     Save
                 </v-btn>
@@ -86,6 +90,8 @@ export default {
             description: '',
             thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
             videoId: this.$route.params.id,
+            activeButton: false,
+            changeInputCount: 0
         }
     },
     methods: {
@@ -106,6 +112,16 @@ export default {
         resetInputFields() {
             this.title = this.video.title;
             this.description = this.video.description;
+            this.changeInputCount = 0;
+            this.updateActiveStatus();
+        },
+        updateActiveStatus() {
+            console.log("ALOO")
+            if (this.changeInputCount == 0) 
+            {
+                this.activeButton = !this.activeButton;
+                this.changeInputCount++;
+            }
         }
     },
     async created() {
@@ -120,6 +136,37 @@ export default {
             if (val) {
                 this.thumbnailVideoUrl = val.url;
             }
+        },
+        title: function(val) {
+            if (val != this.video.title)
+                this.updateActiveStatus();
+            else 
+                this.changeInputCount = 0;
+
+        }, 
+        description: function(val) {
+            if (val != this.video.title)
+                this.updateActiveStatus();
+            else 
+                this.changeInputCount = 0;
+        }, 
+        activeButton: function() {
+            console.log("activeButton: ", this.activeButton)
+            const btnReset = document.getElementById('btn-reset');
+            const btnSave = document.getElementById('btn-save');
+            if (this.activeButton) {
+                btnReset.classList.add("btn-reset-active");
+                btnSave.classList.add("btn-save-active");
+                btnReset.classList.remove("btn-reset-inactive");
+                btnSave.classList.remove("btn-save-inactive");
+            } else {
+                btnReset.classList.add("btn-reset-inactive");
+                btnSave.classList.add("btn-save-inactive");
+                btnReset.classList.remove("btn-reset-active");
+                btnSave.classList.remove("btn-save-active");
+            }
+            
+
         }
     },
 }
@@ -129,12 +176,20 @@ export default {
 .v-btn--is-elevated {
     box-shadow: none !important;
 }
-.btn-cancel {
-    font-weight: 500 !important;
-    color: #065FD4
+.btn-reset-active {
+    color: #065FD4 !important;
 }
-.btn-save {
+.btn-reset-inactive {
+    color: grey !important;
+}
+.btn-reset {
+    font-weight: 500 !important;
+}
+.btn-save-active {
     background-color: #065FD4 !important;
+}
+.btn-save-inactive {
+    background-color: grey !important;
 }
 .padding-left-right-15 {
     padding: 0 15px;
