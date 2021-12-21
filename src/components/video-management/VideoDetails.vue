@@ -116,9 +116,7 @@ export default {
             this.updateActiveStatus();
         },
         updateActiveStatus() {
-            console.log("ALOO")
-            if (this.changeInputCount == 0) 
-            {
+            if (this.changeInputCount == 0) {
                 this.activeButton = !this.activeButton;
                 this.changeInputCount++;
             }
@@ -165,8 +163,6 @@ export default {
                 btnReset.classList.remove("btn-reset-active");
                 btnSave.classList.remove("btn-save-active");
             }
-            
-
         }
     },
 }
