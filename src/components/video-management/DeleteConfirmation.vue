@@ -1,73 +1,99 @@
 <template>
-    <!-- <div>
-        <v-dialog
-            transition="dialog-bottom-transition"
-            max-width="600"
-        >
-            <template v-slot:activator="{ on, attrs }">
-            <v-btn
-                color="primary"
-                v-bind="attrs"
-                v-on="on"
-            >From the bottom</v-btn>
-            </template>
-            <template v-slot:default="dialog">
-            
-            </template>
-        </v-dialog>
-    </div> -->
-    <div class="container" style="max-width: 700px">
-        <v-card class="container">
-            <v-card-text>
-                <div class="text-h5 text-black"><h5><b>Permanently delete this draft video?</b></h5></div>
-            </v-card-text>
-            <div class="card">
-                <div class="row card-body">
-                    <div class="col-md container">
-                    <video 
-                        class="video-mask"
-                        v-bind:src="`http://localhost:8000/v1/videos/stream/test4_617a508f7e3e601cad80531d_1639831479.webm`" >
-                    </video>
-                    </div>
-                    <div class="col-md container align-middle ">
-                        <p class="bottom-buffer">Output</p>
-                        <p class="text-grey bottom-buffer">Uploaded 18/10/2021 </p>
-                        <p class="text-grey">0 views</p>
-                    </div>
-                </div>
-                
-            </div>
-            <v-checkbox
-                v-model="confirmCheckbox"
-                :label="`I understand that deleting is permanent, and can't be undone`"
-            ></v-checkbox>
+    <div>
+        <v-row justify="center">
+            <!-- <v-btn
+            color="primary"
+            dark
+            @click.stop="dialog = true"
+            >
+            Open Dialog
+            </v-btn> -->
 
-            <v-card-actions class="justify-end">
-                <v-btn
-                    text
-                    class=""
-                    @click="dialog.value = false"
-                >CANCEL</v-btn>
-                <v-btn
-                    text
-                    :disabled="!confirmCheckbox"
-                    @click="deleteVideo"
-                >DELETE VIDEO</v-btn>
-            </v-card-actions>
-        </v-card>
+            <v-dialog
+            v-model="deleteDialog.isOpened"
+            max-width="700"
+            >
+                <div class="container">
+                    <v-card class="container">
+                        <v-card-text>
+                            <div class="text-h5 text-black"><h5><b>Permanently delete this video?</b></h5></div>
+                        </v-card-text>
+                        <div class="card">
+                            <div class="row card-body">
+                                <div class="col-md container">
+                                <video 
+                                    class="video-mask"
+                                    v-bind:src="`http://localhost:8000/v1/videos/stream/${deleteDialog.videoUrl}`" >
+                                </video>
+                                </div>
+                                <div class="col-md container align-middle ">
+                                    <p class="bottom-buffer">{{this.deleteDialog.video.title}}</p>
+                                    <p class="text-grey bottom-buffer">Uploaded {{this.deleteDialog.video.created_at}} </p>
+                                    <p class="text-grey">0 views</p>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <v-checkbox
+                            v-model="confirmCheckbox"
+                            :label="`I understand that deleting is permanent, and can't be undone`"
+                        ></v-checkbox>
+
+                        <v-card-actions class="justify-end">
+                            <v-btn
+                                text
+                                class=""
+                                @click="closeDialog"
+                            >CANCEL</v-btn>
+                            <v-btn
+                                text
+                                :disabled="!confirmCheckbox"
+                                @click="deleteVideo"
+                            >DELETE VIDEO</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </div>
+            </v-dialog>
+        </v-row>
     </div>
 </template>
 
+
+
 <script>
+import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../../utils/utils'
+
+const VideoRepository = RepositoryFactory.get('video')
 export default {
+    props: ['deleteDialog'],
     data() {
         return {
-            confirmCheckbox: false
+            confirmCheckbox: false,
         }
     },
     methods: {
-        deleteVideo() {
-            
+        async deleteVideo() {
+            const deleteInfo = { 
+                url: this.deleteDialog.videoUrl, 
+                id: this.deleteDialog.video._id
+            };
+            const { data } = await VideoRepository.deleteVideo(deleteInfo);
+            if (data) {
+                const dataObject = convertJSONToObject(data);
+                if (!dataObject.error) {
+                    if (dataObject.deletedCount == 0)
+                        alert("Cannot delete this video! ");
+                    this.closeDialog();
+                } else {
+                    alert(dataObject.error);
+                }
+            }  else {
+                alert("Cannot delete this video! ");
+            }
+        },
+        closeDialog() {
+            this.$emit('onClose', false)
         }
     }
 }

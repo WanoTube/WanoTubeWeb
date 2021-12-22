@@ -22,8 +22,8 @@ function updateVideo (payload) {
     return Repository.put(`${resource}/update`, payload);
 }
 
-function deleteVideo (videoId) {
-    return Repository.delete(`${resource}/delete/${videoId}`);
+function deleteVideo (payload) {
+    return Repository.post(`${resource}/delete/`, payload);
 }
 
 export default {

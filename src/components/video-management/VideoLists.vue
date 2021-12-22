@@ -44,8 +44,7 @@
                 </v-data-table>
             </div>
         </div>
-        <DeleteConfirmation></DeleteConfirmation>
-
+        <DeleteConfirmation v-bind:deleteDialog="deleteDialog" @onClose="deleteDialog.isOpened = $event"/>
     </div>
 </template>
 
@@ -59,7 +58,7 @@ const VideoRepository = RepositoryFactory.get('video')
 
 export default {
     components: {
-        // NavBar,
+        NavBar,
         DeleteConfirmation
     },
     data () {
@@ -107,7 +106,11 @@ export default {
           },
         ],
         videos: [],
-        confirmCheckbox: false
+        confirmCheckbox: false,
+        deleteDialog: {
+            isOpened: false,
+            video: {}
+        }
       }
     },
     methods: {
@@ -134,14 +137,16 @@ export default {
         onEditButtonClick(row) {
 			this.$router.push({ path: `/heoboi/videos/${row._id}`})
         },
-        onDeleteButtonClick() {
-            alert("Hello")
+        onDeleteButtonClick(row) {
+            // console.log(row)
+            this.deleteDialog.isOpened = true;
+            this.deleteDialog.video = row
         }
     },
     async mounted() {
         //TO-DO: Check if videos is ull
         this.videos = await this.getAllVideos();
-    }
+    },
 }
 </script>
 
