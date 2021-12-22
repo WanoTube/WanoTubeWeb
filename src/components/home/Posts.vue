@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex" style="flex-direction: column">
         <div v-for="video in videos" v-bind:key="video.tittle" >
-            <Post :videoKey="video"></Post>
+            <Post :video="video"></Post>
         </div>
     </div>
 </template>
@@ -29,7 +29,7 @@ export default {
                 let video = dataObject[index];
                 if (video) {
                     if (video.url) {
-                        this.videos.push(video.url)
+                        this.videos.push(video)
                     }
                 }
                 

@@ -49,7 +49,7 @@ export const router = new VueRouter({
         {path: '/:username/videos/:id', component: VideoDetails },
         {path: '/login/', component: Authentication },
         {path: '/signup/', component: Register },
-        {path: '/comment', component: Comment},
+        {path: '/comment/:id', component: Comment},
         {path: '/upload', component: Upload},
         // {path: '/browsefile', component: BrowseFile}
     ]

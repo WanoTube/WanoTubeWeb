@@ -4,7 +4,10 @@
             <router-link to="/" class="d-none d-sm-block">
                  <span class="fa fa-times fa-2x exit-button"></span>
             </router-link>
-            <img src="../assets/images/sample/Image_2.png" class="w-100">
+            <LazyVideo  
+                class="w-100"
+                :src="videoUrl" :poster="defaultPoster"/>
+            <!-- <img src="../assets/images/sample/Image_2.png" class="w-100"> -->
             <div class="d-sm-none container">
                 <CommentSection></CommentSection>
                 <br>
@@ -101,6 +104,10 @@
 <script>
 import PostCaption from '../components/home/PostCaption.vue'
 import CommentSection from '../components/comment/CommentSection.vue'
+import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../utils/utils'
+const VideoRepository = RepositoryFactory.get('video')
+
 import $ from 'jquery'
 export default {
     components: {
@@ -110,10 +117,24 @@ export default {
     data(){
         return {
             likes: 0,
-            comments : 8
+            comments : 8,
+            video: {},
+            videoUrl: '',
+            defaultPoster: ''
         }
     },
     methods: {
+        async getVideo() {
+            const { data } = await VideoRepository.getVideoById(this.$route.params.id);
+            if (data) {
+                const dataObject = convertJSONToObject(data);
+                if (!dataObject.error) {
+                    return dataObject;
+                }
+                return null;
+            } 
+            return null;
+        },
         commentFunction(){
             this.$refs.commentSection.commentFunction();
         },
@@ -130,7 +151,6 @@ export default {
             else
                 this.likes = this.likes -1;
         }
-        
     },
     mounted(){
         $('.button').mouseenter(function(i,obj){
@@ -141,6 +161,17 @@ export default {
             ($(this)).find('circle').css("fill", "#F1F1F2");
             ($(this)).find('path').css("fill", "black");
         })
+    },
+    async created() {
+        this.video = await this.getVideo();
+    },
+    watch: {
+        video: function (val) {
+            if (val) {
+                this.videoUrl = "http://localhost:8000/v1/videos/stream/"+ val.url
+                this.defaultPoster ="http://localhost:8080/img/WatchOut.1e172f0c.png"
+            }
+        },
     }
 }
 </script>
