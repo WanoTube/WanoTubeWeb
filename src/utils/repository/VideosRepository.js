@@ -14,17 +14,23 @@ function getVideoById(videoId) {
     return Repository.get(`${resource}/${videoId}`);
 }
 
-function upload(payload) {
+function uploadVideo (payload) {
     return Repository.post(`${resource}/upload`, payload);
 }
 
-function update(payload) {
+function updateVideo (payload) {
     return Repository.put(`${resource}/update`, payload);
 }
+
+function deleteVideo (videoId) {
+    return Repository.delete(`${resource}/delete/${videoId}`);
+}
+
 export default {
     get,
     getAllVideoInfosWithUserId,
     getVideoById,
-    upload,
-    update
+    uploadVideo,
+    updateVideo,
+    deleteVideo
 }

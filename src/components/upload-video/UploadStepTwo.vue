@@ -147,7 +147,7 @@ export default {
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("video", this.video);
-                const { data } = await VideoRepository.upload(formData);
+                const { data } = await VideoRepository.uploadVideo(formData);
                 if (data) {
                     const dataObject = convertJSONToObject(data);
                     console.log(dataObject);

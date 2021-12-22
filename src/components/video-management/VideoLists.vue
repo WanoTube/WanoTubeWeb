@@ -3,16 +3,6 @@
         <NavBar></NavBar>
         <br><br>
         <div class="row">
-            <!-- <div class="col-2 border-right">
-                <br>
-                <div class="text-center">
-                    <img src="../../assets/images/Account.png" width="100px" height="100px">
-                </div>
-                <div class="text-center">
-                    <br>
-                    <p> <b>@heoboi</b></p>
-                </div>
-            </div> -->
             <div class="col-12">
                 <br>
                 <div class="container">
@@ -26,8 +16,9 @@
                     item-key="name"
                     show-select
                     class="elevation-1"
-                    @click:row="handleRowClick"
                 >
+                <!-- @click:row="handleRowClick" -->
+
                     <template v-slot:item.title="{ item }">
                         <div class="row">
                             <div class="">
@@ -43,29 +34,33 @@
                         <p>{{ new Date(item.created_at).toLocaleString() }}</p>
                     </template>
                     <template v-slot:item.actions="{ item }">
-                        <v-btn class="mx-2" fab dark small color="blue" @click="onButtonClick(item)">
+                        <v-btn class="mx-2" fab dark small color="blue" @click="onEditButtonClick(item)">
                             <v-icon>mdi-pencil</v-icon>
                         </v-btn>
-                        <v-btn class="mx-2" fab dark small color="blue" @click="onButtonClick(item)">
+                        <v-btn class="mx-2" fab dark small color="blue" @click="onDeleteButtonClick(item)">
                             <v-icon>mdi-delete</v-icon>
                         </v-btn>
                     </template>
                 </v-data-table>
             </div>
         </div>
+        <DeleteConfirmation></DeleteConfirmation>
+
     </div>
 </template>
 
 <script>
 import NavBar from '../../components/common/NavBar.vue'
+import DeleteConfirmation from './DeleteConfirmation.vue'
+
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
-
 const VideoRepository = RepositoryFactory.get('video')
 
 export default {
     components: {
-        NavBar
+        // NavBar,
+        DeleteConfirmation
     },
     data () {
       return {
@@ -111,7 +106,8 @@ export default {
               value: 'actions'
           },
         ],
-        videos: []
+        videos: [],
+        confirmCheckbox: false
       }
     },
     methods: {
@@ -135,7 +131,10 @@ export default {
             console.log(row)
 			this.$router.push({ path: `/heoboi/videos/${row._id}`})
         },
-        onButtonClick() {
+        onEditButtonClick(row) {
+			this.$router.push({ path: `/heoboi/videos/${row._id}`})
+        },
+        onDeleteButtonClick() {
             alert("Hello")
         }
     },

@@ -58,7 +58,7 @@
             <div class="col-md-4 ">
                 <div class="card">
                     <video 
-                        id="video-drag" 
+                        id="video-thumbail" 
                         controls
                         v-bind:src="`http://localhost:8000/v1/videos/stream/${thumbnailVideoUrl}`" >
                     </video>
@@ -143,7 +143,7 @@ export default {
                     title: this.title, 
                     description: this.description
                 };
-                const { data } = await VideoRepository.update(updateVideoInfo);
+                const { data } = await VideoRepository.updateVideo(updateVideoInfo);
                 const dataObject = convertJSONToObject(data)
                 if (!dataObject.error) {
                     this.isLoading = false;
