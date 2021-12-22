@@ -1,119 +1,115 @@
-.list-comments{
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 360px;
+.list-comments {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 18rem;
 }
-.post-button{
-    margin-left: 15px;
-    margin-right: 15px;
-    border-radius: 15px;
-    color: #F14B4B;
-    border: 1px solid #F14B4B;
-    margin: auto;
+.post-button {
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 15px;
+  color: #f14b4b;
+  border: 1px solid #f14b4b;
+  margin: auto;
 }
-.post-button:hover{
-    color: white;
-    border: 1px solid transparent;
-    background-color: #F14B4B;
+.post-button:hover {
+  color: white;
+  border: 1px solid transparent;
+  background-color: #f14b4b;
 }
-.post-button:active{
-    color: white;
-    border: 1px solid transparent;
-    background-color: #F14B4B;
+.post-button:active {
+  color: white;
+  border: 1px solid transparent;
+  background-color: #f14b4b;
 }
 
 /* .comment-bar .icon {
     
 } */
 
-
-.tag-people-component{
-    border-radius: 9px !important;
-    /* padding-top: 20px;
+.tag-people-component {
+  border-radius: 9px !important;
+  /* padding-top: 20px;
     padding-bottom: 20px; */
-    
-    background-color: white;
-    box-shadow:
-        0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-        0 12.5px 10px rgba(0, 0, 0, 0.06),
-        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-        0 100px 80px rgba(0, 0, 0, 0.12)
-        ;
-    position: absolute;
-    left: 20px;
-    bottom: 50px;
-    width: 300px;
-    height: 165px;
-    overflow: scroll;    
+
+  background-color: white;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  position: absolute;
+  left: 20px;
+  bottom: 50px;
+  width: 300px;
+  height: 165px;
+  overflow: scroll;
 }
 
-
-
-.list-users{    
-    display: flex;
-    flex-direction: column !important; 
-    /* align-items: flex-start; */
+.list-users {
+  display: flex;
+  flex-direction: column !important;
+  /* align-items: flex-start; */
 }
-.list-users .d-flex{
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 25px;
-    padding-right: 25px;
+.list-users .d-flex {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
-.list-users .d-flex:hover{
-    background-color: #E3E4E5;
-    cursor: pointer;
+.list-users .d-flex:hover {
+  background-color: #e3e4e5;
+  cursor: pointer;
 }
 .list-users .d-flex img {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 .user-selected {
-    background-color: #F3F3F3;
+  background-color: #f3f3f3;
 }
 .icon-button {
-    cursor: pointer;
-    background-color: white;
-    border-radius:50%;
-    border: none;
-    /* margin-right: 10px; */
-    width: 40px !important;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  border: none;
+  /* margin-right: 10px; */
+  width: 40px !important;
 }
 .icon-button:hover {
-    background-color: #E4E6E9;
+  background-color: #e4e6e9;
 }
 /* SCROLL BAR */
 /* total width */
 .list-comments {
-    word-break: break-all;
+  word-break: break-all;
 }
-.list-comments::-webkit-scrollbar, .tag-people-component::-webkit-scrollbar {
-    background-color: #fff;
-    width: 16px;
+.list-comments::-webkit-scrollbar,
+.tag-people-component::-webkit-scrollbar {
+  background-color: #fff;
+  width: 16px;
 }
 
 /* background of the scrollbar except button or resizer */
-.list-comments::-webkit-scrollbar-track, .tag-people-component::-webkit-scrollbar-track {
-    background-color: #fff;
+.list-comments::-webkit-scrollbar-track,
+.tag-people-component::-webkit-scrollbar-track {
+  background-color: #fff;
 }
 
 /* scrollbar itself */
-.list-comments::-webkit-scrollbar-thumb, .tag-people-component::-webkit-scrollbar-thumb {
-    background-color: #babac0;
-    border-radius: 16px;
-    border: 4px solid #fff;
+.list-comments::-webkit-scrollbar-thumb,
+.tag-people-component::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 16px;
+  border: 4px solid #fff;
 }
 
 /* set button(top and bottom of the scrollbar) */
-.list-comments::-webkit-scrollbar-button, .tag-people-component::-webkit-scrollbar-button  {
-    display:none;
+.list-comments::-webkit-scrollbar-button,
+.tag-people-component::-webkit-scrollbar-button {
+  display: none;
 }
 
-
 .filters::-webkit-scrollbar {
-    background-color: #fff;
-    width: 16px;
+  background-color: #fff;
+  width: 16px;
 }

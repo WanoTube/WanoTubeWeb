@@ -1,13 +1,16 @@
 <template>
-    <div class="row comment-view">
+    <div class="row comment-view h-100">
         <div class="col-md-6 order-2 order-md-1 left-video">
             <router-link to="/" class="d-none d-sm-block">
-                 <span class="fa fa-times fa-2x exit-button"></span>
+                 <span class="fa fa-times fa-2x exit-button" style="z-index: 9999"></span>
             </router-link>
-            <LazyVideo  
-                class="w-100"
-                :src="videoUrl" :poster="defaultPoster"/>
-            <!-- <img src="../assets/images/sample/Image_2.png" class="w-100"> -->
+            <div class="d-flex justify-content-center text-center" style="height: 100%">
+                <video 
+                class="col text-center"
+                    controls
+                    v-bind:src="`${videoUrl}`" >
+                </video>
+            </div>
             <div class="d-sm-none container">
                 <CommentSection></CommentSection>
                 <br>

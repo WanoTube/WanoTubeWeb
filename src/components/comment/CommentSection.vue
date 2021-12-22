@@ -18,10 +18,11 @@
                     <button width="20px" height="20px" class="icon-button" @click="showSuggestions">
                         <i class="fa fa-at"></i>
                     </button>
-                    <form class="d-flex w-100" style="flex: 1" @submit="onFormSubmit">
+                    <form class="d-flex w-100" style="flex: 1; margin: 10px" @submit="onFormSubmit">
                         <!-- <img src="../../assets/images/Search-Icon.svg" class="icon" width="20px" height="20px"> -->
                         <div class="d-flex form-control input-container comment-bar">
                             <input 
+                            
                              @input="onCommentChange" 
                                 ref="commentInput"
                                 v-model="currentComment" 
@@ -38,7 +39,12 @@
                     </form>
                 </div>
                 <div class="col-2">
-                    <span id="post-button" class=" row align-items-center post-button h-100 text-center" style="cursor:pointer"  @click="postComment">
+                    <span 
+                        id="post-button" 
+                        class=" row align-items-center post-button h-100 text-center" 
+                        style="cursor:pointer"  
+                        @click="postComment"
+                    >
                             <b class="col">Post</b>
                         </span>
                 </div>
@@ -57,8 +63,6 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
 
         </div>
     </div>
