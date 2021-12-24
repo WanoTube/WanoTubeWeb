@@ -6,12 +6,12 @@ function get() {
     return Repository.get(`${resource}`);
 }
 
-function getAllVideoInfosWithUserId(authorId) {
-    return Repository.get(`${resource}/users/${authorId}`);
+function getAllVideoInfosWithUserId(author_id) {
+    return Repository.get(`${resource}/users/${author_id}`);
 }
 
-function getVideoById(videoId) {
-    return Repository.get(`${resource}/${videoId}`);
+function getVideoById(video_id) {
+    return Repository.get(`${resource}/${video_id}`);
 }
 
 function uploadVideo (payload) {

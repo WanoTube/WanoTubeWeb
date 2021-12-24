@@ -98,7 +98,7 @@ export default {
             title: '',
             description: '',
             thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
-            videoId: this.$route.params.id,
+            video_id: this.$route.params.id,
             activeButton: false,
             changeInputCount: 0,
             snackbar: false,
@@ -108,7 +108,7 @@ export default {
     },
     methods: {
         async getVideo() {
-            const { data } = await VideoRepository.getVideoById(this.videoId);
+            const { data } = await VideoRepository.getVideoById(this.video_id);
             if (data) {
                 const dataObject = convertJSONToObject(data);
                 if (!dataObject.error) {

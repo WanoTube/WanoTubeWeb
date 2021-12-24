@@ -23,7 +23,7 @@
                                 <div class="col-md container">
                                 <video 
                                     class="video-mask"
-                                    v-bind:src="`http://localhost:8000/v1/videos/stream/${deleteDialog.videoUrl}`" >
+                                    v-bind:src="`http://localhost:8000/v1/videos/stream/${deleteDialog.video.url}`" >
                                 </video>
                                 </div>
                                 <div class="col-md container align-middle ">
@@ -75,7 +75,7 @@ export default {
     methods: {
         async deleteVideo() {
             const deleteInfo = { 
-                url: this.deleteDialog.videoUrl, 
+                url: this.deleteDialog.video.url, 
                 id: this.deleteDialog.video._id
             };
             const { data } = await VideoRepository.deleteVideo(deleteInfo);
@@ -104,10 +104,7 @@ export default {
     background-color: #f1f1f1;
     border: 1px solid transparent;
 }
-.video-mask{
-    border-radius: 0.25rem; 
-    overflow: hidden; 
-}
+
 .text-grey {
     color: #606060;
 }
@@ -120,5 +117,9 @@ export default {
 <style>
 .v-input--selection-controls .v-input__slot > .v-label{
     margin: 0 !important;
+}
+.video-mask{
+    border-radius: 0.25rem; 
+    overflow: hidden; 
 }
 </style>

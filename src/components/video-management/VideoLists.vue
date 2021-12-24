@@ -1,14 +1,15 @@
 <template>
-    <div>
+    <div class="container-fluid">
         <NavBar></NavBar>
         <br><br>
         <div class="row">
             <div class="col-12">
                 <br>
+                
+                <br>
                 <div class="container">
                     <h3>Video content</h3>
                 </div>
-                <br>
                 <v-data-table
                     v-model="selected"
                     :headers="headers"
@@ -20,26 +21,35 @@
                 <!-- @click:row="handleRowClick" -->
 
                     <template v-slot:item.title="{ item }">
-                        <div class="row">
-                            <div class="">
-                                <video v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`" style="height: 80px"/>
-                            </div>
-                            <div class=" d-flex justify-content-center align-items-center" style="padding-left: 50px">
-                                <p>{{item.title}}</p>
-      
+                        <div class="card" style="width: 300px; border: 0">
+                            <div class="row no-gutters">
+                                <div class="col-sm-5">
+                                    <video
+                                        class="card-img h-100 align-items-center video-mask" 
+                                        v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`" 
+                                    />
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="card-body h-100 align-items-center">
+                                        <p class="card-title">{{item.title}}</p>
+                                        <p class="card-text text-secondary" style="margin-top: -10px">{{item.description}}</p>
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>
                     <template v-slot:item.created_at="{ item }">
-                        <p>{{ new Date(item.created_at).toLocaleString() }}</p>
+                        {{ new Date(item.created_at).toLocaleString() }}
+                    </template>
+                    <template v-slot:item.visibility="{ item }">
+                        <span v-if="item.visibility == 0">Public</span>
+                        <span v-else-if="item.visibility == 1">Private</span>
+                        <span v-else-if="item.visibility == 2">Followers</span>
                     </template>
                     <template v-slot:item.actions="{ item }">
-                        <v-btn class="mx-2" fab dark small color="blue" @click="onEditButtonClick(item)">
-                            <v-icon>mdi-pencil</v-icon>
-                        </v-btn>
-                        <v-btn class="mx-2" fab dark small color="blue" @click="onDeleteButtonClick(item)">
-                            <v-icon>mdi-delete</v-icon>
-                        </v-btn>
+                        <v-icon class="mx-2" @click="onEditButtonClick(item)">mdi-pencil</v-icon>
+                        <v-icon class="mx-2" @click="onDeleteButtonClick(item)">mdi-delete</v-icon>
                     </template>
                 </v-data-table>
             </div>
@@ -75,30 +85,30 @@ export default {
               text: 'Description', 
               value: 'description' 
           },
-        //   { 
-        //       text: 'Visibility', 
-        //       value: 'visibiligy',
-        //       sortable: false
-        //   },
+          { 
+              text: 'Visibility', 
+              value: 'visibility',
+              sortable: false
+          },
           { 
               text: 'Date', 
               value: 'created_at' 
           },
-          { 
-              text: 'Restriction', 
-              value: '' 
-          },
+        //   { 
+        //       text: 'Restriction', 
+        //       value: '' 
+        //   },
           { 
               text: 'Views', 
-              value: 'views',
+              value: 'total_views',
           },
           { 
               text: 'Comments', 
-              value: 'comments'
+              value: 'total_comments'
           },
           { 
               text: 'Likes', 
-              value: 'likes1'
+              value: 'total_likes'
           },
           { 
               text: 'Actions', 
@@ -115,8 +125,8 @@ export default {
     },
     methods: {
         async getAllVideos () {
-            const authorId = "617a508f7e3e601cad80531d";
-            const { data } = await VideoRepository.getAllVideoInfosWithUserId(authorId);
+            const author_id = "617a508f7e3e601cad80531d";
+            const { data } = await VideoRepository.getAllVideoInfosWithUserId(author_id);
             if (data) {
                 const dataObject = convertJSONToObject(data);
                 if (!dataObject.error) {
