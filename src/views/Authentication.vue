@@ -85,6 +85,7 @@ export default {
 			const dataObject = convertJSONToObject(data)
 			if (!dataObject.error) {
 				localStorage.setItem( 'token', JSON.stringify(data) );
+				localStorage.setItem( 'email', JSON.stringify(this.email) );
 				this.isLoading = false;
 				this.$router.push({ path: 'home' })
 			} else {

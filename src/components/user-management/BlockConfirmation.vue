@@ -8,27 +8,11 @@
                 <div class="container">
                     <v-card class="container">
                         <v-card-text>
-                            <div class="text-h5 text-black"><h5><b>Permanently delete this video?</b></h5></div>
+                            <div class="text-h5 text-black"><h5><b>Permanently ban this user?</b></h5></div>
                         </v-card-text>
-                        <div class="card">
-                            <div class="row card-body">
-                                <div class="col-md container">
-                                <video 
-                                    class="video-mask"
-                                    v-bind:src="`http://localhost:8000/v1/videos/stream/${deleteDialog.video.url}`" >
-                                </video>
-                                </div>
-                                <div class="col-md container align-middle ">
-                                    <p class="bottom-buffer">{{this.deleteDialog.video.title}}</p>
-                                    <p class="text-grey bottom-buffer">Uploaded {{this.deleteDialog.video.created_at}} </p>
-                                    <p class="text-grey">0 views</p>
-                                </div>
-                            </div>
-                            
-                        </div>
                         <v-checkbox
                             v-model="confirmCheckbox"
-                            :label="`I understand that deleting is permanent, and can't be undone`"
+                            :label="`I understand that banning is permanent, and can't be undone`"
                         ></v-checkbox>
 
                         <v-card-actions class="justify-end">
@@ -41,7 +25,7 @@
                                 text
                                 :disabled="!confirmCheckbox"
                                 @click="deleteVideo"
-                            >DELETE VIDEO</v-btn>
+                            >BAN USER</v-btn>
                         </v-card-actions>
                     </v-card>
                 </div>

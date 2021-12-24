@@ -6,8 +6,9 @@ import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
 import UploadVideo from './views/UploadVideo.vue'
 import Upload from './components/upload-video/Upload.vue'
-import VideoManagement from './components/video-management/VideoLists.vue'
+import VideoManagement from './components/video-management/ListVideos.vue'
 import VideoDetails from './components/video-management/VideoDetails.vue'
+import UserManagement from './components/user-management/ListUsers.vue'
 
 import Comment from './views/Comment.vue'
 import Search from './components/discover/Search.vue'
@@ -45,12 +46,13 @@ export const router = new VueRouter({
                 {path: '/editing/browsefile', component: BrowseFile}
             ]
         },
-        {path: '/:username/videos/', component: VideoManagement },
-        {path: '/:username/videos/:id', component: VideoDetails },
-        {path: '/login/', component: Authentication },
-        {path: '/signup/', component: Register },
-        {path: '/comment/:id', component: Comment},
-        {path: '/upload', component: Upload},
+        { path: '/users/', component: UserManagement },
+        { path: '/:username/videos/', component: VideoManagement },
+        { path: '/:username/videos/:id', component: VideoDetails },
+        { path: '/login/', component: Authentication },
+        { path: '/signup/', component: Register },
+        { path: '/comment/:id', component: Comment},
+        { path: '/upload', component: Upload},
         // {path: '/browsefile', component: BrowseFile}
     ]
 })

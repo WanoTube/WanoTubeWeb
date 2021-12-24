@@ -3,11 +3,17 @@ import Repository from "./Repository";
 const resource = "/users";
 
 function get() {
-    return Repository.get(`${resource}`);
+    let header = JSON.parse(localStorage.getItem('token'));
+    const config = {
+        headers: {
+            "auth-token": header
+        }
+    }
+    return Repository.get(`${resource}`, config);
 }
 
 function getUser(userId) {
-    return Repository.get(`${resource}/${userId}`);
+    return Repository.get(`${resource}/${userId}`, );
 }
 
 function createUser(payload) {

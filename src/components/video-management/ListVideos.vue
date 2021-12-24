@@ -29,8 +29,6 @@
                     show-select
                     class="elevation-1"
                 >
-                <!-- @click:row="handleRowClick" -->
-
                     <template v-slot:item.title="{ item }">
                         <div class="card" style="width: 300px; border: 0">
                             <div class="row no-gutters">
@@ -70,7 +68,7 @@
 </template>
 
 <script>
-import NavBar from '../../components/common/NavBar.vue'
+import NavBar from '../common/NavBar.vue'
 import DeleteConfirmation from './DeleteConfirmation.vue'
 
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
@@ -146,10 +144,6 @@ export default {
                 return null;
             } 
             return null;
-            // else {
-            //     alert("Please input all the require fields")
-            //     return null;
-            // }
         },
         handleRowClick(row) {
             console.log(row)
