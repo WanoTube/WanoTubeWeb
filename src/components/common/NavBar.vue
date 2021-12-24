@@ -42,6 +42,7 @@
               <a class="text-muted" href="/heoboi/videos">
                   <img src="../../assets/images/Account.png" width="41px" height="41px">
               </a>
+              <!-- <v-icon class="mx-2">mdi-login-variant</v-icon> -->
             </div>
            
           </div>

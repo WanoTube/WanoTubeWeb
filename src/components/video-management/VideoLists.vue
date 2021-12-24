@@ -5,10 +5,21 @@
         <div class="row">
             <div class="col-12">
                 <br>
-                
                 <br>
-                <div class="container">
-                    <h3>Video content</h3>
+                <div class="row ">
+                    <div class="col padding-left-right-15" style="margin-bottom: 10px">
+                        <h1><b>Video content</b></h1>
+                    </div>
+                    <div class="col container row justify-content-end" >
+                        <v-btn
+                            class="ma-2 "
+                            outlined
+                            color="black"
+                            >
+                            <v-icon left>mdi-plus</v-icon>
+                            Upload video
+                        </v-btn>
+                    </div>
                 </div>
                 <v-data-table
                     v-model="selected"
