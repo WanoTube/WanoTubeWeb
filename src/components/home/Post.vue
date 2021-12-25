@@ -4,7 +4,7 @@
             <div class="card-header container bg-white non-border">
                 <PostCaption isPost="true" avatar_img="Liuyu.png" name="INTO1–刘宇" username="@into1_liuyu_" caption="Relatively cool" bg_music="Crazy Frog"></PostCaption>
             </div>
-            <div class="card-body video-control-feed">
+            <div class="card-body video-control-feed" style="padding-top: 0">
                 <div @click="linkToCommentView">
                     <LazyVideo :src="src" :poster="defaultPoster" />
                 </div>

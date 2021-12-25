@@ -20,7 +20,8 @@
                                 </div>
                                 <div class="col-md container align-middle ">
                                     <p class="bottom-buffer">{{this.deleteDialog.video.title}}</p>
-                                    <p class="text-grey bottom-buffer">Uploaded {{this.deleteDialog.video.created_at}} </p>
+                                    
+                                    <p class="text-grey bottom-buffer">Uploaded {{new Date(this.deleteDialog.video.created_at).toLocaleString()}} </p>
                                     <p class="text-grey">0 views</p>
                                 </div>
                             </div>

@@ -14,19 +14,6 @@
         </div>
       </div>
     </div> 
-    <v-btn
-    color="primary"
-    @click="onContinue"
-    >
-      Continue
-    </v-btn>
-
-    <v-btn 
-    text
-    @click="onReturn"
-    >
-        Cancel
-    </v-btn>
   </div>
   
 </template>

@@ -3,6 +3,17 @@
         <NavBar></NavBar>
         <br> <br> <br>
         <div class="container">
+            <v-btn
+                class="ma-2 "
+                outlined
+                color="black"
+                >
+                <v-icon left>
+                    mdi-arrow-left
+                </v-icon>
+                Back to videos
+            </v-btn>
+            <br><br>
             <v-stepper non-linear v-model="e1">
                 <v-stepper-header>
                     <v-stepper-step
@@ -35,7 +46,7 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
-                        <UploadStepOne @videoWasUpdated="video = $event" @onContinue="e1 = $event"/>
+                        <UploadStepOne/>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">

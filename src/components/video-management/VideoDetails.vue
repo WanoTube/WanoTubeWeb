@@ -13,6 +13,7 @@
             </v-icon>
                 Back to videos
             </v-btn>
+            <br><br>
         <div class="row ">
            
             <div class="col padding-left-right-15">
@@ -36,6 +37,8 @@
             </div>
         </div>
         <div style="height: 10px"></div>
+        <br>
+
         <div class="row">
             <div class="col-md-8">
                 <div>

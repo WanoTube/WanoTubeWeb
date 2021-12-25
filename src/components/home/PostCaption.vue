@@ -5,7 +5,7 @@
         </div>
         <div>
             <div class="row">
-                <div class="col-11">
+                <div class="col-11" style="padding-bottom: 0">
                     <b>{{name}}</b>  <span style="color: #c4c4c4">{{username}}</span> 
                     <br>
                     {{caption}}
