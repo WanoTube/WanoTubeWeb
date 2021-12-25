@@ -63,7 +63,7 @@
                     <video 
                         id="video-thumbail" 
                         controls
-                        v-bind:src="`http://localhost:8000/v1/videos/stream/${thumbnailVideoUrl}`" >
+                        v-bind:src="thumbnailVideoUrl" >
                     </video>
                     <div class="card-body">
                         <small class="card-text text-secondary">Video link </small>
@@ -100,7 +100,7 @@ export default {
             video: {},
             title: '',
             description: '',
-            thumbnailVideoUrl: 'into1_617a508f7e3e601cad80531d_1639816025.webm',
+            thumbnailVideoUrl: '',
             video_id: this.$route.params.id,
             activeButton: false,
             changeInputCount: 0,
@@ -171,7 +171,7 @@ export default {
     watch: {
         video: function (val) {
             if (val) {
-                this.thumbnailVideoUrl = val.url;
+                this.thumbnailVideoUrl = "http://localhost:8000/v1/videos/stream/" + val.url;
             }
         },
         title: function(val) {

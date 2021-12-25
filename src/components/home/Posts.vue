@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex" style="flex-direction: column">
-        <div v-for="video in videos" v-bind:key="video.tittle" >
+    <div class="row" style="padding: 30px">
+        <div v-for="video in videos" v-bind:key="video.tittle" class="col-md-4" >
             <Post :video="video"></Post>
         </div>
     </div>

@@ -1,16 +1,13 @@
 <template>
   <div class="">
      <NavBar ref="navbar"></NavBar>
-     <div class="container">
-         <br>
-         <br>
-         <br>
-         <br>
+     <div class="bg-secondary-color">
+         <div style="height: 66px"></div>
          <div class="d-flex">
-           <div class="">
+           <div class="bg-white">
               <SideBar></SideBar>
             </div>
-            <div class="">
+            <div class=" ">
                <router-view></router-view>
             </div>
          </div>
@@ -51,4 +48,7 @@ export default {
 </script>
 
 <style>
+.bg-secondary-color {
+   background-color: #f9f9f9 !important;
+}
 </style>

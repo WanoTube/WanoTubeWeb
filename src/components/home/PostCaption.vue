@@ -5,21 +5,12 @@
         </div>
         <div>
             <div class="row">
-                <div class="col-11" style="padding-bottom: 0">
+                <div class="col" style="padding-bottom: 0">
                     <b>{{name}}</b>  <span style="color: #c4c4c4">{{username}}</span> 
                     <br>
                     {{caption}}
                     <br>
-                    
-                    <span v-if="bg_music" class="fa fa-music m-r-10"></span> <b>{{bg_music}}</b>
-                    
                 </div>
-                <div class="col-1">
-
-                </div>
-                <button class="btn btn-danger btn-follow" >
-                    Follow
-                </button>
             </div>
         </div>
     </div>

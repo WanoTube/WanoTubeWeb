@@ -1,5 +1,5 @@
 <template>
-    <div class="side-bar-home ">
+    <div class="side-bar-home" style="padding-left: 20px">
         <div class="filter-buttons container">
             <div class="filter-button-component d-none d-lg-block">
                 <img src="../../assets/images/Home-Icon.svg" class="m-r-15">
