@@ -22,7 +22,7 @@ export default {
     },
     created: async function() {
 
-        const { data } = await VideoRepository.get();
+        const { data } = await VideoRepository.getAllPublicVideoInfos();
         const dataObject = convertJSONToObject(data)
         if (!dataObject.error) {
             for (let index in dataObject) {

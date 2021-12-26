@@ -6,6 +6,10 @@ function get() {
     return Repository.get(`${resource}`);
 }
 
+function getAllPublicVideoInfos() {
+    return Repository.get(`${resource}/public`);
+}
+
 function getAllVideoInfosWithUserId(author_id) {
     return Repository.get(`${resource}/users/${author_id}`);
 }
@@ -28,6 +32,7 @@ function deleteVideo (payload) {
 
 export default {
     get,
+    getAllPublicVideoInfos,
     getAllVideoInfosWithUserId,
     getVideoById,
     uploadVideo,
