@@ -76,17 +76,35 @@ export default {
 		async submit() {
 			this.isLoading = true;
 			const loginInfo = { email: this.email, password: this.password };
-			const { data } = await UsersRepository.login(loginInfo);
-			const dataObject = convertJSONToObject(data)
-			if (!dataObject.error) {
-				localStorage.setItem( 'token', JSON.stringify(data) );
-				localStorage.setItem( 'email', JSON.stringify(this.email) );
-				this.isLoading = false;
-				this.$router.push({ path: 'home' })
-			} else {
-				// TO-DO: Validation
-				const errorString = JSON.stringify(dataObject.error)
-				console.log(errorString)
+			try {
+				const { data } = await UsersRepository.login(loginInfo);
+				const dataObject = convertJSONToObject(data)
+				console.log(dataObject)
+				if (!dataObject.error) {
+					const user = dataObject.user;
+					const isAdmin = user.is_admin;
+					localStorage.setItem( 'token', JSON.stringify(dataObject.token) );
+					localStorage.setItem( 'user', JSON.stringify(user) );
+					localStorage.setItem( 'is_admin', JSON.stringify(isAdmin) );
+					this.isLoading = false;
+					if (localStorage.getItem('token') != null) {
+						if (this.$route.params.nextUrl != null) {
+							this.$router.push(this.$route.params.nextUrl)
+						} else {
+							if (isAdmin == 1) {
+								this.$router.push('users')
+							} else {
+								this.$router.push('home')
+							}
+						}
+					}
+				} else {
+					// TO-DO: Validation
+					const errorString = JSON.stringify(dataObject.error)
+					console.log(errorString)
+				}
+			} catch (error) {
+				console.log(error)
 			}
 		},
 		register() {

@@ -148,16 +148,36 @@
 					email: this.email, 
 					password: this.password 
 				};
-				const { data } = await UsersRepository.signup(signUpInfo);
-				console.log(data);
-				const dataObject = convertJSONToObject(data)
-				if (!dataObject.error) {
-					this.isLoading = false;
-					this.info = data;
-					this.$router.push({ path: 'home' })
-				} else {
-					const errorString = JSON.stringify(dataObject.error)
-					console.log(errorString)
+				try {
+					const { data } = await UsersRepository.signup(signUpInfo);
+					console.log(data);
+					const dataObject = convertJSONToObject(data)
+					if (!dataObject.error) {
+						const user = dataObject.user;
+						const isAdmin = user.is_admin;
+						localStorage.setItem( 'token', JSON.stringify(dataObject.token) );
+						localStorage.setItem( 'user', JSON.stringify(user) );
+						localStorage.setItem( 'is_admin', JSON.stringify(isAdmin) );
+						this.isLoading = false;
+						this.info = data;
+						if (localStorage.getItem('token') != null) {
+							if (this.$route.params.nextUrl != null) {
+								this.$router.push(this.$route.params.nextUrl)
+							} else {
+								if (isAdmin == 1) {
+									this.$router.push('users')
+								} else {
+									this.$router.push('home')
+								}
+							}
+						}
+						// this.$router.push({ path: 'home' })
+					} else {
+						const errorString = JSON.stringify(dataObject.error)
+						console.log(errorString)
+					}
+				} catch (error) {
+					console.log(error)
 				}
 			},
 			login() {

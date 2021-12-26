@@ -30,13 +30,12 @@ export default {
        }
     },
     methods:{
-       getSuggestedAccounts(){
-           this.suggestedAccounts = this.$refs.navbar.suggestedAccounts
-       },
-        getAllUsers()
-        {
-            this.allUsers = this.$refs.navbar.allUsers
-        }   
+      getSuggestedAccounts() {
+         this.suggestedAccounts = this.$refs.navbar.suggestedAccounts
+      },
+      getAllUsers() {
+         this.allUsers = this.$refs.navbar.allUsers
+      }   
     },
     mounted(){
          this.$nextTick(() => {

@@ -29,11 +29,26 @@ export const router = new VueRouter({
             component: Home,
             redirect: '/home',
             children: [
-                {path: '/search/:id', component: Search },
-                {path: '/search', component: Search },
-                {path: '/home', component: Posts },
-                {path: '/trending/:id', component: Trending},
-                {path: '/trending', component: Trending}
+                {
+                    path: '/search/:id', 
+                    component: Search 
+                },
+                {
+                    path: '/search', 
+                    component: Search 
+                },
+                {
+                    path: '/home', 
+                    component: Posts 
+                },
+                {
+                    path: '/trending/:id', 
+                    component: Trending
+                },
+                {
+                    path: '/trending', 
+                    component: Trending
+                }
             ]
         },
         {
@@ -41,19 +56,105 @@ export const router = new VueRouter({
             component: Editing,
             redirect: '/editing/mymedia',
             children: [
-                {path: '/editing/filter', component: Filter },
-                {path: '/editing/mymedia', component: MyMedia},
-                {path: '/editing/browsefile', component: BrowseFile}
+                {
+                    path: '/editing/filter', 
+                    component: Filter 
+                },
+                {
+                    path: '/editing/mymedia', 
+                    component: MyMedia
+                },
+                {
+                    path: '/editing/browsefile', 
+                    component: BrowseFile
+                }
             ]
+        }, 
+        { 
+            path: '/users/', 
+            component: UserManagement,
+            meta: {
+                requiresAuth: true,
+                isAdmin: true
+            }
         },
-        { path: '/users/', component: UserManagement },
-        { path: '/:username/videos/', component: VideoManagement },
-        { path: '/:username/videos/:id', component: VideoDetails },
-        { path: '/login/', component: Authentication },
-        { path: '/signup/', component: Register },
-        { path: '/comment/:id', component: Comment},
-        { path: '/upload', component: Upload},
-        { path: "*", component: PageNotFound }
+        { 
+            path: '/:username/videos/', 
+            component: VideoManagement,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        { 
+            path: '/:username/videos/:id', 
+            component: VideoDetails,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        { 
+            path: '/login/', 
+            component: Authentication,
+            meta: {
+                guest: true
+            }
+        },
+        { 
+            path: '/signup/', 
+            component: Register,
+            meta: {
+                guest: true
+            }
+        },
+        { 
+            path: '/comment/:id', 
+            component: Comment,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        { 
+            path: '/upload', 
+            component: Upload,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        { 
+            path: "*", 
+            component: PageNotFound 
+        }
         // {path: '/browsefile', component: BrowseFile}
     ]
+})
+
+// Meta Handling
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem('token') == null) {
+      next({
+        path: '/login',
+        params: { nextUrl: to.fullPath }
+      })
+    } else {
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (to.matched.some(record => record.meta.isAdmin)) {
+        if (user.is_admin == 1) {
+          next()
+        } else {
+          next({ path: '/login' })
+        }
+      } else {
+        next()
+      }
+    }
+  } else if (to.matched.some(record => record.meta.guest)) {
+    if (localStorage.getItem('token') == null) {
+      next()
+    } else {
+      next({ path: '/home' })
+    }
+  } else {
+    next()
+  }
 })

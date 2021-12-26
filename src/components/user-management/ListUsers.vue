@@ -104,7 +104,11 @@ export default {
     },
     async mounted() {
         //TO-DO: Check if videos is ull
-        this.videos = await this.getAllVideos();
+        try {
+            this.videos = await this.getAllVideos();
+        } catch (error) {
+            console.log(error)
+        }
     },
 }
 </script>
