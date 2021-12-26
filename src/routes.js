@@ -17,7 +17,7 @@ import Trending from './components/discover/Trending.vue'
 import Filter from './components/video-editing/filters/Filters.vue'
 import MyMedia from './components/video-editing/my-media/MyMedia.vue'
 import BrowseFile from './components/video-editing/browse-files/BrowseFile.vue'
-
+import PageNotFound from './views/PageNotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -53,6 +53,7 @@ export const router = new VueRouter({
         { path: '/signup/', component: Register },
         { path: '/comment/:id', component: Comment},
         { path: '/upload', component: Upload},
+        { path: "*", component: PageNotFound }
         // {path: '/browsefile', component: BrowseFile}
     ]
 })
