@@ -14,44 +14,95 @@
 						<div class="login-wrap p-4 p-lg-5">
 							<div class="d-flex">
 								<div class="w-100">
-									<h3 class="mb-4">Sign Up</h3>
+									<h3 class="mb-4 text-center">Sign Up</h3>
 								</div>
 							</div>
 							<form @submit.prevent="submit" class="signin-form">
-								<div class="form-group mb-3">
-									<label class="label" for="name">First Name</label>
-									<input v-model="first_name" type="text" class="form-control" placeholder="First Name" required>
+								<div class="d-flex">
+									<v-icon style="margin-right: 10px">mdi-account</v-icon>
+									<v-text-field
+										v-model="username" 
+										label="Username"
+										placeholder="Placeholder"
+									>
+									</v-text-field>
 								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="lastName">Last Name</label>
-									<input v-model="last_name" type="text" class="form-control" placeholder="Last Name" required>
+								<div class="">
+									<v-menu
+										ref="menu"
+										v-model="menu"
+										:close-on-content-click="false"
+										transition="scale-transition"
+										offset-y
+										min-width="auto"
+										>
+											<template v-slot:activator="{ on, attrs }">
+												<v-text-field
+												v-model="date"
+												label="Date of Birth"
+												prepend-icon="mdi-calendar"
+												readonly
+												v-bind="attrs"
+												v-on="on"
+												></v-text-field>
+											</template>
+										<v-date-picker
+											v-model="date"
+											color="pink"
+											:active-picker.sync="activePicker"
+											:max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+											min="1950-01-01"
+											@change="save"
+										></v-date-picker>
+									</v-menu>
 								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="username">Username</label>
-									<input v-model="username" type="text" class="form-control" placeholder="Username" required>
+								<div class="d-flex">
+									<v-icon style="margin-right: 10px">mdi-email</v-icon>
+									<v-text-field
+										v-model="email" 
+										label="Email"
+										placeholder="Placeholder"
+									></v-text-field>
 								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="email">Email</label>
-									<input v-model="email" type="email" class="form-control" placeholder="Email" required>
-								</div>
-								<div class="form-group mb-3">
-									<label class="label" for="password">Password</label>
-								<input v-model="password" type="password" class="form-control" placeholder="Password" required>
+								<div class="d-flex" style="margin-bottom: 20px">
+									<v-icon style="margin-right: 10px">mdi-lock</v-icon>
+									<v-text-field
+										v-model="password"
+										:append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+										:rules="[rules.required, rules.min]"
+										:type="show1 ? 'text' : 'password'"
+										name="input-10-1"
+										label="Password"
+										hint="At least 8 characters"
+										counter
+										@click:append="show1 = !show1"
+									></v-text-field>
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
 								</div>
-								<div class="form-group d-md-flex">
-									<div class="w-50 text-left">
-										<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-											<input type="checkbox" checked>
-											<span class="checkmark"></span>
-											</label>
-									</div>
-									<div class="w-50 text-md-right">
-										<a href="#">Forgot Password</a>
-									</div>
+								<div>
+									<v-checkbox
+										v-model="terms"
+										color="pink"
+									>
+									
+										<template v-slot:label>
+											<div>
+												Do you accept the
+												<a
+													href="#"
+												>terms</a>
+												and
+												<a
+													href="#"
+												>conditions?</a>
+											</div>
+										</template>
+									</v-checkbox>
 								</div>
+								
+								
 							</form>
 						</div>
 					</div>
@@ -74,24 +125,31 @@
 				info: [],
 				isLoading: false,
 				progress: 50,
-				first_name: "",
-				last_name: "",
 				username: "",
 				email: "",
-				password: ""
+				password: "",
+				activePicker: null,
+				date: null,
+				menu: false,
+				rules: {
+					required: value => !!value || 'Required.',
+					min: v => v.length >= 8 || 'Min 8 characters',
+					emailMatch: () => (`The email and password you entered don't match`),
+				},
+				show1: false,
+				terms: false
 			}
 		},
 		methods: {
 			async submit() {
 				this.isLoading = true;
 				const signUpInfo = { 
-					first_name: this.first_name, 
-					last_name: this.last_name, 
 					username: this.username,
 					email: this.email, 
 					password: this.password 
 				};
 				const { data } = await UsersRepository.signup(signUpInfo);
+				console.log(data);
 				const dataObject = convertJSONToObject(data)
 				if (!dataObject.error) {
 					this.isLoading = false;
@@ -104,7 +162,15 @@
 			},
 			login() {
 				this.$router.push({ path: 'login' })
-			}
-		}
+			},
+			save (date) {
+				this.$refs.menu.save(date)
+			},
+		},
+		watch: {
+			menu (val) {
+				val && setTimeout(() => (this.activePicker = 'YEAR'))
+			},
+		},
 	}
 </script>

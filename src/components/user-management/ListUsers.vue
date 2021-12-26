@@ -64,6 +64,10 @@ export default {
             value: 'birth_date',
           },
           {
+            text: 'Phone',
+            value: 'phone_number',
+          },
+          {
             text: 'Country',
             value: 'country',
           },
@@ -85,7 +89,6 @@ export default {
             const { data } = await UserRepository.get();
             if (data) {
                 const dataObject = convertJSONToObject(data);
-                console.log(dataObject)
                 if (!dataObject.error) {
                     return dataObject;
                 }
@@ -93,17 +96,10 @@ export default {
             } 
             return null;
         },
-        handleRowClick(row) {
-            console.log(row)
-			this.$router.push({ path: `/heoboi/videos/${row._id}`})
-        },
-        onEditButtonClick(row) {
-			this.$router.push({ path: `/heoboi/videos/${row._id}`})
-        },
         onDeleteButtonClick(row) {
-            // console.log(row)
-            this.deleteDialog.isOpened = true;
-            this.deleteDialog.video = row
+            console.log(row)
+            // this.deleteDialog.isOpened = true;
+            // this.deleteDialog.video = row
         }
     },
     async mounted() {
