@@ -7,6 +7,7 @@
                 class="ma-2 "
                 outlined
                 color="black"
+                @click="backToVideos"
                 >
                 <v-icon left>
                     mdi-arrow-left
@@ -46,7 +47,7 @@
 
                 <v-stepper-items>
                     <v-stepper-content step="1">
-                        <UploadStepOne/>
+                        <UploadStepOne @videoWasUpdated="video = $event" @onContinue="e1 = $event"/>
                     </v-stepper-content>
 
                     <v-stepper-content step="2">
@@ -85,6 +86,13 @@ export default {
         video: {},
         videoUploadResult: {}
       }
+    },
+    methods: {
+        backToVideos() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            const username = user.username;
+            this.$router.push({ path: `/${username}/videos` })
+        },
     },
     watch: {
         video(newVal) {

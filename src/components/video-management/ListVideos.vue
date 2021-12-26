@@ -15,6 +15,7 @@
                             class="ma-2 "
                             outlined
                             color="black"
+                            @click="uploadVideo"
                             >
                             <v-icon left>mdi-plus</v-icon>
                             Upload video
@@ -162,7 +163,10 @@ export default {
             // console.log(row)
             this.deleteDialog.isOpened = true;
             this.deleteDialog.video = row
-        }
+        },
+        uploadVideo() {
+            this.$router.push({ path: `/upload` })
+        },
     },
     async mounted() {
         //TO-DO: Check if videos is ull

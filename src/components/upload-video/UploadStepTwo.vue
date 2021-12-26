@@ -144,9 +144,13 @@ export default {
         async uploadVideo() {
             if (this.title && this.description && this.video) {
                 let formData = new FormData();
+                const user = JSON.parse(localStorage.getItem('user'));
+
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("video", this.video);
+                formData.append("author_id", user._id);
+
                 const { data } = await VideoRepository.uploadVideo(formData);
                 if (data) {
                     const dataObject = convertJSONToObject(data);

@@ -37,6 +37,7 @@ export default {
         let files = e.target.files;
         this.mulableVideo = files[0];
         this.$emit('videoWasUpdated', this.mulableVideo)
+        this.$emit('onContinue', 2)
       },
       onContinue() {
         this.$emit('onContinue', 2)
