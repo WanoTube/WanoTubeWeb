@@ -122,7 +122,9 @@ export default {
             return null;
         },
         backToVideos() {
-            this.$router.push({ path: '/heoboi/videos' })
+            const user = JSON.parse(localStorage.getItem('user'));
+            const username = user.username;
+            this.$router.push({ path: `/${username}/videos` })
         },
         resetInputFields() {
             this.title = this.video.title;

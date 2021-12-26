@@ -39,7 +39,7 @@
                   </defs>
                 </svg>
               </a>
-              <a class="text-muted" href="/heoboi/videos">
+              <a class="text-muted" @click="navigateToVideos">
                   <img src="../../assets/images/Account.png" width="41px" height="41px">
               </a>
               <!-- <v-icon class="mx-2">mdi-login-variant</v-icon> -->
@@ -54,8 +54,9 @@
 <script>
 import SearchBar from '../common/SearchBar.vue'
 export default {
-  data(){
-    return{
+  data() {
+    return {
+      currentUsername: '',
       allUsers:[
         {
                   id: "1",
@@ -198,6 +199,9 @@ export default {
       }
       else
         navbarButtons.style.display = "block"
+    },
+    navigateToVideos() {
+      this.$router.push('/' + this.currentUsername + '/videos')
     }
   },
   mounted(){
@@ -211,6 +215,9 @@ export default {
         navBarButtons.style.display = "none"
       }
     }
+  },
+  created() {
+    this.currentUsername = JSON.parse(localStorage.getItem('user')).username;
   }
 }
 </script>

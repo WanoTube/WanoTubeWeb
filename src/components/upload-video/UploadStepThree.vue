@@ -49,7 +49,9 @@ export default {
   },
   methods: {
     onContinue() {
-      this.$router.push({ path: `/heoboi/videos/` });
+        const user = JSON.parse(localStorage.getItem('user'));
+        const username = user.username;
+        this.$router.push({ path: `/${username}/videos/` });
     },
     onReturn() {
       this.$emit("onReturn", 2);

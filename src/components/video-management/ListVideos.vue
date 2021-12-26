@@ -129,28 +129,34 @@ export default {
         deleteDialog: {
             isOpened: false,
             video: {}
-        }
+        },
+        username : ''
       }
     },
     methods: {
         async getAllVideos () {
-            const author_id = "617a508f7e3e601cad80531d";
-            const { data } = await VideoRepository.getAllVideoInfosWithUserId(author_id);
-            if (data) {
-                const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
-                    return dataObject;
-                }
+            const user = JSON.parse(localStorage.getItem('user'));
+            const author_id = user._id;
+            const username = user.username;
+            this.username = username;
+            if (this.$route.params.username == username) {
+                const { data } = await VideoRepository.getAllVideoInfosWithUserId(author_id);
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    if (!dataObject.error) {
+                        return dataObject;
+                    }
+                    return null;
+                } 
                 return null;
-            } 
-            return null;
+            }
         },
         handleRowClick(row) {
             console.log(row)
-			this.$router.push({ path: `/heoboi/videos/${row._id}`})
+			this.$router.push({ path: `/${this.username}/videos/${row._id}`})
         },
         onEditButtonClick(row) {
-			this.$router.push({ path: `/heoboi/videos/${row._id}`})
+			this.$router.push({ path: `/${this.username}/videos/${row._id}`})
         },
         onDeleteButtonClick(row) {
             // console.log(row)
