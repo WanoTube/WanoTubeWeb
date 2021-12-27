@@ -16,8 +16,7 @@
               <span class="fa fa-bars d-md-none"></span>
             </button>
           </div>
-          <div class="col-md-4 d-flex  order-md-3 order-3 nav-bar-buttons-container">
-            
+          <div v-if="currentUsername" class="col-md-4 d-flex  order-md-3 order-3 nav-bar-buttons-container">
             <div id="nav-bar-buttons" class="nav-bar-buttons">
               <router-link to="/upload">
                 <svg width="39" height="31" viewBox="0 0 39 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,9 +41,16 @@
               <a class="text-muted" @click="navigateToVideos">
                   <img src="../../assets/images/Account.png" width="41px" height="41px">
               </a>
-              <!-- <v-icon class="mx-2">mdi-login-variant</v-icon> -->
             </div>
            
+          </div>
+          <div v-else class="col-md-4 d-flex  order-md-3 order-3 nav-bar-buttons-container ">
+            <button type="button" class="btn btn-primary" style="width: 100px; margin-right: 10px" @click="logIn">
+              <span style="font-weight: 500">Log In</span>
+            </button>
+            <button type="button" style="width: 100px" @click="signUp">
+              <span style="font-weight: 500">Sign Up</span>
+            </button>
           </div>
         </div>
     </div>
@@ -53,6 +59,7 @@
 <style src="../../assets/styles/navbar.css"></style>
 <script>
 import SearchBar from '../common/SearchBar.vue'
+// import Button from './Button.vue'
 export default {
   data() {
     return {
@@ -184,11 +191,11 @@ export default {
     }
   },
   components: {
-    SearchBar
+    SearchBar,
+    // Button
   },
   methods:{
     toggle: function (event) {
-      // alert("Hello")
       var navbarButtons = document.getElementById('nav-bar-buttons')
       if (window.innerWidth <= 768)
       {
@@ -201,7 +208,14 @@ export default {
         navbarButtons.style.display = "block"
     },
     navigateToVideos() {
-      this.$router.push('/' + this.currentUsername + '/videos')
+      if (this.currentUsername)
+        this.$router.push('/' + this.currentUsername + '/videos')
+    },
+    logIn() {
+      this.$router.push("/login")
+    },
+    signUp() {
+      this.$router.push("/signup")
     }
   },
   mounted(){
@@ -217,7 +231,10 @@ export default {
     }
   },
   created() {
-    this.currentUsername = JSON.parse(localStorage.getItem('user')).username;
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      this.currentUsername = user.username;
+    }
   }
 }
 </script>
