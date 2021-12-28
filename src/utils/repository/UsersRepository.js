@@ -28,10 +28,15 @@ function deleteUser(userId) {
     return Repository.put(`${resource}/${userId}`)
 }
 
+function getAvatar(key) {
+    return Repository.get(`${resource}/avatar/${key}`)
+}
+
 export default {
     get, 
     getUser,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getAvatar
 }

@@ -37,7 +37,7 @@
               <v-menu offset-y style="">
                 <template v-slot:activator="{ on, attrs }">
                   <a class="text-muted" v-bind="attrs" v-on="on">
-                    <img src="../../assets/images/Account.png" width="41px" height="41px">
+                    <img v-bind:src="avatarSource + avatar" width="41px" height="41px">
                 </a>
                 </template>
                 <v-list>
@@ -86,7 +86,6 @@
 </style>
 <script>
 import SearchBar from '../common/SearchBar.vue'
-// import Button from './Button.vue'
 export default {
   data() {
     return {
@@ -232,11 +231,12 @@ export default {
           action: "logOut" 
         },
       ],
+      avatarSource: "http://localhost:8000/v1/users/avatar/",
+      avatar: 'default_avatar.png'
     }
   },
   components: {
     SearchBar,
-    // Button
   },
   methods:{
     toggle: function (event) {
@@ -266,7 +266,7 @@ export default {
       this.currentUsername = ""
     },
     viewProfile() {
-      alert('View Profile!!')
+      this.$router.push("/" + this.currentUsername)
     },
     menuActionClick(action) {
       if (action === "viewVideos") {
@@ -294,6 +294,8 @@ export default {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       this.currentUsername = user.username;
+      if (user.avatar)
+        this.avatar = user.avatar;
     }
   }
 }
