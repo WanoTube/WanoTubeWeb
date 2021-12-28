@@ -51,7 +51,7 @@
                       size="35"
                     >
                       <span class="white--text">
-                        <v-icon color="1D1F23" v-text="item.icon" size="24"></v-icon>
+                        <v-icon color="black" v-text="item.icon" size="24"></v-icon>
                       </span>
                     </v-avatar>
                     <span style="width: 20px"></span>
@@ -59,7 +59,7 @@
                       {{ item.title }}
                     </v-list-item-title>
                     <v-list-item-icon>
-                      <v-icon color="#1D1F23">mdi-chevron-right</v-icon>
+                      <v-icon color="black">mdi-chevron-right</v-icon>
                     </v-list-item-icon>
                   </v-list-item>
                 </v-list>
@@ -217,14 +217,14 @@ export default {
       ],
       items: [
         { 
-          title: 'My videos', 
-          icon: "mdi-logout", 
-          action: "viewVideos" 
+          title: 'My Profile',  
+          icon: "mdi-account-circle", 
+          action: "viewProfile" 
         },
         { 
-          title: 'My Profile',  
-          icon: "mdi-logout", 
-          action: "viewProfile" 
+          title: 'My videos', 
+          icon: "mdi-folder-account", 
+          action: "viewVideos" 
         },
         { 
           title: 'Log Out',  
@@ -262,7 +262,7 @@ export default {
       this.$router.push("/signup")
     },
     logOut() {
-      alert('LOGOUT!!')
+      localStorage.clear();
     },
     viewProfile() {
       alert('View Profile!!')
