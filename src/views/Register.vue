@@ -146,13 +146,14 @@
 				const signUpInfo = { 
 					username: this.username,
 					email: this.email, 
-					password: this.password 
+					password: this.password,
+					birth_date: this.date
 				};
 				try {
 					const { data } = await UsersRepository.signup(signUpInfo);
-					console.log(data);
 					const dataObject = convertJSONToObject(data)
-					if (!dataObject.error) {
+
+					if (!dataObject.details) {
 						const user = dataObject.user;
 						const isAdmin = user.is_admin;
 						localStorage.setItem( 'token', JSON.stringify(dataObject.token) );
@@ -173,8 +174,8 @@
 						}
 						// this.$router.push({ path: 'home' })
 					} else {
-						const errorString = JSON.stringify(dataObject.error)
-						console.log(errorString)
+						const message = dataObject.details[0].message;
+						console.log(message)
 					}
 				} catch (error) {
 					console.log(error)
