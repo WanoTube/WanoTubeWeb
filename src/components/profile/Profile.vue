@@ -31,8 +31,8 @@
             <br>
             <hr/>
             <div class="row">
-                <div class="col-4 video-feed">
-                    <LazyVideo :src="src"  />
+                <div v-for="video in videos" v-bind:key="video.tittle" class="col-4 video-feed" >
+                    <LazyVideo :src="videoSource + video.url" :class="'thumbnail-video'"  />
                 </div>
             </div>
         </div>
@@ -42,13 +42,99 @@
 
 <script>
 import NavBar from '../common/NavBar.vue'
+import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../../utils/utils'
+const UsersRepository = RepositoryFactory.get('users')
+const VideosRepository = RepositoryFactory.get('video')
+
 export default {
     components: {
         NavBar
     },
     data() {
         return {
-            caption: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+            caption: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+            src: 'https://www.bigbuckbunny.org/',
+            user: {},
+            videos: [],
+            videoSource: "http://localhost:8000/v1/videos/stream/"
+        }
+    },
+    methods: {
+        async getProfileInfo() {
+            try {
+                const username = this.$route.params.username;
+                const { data } = await UsersRepository.getUserByUsername(username);
+				const dataObject = convertJSONToObject(data)
+				if (!dataObject.details) {
+                    return dataObject[0]
+                } 
+                return null;
+            } catch (error) {
+                console.log(error)
+                return null;
+            }
+        },
+        async getAllPublicVideosByUserId(userId) {
+            try {
+                const { data } = await VideosRepository.getAllPublicVideoInfosWithUserId(userId);
+				const dataObject = convertJSONToObject(data)
+				if (!dataObject.details) {
+                    return dataObject
+                } 
+                return null;
+            } catch (error) {
+                console.log(error)
+                return null;
+            }
+        },
+        async getAllVideosByUserId(userId) {
+            try {
+                const { data } = await VideosRepository.getAllVideoInfosWithUserId(userId);
+				const dataObject = convertJSONToObject(data)
+				if (!dataObject.details) {
+                    return dataObject
+                } 
+                return null;
+            } catch (error) {
+                console.log(error)
+                return null;
+            }
+        },
+        async getVideos() {
+            const requestedUsername = this.$route.params.username;
+            const user = localStorage.getItem('user');
+            const userId = this.user._id;
+            if (user) {
+                const currentUsername = user.username;
+                if (requestedUsername == currentUsername) {
+                    // get all videos of this user
+                    return await this.getAllVideosByUserId(userId);
+                } else {
+                    // get all public videos of this user
+                    return await this.getAllPublicVideosByUserId(userId);
+                }
+            } else {
+                // get all public videos of this user
+                return await this.getAllPublicVideosByUserId(userId);
+            }
+        }
+    },
+    async created() {
+        try {
+            this.user = await this.getProfileInfo();
+            this.videos = await this.getVideos();
+            this.$nextTick(() =>{
+                let videos = document.getElementsByClassName('thumbnail-video')
+                videos.forEach(video => {
+                    console.log("video: ", video)
+                    if (video.hasAttribute("controls")) {
+                        video.removeAttribute("controls")   
+                    }
+                });
+            })
+        } catch (error) {
+            console.log("ERROR: ", error);
         }
     }
 }
@@ -68,8 +154,6 @@ export default {
     text-align: center;
 }
 @media only screen and (min-width: 960px) {
-    .btn-outline-secondary{
-    }
     .avatar-profile {
         text-align: right !important;
     }

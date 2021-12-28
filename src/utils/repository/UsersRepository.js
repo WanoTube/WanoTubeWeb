@@ -2,18 +2,23 @@ import Repository from "./Repository";
 
 const resource = "/users";
 
-function get() {
-    let header = JSON.parse(localStorage.getItem('token'));
-    const config = {
-        headers: {
-            "auth-token": header
-        }
+let header = JSON.parse(localStorage.getItem('token'));
+const config = {
+    headers: {
+        "auth-token": header
     }
+}
+
+function get() {    
     return Repository.get(`${resource}`, config);
 }
 
 function getUser(userId) {
-    return Repository.get(`${resource}/${userId}`, );
+    return Repository.get(`${resource}/${userId}`, config);
+}
+
+function getUserByUsername(username) {
+    return Repository.get(`${resource}/${username}`, config);
 }
 
 function createUser(payload) {
@@ -35,6 +40,7 @@ function getAvatar(key) {
 export default {
     get, 
     getUser,
+    getUserByUsername,
     createUser,
     updateUser,
     deleteUser,
