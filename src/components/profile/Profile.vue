@@ -6,14 +6,20 @@
             <div class="row ">
                 <div class="col-sm-4  avatar-profile">
                     <img 
-                    class="rounded-circle img-responsive"
-                    src="../../assets/images/Account.png" 
-                    width="150px" height="150px">
+                        v-if="user.avatar"
+                        class="rounded-circle img-responsive"
+                        v-bind:src="avatarSource + user.avatar" 
+                        width="150px" height="150px">
+                    <img 
+                        v-else
+                        class="rounded-circle img-responsive"
+                        src="../../assets/images/Account.png" 
+                        width="150px" height="150px">
                 </div>
                 <div class="col-sm-7">
                     <div class="row">
                         <div class="col-sm-3"  style="padding-top: 20px">
-                            <h4 class="username " style="margin-bottom: 0; padding-bottom: 0">heoboi</h4>
+                            <h4 class="username " style="margin-bottom: 0; padding-bottom: 0">{{username}}</h4>
                         </div>
                         <div class="col-sm-9">
                             <button type="button" class="btn btn-outline-secondary" >
@@ -22,10 +28,10 @@
                         </div>
                     </div>
                     <div style="margin-top: 15px">
-                        <span><b>Nguyễn Đắc Thiên Ngân</b></span>
-                        <p>{{caption}}</p>
+                        <span><b>{{user.first_name}}  {{user.last_name}}</b></span>
+                        <p v-if="user.description">{{user.description}}</p>
+                        <p v-else>{{caption}}</p>
                     </div>
-                    
                 </div>
             </div>
             <br>
@@ -56,14 +62,17 @@ export default {
             caption: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
             src: 'https://www.bigbuckbunny.org/',
             user: {},
+            username: '',
             videos: [],
-            videoSource: "http://localhost:8000/v1/videos/stream/"
+            videoSource: "http://localhost:8000/v1/videos/stream/",
+            avatarSource: "http://localhost:8000/v1/users/avatar/"
         }
     },
     methods: {
         async getProfileInfo() {
             try {
                 const username = this.$route.params.username;
+                this.username = username;
                 const { data } = await UsersRepository.getUserByUsername(username);
 				const dataObject = convertJSONToObject(data)
 				if (!dataObject.details) {
@@ -157,5 +166,8 @@ export default {
     .avatar-profile {
         text-align: right !important;
     }
+}
+.thumbnail-video {
+    cursor: pointer;
 }
 </style>
