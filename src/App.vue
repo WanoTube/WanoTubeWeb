@@ -20,7 +20,9 @@ export default {
 <style src="./assets/styles/main.css"></style>
 <style>
 
-
+body p, body h5, body h4, body h3, body h2, body h1 {
+  font-family: 'Roboto', sans-serif;
+}
 /* total width */
 body::-webkit-scrollbar {
     background-color: #fff;
