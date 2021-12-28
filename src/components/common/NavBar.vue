@@ -263,6 +263,7 @@ export default {
     },
     logOut() {
       localStorage.clear();
+      this.currentUsername = ""
     },
     viewProfile() {
       alert('View Profile!!')
@@ -294,7 +295,6 @@ export default {
     if (user) {
       this.currentUsername = user.username;
     }
-    this.currentUsername = "Hi";
   }
 }
 </script>
