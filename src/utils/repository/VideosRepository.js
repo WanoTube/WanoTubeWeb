@@ -14,6 +14,10 @@ function getAllVideoInfosWithUserId(author_id) {
     return Repository.get(`${resource}/users/${author_id}`);
 }
 
+function getAllPublicVideoInfosWithUserId(author_id) {
+    return Repository.get(`${resource}/users/${author_id}/public`);
+}
+
 function getVideoById(video_id) {
     return Repository.get(`${resource}/${video_id}`);
 }
@@ -34,6 +38,7 @@ export default {
     get,
     getAllPublicVideoInfos,
     getAllVideoInfosWithUserId,
+    getAllPublicVideoInfosWithUserId,
     getVideoById,
     uploadVideo,
     updateVideo,
