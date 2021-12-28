@@ -19,21 +19,8 @@ export default {
 
 <style src="./assets/styles/main.css"></style>
 <style>
-@font-face {
-  font-family: "Montserrat";
-  src: local("Montserrat"),
-   url(./assets/fonts/Montserrat-Regular.ttf) format("truetype");
-}
 
-body{
-  font-family: "Montserrat", Helvetica, Arial;
-  /* font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px; */
-}
+
 /* total width */
 body::-webkit-scrollbar {
     background-color: #fff;

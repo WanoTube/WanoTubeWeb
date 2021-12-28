@@ -36,7 +36,7 @@
               </a>
               <v-menu offset-y style="">
                 <template v-slot:activator="{ on, attrs }">
-                  <a class="text-muted" v-bind="attrs" v-on="on">
+                  <a class="text-muted rounded-circle" v-bind="attrs" v-on="on">
                     <img v-bind:src="avatarSource + avatar" width="41px" height="41px">
                 </a>
                 </template>
@@ -266,7 +266,7 @@ export default {
       this.currentUsername = ""
     },
     viewProfile() {
-      this.$router.push("/" + this.currentUsername)
+      this.$router.push("/" + this.currentUsername + "/profile")
     },
     menuActionClick(action) {
       if (action === "viewVideos") {

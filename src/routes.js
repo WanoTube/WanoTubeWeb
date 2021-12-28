@@ -9,6 +9,7 @@ import Upload from './components/upload-video/Upload.vue'
 import VideoManagement from './components/video-management/ListVideos.vue'
 import VideoDetails from './components/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
+import Profile from './components/profile/Profile.vue'
 
 import Comment from './views/Comment.vue'
 import Search from './components/discover/Search.vue'
@@ -79,6 +80,10 @@ export const router = new VueRouter({
             }
         },
         { 
+            path: '/:username/profile', 
+            component: Profile,
+        },
+        { 
             path: '/:username/videos/', 
             component: VideoManagement,
             meta: {
@@ -95,16 +100,10 @@ export const router = new VueRouter({
         { 
             path: '/login/', 
             component: Authentication,
-            meta: {
-                guest: true
-            }
         },
         { 
             path: '/signup/', 
             component: Register,
-            meta: {
-                guest: true
-            }
         },
         { 
             path: '/comment/:id', 
