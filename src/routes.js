@@ -10,6 +10,7 @@ import VideoManagement from './components/video-management/ListVideos.vue'
 import VideoDetails from './components/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
 import Profile from './components/profile/Profile.vue'
+import EditProfile from './components/profile/EditProfile.vue'
 
 import Comment from './views/Comment.vue'
 import Search from './components/discover/Search.vue'
@@ -82,6 +83,10 @@ export const router = new VueRouter({
         { 
             path: '/:username/profile', 
             component: Profile,
+        },
+        { 
+            path: '/:username/profile/edit', 
+            component: EditProfile,
         },
         { 
             path: '/:username/videos/', 

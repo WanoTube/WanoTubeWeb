@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-content>
-      <div>
-              <router-view/>
+      <div class="bg-secondary-color h-100">
+          <router-view/>
         </div>
     </v-content>
   </v-app>
