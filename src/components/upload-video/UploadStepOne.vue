@@ -31,7 +31,8 @@ export default {
         e.preventDefault();
         let files = e.dataTransfer.files;
         this.mulableVideo = files[0];
-
+        this.$emit('videoWasUpdated', this.mulableVideo)
+        this.$emit('onContinue', 2)
       },
       onChange(e) {
         let files = e.target.files;
