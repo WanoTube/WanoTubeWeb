@@ -7,12 +7,14 @@
             <div class="row justify-content-center">
                 <div class="avatar-container">
                     <img 
+                        id="avatar"
                         v-if="user.avatar"
                         class="rounded-circle img-responsive"
                         v-bind:src="avatarSource + user.avatar" 
                         width="150px" height="150px"
                     />
                     <img 
+                        id="avatar"
                         v-else
                         class="rounded-circle img-responsive"
                         v-bind:src="avatarSource + 'default_avatar.png'" 
@@ -27,19 +29,21 @@
                 class="d-none" 
                 type="file" 
                 @change="onFileChanged"
+                accept="image/png, image/jpeg"
             >
             <br>
             <h5 class="text-center">{{username}}</h5>
 
             <v-form v-model="valid">
+
                 <v-container>
-                    <v-row>
+                    <v-row  justify="center">
                         <v-col
                         cols="12"
                         md="4"
                         >
                             <v-text-field
-                                v-model="lastname"
+                                v-model="firstName"
                                 :rules="nameRules"
                                 :counter="10"
                                 label="First name"
@@ -52,7 +56,7 @@
                         md="4"
                         >
                             <v-text-field
-                                v-model="lastname"
+                                v-model="lastName"
                                 :rules="nameRules"
                                 :counter="10"
                                 label="Last name"
@@ -60,7 +64,137 @@
                             ></v-text-field>
                         </v-col>
                     </v-row>
+                    <v-row  justify="center">
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                            <v-text-field
+                                v-model="username"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Username"
+                                required
+                            ></v-text-field>
+                        </v-col>
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                            <v-text-field
+                                v-model="email"
+                                :rules="emailRules"
+                                label="Email"
+                                required
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row  justify="center">
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                            <v-text-field
+                                v-model="phoneNumber"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Phone Number"
+                                required
+                            ></v-text-field>
+                        </v-col>
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                           <v-combobox
+                            v-model="gender"
+                            :items="genders"
+                            label="Gender">
+                               
+                           </v-combobox>
+
+                        </v-col>
+                    </v-row>
+                    <v-row  justify="center">
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                            <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                        v-model="birthDate"
+                                        label="Date of Birth"
+                                        prepend-icon=""
+                                        readonly
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        ></v-text-field>
+                                    </template>
+                                <v-date-picker
+                                    v-model="birthDate"
+                                    color="pink"
+                                    :active-picker.sync="activePicker"
+                                    :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                                    min="1950-01-01"
+                                    @change="updateBirthDate"
+                                ></v-date-picker>
+                            </v-menu>
+                        </v-col>
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                           <v-text-field
+                                v-model="country"
+                                :rules="nameRules"
+                                :counter="10"
+                                label="Country"
+                                required
+                            ></v-text-field>
+
+                        </v-col>
+                    </v-row>
+                    <v-row  justify="center">
+                        <v-col
+                        cols="12"
+                        md="8"
+                        >
+                           <v-textarea
+                                v-model="description"
+                                name="input-7-4"
+                                label="Description"
+                                placeholder="Short description about yourself"
+                            ></v-textarea>
+
+                        </v-col>
+                    </v-row>
+                    <v-row  justify="center">
+                        <v-col
+                        cols="12"
+                        md="4"
+                        >
+                           <v-btn
+                            :disabled="!valid"
+                            color="primary"
+                            class="mr-4 text-center"
+                            @click="updateProfile"
+                            >
+                            Save
+                            </v-btn>
+
+                        </v-col>
+                    </v-row>
                 </v-container>
+
+                
             </v-form>
         </div>
         
@@ -82,8 +216,8 @@ export default {
             isSelecting: false,
             selectedFile: null,
             valid: false,
-            firstname: '',
-            lastname: '',
+            firstName: '',
+            lastName: '',
             nameRules: [
                 v => !!v || 'Name is required',
                 v => v.length <= 10 || 'Name must be less than 10 characters',
@@ -95,10 +229,33 @@ export default {
             ],
             avatarSource: "http://localhost:8000/v1/users/avatar/",
             user: {},
-            username: ''
+            username: '',
+            gender: 'Female',
+            genders: ['Female', 'Male'],
+            menu: false,
+            birthDate: null,
+            country: '',
+            description: '',
+            phoneNumber: '',
+            activePicker: null,
+            account: {}
         }
     },
     methods: {
+        async getAccountInfo() {
+             try {
+                const userId = this.user._id;
+                const { data } = await UsersRepository.getAccountByUserId(userId);
+				const dataObject = convertJSONToObject(data)
+				if (!dataObject.details) {
+                    return dataObject[0]
+                } 
+                return null;
+            } catch (error) {
+                console.log(error)
+                return null;
+            }
+        },
         async getProfileInfo() {
             try {
                 const username = this.$route.params.username;
@@ -116,7 +273,6 @@ export default {
         },
         handleFileImport() {
             this.isSelecting = true;
-
             // After obtaining the focus when closing the FilePicker, return the button state to normal
             window.addEventListener('focus', () => {
                 this.isSelecting = false
@@ -127,17 +283,96 @@ export default {
         },
         onFileChanged(e) {
             this.selectedFile = e.target.files[0];
-            console.log(this.selectedFile)
-            // Do whatever you need with the file, liek reading it with FileReader
+            this.createFile(this.selectedFile);
+        },
+        createFile(file) {
+            if (!file) { 
+                console.log("Failed to load file");
+            } else {
+                let vm = this;
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    // The file reader gives us an ArrayBuffer:
+                    let buffer = e.target.result;
+                    var uint8Array  = new Uint8Array(buffer);
+                    var arrayBuffer = uint8Array.buffer;
+                    var blob        = new Blob([arrayBuffer]);
+                    let url = URL.createObjectURL(blob);
+                    var vid = document.getElementById('avatar')
+                    vid.src = url
+                }
+                reader.readAsArrayBuffer(file);
+            }
+        },
+        async updateAvatar() {
+            let formData = new FormData();
+            const user = JSON.parse(localStorage.getItem('user'));
+            formData.append("avatar", this.selectedFile);
+            formData.append("user_id", user._id);
+            const { data } = await UsersRepository.updateAvatar(formData);
+            if (data) {
+                const dataObject = convertJSONToObject(data);
+                if (!dataObject.error) {
+                    return dataObject;
+                } else {
+                    return null;
+                }
+            }
+            return null;
+        },
+        updateBirthDate(date) {
+            this.$refs.menu.save(date)
+        },
+        async updateProfile() {
+            // if (this.selectedFile) {
+            //     await this.updateAvatar();
+            // }
+            const profileInfo = { 
+                id: this.user._id,
+                first_name: this.firstName,
+                last_name: this.lastName,
+                username: this.username,
+                email: this.email, 
+                birth_date: this.birthDate,
+                gender: this.gender, //CHECK lại
+                description: this.description,
+                phone_number: this.phoneNumber,
+                country: this.country
+            };
+            console.log("profileInfo: ", profileInfo);
+            try {
+                const { data } = await UsersRepository.updateUser(profileInfo);
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.details) {
+                    if (this.$route.params.nextUrl != null) {
+                        this.$router.push(this.$route.params.nextUrl)
+                    } else {
+                        this.$router.push('/' + this.username + '/profile')
+                    }
+                } else {
+                    const message = dataObject.details[0].message;
+                    console.log(message)
+                }
+            } catch (error) {
+                console.log(error)
+            }
         },
     },
     async created() {
         try {
             this.user = await this.getProfileInfo();
+            this.account = await this.getAccountInfo();
+            if (this.account)
+                this.email = this.account.email;
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+    watch: {
+        menu (val) {
+            val && setTimeout(() => (this.activePicker = 'YEAR'))
+        },
+    },
 }
 </script>
 

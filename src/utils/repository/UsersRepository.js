@@ -21,12 +21,16 @@ function getUserByUsername(username) {
     return Repository.get(`${resource}/${username}`, config);
 }
 
+function getAccountByUserId(userId) {
+    return Repository.get(`${resource}/account/${userId}`);
+}
+
 function createUser(payload) {
     return Repository.post(`${resource}`, payload)
 }
 
-function updateUser(userId, payload) {
-    return Repository.put(`${resource}/${userId}`, payload)
+function updateUser(payload) {
+    return Repository.put(`${resource}/update`, payload)
 }
 
 function deleteUser(userId) {
@@ -37,12 +41,18 @@ function getAvatar(key) {
     return Repository.get(`${resource}/avatar/${key}`)
 }
 
+function updateAvatar(payload) {
+    return Repository.post(`${resource}/avatar/`, payload)
+}
+
 export default {
     get, 
     getUser,
     getUserByUsername,
+    getAccountByUserId,
     createUser,
     updateUser,
     deleteUser,
-    getAvatar
+    getAvatar,
+    updateAvatar
 }
