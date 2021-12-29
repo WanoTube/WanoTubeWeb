@@ -166,9 +166,9 @@
 								this.$router.push(this.$route.params.nextUrl)
 							} else {
 								if (isAdmin == 1) {
-									this.$router.push('users')
+									this.$router.push('/users')
 								} else {
-									this.$router.push('home')
+									this.$router.push('/home')
 								}
 							}
 						}

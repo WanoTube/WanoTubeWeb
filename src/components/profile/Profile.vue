@@ -13,7 +13,7 @@
                     <img 
                         v-else
                         class="rounded-circle img-responsive"
-                        src="../../assets/images/Account.png" 
+                        v-bind:src="avatarSource + 'default_avatar.png'" 
                         width="150px" height="150px">
                 </div>
                 <div class="col-sm-7">
@@ -22,7 +22,7 @@
                             <h4 class="username " style="margin-bottom: 0; padding-bottom: 0">{{username}}</h4>
                         </div>
                         <div class="col-sm-9">
-                            <button type="button" class="btn btn-outline-secondary" >
+                            <button type="button" class="btn btn-outline-secondary" @click="navigateToEditProfile">
                            Edit Profile
                         </button>
                         </div>
@@ -69,6 +69,9 @@ export default {
         }
     },
     methods: {
+        navigateToEditProfile() {
+            this.$router.push("/" + this.username + "/profile/edit")
+        },
         async getProfileInfo() {
             try {
                 const username = this.$route.params.username;
@@ -76,7 +79,7 @@ export default {
                 const { data } = await UsersRepository.getUserByUsername(username);
 				const dataObject = convertJSONToObject(data)
 				if (!dataObject.details) {
-                    return dataObject[0]
+                    return dataObject
                 } 
                 return null;
             } catch (error) {
