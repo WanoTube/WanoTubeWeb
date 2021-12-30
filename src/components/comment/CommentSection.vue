@@ -166,13 +166,9 @@ export default {
                     if (!dataObject.details) {
                         for (let index in dataObject) {
                             let comment = dataObject[index];
-                            comment.bg_music = "Crazy Frog"
-                            if (comment) {
-                                if (comment.author_id) {
-                                    comment.user = await this.getUserByAuthorId(comment.author_id);
-                                    this.allComments.push(comment)
-                                }
-                            }
+                            comment =  await this.analyzeComment(comment);
+                            if (comment)
+                                this.allComments.push(comment);
                         }
                     }
                     return null;
@@ -193,24 +189,27 @@ export default {
         async postComment(){
            if(this.currentComment === "")  return
             //create new comment and clear input after that
-            await this.commentVideo();
-            
-            // const newComment = {
-            //     id: this.allComments.length +1,
-            //     name: "INT01–刘宇",
-            //     username: "@into1_liuyu_",
-            //     caption: this.currentComment,
-            //     bg_music: "Crazy Frog",
-            //     filename:"man (2).png"
-            // }
-            // this.allComments.push(newComment)
-            this.currentComment = ""
-            
-            //scrol to bottom after submitting comment
-            this.$nextTick(() => {
-                this.scrollToEnd()
-            }) 
-            // this.$parent.$data.comments = this.allComments.length;
+            try {
+                let comment = await this.commentVideo();
+                if (comment) {
+                    comment = await this.analyzeComment(comment);
+                    if (comment)
+                        this.allComments.push(comment);
+                    this.currentComment = ""
+                }
+            } catch (error) {
+                alert(error.response.data);
+            }
+        },
+        async analyzeComment(comment) {
+            comment.bg_music = "Crazy Frog"
+            if (comment) {
+                if (comment.author_id) {
+                    comment.user = await this.getUserByAuthorId(comment.author_id);
+                    return comment;
+                }
+            }
+            return null;
         },
         scrollToEnd() {
             const content = this.$refs.commentContainer;
