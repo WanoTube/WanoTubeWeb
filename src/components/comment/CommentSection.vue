@@ -4,11 +4,11 @@
             <div class="list-comments" ref="commentContainer">
                 <Comment 
                     v-for="c in allComments" 
-                    :key="c.id" :name="c.name" 
-                    :username="c.username" 
-                    :caption="c.caption" 
+                    :key="c._id" :name="c.user.first_name + ' ' + c.user.last_name"
+                    :username="c.user.username" 
+                    :caption="c.content" 
                     :bg_music="c.bg_music"
-                    :filename="c.filename"
+                    :filename="c.user.avatar"
                     ></Comment>
             </div>
         </div>
@@ -76,6 +76,7 @@ import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
 
 const VideoRepository = RepositoryFactory.get('video')
+const UsersRepository = RepositoryFactory.get('users')
 
 export default {
     components: {
@@ -114,13 +115,13 @@ export default {
                 return;
             try {
                 const formData = {
+                    content: this.currentComment,
                     video_id: this.$route.params.id,
                     author_id: this.currentUser._id
                 }
                 const { data } = await VideoRepository.commentVideo(formData);
                 if (data) {
                     let dataObject = convertJSONToObject(data);
-                    console.log("dataObject: ", dataObject)
                     if (!dataObject.details) {
                         if (dataObject) {
                             return dataObject;
@@ -136,16 +137,43 @@ export default {
                 }
             }
         },
+        async getUserByAuthorId(authorId) {
+            try {
+                const { data } = await UsersRepository.getUser(authorId);
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.details) {
+                    if (dataObject) {
+                        let user = dataObject.user;
+                        user.username = dataObject.username;
+                        return user;
+                    }
+                    return null;
+                } else {
+                    const errorString = JSON.stringify(dataObject.details)
+                    console.log(errorString)
+                }
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
         async getAllVideoComments() {
              try {
                 const { data } = await VideoRepository.getVideoComments(this.$route.params.id);
                 if (data) {
                     let dataObject = convertJSONToObject(data);
                     if (!dataObject.details) {
-                        if (dataObject.url) {
-                            return dataObject;
+                        for (let index in dataObject) {
+                            let comment = dataObject[index];
+                            comment.bg_music = "Crazy Frog"
+                            if (comment) {
+                                if (comment.author_id) {
+                                    comment.user = await this.getUserByAuthorId(comment.author_id);
+                                    this.allComments.push(comment)
+                                }
+                            }
                         }
-                        return null;
                     }
                     return null;
                 } 
@@ -162,25 +190,27 @@ export default {
                 commentInput.focus()
             })
         },
-        postComment(){
+        async postComment(){
            if(this.currentComment === "")  return
             //create new comment and clear input after that
-            const newComment = {
-                id: this.allComments.length +1,
-                name: "INT01–刘宇",
-                username: "@into1_liuyu_",
-                caption: this.currentComment,
-                bg_music: "Crazy Frog",
-                filename:"man (2).png"
-            }
-            this.allComments.push(newComment)
+            await this.commentVideo();
+            
+            // const newComment = {
+            //     id: this.allComments.length +1,
+            //     name: "INT01–刘宇",
+            //     username: "@into1_liuyu_",
+            //     caption: this.currentComment,
+            //     bg_music: "Crazy Frog",
+            //     filename:"man (2).png"
+            // }
+            // this.allComments.push(newComment)
             this.currentComment = ""
             
             //scrol to bottom after submitting comment
             this.$nextTick(() => {
                 this.scrollToEnd()
             }) 
-            this.$parent.$data.comments = this.allComments.length;
+            // this.$parent.$data.comments = this.allComments.length;
         },
         scrollToEnd() {
             const content = this.$refs.commentContainer;
@@ -259,7 +289,7 @@ export default {
     },
     async mounted() {
         window.addEventListener('keydown', this.onSelectAnotherUsername);
-        this.allComments = await this.getAllVideoComments();
+        await this.getAllVideoComments();
         this.currentUser = JSON.parse(localStorage.getItem('user'));
     }
 }

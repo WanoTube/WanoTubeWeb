@@ -2,7 +2,12 @@
     <div class="">
         <div class="d-flex">
             <div class="avatar">
-                <img :src="require(`../../assets/images/emchingan/${filename}`)" width="41px" height="41px" id="logo-img"/>
+                <img :src="`http://localhost:8000/v1/users/avatar/${filename}`"  
+                width="41px" 
+                height="41px" 
+                class="img-responsive rounded-circle"
+                style="object-fit: cover"
+                />
                 <br>
                 <div class="text-center">
                     <img src="../../assets/images/CheckBox-Icon.svg">
