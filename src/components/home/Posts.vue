@@ -20,6 +20,36 @@ export default {
     components: {
         Post
     },
+    methods: {
+        async getVideos() {
+            try {
+                const { data } = await VideoRepository.getAllPublicVideoInfos();
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.details) {
+                    for (let index in dataObject) {
+                        let video = dataObject[index];
+                        if (video) {
+                            if (video.url) {
+                                console.log(video.author_id)
+                                this.videos.push(video)
+                            }
+                        }
+                        
+                    }
+                } else {
+                    const errorString = JSON.stringify(dataObject.details)
+                    console.log(errorString)
+                }
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
+        async getUserByAuthorId() {
+            // dùng query hơn là params
+        }
+    },
     created: async function() {
         try {
             const { data } = await VideoRepository.getAllPublicVideoInfos();
@@ -29,6 +59,7 @@ export default {
                     let video = dataObject[index];
                     if (video) {
                         if (video.url) {
+                            console.log(video.author_id)
                             this.videos.push(video)
                         }
                     }

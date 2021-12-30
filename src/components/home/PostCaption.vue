@@ -6,7 +6,7 @@
         <div>
             <div class="row">
                 <div class="col" style="padding-bottom: 0">
-                    <b>{{name}}</b>  <span style="color: #c4c4c4">{{username}}</span> 
+                    <b>{{name}}</b>
                     <br>
                     {{caption}}
                     <br>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    props:['name', 'username', 'caption', 'bg_music', 'avatar_img','isPost']
+    props:['name', 'caption', 'bg_music', 'avatar_img','isPost']
 }
 </script>
 <style src="../../assets/styles/post-caption.css">
