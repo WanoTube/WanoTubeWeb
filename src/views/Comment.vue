@@ -3,7 +3,7 @@
         <br><br><br>
         <NavBar></NavBar>
         <div class="row comment-view">
-            <div class="col-md-6 order-2 order-md-1 left-video">
+            <div class="col-md-6 order-2 order-sm-1 left-video">
                 <router-link :to="prevRoutePath" class="d-none d-sm-block">
                     <span class="fa fa-times fa-2x exit-button" style="z-index: 9999"></span>
                 </router-link>
@@ -19,7 +19,7 @@
                     <br>
                 </div>
             </div>
-            <div class="col-md-6 order-1 order-md-2 right-post">
+            <div class="col-md-6 order-1 order-sm-2 right-post">
                 <div class="container">
                     <div class="card non-border">
                         <div class="card-header container bg-white ">
