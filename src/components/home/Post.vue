@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="card-text container non-border">
-                <PostCaption isPost="true" :avatar_img="video.user.avatar" :name="video.user.username" :caption="video.description" bg_music="Crazy Frog"></PostCaption>
+                <PostCaption isPost="true" :avatar_img="video.user.avatar" :name="video.user.first_name + ' ' + video.user.last_name" :username="video.user.username" :caption="video.description" bg_music="Crazy Frog"></PostCaption>
             </div>
         </div>
         

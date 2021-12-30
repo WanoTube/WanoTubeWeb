@@ -23,7 +23,7 @@
                 <div class="container">
                     <div class="card non-border">
                         <div class="card-header container bg-white ">
-                            <PostCaption  isPost="true"  :avatar_img="user.avatar" :name="user.username"  :caption="video.description" bg_music="Crazy Frog"></PostCaption>
+                            <PostCaption  isPost="true"  :avatar_img="user.avatar"  :name="user.first_name + ' ' + user.last_name" :username="user.username"  :caption="video.description" bg_music="Crazy Frog"></PostCaption>
                             <router-link to="/" class="d-sm-none">
                                 <span class="fa fa-times fa-2x exit-button"></span>
                             </router-link>
