@@ -145,7 +145,6 @@ export default {
             this.$nextTick(() =>{
                 let videos = document.getElementsByClassName('thumbnail-video')
                 videos.forEach(video => {
-                    console.log("video: ", video)
                     if (video.hasAttribute("controls")) {
                         video.removeAttribute("controls")   
                     }

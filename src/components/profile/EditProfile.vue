@@ -176,7 +176,7 @@
 
                         </v-col>
                     </v-row>
-                    <v-row  justify="center">
+                    <v-row  justify="end">
                         <v-col
                         cols="12"
                         md="4"
@@ -188,6 +188,13 @@
                             @click="updateProfile"
                             >
                             Save
+                            </v-btn>
+                            <v-btn
+                            color="#FAFAFA"
+                            class="mr-4 text-center"
+                            @click="navigateToProgile"
+                            >
+                            Cancel
                             </v-btn>
 
                         </v-col>
@@ -249,6 +256,10 @@ export default {
         }
     },
     methods: {
+        navigateToProgile() {
+            const username = this.$route.params.username;
+            this.$router.push("/" + username + "/profile");
+        },
         async getAccountInfo() {
              try {
                 const userId = this.user._id;

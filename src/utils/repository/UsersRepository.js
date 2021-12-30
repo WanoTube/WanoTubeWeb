@@ -18,7 +18,7 @@ function getUser(userId) {
 }
 
 function getUserByUsername(username) {
-    return Repository.get(`${resource}/${username}`, config);
+    return Repository.get(`${resource}/search?username=${username}`);
 }
 
 function getAccountByUserId(userId) {
