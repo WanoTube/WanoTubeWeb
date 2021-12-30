@@ -197,7 +197,12 @@
                 
             </v-form>
         </div>
-        
+        <v-snackbar
+            v-model="snackbar"
+            :timeout="snackbarTimeOut"
+        >
+            {{ snackbarText }}
+        </v-snackbar>
     </div>
 </template>
 
@@ -219,7 +224,6 @@ export default {
             firstName: '',
             lastName: '',
             nameRules: [
-                v => !!v || 'Name is required',
                 v => v.length <= 10 || 'Name must be less than 10 characters',
             ],
             email: '',
@@ -238,7 +242,10 @@ export default {
             description: '',
             phoneNumber: '',
             activePicker: null,
-            account: {}
+            account: {},
+            snackbar: false,
+            snackbarText: `Hello, I'm a snackbar`,
+            snackbarTimeOut: 3000
         }
     },
     methods: {
@@ -252,7 +259,9 @@ export default {
                 } 
                 return null;
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
                 return null;
             }
         },
@@ -267,7 +276,9 @@ export default {
                 } 
                 return null;
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
                 return null;
             }
         },
@@ -306,13 +317,17 @@ export default {
         },
         async updateAvatar() {
             let formData = new FormData();
-            const user = JSON.parse(localStorage.getItem('user'));
+            let user = JSON.parse(localStorage.getItem('user'));
             formData.append("avatar", this.selectedFile);
             formData.append("user_id", user._id);
             const { data } = await UsersRepository.updateAvatar(formData);
             if (data) {
                 const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
+                if (!dataObject.details) {
+                    this.snackbar = true;
+                    this.snackbarText = 'Updated avatar successfully'
+                    user.avatar = dataObject;
+					localStorage.setItem( 'user', JSON.stringify(user) );
                     return dataObject;
                 } else {
                     return null;
@@ -324,9 +339,9 @@ export default {
             this.$refs.menu.save(date)
         },
         async updateProfile() {
-            // if (this.selectedFile) {
-            //     await this.updateAvatar();
-            // }
+            if (this.selectedFile) {
+                await this.updateAvatar();
+            }
             const profileInfo = { 
                 id: this.user._id,
                 first_name: this.firstName,
@@ -334,7 +349,7 @@ export default {
                 username: this.username,
                 email: this.email, 
                 birth_date: this.birthDate,
-                gender: this.gender, //CHECK lại
+                gender: this.gender,
                 description: this.description,
                 phone_number: this.phoneNumber,
                 country: this.country
@@ -354,7 +369,9 @@ export default {
                     console.log(message)
                 }
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
             }
         },
     },
@@ -362,10 +379,21 @@ export default {
         try {
             this.user = await this.getProfileInfo();
             this.account = await this.getAccountInfo();
+            if (this.user) {
+                const user = this.user;
+                this.firstName = user.first_name;
+                this.lastName = user.last_name;
+                this.phoneNumber = user.phone_number;
+                // this.birthDate = user.birth_date;
+                this.country = user.country;
+                this.description = user.description;
+            }
             if (this.account)
                 this.email = this.account.email;
         } catch (error) {
-            console.log(error)
+            if (error.response) {
+                alert(error.response.data);
+            }
         }
     },
     watch: {

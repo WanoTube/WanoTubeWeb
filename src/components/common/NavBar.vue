@@ -36,8 +36,8 @@
               </a>
               <v-menu offset-y style="">
                 <template v-slot:activator="{ on, attrs }">
-                  <a class="text-muted rounded-circle" v-bind="attrs" v-on="on">
-                    <img v-bind:src="avatarSource + avatar" width="41px" height="41px">
+                  <a class="text-muted " v-bind="attrs" v-on="on">
+                    <img class="rounded-circle img-responsive" v-bind:src="avatarSource + avatar" width="41px" height="41px">
                 </a>
                 </template>
                 <v-list>
@@ -263,7 +263,8 @@ export default {
     },
     logOut() {
       localStorage.clear();
-      this.currentUsername = ""
+      this.currentUsername = "",
+      this.$router.push("/login")
     },
     viewProfile() {
       this.$router.push("/" + this.currentUsername + "/profile")
