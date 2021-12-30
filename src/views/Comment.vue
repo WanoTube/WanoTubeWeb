@@ -4,7 +4,7 @@
         <NavBar></NavBar>
         <div class="row comment-view">
             <div class="col-md-6 order-2 order-md-1 left-video">
-                <router-link to="/" class="d-none d-sm-block">
+                <router-link :to="prevRoutePath" class="d-none d-sm-block">
                     <span class="fa fa-times fa-2x exit-button" style="z-index: 9999"></span>
                 </router-link>
                 <div class="d-flex justify-content-center text-center" style="height: 100%">
@@ -23,7 +23,7 @@
                 <div class="container">
                     <div class="card non-border">
                         <div class="card-header container bg-white ">
-                            <PostCaption  isPost="true"  avatar_img="Liuyu.png" name="INTO1–刘宇" username="@into1_liuyu_" caption="Relatively cool" bg_music="Crazy Frog"></PostCaption>
+                            <PostCaption  isPost="true"  :avatar_img="user.avatar" :name="user.username"  :caption="video.description" bg_music="Crazy Frog"></PostCaption>
                             <router-link to="/" class="d-sm-none">
                                 <span class="fa fa-times fa-2x exit-button"></span>
                             </router-link>
@@ -116,9 +116,20 @@ import CommentSection from '../components/comment/CommentSection.vue'
 import { RepositoryFactory } from '../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../utils/utils'
 const VideoRepository = RepositoryFactory.get('video')
+const UsersRepository = RepositoryFactory.get('users')
 
 import $ from 'jquery'
 export default {
+    computed: {
+        prevRoutePath() {
+            return this.prevRoute ? this.prevRoute.path : '/'
+        },
+    },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            vm.prevRoute = from;
+        });
+    },
     components: {
         NavBar,
         PostCaption,
@@ -130,7 +141,9 @@ export default {
             comments : 8,
             video: {},
             videoUrl: '',
-            defaultPoster: ''
+            defaultPoster: '',
+            user: {},
+            prevRoute: null
         }
     },
     methods: {
@@ -138,13 +151,37 @@ export default {
             try {
                 const { data } = await VideoRepository.getVideoById(this.$route.params.id);
                 if (data) {
-                    const dataObject = convertJSONToObject(data);
+                    let dataObject = convertJSONToObject(data);
                     if (!dataObject.details) {
-                        return dataObject;
+                        if (dataObject.url) {
+                            return dataObject;
+                        }
+                        return null;
                     }
                     return null;
                 } 
                 return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
+        async getUserByAuthorId(authorId) {
+            try {
+                const { data } = await UsersRepository.getUser(authorId);
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.details) {
+                    if (dataObject) {
+                        let user = dataObject.user;
+                        user.username = dataObject.username;
+                        return user;
+                    }
+                    return null;
+                } else {
+                    const errorString = JSON.stringify(dataObject.details)
+                    console.log(errorString)
+                }
             } catch (error) {
                 if (error.response) {
                     alert(error.response.data);
@@ -182,10 +219,11 @@ export default {
         this.video = await this.getVideo();
     },
     watch: {
-        video: function (val) {
+        video: async function (val) {
             if (val) {
                 this.videoUrl = "http://localhost:8000/v1/videos/stream/"+ val.url
-                this.defaultPoster ="http://localhost:8080/img/WatchOut.1e172f0c.png"
+                this.defaultPoster ="http://localhost:8080/img/WatchOut.1e172f0c.png";
+                this.user = await this.getUserByAuthorId(val.author_id);
             }
         },
     }

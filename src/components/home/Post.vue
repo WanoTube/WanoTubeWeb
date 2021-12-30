@@ -1,7 +1,6 @@
 <template>
     <div class="container post-card" style="padding: 0; " v-cloak>
         <div class="card non-border" style="background-color: transparent;">
-            
             <div class="card-body" style="padding: 0">
                 <div @click="linkToCommentView" style="cursor: pointer">
                     <LazyVideo :src="src" :class="'thumbnail-video'" />
@@ -25,7 +24,6 @@ export default {
     data(){
         return {
             src: '',
-            routerLinkToCommentView: '',
             isViewed: false,
             socket: io("http://localhost:8000", {
                 withCredentials: true,
