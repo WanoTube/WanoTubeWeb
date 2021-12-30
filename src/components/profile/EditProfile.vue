@@ -384,7 +384,7 @@ export default {
                 this.firstName = user.first_name;
                 this.lastName = user.last_name;
                 this.phoneNumber = user.phone_number;
-                // this.birthDate = user.birth_date;
+                this.birthDate = new Date(user.birth_date).toISOString().slice(0,10);
                 this.country = user.country;
                 this.description = user.description;
             }
