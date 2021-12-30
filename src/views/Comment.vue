@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-white">
         <br><br><br>
         <NavBar></NavBar>
         <div class="row comment-view">
@@ -56,7 +56,6 @@
                                             </filter>
                                             </defs>
                                         </svg>
-                                        <!-- <img id="like-button" class="button" @click="likeFunction" src="../assets/images/Like-Icon.svg" width="48px" height="48px"> -->
                                         <span class="numbers">{{likes}}</span>
                                     </div>
                                     <div class="col text-center">
@@ -143,7 +142,8 @@ export default {
             videoUrl: '',
             defaultPoster: '',
             user: {},
-            prevRoute: null
+            prevRoute: null,
+            currentUser: {}
         }
     },
     methods: {
@@ -191,18 +191,61 @@ export default {
         commentFunction(){
             this.$refs.commentSection.commentFunction();
         },
-        async likeFunction(){
-            var element = document.getElementById("like-button");
-            element.classList.add("active-button");
-            if (this.likes == 0)
-            {
-                $( "span.liked-text" ).toggleClass( "press", 1000 );
-                await new Promise(r => setTimeout(r, 1000));
-                $( "span.liked-text" ).removeClass( "press");
-                this.likes = this.likes + 1;
+        async likeVideo() {
+            if (!this.currentUser) 
+                return;
+            try {
+                const formData = {
+                    target_id: this.$route.params.id,
+                    author_id: this.currentUser._id
+                }
+                const { data } = await VideoRepository.likeVideo(formData);
+                if (data) {
+                    let dataObject = convertJSONToObject(data);
+                    console.log("dataObject: ", dataObject)
+                    if (!dataObject.details) {
+                        if (dataObject) {
+                            return dataObject;
+                        }
+                        return null;
+                    }
+                    return null;
+                } 
+                return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
             }
-            else
-                this.likes = this.likes -1;
+        },
+        async getAllLikes() {
+            try {
+                const { data } = await VideoRepository.getVideoTotalLikes(this.$route.params.id);
+                return data;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
+        async likeFunction(){
+            try {
+                await this.likeVideo();
+                var element = document.getElementById("like-button");
+                element.classList.add("active-button");
+                if (this.likes == 0) {
+                    $( "span.liked-text" ).toggleClass( "press", 1000 );
+                    await new Promise(r => setTimeout(r, 1000));
+                    $( "span.liked-text" ).removeClass( "press");
+                    this.likes = this.likes + 1;
+                }
+                else
+                    this.likes = this.likes -1;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
         }
     },
     mounted(){
@@ -217,6 +260,8 @@ export default {
     },
     async created() {
         this.video = await this.getVideo();
+        this.currentUser = JSON.parse(localStorage.getItem('user'));
+        this.likes = await this.getAllLikes();
     },
     watch: {
         video: async function (val) {

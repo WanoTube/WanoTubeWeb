@@ -34,6 +34,34 @@ function deleteVideo (payload) {
     return Repository.post(`${resource}/delete/`, payload);
 }
 
+function getVideoLikes (videoId) {
+    return Repository.get(`${resource}/${videoId}/likes/`);
+}
+
+function getVideoTotalLikes (videoId) {
+    return Repository.get(`${resource}/${videoId}/total-likes/`);
+}
+
+function likeVideo (payload) {
+    return Repository.post(`${resource}/like/`, payload);
+}
+
+function getVideoComments (videoId) {
+    return Repository.get(`${resource}/${videoId}/comments/`);
+}
+
+function getVideoTotalComments (videoId) {
+    return Repository.get(`${resource}/${videoId}/total-comments/`);
+}
+
+function commentVideo (payload) {
+    return Repository.post(`${resource}/comment/`, payload);
+}
+
+function deleteComment (payload) {
+    return Repository.post(`${resource}/comment/delete`, payload);
+}
+
 export default {
     get,
     getAllPublicVideoInfos,
@@ -42,5 +70,12 @@ export default {
     getVideoById,
     uploadVideo,
     updateVideo,
-    deleteVideo
+    deleteVideo,
+    getVideoLikes,
+    getVideoTotalLikes,
+    likeVideo,
+    getVideoComments,
+    getVideoTotalComments,
+    commentVideo,
+    deleteComment
 }
