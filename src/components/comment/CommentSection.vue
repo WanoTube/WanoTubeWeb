@@ -92,11 +92,12 @@ export default {
            if(this.currentComment === "")  return
             //create new comment and clear input after that
             const newComment = {
-                id: this.allComments.length,
+                id: this.allComments.length +1,
                 name: "INT01–刘宇",
                 username: "@into1_liuyu_",
                 caption: this.currentComment,
-                bg_music: "Crazy Frog"
+                bg_music: "Crazy Frog",
+                filename:"man (2).png"
             }
             this.allComments.push(newComment)
             this.currentComment = ""
