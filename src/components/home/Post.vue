@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div class="card-text container non-border">
-                <PostCaption isPost="true" avatar_img="Liuyu.png" name="INTO1–刘宇" caption="Relatively cool" bg_music="Crazy Frog"></PostCaption>
+                <PostCaption isPost="true" :avatar_img="video.user.avatar" :name="video.user.username" :caption="video.description" bg_music="Crazy Frog"></PostCaption>
             </div>
         </div>
         

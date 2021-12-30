@@ -9,6 +9,7 @@
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
 const VideoRepository = RepositoryFactory.get('video')
+const UsersRepository = RepositoryFactory.get('users')
 
 import Post from './Post.vue'
 export default {
@@ -29,12 +30,11 @@ export default {
                     for (let index in dataObject) {
                         let video = dataObject[index];
                         if (video) {
-                            if (video.url) {
-                                console.log(video.author_id)
+                            if (video.url && video.author_id) {
+                                video.user = await this.getUserByAuthorId(video.author_id);
                                 this.videos.push(video)
                             }
                         }
-                        
                     }
                 } else {
                     const errorString = JSON.stringify(dataObject.details)
@@ -46,34 +46,30 @@ export default {
                 }
             }
         },
-        async getUserByAuthorId() {
-            // dùng query hơn là params
+        async getUserByAuthorId(authorId) {
+            try {
+                const { data } = await UsersRepository.getUser(authorId);
+                const dataObject = convertJSONToObject(data)
+                if (!dataObject.details) {
+                    if (dataObject) {
+                        let user = dataObject.user;
+                        user.username = dataObject.username;
+                        return user;
+                    }
+                    return null;
+                } else {
+                    const errorString = JSON.stringify(dataObject.details)
+                    console.log(errorString)
+                }
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
         }
     },
     created: async function() {
-        try {
-            const { data } = await VideoRepository.getAllPublicVideoInfos();
-            const dataObject = convertJSONToObject(data)
-            if (!dataObject.details) {
-                for (let index in dataObject) {
-                    let video = dataObject[index];
-                    if (video) {
-                        if (video.url) {
-                            console.log(video.author_id)
-                            this.videos.push(video)
-                        }
-                    }
-                    
-                }
-            } else {
-                const errorString = JSON.stringify(dataObject.details)
-                console.log(errorString)
-            }
-        } catch (error) {
-            if (error.response) {
-                alert(error.response.data);
-            }
-        }
+        this.getVideos();
     },
 }
 </script>
