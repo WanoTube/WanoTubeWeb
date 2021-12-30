@@ -18,8 +18,7 @@
                     <button width="20px" height="20px" class="icon-button" @click="showSuggestions">
                         <i class="fa fa-at"></i>
                     </button>
-                    <form class="d-flex w-100" style="flex: 1; margin: 10px" @submit="onFormSubmit">
-                        <!-- <img src="../../assets/images/Search-Icon.svg" class="icon" width="20px" height="20px"> -->
+                    <form class="d-flex w-100" style="flex: 1; margin: 10px" @submit="postComment">
                         <div class="d-flex form-control input-container comment-bar">
                             <input 
                             
@@ -71,14 +70,12 @@
 <style src="../../assets/styles/comment-section.css"></style>
 <style src="../../assets/styles/comment-bar.css"></style>
 <script>
-// import CommentBar from '../common/CommentBar.vue'
 import Comment from '../comment/Comment.vue'
 import Vue from 'vue'
 import $ from 'jquery'
 
 export default {
     components: {
-        // CommentBar,
         Comment
     },
     methods: {
@@ -111,25 +108,6 @@ export default {
         scrollToEnd() {
             const content = this.$refs.commentContainer;
             content.scrollTop = content.scrollHeight
-        },
-        onFormSubmit(e) {   
-            if(this.currentComment === "" || !this.isSendComment)  return
-            //create new comment and clear input after that
-            const newComment = {
-                id: this.allComments.length,
-                name: "INT01–刘宇",
-                username: "@into1_liuyu_",
-                caption: this.currentComment,
-                bg_music: "Crazy Frog"
-            }
-            this.allComments.push(newComment)
-            this.currentComment = ""
-            
-            //scrol to bottom after submitting comment
-            this.$nextTick(() => {
-                this.scrollToEnd()
-            })
-            this.$parent.$data.comments = this.allComments.length;
         },
         showSuggestions() {
             this.isHidden = !this.isHidden
