@@ -79,8 +79,7 @@ export default {
 			try {
 				const { data } = await UsersRepository.login(loginInfo);
 				const dataObject = convertJSONToObject(data)
-				console.log(dataObject)
-				if (!dataObject.error) {
+				if (!dataObject.details) {
 					const user = dataObject.user;
 					const isAdmin = user.is_admin;
 					localStorage.setItem( 'token', JSON.stringify(dataObject.token) );
@@ -100,11 +99,13 @@ export default {
 					}
 				} else {
 					// TO-DO: Validation
-					const errorString = JSON.stringify(dataObject.error)
+					const errorString = JSON.stringify(dataObject.details)
 					console.log(errorString)
 				}
 			} catch (error) {
-				console.log(error)
+				if (error.response) {
+					alert(error.response.data);
+				}
 			}
 		},
 		register() {

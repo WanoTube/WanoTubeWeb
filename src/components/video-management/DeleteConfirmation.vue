@@ -71,18 +71,24 @@ export default {
                 url: this.deleteDialog.video.url, 
                 id: this.deleteDialog.video._id
             };
-            const { data } = await VideoRepository.deleteVideo(deleteInfo);
-            if (data) {
-                const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
-                    if (dataObject.deletedCount == 0)
-                        alert("Cannot delete this video! ");
-                    this.closeDialog();
-                } else {
-                    alert(dataObject.error);
+            try {
+                const { data } = await VideoRepository.deleteVideo(deleteInfo);
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    if (!dataObject.details) {
+                        if (dataObject.deletedCount == 0)
+                            alert("Cannot delete this video! ");
+                        this.closeDialog();
+                    } else {
+                        alert(dataObject.details);
+                    }
+                }  else {
+                    alert("Cannot delete this video! ");
                 }
-            }  else {
-                alert("Cannot delete this video! ");
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
             }
         },
         closeDialog() {

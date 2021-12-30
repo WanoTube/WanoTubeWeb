@@ -141,15 +141,21 @@ export default {
             const username = user.username;
             this.username = username;
             if (this.$route.params.username == username) {
-                const { data } = await VideoRepository.getAllVideoInfosWithUserId(author_id);
-                if (data) {
-                    const dataObject = convertJSONToObject(data);
-                    if (!dataObject.error) {
-                        return dataObject;
-                    }
+                try {
+                    const { data } = await VideoRepository.getAllVideoInfosWithUserId(author_id);
+                    if (data) {
+                        const dataObject = convertJSONToObject(data);
+                        if (!dataObject.details) {
+                            return dataObject;
+                        }
+                        return null;
+                    } 
                     return null;
-                } 
-                return null;
+                } catch (error) {
+                    if (error.response) {
+                        alert(error.response.data);
+                    }
+                }
             }
         },
         handleRowClick(row) {

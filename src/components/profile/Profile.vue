@@ -83,7 +83,9 @@ export default {
                 } 
                 return null;
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
                 return null;
             }
         },
@@ -96,7 +98,9 @@ export default {
                 } 
                 return null;
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
                 return null;
             }
         },
@@ -109,7 +113,9 @@ export default {
                 } 
                 return null;
             } catch (error) {
-                console.log(error)
+                if (error.response) {
+                    alert(error.response.data);
+                }
                 return null;
             }
         },
@@ -146,7 +152,9 @@ export default {
                 });
             })
         } catch (error) {
-            console.log("ERROR: ", error);
+            if (error.response) {
+                alert(error.response.data);
+            }
         }
     }
 }

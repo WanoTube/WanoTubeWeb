@@ -86,15 +86,21 @@ export default {
     },
     methods: {
         async getAllVideos () {
-            const { data } = await UserRepository.get();
-            if (data) {
-                const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
-                    return dataObject;
-                }
+            try {
+                const { data } = await UserRepository.get();
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    if (!dataObject.details) {
+                        return dataObject;
+                    }
+                    return null;
+                } 
                 return null;
-            } 
-            return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
         },
         onDeleteButtonClick(row) {
             console.log(row)
@@ -107,7 +113,9 @@ export default {
         try {
             this.videos = await this.getAllVideos();
         } catch (error) {
-            console.log(error)
+            if (error.response) {
+                alert(error.response.data);
+            }
         }
     },
 }

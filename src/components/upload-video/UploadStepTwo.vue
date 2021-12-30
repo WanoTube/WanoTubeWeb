@@ -151,17 +151,23 @@ export default {
                 formData.append("video", this.video);
                 formData.append("author_id", user._id);
 
-                const { data } = await VideoRepository.uploadVideo(formData);
-                if (data) {
-                    const dataObject = convertJSONToObject(data);
-                    console.log(dataObject);
-                    if (!dataObject.error) {
-                        return dataObject;
-                    } else {
-                        return null;
+                try {
+                    const { data } = await VideoRepository.uploadVideo(formData);
+                    if (data) {
+                        const dataObject = convertJSONToObject(data);
+                        console.log(dataObject);
+                        if (!dataObject.details) {
+                            return dataObject;
+                        } else {
+                            return null;
+                        }
+                    }
+                    return null;
+                } catch (error) {
+                    if (error.response) {
+                        alert(error.response.data);
                     }
                 }
-                return null;
             } else {
                 alert("Please input all the require fields")
                 return null;

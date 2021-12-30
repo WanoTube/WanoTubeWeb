@@ -111,15 +111,21 @@ export default {
     },
     methods: {
         async getVideo() {
-            const { data } = await VideoRepository.getVideoById(this.video_id);
-            if (data) {
-                const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
-                    return dataObject;
-                }
+            try {
+                const { data } = await VideoRepository.getVideoById(this.video_id);
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    if (!dataObject.details) {
+                        return dataObject;
+                    }
+                    return null;
+                } 
                 return null;
-            } 
-            return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
         },
         backToVideos() {
             const user = JSON.parse(localStorage.getItem('user'));
@@ -150,14 +156,14 @@ export default {
                 };
                 const { data } = await VideoRepository.updateVideo(updateVideoInfo);
                 const dataObject = convertJSONToObject(data)
-                if (!dataObject.error) {
+                if (!dataObject.details) {
                     this.isLoading = false;
                     this.info = data;
                     console.log(dataObject);
                     this.snackbar = true;
                     this.snackbarText = 'Updated successfully'
                 } else {
-                    const errorString = JSON.stringify(dataObject.error)
+                    const errorString = JSON.stringify(dataObject.details)
                     console.log(errorString)
                 }
             }

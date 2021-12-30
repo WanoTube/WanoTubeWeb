@@ -135,15 +135,21 @@ export default {
     },
     methods: {
         async getVideo() {
-            const { data } = await VideoRepository.getVideoById(this.$route.params.id);
-            if (data) {
-                const dataObject = convertJSONToObject(data);
-                if (!dataObject.error) {
-                    return dataObject;
-                }
+            try {
+                const { data } = await VideoRepository.getVideoById(this.$route.params.id);
+                if (data) {
+                    const dataObject = convertJSONToObject(data);
+                    if (!dataObject.details) {
+                        return dataObject;
+                    }
+                    return null;
+                } 
                 return null;
-            } 
-            return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
         },
         commentFunction(){
             this.$refs.commentSection.commentFunction();

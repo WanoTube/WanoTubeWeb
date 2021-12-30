@@ -21,24 +21,28 @@ export default {
         Post
     },
     created: async function() {
-
-        const { data } = await VideoRepository.getAllPublicVideoInfos();
-        const dataObject = convertJSONToObject(data)
-        if (!dataObject.error) {
-            for (let index in dataObject) {
-                let video = dataObject[index];
-                if (video) {
-                    if (video.url) {
-                        this.videos.push(video)
+        try {
+            const { data } = await VideoRepository.getAllPublicVideoInfos();
+            const dataObject = convertJSONToObject(data)
+            if (!dataObject.details) {
+                for (let index in dataObject) {
+                    let video = dataObject[index];
+                    if (video) {
+                        if (video.url) {
+                            this.videos.push(video)
+                        }
                     }
+                    
                 }
-                
+            } else {
+                const errorString = JSON.stringify(dataObject.details)
+                console.log(errorString)
             }
-        } else {
-            const errorString = JSON.stringify(dataObject.error)
-            console.log(errorString)
+        } catch (error) {
+            if (error.response) {
+                alert(error.response.data);
+            }
         }
-        const key = 'into1_617a508f7e3e601cad80531d_1638728684.webm';
     },
 }
 </script>
