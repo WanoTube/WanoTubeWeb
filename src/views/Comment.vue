@@ -91,7 +91,6 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="d-none d-sm-block">
                             <CommentSection ref="commentSection"></CommentSection>
                         </div>
@@ -198,7 +197,6 @@ export default {
                 const { data } = await VideoRepository.likeVideo(formData);
                 if (data) {
                     let dataObject = convertJSONToObject(data);
-                    console.log("dataObject: ", dataObject)
                     if (!dataObject.details) {
                         if (dataObject) {
                             return dataObject;
@@ -217,6 +215,16 @@ export default {
         async getAllLikes() {
             try {
                 const { data } = await VideoRepository.getVideoTotalLikes(this.$route.params.id);
+                return data;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
+        async getAllComments() {
+            try {
+                const { data } = await VideoRepository.getVideoTotalComments(this.$route.params.id);
                 return data;
             } catch (error) {
                 if (error.response) {
@@ -258,6 +266,7 @@ export default {
         this.video = await this.getVideo();
         this.currentUser = JSON.parse(localStorage.getItem('user'));
         this.likes = await this.getAllLikes();
+        this.comments = await this.getAllComments();
     },
     watch: {
         video: async function (val) {

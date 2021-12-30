@@ -71,14 +71,91 @@
 <style src="../../assets/styles/comment-bar.css"></style>
 <script>
 import Comment from '../comment/Comment.vue'
-import Vue from 'vue'
-import $ from 'jquery'
+
+import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
+import { convertJSONToObject } from '../../utils/utils'
+
+const VideoRepository = RepositoryFactory.get('video')
 
 export default {
     components: {
         Comment
     },
+    data: function(){
+       return {
+           currentUser: {},
+           isHidden: true,
+           isSendComment: false,
+           currentComment: "",
+           allComments: [],
+           allUsernames: [
+               { id: 1, username: "@ndt_ngan" },
+               { id: 2, username: "@nl_bach" },
+               { id: 3, username: "@ct_dung" },
+               { id: 4, username: "@th_toan" },
+               { id: 5, username: "@nc_thanh" },
+               { id: 6, username: "@pn_thinh" },
+               { id: 7, username: "@nn_long" },
+               { id: 8, username: "@ub_tien" },
+               { id: 9, username: "@tm_hieu" },
+               { id: 10, username: "@tp_duy" },
+               { id: 11, username: "@dnu_phuong" },
+               { id: 12, username: "@ntq_ngan" },
+           ],
+           suggestedUsernames: {
+               all: [],
+               current: 0,
+           }
+        }
+    },
     methods: {
+        async commentVideo() {
+            if (!this.currentUser) 
+                return;
+            try {
+                const formData = {
+                    video_id: this.$route.params.id,
+                    author_id: this.currentUser._id
+                }
+                const { data } = await VideoRepository.commentVideo(formData);
+                if (data) {
+                    let dataObject = convertJSONToObject(data);
+                    console.log("dataObject: ", dataObject)
+                    if (!dataObject.details) {
+                        if (dataObject) {
+                            return dataObject;
+                        }
+                        return null;
+                    }
+                    return null;
+                } 
+                return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
+        async getAllVideoComments() {
+             try {
+                const { data } = await VideoRepository.getVideoComments(this.$route.params.id);
+                if (data) {
+                    let dataObject = convertJSONToObject(data);
+                    if (!dataObject.details) {
+                        if (dataObject.url) {
+                            return dataObject;
+                        }
+                        return null;
+                    }
+                    return null;
+                } 
+                return null;
+            } catch (error) {
+                if (error.response) {
+                    alert(error.response.data);
+                }
+            }
+        },
         commentFunction(){
             this.$nextTick(() =>{
                 const commentInput = this.$refs.commentInput
@@ -168,7 +245,6 @@ export default {
                 return
             }
 
-
             if(e.key === "ArrowUp") this.suggestedUsernames.current --
             if(e.key === "ArrowDown") this.suggestedUsernames.current ++
 
@@ -181,94 +257,10 @@ export default {
             })
         }
     },
-    mounted() {
-        window.addEventListener('keydown', this.onSelectAnotherUsername)
-
-        //scrol to bottom at first render
-        // this.$nextTick(() => this.scrollToEnd())
-    },
-    data: function(){
-       return {
-           isHidden: true,
-           isSendComment: false,
-           currentComment: "",
-           allComments: [
-               {
-                   id: "1",
-                   name: "Daniel Zhou",
-                   username: "@chaukhavu",
-                   caption: "Đẹp quá ạ",
-                   bg_music: "Crazy Frog",
-                   filename:"employee.png"
-               },
-               {
-                   id: "2",
-                   name: "Heo Bối",
-                   username: "@heoboi1505",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Dog",
-                   filename:"hipster.png"
-               },
-               {
-                   id: "3",
-                   name: "Nguyễn Lê Bách",
-                   username: "@nlbach",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Pig",
-                   filename:"man.png"
-               },
-               {
-                   id: "4",
-                   name: "Chung Thái Dung",
-                   username: "@ctdung",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Cat",
-                   filename:"woman.png"
-               },
-               {
-                   id: "5",
-                   name: "Nguyễn Chí Thành",
-                   username: "@ncthanh",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Cat",
-                   filename:"man (1).png"
-               },
-               {
-                   id: "6",
-                   name: "Uyên Phương",
-                   username: "@dnuyenphuong",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Cat",
-                   filename:"man (2).png"
-               },
-               {
-                   id: "7",
-                   name: "Tôi là tôi",
-                   username: "@toilatoi?",
-                   caption: "Super Cool",
-                   bg_music: "Crazy Bear",
-                   filename:"woman (4).png"
-               }
-           ],
-           allUsernames: [
-               { id: 1, username: "@ndt_ngan" },
-               { id: 2, username: "@nl_bach" },
-               { id: 3, username: "@ct_dung" },
-               { id: 4, username: "@th_toan" },
-               { id: 5, username: "@nc_thanh" },
-               { id: 6, username: "@pn_thinh" },
-               { id: 7, username: "@nn_long" },
-               { id: 8, username: "@ub_tien" },
-               { id: 9, username: "@tm_hieu" },
-               { id: 10, username: "@tp_duy" },
-               { id: 11, username: "@dnu_phuong" },
-               { id: 12, username: "@ntq_ngan" },
-           ],
-           suggestedUsernames: {
-               all: [],
-               current: 0,
-           }
-        }
+    async mounted() {
+        window.addEventListener('keydown', this.onSelectAnotherUsername);
+        this.allComments = await this.getAllVideoComments();
+        this.currentUser = JSON.parse(localStorage.getItem('user'));
     }
 }
 </script>
