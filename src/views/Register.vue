@@ -172,7 +172,6 @@
 								}
 							}
 						}
-						// this.$router.push({ path: 'home' })
 					} else {
 						const message = dataObject.details[0].message;
 						console.log(message)
