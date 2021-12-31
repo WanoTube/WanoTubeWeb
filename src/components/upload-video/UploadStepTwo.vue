@@ -109,6 +109,7 @@ export default {
                 let vm = this;
                 let reader = new FileReader();
                 reader.onload = function(e) {
+
                     vm.thumbnailVideo = e.target.result;
                     // The file reader gives us an ArrayBuffer:
                     let buffer = e.target.result;
@@ -118,12 +119,16 @@ export default {
                     let url = URL.createObjectURL(blob);
                     var vid = document.getElementById('video-drag')
                     vid.src = url
+
                     vid.onloadedmetadata = function() {
                         const seconds = this.duration;
+                        let duration = "";
+
                         if (seconds < 3600)
-                            vm.duration = new Date(seconds * 1000).toISOString().substr(14, 5)
+                            duration = new Date(seconds * 1000).toISOString().substr(14, 5)
                         else 
-                            vm.duration = new Date(seconds * 1000).toISOString().substr(11, 8);
+                            duration = new Date(seconds * 1000).toISOString().substr(11, 8);
+                        vm.duration = duration;
                     };
                     vid.load()
                 }
@@ -152,7 +157,7 @@ export default {
             }
         },
         async uploadVideo() {
-            if (this.title && this.video) {
+            if (this.title && this.video && this.duration) {
                 let formData = new FormData();
                 const user = JSON.parse(localStorage.getItem('user'));
 

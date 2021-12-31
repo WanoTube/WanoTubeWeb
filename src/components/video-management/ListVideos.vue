@@ -30,7 +30,7 @@
                     class="elevation-1"
                 >
                     <template v-slot:item.title="{ item }">
-                        <div class="card" style="width: 300px; border: 0">
+                        <div class="card" style="width: 300px; border: 0; background-color: transparent">
                             <div class="row no-gutters">
                                 <div class="col-sm-5">
                                     <video

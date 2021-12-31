@@ -1,36 +1,41 @@
 <template>
   <div>
-    <h1>Checks</h1>
+    <h3>Checks</h3>
     <p>
-      We'll check your video for issues that may restrict its visibility and
-      then you will have the opportunity to fix issues before publishing your
-      video.
+      Checking if your edited video contains any copyright content.
     </p>
+    <h5>
+      <b>Copyright</b>
+      <small style="margin-left: 10px"></small>
+    </h5>
+    <div v-if="recResult">
+      <!-- <b>Title: </b> {{ videoUploadResult.title }}
+      <br />
+      <b>Description: </b> {{ videoUploadResult.description }}
+      <br /> -->
+      <div class="card">
+        <div class="card-body">
+          <b>Song Title: </b>
+            {{ recResult.title }}
+            <br />
 
-    <h2>Copyright</h2>
-    <p>Checking if your edited video contains any copyright content.</p>
-    <b>Title: </b> {{ videoUploadResult.title }}
-    <br />
-    <b>Description: </b> {{ videoUploadResult.description }}
-    <br />
-    <!-- <b>Recognize result: </b> {{videoUploadResult.recResult}} -->
+            <b>Album: </b>
+            {{ recResult.album }}
+            <br />
 
-    <b>Song Title: </b>
-    {{ recResult.title }}
-    <br />
-
-    <b>Album: </b>
-    {{ recResult.album }}
-    <br />
-
-    <b>Song artists: </b>
-    {{ recResult.songArtist }}
-    <br />
-    <br />
+            <b>Song artists: </b>
+            {{ recResult.songArtist }}
+            <br />
+            <br/>
+          </div>
+      </div>
+    </div>
+    <div v-else>
+      <p>No issues found</p>
+    </div>
     <v-btn color="primary" @click="onContinue">
       Complete
     </v-btn>
-
     <v-btn text @click="onReturn">
       Back
     </v-btn>
