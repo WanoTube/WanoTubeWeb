@@ -18,57 +18,97 @@
 								</div>
 							</div>
 							<form @submit.prevent="submit" class="signin-form">
-								<div class="d-flex">
-									<v-icon style="margin-right: 10px">mdi-account</v-icon>
-									<v-text-field
-										v-model="username" 
-										label="Username"
-										placeholder="Placeholder"
+								<v-row  justify="center">
+									<v-col
+										cols="6"
+										md="6"
 									>
-									</v-text-field>
-								</div>
-								<div class="">
-									<v-menu
-										ref="menu"
-										v-model="menu"
-										:close-on-content-click="false"
-										transition="scale-transition"
-										offset-y
-										min-width="auto"
+										<v-text-field
+											v-model="firstName" 
+											label="First Name"
+											placeholder="Your first name"
 										>
-											<template v-slot:activator="{ on, attrs }">
-												<v-text-field
+										</v-text-field>
+									</v-col> 
+									<v-col
+										cols="6"
+										md="6"
+									>
+										<v-text-field
+										v-model="lastName" 
+										label="Last Name"
+										placeholder="Your last name"
+										>
+										</v-text-field>
+									</v-col> 
+								</v-row>
+								<v-row  justify="center">
+									<v-col
+										cols="12"
+										md="4"
+									>
+										<v-text-field
+											v-model="username" 
+											label="Username"
+											placeholder="Your username"
+										>
+										</v-text-field>
+									</v-col> 
+								</v-row>
+								<v-row  justify="center">
+									<v-col
+										cols="12"
+										md="4"
+									>
+										<v-menu
+											ref="menu"
+											v-model="menu"
+											:close-on-content-click="false"
+											transition="scale-transition"
+											offset-y
+											min-width="auto"
+											>
+												<template v-slot:activator="{ on, attrs }">
+													<v-text-field
+													v-model="date"
+													label="Date of Birth"
+													readonly
+													v-bind="attrs"
+													v-on="on"
+													></v-text-field>
+												</template>
+											<v-date-picker
 												v-model="date"
-												label="Date of Birth"
-												prepend-icon="mdi-calendar"
-												readonly
-												v-bind="attrs"
-												v-on="on"
-												></v-text-field>
-											</template>
-										<v-date-picker
-											v-model="date"
-											color="pink"
-											:active-picker.sync="activePicker"
-											:max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
-											min="1950-01-01"
-											@change="save"
-										></v-date-picker>
-									</v-menu>
-								</div>
-								<div class="d-flex">
-									<v-icon style="margin-right: 10px">mdi-email</v-icon>
-									<v-text-field
-										v-model="email" 
-										label="Email"
-										placeholder="Placeholder"
-									></v-text-field>
-								</div>
-								<div class="d-flex" style="margin-bottom: 20px">
-									<v-icon style="margin-right: 10px">mdi-lock</v-icon>
-									<v-text-field
+												color="pink"
+												:active-picker.sync="activePicker"
+												:max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+												min="1950-01-01"
+												@change="save"
+											></v-date-picker>
+										</v-menu>
+									</v-col> 
+								</v-row>
+								<v-row  justify="center">
+									<v-col
+										cols="12"
+										md="4"
+									>
+										<div class="d-flex">
+											<v-text-field
+												v-model="email" 
+												label="Email"
+												placeholder="Your email"
+											></v-text-field>
+										</div>
+									</v-col> 
+								</v-row>
+								<v-row  justify="center">
+									<v-col
+										cols="12"
+										md="4"
+									>
+										<v-text-field
 										v-model="password"
-										:append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
 										:rules="[rules.required, rules.min]"
 										:type="show1 ? 'text' : 'password'"
 										name="input-10-1"
@@ -77,7 +117,8 @@
 										counter
 										@click:append="show1 = !show1"
 									></v-text-field>
-								</div>
+									</v-col> 
+								</v-row>
 								<div class="form-group">
 									<button type="submit" class="form-control btn btn-primary submit px-3">Sign Up</button>
 								</div>
@@ -122,6 +163,8 @@
 	export default {
 		data () {
 			return {
+				firstName: '',
+				lastName: '',
 				info: [],
 				isLoading: false,
 				progress: 50,
@@ -144,6 +187,8 @@
 			async submit() {
 				this.isLoading = true;
 				const signUpInfo = { 
+					first_name: this.firstName,
+					last_name: this.lastName,
 					username: this.username,
 					email: this.email, 
 					password: this.password,
@@ -174,7 +219,7 @@
 						}
 					} else {
 						const message = dataObject.details[0].message;
-						console.log(message)
+						alert(message)
 					}
 				} catch (error) {
 					if (error.response) {
