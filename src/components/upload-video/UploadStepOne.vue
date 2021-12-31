@@ -35,14 +35,18 @@ export default {
         e.preventDefault();
         let files = e.dataTransfer.files;
         this.mulableVideo = files[0];
-        this.$emit('videoWasUpdated', this.mulableVideo)
-        this.$emit('onContinue', 2)
+        if (this.mulableVideo) {
+          this.$emit('videoWasUpdated', this.mulableVideo)
+          this.$emit('onContinue', 2)
+        }
       },
       onChange(e) {
         let files = e.target.files;
         this.mulableVideo = files[0];
-        this.$emit('videoWasUpdated', this.mulableVideo)
-        this.$emit('onContinue', 2)
+        if (this.mulableVideo) {
+          this.$emit('videoWasUpdated', this.mulableVideo)
+          this.$emit('onContinue', 2)
+        }
       },
       onContinue() {
         this.$emit('onContinue', 2)
