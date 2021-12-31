@@ -2,7 +2,7 @@
     <div>
         <NavBar></NavBar>
         <br><br><br><br>
-        <div class="container">
+        <div class="container"  :key="$route.fullPath">
             <div class="row ">
                 <div class="col-sm-4  avatar-profile">
                     <img 
@@ -22,9 +22,9 @@
                             <h4 class="username " style="margin-bottom: 0; padding-bottom: 0">{{username}}</h4>
                         </div>
                         <div class="col-sm-9">
-                            <button type="button" class="btn btn-outline-secondary" @click="navigateToEditProfile">
-                           Edit Profile
-                        </button>
+                            <button v-if="currentUsername == username" type="button" class="btn btn-outline-secondary" @click="navigateToEditProfile">
+                                Edit Profile
+                            </button>
                         </div>
                     </div>
                     <div style="margin-top: 15px">
@@ -67,7 +67,8 @@ export default {
             username: '',
             videos: [],
             videoSource: "http://localhost:8000/v1/videos/stream/",
-            avatarSource: "http://localhost:8000/v1/users/avatar/"
+            avatarSource: "http://localhost:8000/v1/users/avatar/",
+            currentUsername: ''
         }
     },
     methods: {
@@ -128,11 +129,11 @@ export default {
         },
         async getVideos() {
             const requestedUsername = this.$route.params.username;
-            const user = localStorage.getItem('user');
+            const user = JSON.parse(localStorage.getItem('user'));
             const userId = this.user._id;
             if (user) {
-                const currentUsername = user.username;
-                if (requestedUsername == currentUsername) {
+                this.currentUsername = user.username;
+                if (requestedUsername == this.currentUsername) {
                     // get all videos of this user
                     return await this.getAllVideosByUserId(userId);
                 } else {
@@ -162,7 +163,22 @@ export default {
                 alert(error.response.data);
             }
         }
-    }
+    },
+    watch: {
+        '$route.params.username':{
+            handler: function() {
+                this.$nextTick(() => {
+                    // this.show = true
+                    console.log('re-render start')
+                    this.$nextTick(() => {
+                        console.log('re-render end')
+                    })
+                })
+            },
+            deep: true,
+            immediate: true
+        }
+    },
 }
 </script>
 <style>
