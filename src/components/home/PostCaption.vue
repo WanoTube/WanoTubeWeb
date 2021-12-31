@@ -1,12 +1,14 @@
 <template>
     <div class="d-flex">
-        <div class="avatar">
-            <img 
-                :src="`http://localhost:8000/v1/users/avatar/${avatar_img}`" 
-                width="41px" 
-                height="41px" 
-                class="img-responsive rounded-circle"/>
-        </div>
+        <router-link :to="`/${username}/profile`">
+            <div class="avatar">
+                <img 
+                    :src="`http://localhost:8000/v1/users/avatar/${avatar_img}`" 
+                    width="41px" 
+                    height="41px" 
+                    class="img-responsive rounded-circle"/>
+            </div>
+        </router-link>
         <div>
             <div class="row">
                 <div class="col" style="padding-bottom: 0">
