@@ -5,7 +5,7 @@
     <div class="container">
          <v-btn
             tile
-            color="white"
+            color="transparent"
             @click="backToVideos"
             >
             <v-icon left>
@@ -56,6 +56,25 @@
                         placeholder="Tell viewers about your video"
                         value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                     ></v-textarea>
+                     <div class="privacy">
+                        <h5><b>Who can see this post</b></h5>
+                        <div class="flex-center">
+                        <v-radio-group row v-model="privacy">
+                                <v-radio
+                                    :label="`Public`"
+                                    :value="0"
+                                ></v-radio>
+                                <v-radio
+                                    :label="`Private`"
+                                    :value="1"
+                                ></v-radio>
+                                <v-radio
+                                    :label="`Friends`"
+                                    :value="2"
+                                ></v-radio>
+                            </v-radio-group>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4 ">
@@ -71,6 +90,7 @@
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
     <div>
@@ -106,7 +126,8 @@ export default {
             changeInputCount: 0,
             snackbar: false,
             snackbarText: `Hello, I'm a snackbar`,
-            snackbarTimeOut: 3000
+            snackbarTimeOut: 3000,
+            privacy: 0
         }
     },
     methods: {
@@ -151,7 +172,8 @@ export default {
                 const updateVideoInfo = { 
                     id: this.video._id, 
                     title: this.title, 
-                    description: this.description
+                    description: this.description,
+                    privacy: this.privacy
                 };
                 const { data } = await VideoRepository.updateVideo(updateVideoInfo);
                 const dataObject = convertJSONToObject(data)
@@ -172,6 +194,7 @@ export default {
         this.video = await this.getVideo();
         if (this.video) {
             this.title = this.video.title;
+            this.privacy = this.video.visibility;
             this.description = this.video.description;
         }
     },
@@ -237,5 +260,11 @@ export default {
 .padding-right-0 {
     padding: 0 0 !important;
     margin: 0 0 !important;
+}
+</style>
+
+<style>
+.v-input--selection-controls .v-input__slot > .v-label, .v-input--selection-controls .v-radio > .v-label{
+    margin: 0 !important;
 }
 </style>

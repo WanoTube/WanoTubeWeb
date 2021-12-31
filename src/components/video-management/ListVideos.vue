@@ -112,10 +112,10 @@ export default {
         //       text: 'Restriction', 
         //       value: '' 
         //   },
-          { 
-              text: 'Views', 
-              value: 'total_views',
-          },
+        //   { 
+        //       text: 'Views', 
+        //       value: 'total_views',
+        //   },
           { 
               text: 'Comments', 
               value: 'total_comments'

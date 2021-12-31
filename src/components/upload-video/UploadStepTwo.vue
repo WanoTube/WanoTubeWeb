@@ -19,27 +19,45 @@
                         label="Description"
                         value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                     ></v-textarea>
-                    <div class="d-flex justify-content-end">
-                        <v-btn
-                            color="primary"
-                            @click="onContinue"
-                        >
-                            Upload
-                        </v-btn>
-
-                        <v-btn 
-                            text
-                            @click="onReturn"
-                        >
-                            Back
-                        </v-btn>
+                    <div class="privacy">
+                        <h5><b>Who can see this post</b></h5>
+                        <div class="flex-center">
+                        <v-radio-group row v-model="privacy">
+                                <v-radio
+                                    :label="`Public`"
+                                    :value="0"
+                                ></v-radio>
+                                <v-radio
+                                    :label="`Private`"
+                                    :value="1"
+                                ></v-radio>
+                                <v-radio
+                                    :label="`Friends`"
+                                    :value="2"
+                                ></v-radio>
+                            </v-radio-group>
+                        </div>
                     </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <v-btn
+                        color="primary"
+                        @click="onContinue"
+                    >
+                        Upload
+                    </v-btn>
+
+                    <v-btn 
+                        text
+                        @click="onReturn"
+                    >
+                        Back
+                    </v-btn>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <video id="video-drag" src="" class="d-none">
-
                     </video>
                     <div id="process-video" class="page-hero d-flex align-items-center justify-content-center">
                         <p>Processing video... </p>
@@ -55,7 +73,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -91,7 +108,8 @@ export default {
             progressStatus: '',
             size: 0,
             type: '',
-            duration: ''
+            duration: '',
+            privacy: 0
         }
     },
     rules: [
@@ -160,13 +178,12 @@ export default {
             if (this.title && this.video && this.duration) {
                 let formData = new FormData();
                 const user = JSON.parse(localStorage.getItem('user'));
-
                 formData.append("title", this.title);
                 formData.append("description", this.description);
                 formData.append("video", this.video);
                 formData.append("author_id", user._id);
                 formData.append("duration", this.duration);
-
+                formData.append("privacy", this.privacy);
                 try {
                     const { data } = await VideoRepository.uploadVideo(formData);
                     if (data) {
