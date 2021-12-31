@@ -268,6 +268,7 @@ export default {
     },
     viewProfile() {
       this.$router.push("/" + this.currentUsername + "/profile")
+      location.reload();
     },
     menuActionClick(action) {
       if (action === "viewVideos") {

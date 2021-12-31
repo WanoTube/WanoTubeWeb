@@ -79,6 +79,7 @@ export default {
                         if (dataObject.deletedCount == 0)
                             alert("Cannot delete this video! ");
                         this.closeDialog();
+                        location.reload();
                     } else {
                         alert(dataObject.details);
                     }
