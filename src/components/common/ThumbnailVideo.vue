@@ -4,7 +4,6 @@
             <LazyVideo :src="src" :class="'thumbnail-video'" />
         </div>
         <div class="overlayText">
-            
             <p class="bottomText text-white" style="">
                 <span v-if="video.duration">{{video.duration}}</span>
                 <span v-else>{{duration}}</span>
@@ -15,7 +14,7 @@
 
 <script>
 export default {
-    props: ['src', 'videoId', 'video'],
+    props: ['src', 'video'],
     methods: {
         linkToCommentView: function() {
             this.$router.push({
@@ -47,7 +46,7 @@ export default {
     position: absolute;
     bottom: 10%;
     right: 0;
-    margin: 4px;
+    margin: 1px 10px;
     z-index: 1;
     overflow: hidden;
 }

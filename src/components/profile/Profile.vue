@@ -38,7 +38,7 @@
             <hr/>
             <div class="row">
                 <div v-for="video in videos" v-bind:key="video.tittle" class="col-4 video-feed" @click="linkToCommentView(video._id)" >
-                    <LazyVideo :src="videoSource + video.url" :class="'thumbnail-video'"  />
+                    <ThumbnailVideo :src="videoSource + video.url" :video="video"></ThumbnailVideo>
                 </div>
             </div>
         </div>
@@ -48,6 +48,7 @@
 
 <script>
 import NavBar from '../common/NavBar.vue'
+import ThumbnailVideo from '../common/ThumbnailVideo.vue'
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
 const UsersRepository = RepositoryFactory.get('users')
@@ -55,7 +56,8 @@ const VideosRepository = RepositoryFactory.get('video')
 
 export default {
     components: {
-        NavBar
+        NavBar,
+        ThumbnailVideo
     },
     data() {
         return {

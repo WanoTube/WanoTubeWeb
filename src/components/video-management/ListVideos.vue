@@ -38,6 +38,12 @@
                                         class="card-img h-100 align-items-center video-mask" 
                                         v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`" 
                                     />
+                                    <div class="overlayText">
+                                        <p class="bottomText text-white" style="">
+                                            <span v-if="item.duration">{{item.duration}}</span>
+                                            <span v-else>{{duration}}</span>
+                                        </p>
+                                    </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="card-body h-100 align-items-center">
@@ -71,7 +77,6 @@
 <script>
 import NavBar from '../common/NavBar.vue'
 import DeleteConfirmation from './DeleteConfirmation.vue'
-
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
 const VideoRepository = RepositoryFactory.get('video')
@@ -79,7 +84,7 @@ const VideoRepository = RepositoryFactory.get('video')
 export default {
     components: {
         NavBar,
-        DeleteConfirmation
+        DeleteConfirmation,
     },
     data () {
       return {
@@ -131,7 +136,8 @@ export default {
             isOpened: false,
             video: {}
         },
-        username : ''
+        username : '',
+        duration: '00:00'   
       }
     },
     methods: {
