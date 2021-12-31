@@ -118,7 +118,6 @@ export default {
                     if (!dataObject.details) {
                         return dataObject;
                     }
-                    return null;
                 } 
                 return null;
             } catch (error) {

@@ -156,11 +156,8 @@ export default {
                     if (data) {
                         const dataObject = convertJSONToObject(data);
                         console.log(dataObject);
-                        if (!dataObject.details) {
+                        if (!dataObject.details)
                             return dataObject;
-                        } else {
-                            return null;
-                        }
                     }
                     return null;
                 } catch (error) {

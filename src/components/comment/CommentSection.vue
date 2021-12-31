@@ -122,13 +122,9 @@ export default {
                 const { data } = await VideoRepository.commentVideo(formData);
                 if (data) {
                     let dataObject = convertJSONToObject(data);
-                    if (!dataObject.details) {
-                        if (dataObject) {
+                    if (!dataObject.details)
+                        if (dataObject)
                             return dataObject;
-                        }
-                        return null;
-                    }
-                    return null;
                 } 
                 return null;
             } catch (error) {
@@ -171,7 +167,6 @@ export default {
                                 this.allComments.push(comment);
                         }
                     }
-                    return null;
                 } 
                 return null;
             } catch (error) {

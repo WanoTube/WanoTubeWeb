@@ -151,9 +151,7 @@ export default {
                         if (dataObject.url) {
                             return dataObject;
                         }
-                        return null;
                     }
-                    return null;
                 } 
                 return null;
             } catch (error) {
@@ -201,9 +199,7 @@ export default {
                         if (dataObject) {
                             return dataObject;
                         }
-                        return null;
                     }
-                    return null;
                 } 
                 return null;
             } catch (error) {
