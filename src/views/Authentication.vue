@@ -1,14 +1,5 @@
 <template>
     <section class="ftco-section">
-        <!-- <loading-bar
-			id="loading-bar-id"
-			custom-class="custom-class"
-			:on-error-done="errorDone"
-			:on-progress-done="progressDone"
-			:progress="progress"
-			:direction="direction"
-			:error="error" >
-        </loading-bar> -->
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-12 col-lg-10">
@@ -28,12 +19,24 @@
 							</div>
 							<form @submit.prevent="submit" class="signin-form">
 								<div class="form-group mb-3">
-									<label class="label" for="name">Email</label>
-									<input v-model="email" type="email" class="form-control" placeholder="Email" required>
+									<v-text-field
+										v-model="email" 
+										label="Email"
+										placeholder="Your email"
+									>
+									</v-text-field>
 								</div>
 								<div class="form-group mb-3">
-									<label class="label" for="password">Password</label>
-								<input v-model="password" type="password" class="form-control" placeholder="Password" required>
+									<v-text-field
+										v-model="password"
+										:rules="[rules.required, rules.min]"
+										:type="show1 ? 'text' : 'password'"
+										name="input-10-1"
+										label="Password"
+										hint="At least 8 characters"
+										counter
+										@click:append="show1 = !show1"
+									></v-text-field>
 								</div>
 								<div class="form-group">
 									<button type="submit" class="form-control btn btn-primary submit px-3">Sign In</button>
@@ -69,7 +72,13 @@ export default {
 			isLoading: false,
 			progress: 50,
 			email: "",
-			password: ""
+			password: "",
+			rules: {
+				required: value => !!value || 'Required.',
+				min: v => v.length >= 8 || 'Min 8 characters',
+				emailMatch: () => (`The email and password you entered don't match`),
+			},
+			show1: false,	
 		}
 	},
 	methods: {

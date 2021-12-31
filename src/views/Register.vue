@@ -45,7 +45,7 @@
 								<v-row  justify="center">
 									<v-col
 										cols="12"
-										md="4"
+										md="12"
 									>
 										<v-text-field
 											v-model="username" 
@@ -58,7 +58,7 @@
 								<v-row  justify="center">
 									<v-col
 										cols="12"
-										md="4"
+										md="12"
 									>
 										<v-menu
 											ref="menu"
@@ -91,7 +91,7 @@
 								<v-row  justify="center">
 									<v-col
 										cols="12"
-										md="4"
+										md="12"
 									>
 										<div class="d-flex">
 											<v-text-field
@@ -105,7 +105,7 @@
 								<v-row  justify="center">
 									<v-col
 										cols="12"
-										md="4"
+										md="12"
 									>
 										<v-text-field
 										v-model="password"
