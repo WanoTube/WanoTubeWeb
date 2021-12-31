@@ -74,7 +74,6 @@
                 skipTrack = (skipTracks[0].offsetWidth > 0 && skipTracks[0].offsetHeight > 0) ? skipTracks[0] : skipTracks[1]
 
             }
-            
 
             function onClicked(){
                 if (player.paused || player.ended){
@@ -111,7 +110,6 @@
                 buttonToHide.style.display = "none";
                 buttonToShow.style.display = "block"
             }
-
            
             function seek(e) {
                 var percent = e.offsetX / this.offsetWidth;

@@ -88,7 +88,8 @@ export default {
             progressVal: 0,
             progressStatus: '',
             size: 0,
-            type: ''
+            type: '',
+            duration: ''
         }
     },
     rules: [
@@ -115,6 +116,13 @@ export default {
                     let url = URL.createObjectURL(blob);
                     var vid = document.getElementById('video-drag')
                     vid.src = url
+                    vid.onloadedmetadata = function() {
+                        const seconds = this.duration;
+                        if (seconds < 3600)
+                            vm.duration = new Date(seconds * 1000).toISOString().substr(14, 5)
+                        else 
+                            vm.duration = new Date(seconds * 1000).toISOString().substr(11, 8);
+                    };
                     vid.load()
                 }
                 reader.readAsArrayBuffer(file);
@@ -150,6 +158,7 @@ export default {
                 formData.append("description", this.description);
                 formData.append("video", this.video);
                 formData.append("author_id", user._id);
+                formData.append("duration", this.duration);
 
                 try {
                     const { data } = await VideoRepository.uploadVideo(formData);

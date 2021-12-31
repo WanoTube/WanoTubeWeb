@@ -62,6 +62,10 @@ function deleteComment (payload) {
     return Repository.post(`${resource}/comment/delete`, payload);
 }
 
+function getVideoTotalViews (videoId) {
+    return Repository.get(`${resource}/${videoId}/total-views`);
+}
+
 export default {
     get,
     getAllPublicVideoInfos,
@@ -77,5 +81,6 @@ export default {
     getVideoComments,
     getVideoTotalComments,
     commentVideo,
-    deleteComment
+    deleteComment,
+    getVideoTotalViews
 }

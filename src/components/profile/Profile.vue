@@ -70,7 +70,6 @@ export default {
     },
     methods: {
         linkToCommentView: function(id) {
-            this.isViewed = true;
             this.$router.push({
                 path: "/comment/"+ id
             });
