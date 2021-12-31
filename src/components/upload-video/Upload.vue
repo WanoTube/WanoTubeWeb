@@ -1,12 +1,11 @@
 <template>
-   <div class="upload-video">
+   <div class="upload-video bg-white h-100">
         <NavBar></NavBar>
-        <br> <br> <br>
         <div class="container">
+            <br><br><br>
             <v-btn
-                class="ma-2 "
-                outlined
-                color="black"
+                class="ma-2 elevation-0"
+                color="white"
                 @click="backToVideos"
                 >
                 <v-icon left>
@@ -14,9 +13,12 @@
                 </v-icon>
                 Back to videos
             </v-btn>
-            <br><br>
-            <v-stepper non-linear v-model="e1">
-                <v-stepper-header>
+            <div style="padding-left: 20px">
+                <h3>Upload your video</h3>
+            </div>
+            <br>
+            <v-stepper non-linear v-model="e1" class="">
+                <v-stepper-header class="elevation-0">
                     <v-stepper-step
                     editable
                     :complete="e1 > 1"
@@ -45,7 +47,7 @@
                     </v-stepper-step>
                 </v-stepper-header>
 
-                <v-stepper-items>
+                <v-stepper-items >
                     <v-stepper-content step="1">
                         <UploadStepOne @videoWasUpdated="video = $event" @onContinue="e1 = $event"/>
                     </v-stepper-content>
@@ -58,6 +60,7 @@
                         <UploadStepThree v-bind:videoUploadResult="videoUploadResult" @onReturn="e1 = $event"/>
                     </v-stepper-content>
                 </v-stepper-items>
+                <br>
             </v-stepper>
         </div>
         

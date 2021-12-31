@@ -1,6 +1,6 @@
 <template>
     <div>
-        <progress-bar size="tiny" :val=progressVal :text=progressStatus>
+        <progress-bar v-if="progressStatus" size="tiny" :val=progressVal :text=progressStatus>
         </progress-bar>
         <h1>Details</h1>
         <div class="row">

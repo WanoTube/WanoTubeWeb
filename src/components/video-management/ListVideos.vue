@@ -1,20 +1,19 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid bg-white">
         <NavBar></NavBar>
         <br><br>
         <div class="row">
             <div class="col-12">
                 <br>
                 <br>
-                <div class="row ">
+                <div class="row">
                     <div class="col padding-left-right-15" style="margin-bottom: 10px">
                         <h1><b>Video content</b></h1>
                     </div>
                     <div class="col container row justify-content-end" >
                         <v-btn
-                            class="ma-2 "
-                            outlined
-                            color="black"
+                            class="ma-2 elevation-0"
+                            color="white"
                             @click="uploadVideo"
                             >
                             <v-icon left>mdi-plus</v-icon>
