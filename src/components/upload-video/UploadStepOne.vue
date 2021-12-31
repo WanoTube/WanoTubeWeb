@@ -8,8 +8,12 @@
           <label class="btn display-inline">
           <img src="../../assets/images/Folder_Black.png" width="90px" height="90px" style="max-width: 90px">
 
-          <p class="padding-20">Drag and drop files from your computer, or <b>browse files</b></p>
-              <input type="file" name="video" @change="onChange">
+          <p class="padding-20">Drag and drop files from your computer, or <b class="text-primary">browse files</b></p>
+              <input 
+              type="file" 
+              name="video" 
+              @change="onChange"
+              accept="video/mp4,video/x-m4v,video/quicktime,video/*">
           </label>
         </div>
       </div>

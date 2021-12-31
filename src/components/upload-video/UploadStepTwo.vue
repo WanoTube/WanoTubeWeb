@@ -12,7 +12,6 @@
                         placeholder="Placeholder"
                         outlined
                     ></v-text-field>
-                    <br>
                     <v-textarea
                         v-model="description"
                         outlined
@@ -20,6 +19,21 @@
                         label="Description"
                         value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
                     ></v-textarea>
+                    <div class="d-flex justify-content-end">
+                        <v-btn
+                            color="primary"
+                            @click="onContinue"
+                        >
+                            Upload
+                        </v-btn>
+
+                        <v-btn 
+                            text
+                            @click="onReturn"
+                        >
+                            Back
+                        </v-btn>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
@@ -41,19 +55,7 @@
                 </div>
             </div>
         </div>
-        <v-btn
-            color="primary"
-            @click="onContinue"
-        >
-            Upload
-        </v-btn>
-
-        <v-btn 
-            text
-            @click="onReturn"
-        >
-            Back
-        </v-btn>
+        
     </div>
 </template>
 
