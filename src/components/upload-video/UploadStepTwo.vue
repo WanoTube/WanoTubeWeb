@@ -142,7 +142,7 @@ export default {
             }
         },
         async uploadVideo() {
-            if (this.title && this.description && this.video) {
+            if (this.title && this.video) {
                 let formData = new FormData();
                 const user = JSON.parse(localStorage.getItem('user'));
 
