@@ -389,8 +389,8 @@ export default {
     async created() {
         try {
             this.user = await this.getProfileInfo();
-            this.account = await this.getAccountInfo();
             if (this.user) {
+                this.account = await this.getAccountInfo();
                 const user = this.user;
                 this.firstName = user.first_name;
                 this.lastName = user.last_name;

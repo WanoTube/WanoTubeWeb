@@ -130,7 +130,7 @@ export default {
         async getVideos() {
             const requestedUsername = this.$route.params.username;
             const user = JSON.parse(localStorage.getItem('user'));
-            const userId = this.user._id;
+            const userId = user._id;
             if (user) {
                 this.currentUsername = user.username;
                 if (requestedUsername == this.currentUsername) {
