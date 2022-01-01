@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <div class="card-body h-100 w-100 align-items-center">
+                                    <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
                                         <p class="card-title">
                                             <span v-if="item.title.length<25">{{item.title}}</span>
                                             <span v-else>Welcome, {{ item.title.substring(0,25)+".." }}</span>
