@@ -61,7 +61,7 @@ export default {
     },
     data() {
         return {
-            caption: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+            caption: "",
             src: 'https://www.bigbuckbunny.org/',
             user: {},
             username: '',

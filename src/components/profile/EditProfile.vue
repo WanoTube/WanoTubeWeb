@@ -50,7 +50,7 @@
                             <v-text-field
                                 v-model="firstName"
                                 :rules="nameRules"
-                                :counter="10"
+                                :counter="50"
                                 label="First name"
                                 required
                             ></v-text-field>
@@ -63,7 +63,7 @@
                             <v-text-field
                                 v-model="lastName"
                                 :rules="nameRules"
-                                :counter="10"
+                                :counter="50"
                                 label="Last name"
                                 required
                             ></v-text-field>
@@ -77,7 +77,7 @@
                             <v-text-field
                                 v-model="username"
                                 :rules="nameRules"
-                                :counter="10"
+                                :counter="50"
                                 label="Username"
                                 required
                             ></v-text-field>
@@ -101,9 +101,11 @@
                         >
                             <v-text-field
                                 v-model="phoneNumber"
-                                :rules="nameRules"
+                                :rules="phoneRules"
                                 :counter="10"
                                 label="Phone Number"
+                                type="number"
+
                                 required
                             ></v-text-field>
                         </v-col>
@@ -238,7 +240,10 @@ export default {
             firstName: '',
             lastName: '',
             nameRules: [
-                v => v.length <= 10 || 'Name must be less than 10 characters',
+                v => v.length <= 50 || 'Name must be less than 50 characters',
+            ],
+            phoneRules: [
+                v => v.length <= 10 || 'Phone number must be less than 10 characters',
             ],
             email: '',
             emailRules: [
@@ -499,5 +504,20 @@ export default {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+
+</style>
+
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
 }
 </style>
