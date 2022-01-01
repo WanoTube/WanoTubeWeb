@@ -9,10 +9,19 @@
                 <div class="col padding-left-right-15" style="margin-bottom: 10px">
                     <h1><b>List of Users</b></h1>
                 </div>
+                <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                ></v-text-field>
+                <br>
                 <v-data-table
                     v-model="selected"
                     :headers="headers"
                     :items="users"
+                    :search="search"
                     item-key="name"
                     show-select
                     class="elevation-1"
@@ -46,6 +55,7 @@ export default {
     },
     data () {
       return {
+        search: '',
         selected: [],
         headers: [
           {
