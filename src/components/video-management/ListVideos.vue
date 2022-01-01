@@ -47,12 +47,12 @@
                                 <div class="col-sm-7">
                                     <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
                                         <p class="card-title">
-                                            <span v-if="item.title.length<25">{{item.title}}</span>
-                                            <span v-else>{{ item.title.substring(0,25)+".." }}</span>
+                                            <span v-if="item.title.length<100">{{item.title}}</span>
+                                            <span v-else>{{ item.title.substring(0,100)+".." }}</span>
                                         </p>
                                         <p class="card-text text-secondary" style="margin-top: -10px">
-                                            <span v-if="item.description.length<25">{{item.description}}</span>
-                                            <span v-else>{{ item.description.substring(0,25)+".." }}</span>
+                                            <span v-if="item.description.length<100">{{item.description}}</span>
+                                            <span v-else>{{ item.description.substring(0,100)+".." }}</span>
                                         </p>
                                     </div>
                                 </div>
