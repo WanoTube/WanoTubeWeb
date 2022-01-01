@@ -14,7 +14,8 @@
                 <div class="col" style="padding-bottom: 0">
                     <b>{{name}}</b><span style="margin-left: 5px; color: #c4c4c4">@{{username}}</span> 
                     <br>
-                    {{caption}}
+                    <span v-if="caption<25">{{caption}}</span>
+                    <span v-else>{{ caption.substring(0,25)+".." }}</span>
                     <br>
                 </div>
             </div>
