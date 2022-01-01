@@ -5,6 +5,7 @@
         <div class="container card">
             <br>
             <div class="row justify-content-center">
+
                 <div class="avatar-container">
                     <img 
                         id="avatar"
@@ -32,6 +33,10 @@
                 accept="image/png, image/jpeg"
             >
             <br>
+            <div class="text-center" v-if="progressStatus">
+                <v-progress-circular :value="progressVal"></v-progress-circular>
+            </div>
+
             <h5 class="text-center">{{username}}</h5>
 
             <v-form v-model="valid">
@@ -214,6 +219,8 @@
 </template>
 
 <script>
+import io from 'socket.io-client';
+
 import NavBar from '../common/NavBar.vue'
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory';
 import { convertJSONToObject } from '../../utils/utils';
@@ -252,7 +259,13 @@ export default {
             account: {},
             snackbar: false,
             snackbarText: `Hello, I'm a snackbar`,
-            snackbarTimeOut: 3000
+            snackbarTimeOut: 3000,
+            progressVal: 0,
+            progressStatus: '',
+            updatedProfileStatus: '',
+            socket: io("http://localhost:8000", {
+                withCredentials: true,
+            }),
         }
     },
     methods: {
@@ -349,10 +362,29 @@ export default {
         updateBirthDate(date) {
             this.$refs.menu.save(date)
         },
+        async trackingUploadProgress() {
+            const vm = this;
+            this.socket.on('connect', () => {
+                this.socket.on('Upload avatar image to S3', function (progressPercentage) {
+                    if (progressPercentage < 100) 
+                        vm.progressStatus = "Start uploading to S3"
+                    else {
+                        vm.progressStatus = 'Completed';
+                    }
+                    if (progressPercentage) {
+                        console.log("Upload to S3: " + progressPercentage + "%");
+                        vm.progressVal = progressPercentage;
+                    } else {
+                        console.log("Non progress")
+                    }
+                });
+            });
+        },
         async updateProfile() {
             if (this.selectedFile) {
                 await this.updateAvatar();
             }
+            this.updatedProfileStatus = 'Started';
             const profileInfo = { 
                 id: this.user._id,
                 first_name: this.firstName,
@@ -365,16 +397,11 @@ export default {
                 phone_number: this.phoneNumber,
                 country: this.country
             };
-            console.log("profileInfo: ", profileInfo);
             try {
                 const { data } = await UsersRepository.updateUser(profileInfo);
                 const dataObject = convertJSONToObject(data)
                 if (!dataObject.details) {
-                    if (this.$route.params.nextUrl != null) {
-                        this.$router.push(this.$route.params.nextUrl)
-                    } else {
-                        this.$router.push('/' + this.username + '/profile')
-                    }
+                    this.updatedProfileStatus = 'Completed';
                 } else {
                     const message = dataObject.details[0].message;
                     console.log(message)
@@ -407,10 +434,24 @@ export default {
             }
         }
     },
+    mounted() {
+        this.trackingUploadProgress();
+    },
     watch: {
         menu (val) {
             val && setTimeout(() => (this.activePicker = 'YEAR'))
         },
+        progressStatus() {
+            if (this.progressStatus == 'Completed' 
+            &&  (this.updatedProfileStatus == '' || this.updatedProfileStatus == 'Completed')) {
+                this.$router.push('/' + this.username + '/profile')
+            }
+        },
+        updatedProfileStatus() {
+            if (this.progressStatus == '' || this.progressStatus == 'Completed') {
+                this.$router.push('/' + this.username + '/profile')
+            }
+        }
     },
 }
 </script>
