@@ -30,7 +30,7 @@
                     class="elevation-1"
                 >
                     <template v-slot:item.title="{ item }">
-                        <div class="card" style="width: 300px; border: 0; background-color: transparent">
+                        <div class="card" style="max-width: 500px; border: 0; background-color: transparent">
                             <div class="row no-gutters">
                                 <div class="col-sm-5">
                                     <video
@@ -45,10 +45,15 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
-                                    <div class="card-body h-100 align-items-center">
-                                        <p class="card-title">{{item.title}}</p>
-                                        <p class="card-text text-secondary" style="margin-top: -10px">{{item.description}}</p>
-
+                                    <div class="card-body h-100 w-100 align-items-center">
+                                        <p class="card-title">
+                                            <span v-if="item.title.length<25">{{item.title}}</span>
+                                            <span v-else>Welcome, {{ item.title.substring(0,25)+".." }}</span>
+                                        </p>
+                                        <p class="card-text text-secondary" style="margin-top: -10px">
+                                            <span v-if="item.description.length<25">{{item.description}}</span>
+                                            <span v-else>Welcome, {{ item.description.substring(0,25)+".." }}</span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -94,10 +99,6 @@ export default {
             align: 'start',
             sortable: false,
             value: 'title',
-          },
-          { 
-              text: 'Description', 
-              value: 'description' 
           },
           { 
               text: 'Visibility', 
