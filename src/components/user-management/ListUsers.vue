@@ -12,15 +12,18 @@
                 <v-data-table
                     v-model="selected"
                     :headers="headers"
-                    :items="videos"
+                    :items="users"
                     item-key="name"
                     show-select
                     class="elevation-1"
                 >
                     <template v-slot:item.actions="{ item }">
-                        <!-- <v-icon class="mx-2" @click="onEditButtonClick(item)">mdi-eye</v-icon> -->
                         <v-icon class="mx-2" @click="onDeleteButtonClick(item)">mdi-block-helper</v-icon>
                     </template>
+                    <template v-slot:item.birth_date="{ item }">
+                        {{new Date(item.birth_date).toJSON().slice(0,10).replace(/-/g,'/')}}
+                    </template>
+                    
                 </v-data-table>
             </div>
         </div>
@@ -46,7 +49,7 @@ export default {
         selected: [],
         headers: [
           {
-            text: 'Tên',
+            text: 'Fullname',
             align: 'start',
             sortable: false,
             value: 'first_name',
@@ -73,10 +76,11 @@ export default {
           },
           {
               text: 'Actions',
-              value: 'actions'
+              value: 'actions',
+              sortable: false
           }
         ],
-        videos: [],
+        users: [],
         confirmCheckbox: false,
         deleteDialog: {
             isOpened: false,
@@ -85,7 +89,7 @@ export default {
       }
     },
     methods: {
-        async getAllVideos () {
+        async getAllUsers () {
             try {
                 const { data } = await UserRepository.get();
                 if (data) {
@@ -108,9 +112,8 @@ export default {
         }
     },
     async mounted() {
-        //TO-DO: Check if videos is ull
         try {
-            this.videos = await this.getAllVideos();
+            this.users = await this.getAllUsers();
         } catch (error) {
             if (error.response) {
                 alert(error.response.data);
