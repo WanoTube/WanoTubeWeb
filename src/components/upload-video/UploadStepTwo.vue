@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
-                    <video id="video-drag" src="" class="d-none">
+                    <video id="video-drag" src="" class="d-none" style="max-height: 150px">
                     </video>
                     <div id="process-video" class="page-hero d-flex align-items-center justify-content-center">
                         <p>Processing video... </p>
@@ -65,9 +65,9 @@
                     <div class="card-body">
                         <p class="card-text text-secondary">Video's size </p>
                         <p class="card-text text-primary"> {{size}} MB </p>
-                        <div v-if="type">
-                            <p class="card-text text-secondary">Video's type </p>
-                            <p class="card-text text-primary"> {{type}} </p>
+                        <div v-if="duration">
+                            <p class="card-text text-secondary">Duration </p>
+                            <p class="card-text text-primary"> {{duration}} </p>
                         </div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@ export default {
             }
         },
         async uploadVideo() {
-            if (this.title && this.video && this.duration) {
+            if (this.title && this.video) {
                 let formData = new FormData();
                 const user = JSON.parse(localStorage.getItem('user'));
                 formData.append("title", this.title);

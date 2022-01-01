@@ -13,22 +13,26 @@
       <br />
       <b>Description: </b> {{ videoUploadResult.description }}
       <br /> -->
-      <div class="card">
+      <div 
+      v-for="(item, index) in recResult"
+      :key="index"
+      class="card">
         <div class="card-body">
           <b>Song Title: </b>
-            {{ recResult.title }}
+            {{ item.title }}
             <br />
 
             <b>Album: </b>
-            {{ recResult.album }}
+            {{ item.album }}
             <br />
 
             <b>Song artists: </b>
-            {{ recResult.songArtist }}
+            {{ item.songArtist }}
             <br />
             <br/>
           </div>
       </div>
+      <br/>
     </div>
     <div v-else>
       <p>No issues found</p>
@@ -49,7 +53,7 @@ export default {
     return {
       video: {},
       recognition_result: {},
-      recResult: "",
+      recResult: [],
     };
   },
   methods: {
@@ -62,18 +66,22 @@ export default {
       this.$emit("onReturn", 2);
     },
     musicIncluded(musics) {
-      const first = musics[0];
-      const title = first.title;
-      const album = first.album.name;
-      const artists = first.artists; // array
-      const songArtist = artists[0].name;
+      let results = [];
+      musics.forEach(element => {
+        const first = element;
+        const title = first.title;
+        const album = first.album.name;
+        const artists = first.artists; // array
+        const songArtist = artists[0].name;
 
-      let jsonResult = {};
-      jsonResult.title = title;
-      jsonResult.album = album;
-      jsonResult.songArtist = songArtist;
-      console.log("audioRecognition result: " + JSON.stringify(jsonResult));
-      return jsonResult;
+        let jsonResult = {};
+        jsonResult.title = title;
+        jsonResult.album = album;
+        jsonResult.songArtist = songArtist;
+        console.log("audioRecognition result: " + JSON.stringify(jsonResult));
+        results.push(jsonResult)
+      });
+      return results;
     },
   },
   watch: {

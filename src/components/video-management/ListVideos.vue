@@ -30,10 +30,11 @@
                     class="elevation-1"
                 >
                     <template v-slot:item.title="{ item }">
-                        <div class="card" style="max-width: 500px; border: 0; background-color: transparent">
+                        <div class="card" style="max-width: 500px;  border: 0; background-color: transparent">
                             <div class="row no-gutters">
                                 <div class="col-sm-5">
                                     <video
+                                        style="max-height: 150px"
                                         class="card-img h-100 align-items-center video-mask" 
                                         v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`" 
                                     />
