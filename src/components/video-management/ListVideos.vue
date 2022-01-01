@@ -38,7 +38,7 @@
                                         class="card-img h-100 align-items-center video-mask" 
                                         v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`" 
                                     />
-                                    <div class="overlayText">
+                                    <div class="overlayText" style="margin: 15px 10px">
                                         <p class="bottomText text-white" style="">
                                             <span v-if="item.duration">{{item.duration}}</span>
                                             <span v-else>{{duration}}</span>
@@ -48,12 +48,12 @@
                                 <div class="col-sm-7">
                                     <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
                                         <p class="card-title">
-                                            <span v-if="item.title.length<100">{{item.title}}</span>
-                                            <span v-else>{{ item.title.substring(0,100)+".." }}</span>
+                                            <span v-if="item.title.length<60">{{item.title}}</span>
+                                            <span v-else>{{ item.title.substring(0,60)+".." }}</span>
                                         </p>
                                         <p class="card-text text-secondary" style="margin-top: -10px">
-                                            <span v-if="item.description.length<100">{{item.description}}</span>
-                                            <span v-else>{{ item.description.substring(0,100)+".." }}</span>
+                                            <span v-if="item.description.length<60">{{item.description}}</span>
+                                            <span v-else>{{ item.description.substring(0,60)+".." }}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -72,16 +72,22 @@
                         <v-icon class="mx-2" @click="onEditButtonClick(item)">mdi-pencil</v-icon>
                         <v-icon class="mx-2" @click="onDeleteButtonClick(item)">mdi-delete</v-icon>
                     </template>
+                    <template v-slot:item.restriction="{ item }">
+                        <v-icon v-if="item.recognition_result" class="mx-2"  @click="onViewRecognitionResult(item)">mdi-alert-circle</v-icon>
+                        <v-icon v-else class="mx-2">mdi-check-circle</v-icon>
+                    </template>
                 </v-data-table>
             </div>
         </div>
         <DeleteConfirmation v-bind:deleteDialog="deleteDialog" @onClose="deleteDialog.isOpened = $event"/>
+        <ShowRecognitionResult v-bind:recognitionDialog="recognitionDialog" @onClose="recognitionDialog.isOpened = $event"/>
     </div>
 </template>
 
 <script>
 import NavBar from '../common/NavBar.vue'
 import DeleteConfirmation from './DeleteConfirmation.vue'
+import ShowRecognitionResult from './ShowRecognitionResult.vue'
 import { RepositoryFactory } from '../../utils/repository/RepositoryFactory'
 import { convertJSONToObject } from '../../utils/utils'
 const VideoRepository = RepositoryFactory.get('video')
@@ -90,6 +96,7 @@ export default {
     components: {
         NavBar,
         DeleteConfirmation,
+        ShowRecognitionResult
     },
     data () {
       return {
@@ -102,6 +109,10 @@ export default {
             value: 'title',
           },
           { 
+              text: 'Restriction', 
+              value: 'restriction' 
+          },
+          { 
               text: 'Visibility', 
               value: 'visibility',
               sortable: false
@@ -110,10 +121,6 @@ export default {
               text: 'Date', 
               value: 'created_at' 
           },
-        //   { 
-        //       text: 'Restriction', 
-        //       value: '' 
-        //   },
         //   { 
         //       text: 'Views', 
         //       value: 'total_views',
@@ -136,6 +143,10 @@ export default {
         deleteDialog: {
             isOpened: false,
             video: {}
+        },
+        recognitionDialog: {
+            isOpened: false,
+            recognitionResult: {}
         },
         username : '',
         duration: '00:00'   
@@ -172,9 +183,12 @@ export default {
 			this.$router.push({ path: `/${this.username}/videos/${row._id}`})
         },
         onDeleteButtonClick(row) {
-            // console.log(row)
             this.deleteDialog.isOpened = true;
             this.deleteDialog.video = row
+        },
+        onViewRecognitionResult(row) {
+            this.recognitionDialog.isOpened = true;
+            this.recognitionDialog.recognitionResult = row.recognition_result;
         },
         uploadVideo() {
             this.$router.push({ path: `/upload` })
