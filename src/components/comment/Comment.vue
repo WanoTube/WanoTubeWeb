@@ -9,9 +9,9 @@
                 style="object-fit: cover"
                 />
                 <br>
-                <div class="text-center">
+                <!-- <div class="text-center">
                     <img src="../../assets/images/CheckBox-Icon.svg">
-                </div>
+                </div> -->
             </div>
             <div class="w-100">
                 <div class="row">

@@ -8,7 +8,7 @@
       <b>Copyright</b>
       <small style="margin-left: 10px"></small>
     </h5>
-    <div v-if="recResult">
+    <div v-if="recResult.length > 0">
       <!-- <b>Title: </b> {{ videoUploadResult.title }}
       <br />
       <b>Description: </b> {{ videoUploadResult.description }}
@@ -28,7 +28,6 @@
 
             <b>Song artists: </b>
             {{ item.songArtist }}
-            <br />
             <br/>
           </div>
       </div>

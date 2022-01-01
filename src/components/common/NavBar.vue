@@ -42,7 +42,7 @@
                 </template>
                 <v-list>
                   <v-list-item
-                    v-for="(item, index) in items"
+                    v-for="(item, index) in menuItems"
                     :key="index"
                     @click="menuActionClick(item.action)"
                   >
@@ -225,6 +225,11 @@ export default {
           icon: "mdi-folder-account", 
           action: "viewVideos" 
         },
+        {
+          title: 'All users', 
+          icon: "mdi-account-group", 
+          action: "viewUsers" 
+        },
         { 
           title: 'Log Out',  
           icon: "mdi-logout", 
@@ -232,7 +237,8 @@ export default {
         },
       ],
       avatarSource: "http://localhost:8000/v1/users/avatar/",
-      avatar: 'default_avatar.png'
+      avatar: 'default_avatar.png',
+      isAdmin: false
     }
   },
   components: {
@@ -270,11 +276,16 @@ export default {
       this.$router.push("/" + this.currentUsername + "/profile")
       location.reload();
     },
+    viewUsers() {
+      this.$router.push("/users")
+    },
     menuActionClick(action) {
       if (action === "viewVideos") {
         this.navigateToVideos();
       } else if (action === "viewProfile") {
         this.viewProfile();
+      } else if (action === "viewUsers") {
+        this.viewUsers();
       } else if (action === "logOut") {
         this.logOut();
       }
@@ -292,7 +303,19 @@ export default {
       }
     }
   },
+  computed: {
+    menuItems() {
+      if (this.isAdmin)
+        return this.items;
+      else 
+        return this.items.filter(function(value, index, arr){ 
+            return index != 2;
+        })
+    }
+  },
   created() {
+    this.isAdmin = JSON.parse(localStorage.getItem('is_admin'));
+
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       this.currentUsername = user.username;
