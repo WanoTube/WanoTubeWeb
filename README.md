@@ -70,5 +70,13 @@ Project Structure:
       │   │   └── UploadVideo.vue
       │   main.js
       │   routes.js
-      ├── LICENSE
+      ├── .gitignore
       └── README.md
+      └── package-lock.json
+      └── package.json
+      └── vue.config.js
+
+In our project, we're using *Repository Factory* design pattern for calling API services. This pattern helps instantiate a new object without having to specify exactly which class to instantiate.
+- Repository.js takes care of connecting to resources. We will define axios in this file script.
+- After that we will all CRUD (Create, Read, Update, Delete) operations for each entity. So that we have: VideosRepository.js, UsersRepository.js, AuthRepository.js
+- In the RepositoryFactory.js we can call each repository easily.
