@@ -1,2 +1,4 @@
 node_modules
 src/assets/videos
+yarn.lock
+package-lock.json
