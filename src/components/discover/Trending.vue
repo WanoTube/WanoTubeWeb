@@ -1,35 +1,35 @@
 <template>
-    <div class="d-flex " style="flex-direction: column">
-        <Trend></Trend>
-        <Trend></Trend>
-        <Trend></Trend>
-    </div>
+  <div class="d-flex" style="flex-direction: column">
+    <Trend></Trend>
+    <Trend></Trend>
+    <Trend></Trend>
+  </div>
 </template>
 
 <script>
-import Trend from './Trend.vue'
+import Trend from "./Trend.vue";
 export default {
-    components: {
-        Trend,
+  components: {
+    Trend,
+  },
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
-    methods:{
-        scrollToTop() {
-            window.scrollTo(0, 0);
-        },
+  },
+  watch: {
+    "$route.params.id": {
+      handler: function (search) {
+        this.scrollToTop();
+      },
+      deep: true,
+      immediate: true,
     },
-    watch: {
-        '$route.params.id':{
-            handler: function(search) {
-                this.scrollToTop()
-            },
-            deep: true,
-            immediate: true
-        }
-    },
-    mounted(){
-        this.$nextTick(() => {
-            this.scrollToTop()
-        }) 
-    }
-}
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.scrollToTop();
+    });
+  },
+};
 </script>

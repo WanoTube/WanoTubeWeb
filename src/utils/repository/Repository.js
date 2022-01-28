@@ -6,6 +6,6 @@ const baseUrl = baseDomain + version
 axios.defaults.baseURL = baseUrl
 
 export default axios.create({
-    baseUrl
+	baseUrl
 })
 
