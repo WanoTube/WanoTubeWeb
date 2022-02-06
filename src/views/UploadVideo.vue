@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import Button from "../components/common/Button.vue";
-import NavBar from "../components/common/NavBar.vue";
+import Button from "src/components/common/BaseButton.vue";
+import NavBar from "src/components/common/TheNavBar.vue";
 export default {
   components: {
     NavBar,

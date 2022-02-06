@@ -65,7 +65,7 @@
               @click="onUserSelected(u)"
             >
               <img
-                src="../../assets/images/Account.png"
+                src="src/assets/images/Account.png"
                 width="41px"
                 height="41px"
               />
@@ -79,13 +79,13 @@
     </div>
   </div>
 </template>
-<style src="../../assets/styles/comment-section.css"></style>
-<style src="../../assets/styles/comment-bar.css"></style>
+<style src="src/assets/styles/comment-section.css"></style>
+<style src="src/assets/styles/comment-bar.css"></style>
 <script>
 import Comment from "../comment/Comment.vue";
 
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");

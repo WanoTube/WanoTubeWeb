@@ -2,7 +2,7 @@
   <div>
     <form class="d-flex form-control input-container" @submit="onFormSubmit">
       <img
-        src="../../assets/images/Search-Icon.svg"
+        :src="require('src/assets/images/Search-Icon.svg')"
         class="icon"
         width="20px"
         height="20px"
@@ -36,7 +36,7 @@
   </div>
 </template>
 
-<style  src="../../assets/styles/search-bar.css"></style>
+<style  src="src/assets/styles/search-bar.css"></style>
 <script>
 export default {
   components: {},

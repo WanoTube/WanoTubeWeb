@@ -42,8 +42,8 @@
 </template>
 
 <script>
-import BrowseFile from "../video-editing/browse-files/BrowseFile.vue";
-import RecordVideo from "../video-editing/record-video/RecordVideo.vue";
+import BrowseFile from "src/components/video/video-editing/browse-files/BrowseFile.vue";
+import RecordVideo from "src/components/video/video-editing/record-video/RecordVideo.vue";
 import SideBarDetail from "./SideBarDetailEditing.vue";
 export default {
   components: {
@@ -76,5 +76,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/styles/sidebar-editing.css">
+<style src="src/assets/styles/sidebar-editing.css">
 </style>

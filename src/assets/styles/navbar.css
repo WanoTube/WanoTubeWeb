@@ -4,7 +4,7 @@
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
-  z-index: 99999;
+  z-index: 2000;
   border-bottom: 1px solid #C4C4C499;
 }
 
@@ -27,7 +27,7 @@
   border: solid 1px black;
 }
 .nav-bar-buttons{
-  z-index: 99999 !important;
+  z-index: 2000 !important;
 }
 
 @media only screen and (max-width: 768px) {

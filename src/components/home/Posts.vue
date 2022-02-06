@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 

@@ -3,7 +3,7 @@
     <div class="bg-white non-border">
       <div class="d-flex">
         <img
-          src="../../assets/images/Hashtag_Big.svg"
+          :src="require('src/assets/images/Hashtag_Big.svg')"
           width="80px"
           height="90px"
           class="m-r-10"

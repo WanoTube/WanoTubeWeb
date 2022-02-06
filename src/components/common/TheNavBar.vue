@@ -4,7 +4,10 @@
       <div class="row justify-content-between align-items-center">
         <div class="col-4 pt-1 order-md-1 order-1">
           <router-link to="/" id="navbar-brand" class="navbar-brand">
-            <img src="../../assets/Brand.png" class="navbar-brand-image" />
+            <img
+              :src="require('src/assets/Brand.png')"
+              class="navbar-brand-image"
+            />
           </router-link>
         </div>
         <div class="col-md-4 order-md-2 order-4 d-none d-md-block">
@@ -88,15 +91,15 @@
     </div>
   </header>
 </template>
-<style src="../../assets/styles/navbar.css"></style>
+<style src="src/assets/styles/navbar.css"></style>
 <style>
 .v-list {
   width: 250px;
 }
 </style>
 <script>
-import SearchBar from "../common/SearchBar.vue";
-import { defaultAvatarUrl } from "../../constants/user";
+import SearchBar from "./TheSearchBar.vue";
+import { defaultAvatarUrl } from "src/constants/user";
 export default {
   data() {
     return {

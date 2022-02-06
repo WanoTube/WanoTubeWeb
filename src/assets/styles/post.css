@@ -18,6 +18,9 @@
     /* display: flex; */
     z-index: 999;
 }
+.video-item-thumbnail {
+    width: 100%
+}
 @media only screen and (min-width: 1200px ) {
     .video-feed-item {
         right: 200px !important;

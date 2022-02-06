@@ -45,5 +45,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/styles/post.css">
+<style src="src/assets/styles/post.css">
 </style>

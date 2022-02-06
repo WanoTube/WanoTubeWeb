@@ -13,7 +13,7 @@
       class="text-center padding-50"
     >
       <img
-        src="../../assets/images/Folder_Black.png"
+        :src="require('src/assets/images/Folder_Black.png')"
         width="90px"
         height="90px"
         style="max-width: 90px"

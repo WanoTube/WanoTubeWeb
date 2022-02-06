@@ -67,10 +67,10 @@
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
+import NavBar from "../common/TheNavBar.vue";
 import ThumbnailVideo from "../common/ThumbnailVideo.vue";
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const UsersRepository = RepositoryFactory.get("users");
 const VideosRepository = RepositoryFactory.get("video");
 

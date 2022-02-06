@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import NavBar from "../../components/common/NavBar.vue";
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import NavBar from "src/components/common/TheNavBar.vue";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 
 const VideoRepository = RepositoryFactory.get("video");
 

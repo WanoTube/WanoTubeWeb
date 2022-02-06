@@ -16,7 +16,7 @@
         <div class="helper"></div>
         <label class="btn display-inline">
           <img
-            src="../../../assets/images/Folder_Black.png"
+            src="src/assets/images/Folder_Black.png"
             width="90px"
             height="90px"
             style="max-width: 90px"
@@ -31,7 +31,7 @@
     </div>
   </b-modal>
 </template>
-<style src="../../../assets/styles/browse-file.css">
+<style src="src/assets/styles/browse-file.css">
 </style>
 <script>
 export default {

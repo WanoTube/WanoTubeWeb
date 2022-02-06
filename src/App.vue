@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <v-content>
+    <v-main>
       <div class="bg-secondary-color h-100">
         <router-view />
       </div>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 

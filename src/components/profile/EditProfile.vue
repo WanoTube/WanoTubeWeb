@@ -186,9 +186,9 @@
 <script>
 import io from "socket.io-client";
 
-import NavBar from "../common/NavBar.vue";
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import NavBar from "src/components/common/TheNavBar.vue";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const UsersRepository = RepositoryFactory.get("users");
 
 export default {

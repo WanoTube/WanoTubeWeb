@@ -58,11 +58,11 @@
   </div>
 </template>
 
-<style src="../../assets/styles/browse-file.css">
+<style src="src/assets/styles/browse-file.css">
 </style>
 
 <script>
-import NavBar from "../../components/common/NavBar.vue";
+import NavBar from "src/components/common/TheNavBar.vue";
 import UploadStepOne from "./UploadStepOne.vue";
 import UploadStepTwo from "./UploadStepTwo.vue";
 import UploadStepThree from "./UploadStepThree.vue";
@@ -100,5 +100,5 @@ export default {
 };
 </script>
 
-<style src="../../assets/styles/upload.css">
+<style src="src/assets/styles/upload.css">
 </style>

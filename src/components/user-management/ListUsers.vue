@@ -47,11 +47,11 @@
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
+import NavBar from "src/components/common/TheNavBar.vue";
 import BlockConfirmation from "./BlockConfirmation.vue";
 
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const UserRepository = RepositoryFactory.get("users");
 
 export default {

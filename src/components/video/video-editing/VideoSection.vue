@@ -36,7 +36,7 @@
 
 <script>
 import Video from "./Video.vue";
-import Button from "../common/Button.vue";
+import Button from "src/components/common/BaseButton.vue";
 import VideoPlayer from "./VideoPlayer.vue";
 export default {
   components: {
@@ -48,4 +48,4 @@ export default {
 };
 </script>
 
-<style src="../../assets/styles/video-filter.css"></style>
+<style src="src/assets/styles/video-filter.css"></style>

@@ -77,5 +77,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/styles/post-caption.css">
+<style src="src/assets/styles/post-caption.css">
 </style>

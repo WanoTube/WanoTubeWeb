@@ -3,11 +3,11 @@
     <br /><br /><br />
     <NavBar></NavBar>
     <div class="row comment-view">
-      <div class="col-md-6 order-2 order-sm-1 left-video">
+      <div class="col-md-8 order-2 order-sm-1 left-video">
         <router-link :to="prevRoutePath" class="d-none d-sm-block">
           <span
             class="fa fa-times fa-2x exit-button"
-            style="z-index: 9999"
+            style="z-index: 2000"
           ></span>
         </router-link>
         <div
@@ -25,7 +25,7 @@
           <br />
         </div>
       </div>
-      <div class="col-md-6 order-1 order-sm-2 right-post">
+      <div class="col-md-4 order-1 order-sm-2 right-post">
         <div class="container">
           <div class="card non-border">
             <div class="card-header container bg-white">
@@ -210,11 +210,11 @@
   </div>
 </template>
 <script>
-import NavBar from "../components/common/NavBar.vue";
-import PostCaption from "../components/home/PostCaption.vue";
-import CommentSection from "../components/comment/CommentSection.vue";
-import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../utils/utils";
+import NavBar from "src/components/common/TheNavBar.vue";
+import PostCaption from "src/components/home/PostCaption.vue";
+import CommentSection from "src/components/comment/CommentSection.vue";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 

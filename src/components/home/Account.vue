@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex" style="margin-top: 12px">
     <img
-      :src="require(`../../assets/images/into1/${avatar_img}`)"
+      :src="require(`src/assets/images/into1/${avatar_img}`)"
       width="51px"
       height="51px"
       class="m-r-15"
