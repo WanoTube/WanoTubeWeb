@@ -65,7 +65,7 @@
               @click="onUserSelected(u)"
             >
               <img
-                src="src/assets/images/Account.png"
+                :src="require('src/assets/images/Account.png')"
                 width="41px"
                 height="41px"
               />

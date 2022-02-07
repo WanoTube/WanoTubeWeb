@@ -1,6 +1,6 @@
 <template>
   <div class="upload-video">
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <div>
       <br />
       <br />
@@ -86,10 +86,10 @@
 
 <script>
 import Button from "src/components/common/BaseButton.vue";
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 export default {
   components: {
-    NavBar,
+    TheNavBar,
   },
 };
 Button;

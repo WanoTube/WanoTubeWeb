@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid bg-white">
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <br /><br />
     <div class="row">
       <div class="col-12">
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
@@ -122,7 +122,7 @@ const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   components: {
-    NavBar,
+    TheNavBar,
     DeleteConfirmation,
     ShowRecognitionResult,
   },

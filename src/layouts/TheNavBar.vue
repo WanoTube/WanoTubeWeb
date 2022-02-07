@@ -11,7 +11,7 @@
           </router-link>
         </div>
         <div class="col-md-4 order-md-2 order-4 d-none d-md-block">
-          <SearchBar></SearchBar>
+          <TheSearchBar></TheSearchBar>
         </div>
         <div class="col-4 d-flex justify-content-end order-2 d-md-none">
           <button v-on:click="toggle" class="d-md-none menu-toggle">
@@ -98,7 +98,7 @@
 }
 </style>
 <script>
-import SearchBar from "./TheSearchBar.vue";
+import TheSearchBar from "./TheSearchBar.vue";
 import { defaultAvatarUrl } from "src/constants/user";
 export default {
   data() {
@@ -255,7 +255,7 @@ export default {
     };
   },
   components: {
-    SearchBar,
+    TheSearchBar,
   },
   methods: {
     toggle: function (event) {

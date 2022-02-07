@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <br /><br /><br />
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <div class="row comment-view">
       <div class="col-md-8 order-2 order-sm-1 left-video">
         <router-link :to="prevRoutePath" class="d-none d-sm-block">
@@ -210,7 +210,7 @@
   </div>
 </template>
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import PostCaption from "src/components/home/PostCaption.vue";
 import CommentSection from "src/components/comment/CommentSection.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
@@ -231,7 +231,7 @@ export default {
     });
   },
   components: {
-    NavBar,
+    TheNavBar,
     PostCaption,
     CommentSection,
   },

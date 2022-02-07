@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <div id="notfound">
       <div class="notfound">
         <div class="notfound-404">
@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 export default {
   components: {
-    NavBar,
+    TheNavBar,
   },
   created() {
     // window.location.href = "/my-new-404-page.html";

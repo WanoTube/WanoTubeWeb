@@ -1,11 +1,11 @@
 <template>
   <div class="">
-    <NavBar ref="navbar"></NavBar>
+    <TheNavBar ref="navbar"></TheNavBar>
     <div class="bg-secondary-color">
       <div style="height: 66px"></div>
       <div class="d-flex">
         <div class="bg-white">
-          <SideBar></SideBar>
+          <TheSideBarHome></TheSideBarHome>
         </div>
         <div class="">
           <router-view></router-view>
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
-import SideBar from "src/components/common/SideBarHome.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
+import TheSideBarHome from "src/layouts/TheSideBarHome.vue";
 export default {
   components: {
-    NavBar,
-    SideBar,
+    TheNavBar,
+    TheSideBarHome,
   },
   data() {
     return {

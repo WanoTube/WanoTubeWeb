@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <br /><br /><br />
     <div class="container">
       <v-btn tile color="transparent" @click="backToVideos">
@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 
@@ -94,7 +94,7 @@ const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   components: {
-    NavBar,
+    TheNavBar,
   },
   data() {
     return {

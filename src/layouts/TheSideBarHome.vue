@@ -40,8 +40,8 @@
   </div>
 </template>
 <script>
-import Accounts from "../home/Accounts.vue";
-import Discover from "../discover/DiscoverSideBar.vue";
+import Accounts from "../components/home/Accounts.vue";
+import Discover from "../components/discover/DiscoverSideBar.vue";
 export default {
   components: {
     Accounts,

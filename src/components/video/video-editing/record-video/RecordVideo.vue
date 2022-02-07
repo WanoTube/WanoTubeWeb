@@ -37,7 +37,7 @@
           <div class="d-flex justify-content-center p-2">
             <img
               id="recordButton"
-              src="src/assets/images/recording.svg"
+              :src="require('src/assets/images/recording.svg')"
               width="60px"
               height="55px"
               @click="startRecord"

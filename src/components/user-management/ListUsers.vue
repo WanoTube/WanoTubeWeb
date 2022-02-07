@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <br /><br />
     <div class="row">
       <div class="col-12">
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import BlockConfirmation from "./BlockConfirmation.vue";
 
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
@@ -56,7 +56,7 @@ const UserRepository = RepositoryFactory.get("users");
 
 export default {
   components: {
-    NavBar,
+    TheNavBar,
     BlockConfirmation,
   },
   data() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <TheNavBar></TheNavBar>
     <br /><br /><br /><br />
     <div class="container card">
       <br />
@@ -186,14 +186,14 @@
 <script>
 import io from "socket.io-client";
 
-import NavBar from "src/components/common/TheNavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 const UsersRepository = RepositoryFactory.get("users");
 
 export default {
   components: {
-    NavBar,
+    TheNavBar,
   },
   data() {
     return {

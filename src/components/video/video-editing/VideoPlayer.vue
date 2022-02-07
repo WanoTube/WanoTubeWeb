@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col align-self-center trim">
         <div id="scissors">
-          <img src="src/assets/images/scissors.svg" height="25px" />
+          <img :src="require('src/assets/images/scissors.svg')" height="25px" />
           <span class="p-2"></span>
           <span>Trim</span>
         </div>
@@ -12,7 +12,7 @@
       <div id="video-controls" class="container col-lg order-lg-2 order-2">
         <div class="row">
           <img
-            src="src/assets/images/quick-restart.svg"
+            :src="require('src/assets/images/quick-restart.svg')"
             class="
               quickRestart
               rotate180
@@ -26,7 +26,7 @@
             height="30px"
           />
           <img
-            src="src/assets/images/rewind-button.svg"
+            :src="require('src/assets/images/rewind-button.svg')"
             class="
               rewind
               video-player
@@ -39,7 +39,7 @@
             height="30px"
           />
           <img
-            src="src/assets/images/play-button-arrowhead.svg"
+            :src="require('src/assets/images/play-button-arrowhead.svg')"
             class="
               btnPlayPause
               video-player
@@ -52,7 +52,7 @@
             height="50px"
           />
           <img
-            src="src/assets/images/pause.svg"
+            :src="require('src/assets/images/pause.svg')"
             class="
               btnPause
               video-player
@@ -65,7 +65,7 @@
             height="50px"
           />
           <img
-            src="src/assets/images/forward-button.svg"
+            :src="require('src/assets/images/forward-button.svg')"
             class="
               forward
               video-player
@@ -78,7 +78,7 @@
             height="30px"
           />
           <img
-            src="src/assets/images/skip-track.svg"
+            :src="require('src/assets/images/skip-track.svg')"
             class="
               skipTrack
               video-player
