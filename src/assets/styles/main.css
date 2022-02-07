@@ -5,6 +5,15 @@ body {
     margin-top: 20px;
 }
 
+.router-view-wrapper {
+    margin-top: 70px;
+    height: calc(100vh - 70px)
+}
+
+.bg-secondary-color {
+    background-color: #f9f9f9 !important;
+}
+
 @media only screen and (min-width: 576px){
     .right-border{
         border-right: 1px solid rgba(196, 196, 196,60);
@@ -14,6 +23,7 @@ body {
         border-top: 1px solid rgba(196, 196, 196,60);
         margin: 0;
     }
+    
     .bottom-border{
         border-bottom: 1px solid rgba(196, 196, 196,60);
     }
@@ -24,7 +34,6 @@ body {
     .video-embded-component{
       margin-top: 50px;
     }
-    
 }
 @media only screen and (min-width: 576px){
     .p-l-15{
@@ -37,7 +46,7 @@ body {
 }
 .vertical-center {
     transform: translate(0,-10%);
-  }
+}
 
 
 a {

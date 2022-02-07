@@ -1,21 +1,16 @@
 <template>
   <div class="container post-card" style="padding: 0" v-cloak>
     <div class="card non-border" style="background-color: transparent">
-      <ThumbnailVideo
-        :src="src"
-        :video="video"
-        :isOnList="false"
-      ></ThumbnailVideo>
+      <ThumbnailVideo :src="src" :video="video" :isOnList="false" />
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"
-          :avatar_img="video.user.avatar"
+          :avatarImg="video.user.avatar"
           :name="video.user.first_name + ' ' + video.user.last_name"
           :username="video.user.username"
           :caption="video.description"
-          bg_music="Crazy Frog"
-        >
-        </PostCaption>
+          bgMusic="Crazy Frog"
+        />
       </div>
     </div>
   </div>

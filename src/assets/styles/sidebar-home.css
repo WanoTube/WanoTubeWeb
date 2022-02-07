@@ -9,6 +9,7 @@
   .side-bar-home {
     min-width: 200px;
     margin-right: 50px;
+    height: calc(100vh - 70px);
   }
 }
 @media only screen and (max-width: 768px) {

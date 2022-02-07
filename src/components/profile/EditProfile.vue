@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TheNavBar></TheNavBar>
+    <TheNavBar />
     <br /><br /><br /><br />
     <div class="container card">
       <br />

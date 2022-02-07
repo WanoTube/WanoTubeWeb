@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TheNavBar></TheNavBar>
+    <TheNavBar />
     <br /><br /><br /><br />
     <div class="container" :key="$route.fullPath">
       <div class="row">
@@ -94,7 +94,7 @@ export default {
   methods: {
     linkToCommentView: function (id) {
       this.$router.push({
-        path: "/comment/" + id,
+        path: "/watch/" + id,
       });
     },
     navigateToEditProfile() {

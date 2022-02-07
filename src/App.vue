@@ -1,17 +1,23 @@
 <template>
   <v-app>
     <v-main>
-      <div class="bg-secondary-color h-100">
-        <router-view />
+      <div class="bg-secondary-color">
+        <TheNavBar ref="navbar" />
+        <div class="router-view-wrapper">
+          <router-view />
+        </div>
       </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
+import TheNavBar from "src/layouts/TheNavBar.vue";
 export default {
   name: "App",
-  components: {},
+  components: {
+    TheNavBar,
+  },
 };
 </script>
 

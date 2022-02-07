@@ -11,7 +11,7 @@ import UserManagement from './components/user-management/ListUsers.vue'
 import Profile from './components/profile/Profile.vue'
 import EditProfile from './components/profile/EditProfile.vue'
 
-import Comment from './views/Comment.vue'
+import Watch from './views/Watch.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
 import Trending from './components/discover/Trending.vue'
@@ -110,8 +110,8 @@ export const router = new VueRouter({
 			component: Register,
 		},
 		{
-			path: '/comment/:id',
-			component: Comment,
+			path: '/watch/:id',
+			component: Watch,
 			meta: {
 				requiresAuth: true
 			}

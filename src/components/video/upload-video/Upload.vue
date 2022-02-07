@@ -1,6 +1,6 @@
 <template>
   <div class="upload-video bg-white h-100">
-    <TheNavBar></TheNavBar>
+    <TheNavBar />
     <div class="container">
       <br /><br /><br />
       <v-btn class="ma-2 elevation-0" color="white" @click="backToVideos">

@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <TheNavBar></TheNavBar>
+    <TheNavBar />
     <br /><br />
     <div class="row">
       <div class="col-12">

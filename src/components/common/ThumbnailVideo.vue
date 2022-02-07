@@ -73,7 +73,7 @@ export default {
   methods: {
     linkToCommentView: function () {
       this.$router.push({
-        path: "/comment/" + this.video._id,
+        path: "/watch/" + this.video._id,
       });
     },
     onMouseOver: function () {
