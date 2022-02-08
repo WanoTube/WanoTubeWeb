@@ -1,15 +1,16 @@
 <template>
-  <div class="bg-white">
-    <div class="row comment-view">
+  <div class="bg-secondary-color comment-view">
+    <div class="row comment-view" v-if="!loading">
       <PlayerWrapper :prevRoutePath="prevRoutePath" :videoUrl="videoUrl" />
       <CommentWrapper
-        :avatar_img="user.avatar"
+        :avatarImg="user.avatar"
         :name="user.first_name + ' ' + user.last_name"
         :username="user.username"
         :caption="video.description"
         :likeFunction="likeFunction"
         :commentFunction="commentFunction"
         :comments="comments"
+        :likes="likes"
       />
     </div>
   </div>
@@ -40,6 +41,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       likes: 0,
       comments: 8,
       video: {},
@@ -151,8 +153,8 @@ export default {
           $("span.liked-text").toggleClass("press", 1000);
           await new Promise((r) => setTimeout(r, 1000));
           $("span.liked-text").removeClass("press");
-          this.likes = this.likes + 1;
-        } else this.likes = this.likes - 1;
+          this.likes = (parseInt(this.likes) + 1).toString();
+        } else this.likes = (this.likes - 1).toString();
       } catch (error) {
         if (error.response) {
           alert(error.response.data);
@@ -175,6 +177,7 @@ export default {
     this.currentUser = JSON.parse(localStorage.getItem("user"));
     this.likes = await this.getAllLikes();
     this.comments = await this.getAllComments();
+    this.loading = false;
   },
   watch: {
     video: async function (val) {
@@ -187,7 +190,5 @@ export default {
   },
 };
 </script>
-<style src="../assets/styles/comment.css">
-</style>
-<style src="../assets/styles/comment-view.css">
+<style src="src/assets/styles/comment-view.css">
 </style>

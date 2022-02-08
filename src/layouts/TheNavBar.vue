@@ -2,7 +2,7 @@
   <header class="blog-header">
     <div class="container">
       <div class="row justify-content-between align-items-center">
-        <div class="col-4 pt-1 order-md-1 order-1">
+        <div class="col-4 pt-1 order-md-1 order-1 align-items-center">
           <router-link to="/" id="navbar-brand" class="navbar-brand">
             <img
               :src="require('src/assets/Brand.png')"

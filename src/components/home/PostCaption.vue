@@ -3,7 +3,7 @@
     <router-link :to="`/${username}/profile`">
       <div class="avatar">
         <img
-          :src="`http://localhost:8000/v1/users/avatar/${avatar_img}`"
+          :src="`http://localhost:8000/v1/users/avatar/${avatarImg}`"
           width="41px"
           height="41px"
           class="img-responsive rounded-circle"

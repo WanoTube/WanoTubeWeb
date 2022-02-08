@@ -10,26 +10,25 @@
           :caption="c.content"
           :bg_music="c.bg_music"
           :filename="c.user.avatar"
-        ></Comment>
+        />
       </div>
     </div>
     <div class="comment-section container" style="position: relative">
-      <div class="row" style="position: relative">
-        <div class="col-10 d-flex">
-          <button
+      <div class="row comment-bar-wrapper" style="position: relative">
+        <div class="d-flex col">
+          <!-- <button
             width="20px"
             height="20px"
             class="icon-button"
             @click="showSuggestions"
           >
             <i class="fa fa-at"></i>
-          </button>
-          <form
-            class="d-flex w-100"
-            style="flex: 1; margin: 10px"
-            @submit="postComment"
-          >
-            <div class="d-flex form-control input-container comment-bar">
+          </button> -->
+          <v-btn icon color="black" @click="showSuggestions">
+            <v-icon>fa fa-at</v-icon>
+          </v-btn>
+          <form class="d-flex" style="flex: 1" @submit="postComment">
+            <div class="d-flex form-control input-container">
               <input
                 @input="onCommentChange"
                 ref="commentInput"
@@ -37,7 +36,7 @@
                 id="commentInput"
                 class="search_in_navbar"
                 type="search"
-                placeholder="Comment"
+                placeholder="Enter your comment"
                 aria-label="Comment"
                 autocomplete="off"
                 spellcheck="false"
@@ -45,16 +44,17 @@
             </div>
           </form>
         </div>
-        <div class="col-2">
-          <span
+        <!-- <span
             id="post-button"
             class="row align-items-center post-button h-100 text-center"
             style="cursor: pointer"
             @click="postComment"
           >
             <b class="col">Post</b>
-          </span>
-        </div>
+          </span> -->
+        <v-btn icon color="black" @click="postComment">
+          <v-icon>fa-paper-plane</v-icon>
+        </v-btn>
         <div v-if="!isHidden" class="tag-people-component">
           <div class="d-flex list-users">
             <div
@@ -191,7 +191,8 @@ export default {
         commentInput.focus();
       });
     },
-    async postComment() {
+    async postComment(e) {
+      e.preventDefault();
       if (this.currentComment === "") return;
       //create new comment and clear input after that
       try {
@@ -201,6 +202,9 @@ export default {
           if (comment) this.allComments.push(comment);
           this.currentComment = "";
         }
+        setTimeout(() => {
+          this.scrollToEnd();
+        }, 500);
       } catch (error) {
         alert(error.response.data);
       }
@@ -216,8 +220,8 @@ export default {
       return null;
     },
     scrollToEnd() {
-      const content = this.$refs.commentContainer;
-      content.scrollTop = content.scrollHeight;
+      const commentContainerRef = this.$refs.commentContainer;
+      commentContainerRef.scrollTop = commentContainerRef.scrollHeight;
     },
     showSuggestions() {
       this.isHidden = !this.isHidden;
@@ -312,3 +316,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.comment-bar-wrapper {
+  display: flex;
+  align-items: center;
+}
+</style>

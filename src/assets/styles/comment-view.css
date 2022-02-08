@@ -1,31 +1,32 @@
-@media only screen and (max-width: 576px) {
-    .comment-view .container{
-        padding-right: 0 !important;
-        margin-right: 0 !important;
+.comment-view {
+  height: calc(100vh - 70px);
+}
 
-    }
+@media only screen and (max-width: 576px) {
+  .comment-view .container{
+    /* padding-right: 0 !important;
+    margin-right: 0 !important; */
+  }
 }
-.comment-view .left-video{
-    background-color: black;
-}
+
 .comment-view div img{
-    max-height: 650px !important;
-    object-fit: scale-down;
+  max-height: 650px !important;
+  object-fit: scale-down;
 }
 .d-none .exit-button{
-    color: white;
-    position: absolute;
-    top: 25px;
-    left: 50px;
+  color: white;
+  position: absolute;
+  top: 25px;
+  left: 50px;
 }
 .d-sm-none .exit-button{
-    color: black !important;
-    position: absolute;
-    top: 25px;
-    right: 25px;
+  color: black !important;
+  position: absolute;
+  top: 25px;
+  right: 25px;
 }
 .button{
-    cursor: pointer;
+  cursor: pointer;
 }
 .liked-text{
   position: absolute;

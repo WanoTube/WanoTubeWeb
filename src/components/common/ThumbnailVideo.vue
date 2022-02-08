@@ -19,7 +19,7 @@
         <span v-else>{{ defaultDuration }}</span>
       </p>
     </div>
-    <v-scroll-x-transition>
+    <!-- <v-scroll-x-transition>
       <div
         v-if="showPreviewPopup"
         class="preview-popup"
@@ -44,31 +44,31 @@
                 src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                 type="video/mp4"
               />
-              <!-- <track
+              <track
               default
               kind="captions"
               label="English captions"
               src="/path/to/english.vtt"
               srclang="en"
-            /> -->
+            />
             </video>
           </vue-plyr>
         </div>
         <BaseButton label="WATCH" :onClick="linkToCommentView" />
       </div>
-    </v-scroll-x-transition>
+    </v-scroll-x-transition> -->
   </div>
 </template>
 
 <script>
-import BaseButton from "src/components/common/BaseButton.vue";
+// import BaseButton from "src/components/common/BaseButton.vue";
 
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
   props: ["src", "video"],
   components: {
-    BaseButton,
+    // BaseButton,
   },
   methods: {
     linkToCommentView: function () {
@@ -129,7 +129,7 @@ export default {
   margin: 0;
 }
 
-.preview-popup {
+/* .preview-popup {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -145,5 +145,5 @@ export default {
   cursor: pointer;
   width: 100%;
   height: 60%;
-}
+} */
 </style>
