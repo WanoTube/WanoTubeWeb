@@ -7,19 +7,22 @@ global.jQuery = require('jquery');
 var $ = global.jQuery;
 window.$ = $;
 
-import App from './App.vue'
-import { router } from './routes'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import VuePlyr from 'vue-plyr'
+import VueLazyLoadVideo from 'vue-lazyload-video'
+
+import App from './App.vue'
+import { router } from './routes'
+import vuetify from './plugins/vuetify'
+
+import 'vue-plyr/dist/vue-plyr.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import vuetify from './plugins/vuetify'
-import VueLazyLoadVideo from 'vue-lazyload-video'
 
 library.add(faCoffee)
 
@@ -28,10 +31,12 @@ library.add(faCoffee)
 //      window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 // }
 Vue.config.productionTip = false
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
-Vue.use(VueLazyLoadVideo)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue
+  .use(BootstrapVue)
+  .use(IconsPlugin)
+  .use(VueLazyLoadVideo)
+  .use(VuePlyr, { plyr: {} })
+  .component('font-awesome-icon', FontAwesomeIcon)
 
 new Vue({
   router,

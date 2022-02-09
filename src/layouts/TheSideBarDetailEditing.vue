@@ -88,7 +88,7 @@
   <div v-else class="text-center nav-component align-self-center" id="logo">
     <router-link to="/">
       <img
-        :src="require(`../../assets/images/${filename}`)"
+        :src="require(`src/assets/images/${filename}`)"
         width="80px"
         height="83px"
         id="logo-img"

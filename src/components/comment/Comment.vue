@@ -2,8 +2,15 @@
   <div class="">
     <div class="d-flex">
       <div class="avatar">
-        <img
+        <!-- <img
           :src="avatarUrl"
+          width="41px"
+          height="41px"
+          class="img-responsive rounded-circle"
+          style="object-fit: cover"
+        /> -->
+        <img
+          src="https://cdn3.vectorstock.com/i/1000x1000/75/62/smiling-avatar-boy-graphic-vector-9437562.jpg"
           width="41px"
           height="41px"
           class="img-responsive rounded-circle"
@@ -51,12 +58,14 @@
 
 <script>
 import $ from "jquery";
-import { avatarUrlPrefix } from "../../constants/user";
+import { avatarUrlPrefix, defaultAvatarUrl } from "../../constants/user";
 export default {
   props: ["name", "username", "caption", "image", "filename"],
-  data: () => ({
-    avatarUrl: avatarUrlPrefix + this.filename,
-  }),
+  computed: {
+    avatarUrl: function () {
+      return this.filename ? avatarUrlPrefix + this.filename : defaultAvatarUrl;
+    },
+  },
   methods: {
     loveSVGFunction: function (e) {
       e.currentTarget.classList.toggle("animate");
@@ -77,5 +86,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/styles/post-caption.css">
+<style src="src/assets/styles/post-caption.css">
 </style>

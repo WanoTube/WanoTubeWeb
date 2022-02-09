@@ -4,21 +4,20 @@ import Authentication from './views/Authentication.vue'
 import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
-import UploadVideo from './views/UploadVideo.vue'
-import Upload from './components/upload-video/Upload.vue'
-import VideoManagement from './components/video-management/ListVideos.vue'
-import VideoDetails from './components/video-management/VideoDetails.vue'
+import Upload from './components/video/upload-video/Upload.vue'
+import ListVideos from './components/video/video-management/ListVideos.vue'
+import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
 import Profile from './components/profile/Profile.vue'
 import EditProfile from './components/profile/EditProfile.vue'
 
-import Comment from './views/Comment.vue'
+import Watch from './views/Watch.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
 import Trending from './components/discover/Trending.vue'
-import Filter from './components/video-editing/filters/Filters.vue'
-import MyMedia from './components/video-editing/my-media/MyMedia.vue'
-import BrowseFile from './components/video-editing/browse-files/BrowseFile.vue'
+import Filter from './components/video/video-editing/filters/Filters.vue'
+import MyMedia from './components/video/video-editing/my-media/MyMedia.vue'
+import BrowseFile from './components/video/video-editing/browse-files/BrowseFile.vue'
 import PageNotFound from './views/PageNotFound.vue'
 
 Vue.use(VueRouter)
@@ -90,7 +89,7 @@ export const router = new VueRouter({
 		},
 		{
 			path: '/:username/videos/',
-			component: VideoManagement,
+			component: ListVideos,
 			meta: {
 				requiresAuth: true
 			}
@@ -111,8 +110,8 @@ export const router = new VueRouter({
 			component: Register,
 		},
 		{
-			path: '/comment/:id',
-			component: Comment,
+			path: '/watch/:id',
+			component: Watch,
 			meta: {
 				requiresAuth: true
 			}

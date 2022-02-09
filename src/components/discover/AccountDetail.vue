@@ -2,7 +2,7 @@
   <div class="d-flex">
     <div class="avatar">
       <img
-        :src="require(`../../assets/images/emchingan/${avatar_img}`)"
+        :src="require(`src/assets/images/emchingan/${avatar_img}`)"
         width="41px"
         height="41px"
       />
@@ -30,5 +30,5 @@ export default {
   props: ["name", "username", "caption", "bg_music", "avatar_img", "isPost"],
 };
 </script>
-<style src="../../assets/styles/post-caption.css">
+<style src="src/assets/styles/post-caption.css">
 </style>

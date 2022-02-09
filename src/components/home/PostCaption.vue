@@ -3,7 +3,7 @@
     <router-link :to="`/${username}/profile`">
       <div class="avatar">
         <img
-          :src="`http://localhost:8000/v1/users/avatar/${avatar_img}`"
+          :src="`http://localhost:8000/v1/users/avatar/${avatarImg}`"
           width="41px"
           height="41px"
           class="img-responsive rounded-circle"
@@ -28,8 +28,8 @@
 
 <script>
 export default {
-  props: ["name", "username", "caption", "bg_music", "avatar_img", "isPost"],
+  props: ["name", "username", "caption", "bgMusic", "avatarImg", "isPost"],
 };
 </script>
-<style src="../../assets/styles/post-caption.css">
+<style src="src/assets/styles/post-caption.css">
 </style>

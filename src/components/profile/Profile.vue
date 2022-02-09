@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <TheNavBar />
     <br /><br /><br /><br />
     <div class="container" :key="$route.fullPath">
       <div class="row">
@@ -67,16 +67,16 @@
 </template>
 
 <script>
-import NavBar from "../common/NavBar.vue";
+import TheNavBar from "src/layouts/TheNavBar.vue";
 import ThumbnailVideo from "../common/ThumbnailVideo.vue";
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
 const UsersRepository = RepositoryFactory.get("users");
 const VideosRepository = RepositoryFactory.get("video");
 
 export default {
   components: {
-    NavBar,
+    TheNavBar,
     ThumbnailVideo,
   },
   data() {
@@ -94,7 +94,7 @@ export default {
   methods: {
     linkToCommentView: function (id) {
       this.$router.push({
-        path: "/comment/" + id,
+        path: "/watch/" + id,
       });
     },
     navigateToEditProfile() {

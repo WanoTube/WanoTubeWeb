@@ -2,13 +2,16 @@
   <header class="blog-header">
     <div class="container">
       <div class="row justify-content-between align-items-center">
-        <div class="col-4 pt-1 order-md-1 order-1">
+        <div class="col-4 pt-1 order-md-1 order-1 align-items-center">
           <router-link to="/" id="navbar-brand" class="navbar-brand">
-            <img src="../../assets/Brand.png" class="navbar-brand-image" />
+            <img
+              :src="require('src/assets/Brand.png')"
+              class="navbar-brand-image"
+            />
           </router-link>
         </div>
         <div class="col-md-4 order-md-2 order-4 d-none d-md-block">
-          <SearchBar></SearchBar>
+          <TheSearchBar></TheSearchBar>
         </div>
         <div class="col-4 d-flex justify-content-end order-2 d-md-none">
           <button v-on:click="toggle" class="d-md-none menu-toggle">
@@ -88,15 +91,15 @@
     </div>
   </header>
 </template>
-<style src="../../assets/styles/navbar.css"></style>
+<style src="src/assets/styles/navbar.css"></style>
 <style>
 .v-list {
   width: 250px;
 }
 </style>
 <script>
-import SearchBar from "../common/SearchBar.vue";
-import { defaultAvatarUrl } from "../../constants/user";
+import TheSearchBar from "./TheSearchBar.vue";
+import { defaultAvatarUrl } from "src/constants/user";
 export default {
   data() {
     return {
@@ -252,7 +255,7 @@ export default {
     };
   },
   components: {
-    SearchBar,
+    TheSearchBar,
   },
   methods: {
     toggle: function (event) {

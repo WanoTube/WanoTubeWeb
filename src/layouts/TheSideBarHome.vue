@@ -3,12 +3,12 @@
     <br />
     <div class="filter-buttons container">
       <div class="filter-button-component d-none d-lg-block">
-        <img src="../../assets/images/Home-Icon.svg" class="m-r-15" />
+        <img :src="require('src/assets/images/Home-Icon.svg')" class="m-r-15" />
         <b>For you</b>
       </div>
       <div class="filter-button-component d-none d-lg-block">
         <img
-          src="../../assets/images/Users-Icon.svg"
+          :src="require('src/assets/images/Users-Icon.svg')"
           class="m-r-15"
           width="26px"
           height="26px"
@@ -16,11 +16,11 @@
         <b>Following</b>
       </div>
       <div class="filter-button-component d-lg-none">
-        <img src="../../assets/images/Home-Icon.svg" class="m-r-15" />
+        <img :src="require('src/assets/images/Home-Icon.svg')" class="m-r-15" />
       </div>
       <div class="filter-button-component d-lg-none">
         <img
-          src="../../assets/images/Users-Icon.svg"
+          :src="require('src/assets/images/Users-Icon.svg')"
           class="m-r-15"
           width="26px"
           height="26px"
@@ -40,8 +40,8 @@
   </div>
 </template>
 <script>
-import Accounts from "../home/Accounts.vue";
-import Discover from "../discover/DiscoverSideBar.vue";
+import Accounts from "../components/home/Accounts.vue";
+import Discover from "../components/discover/DiscoverSideBar.vue";
 export default {
   components: {
     Accounts,
@@ -50,5 +50,5 @@ export default {
 };
 </script>
 
-<style src="../../assets/styles/sidebar-home.css">
+<style src="src/assets/styles/sidebar-home.css">
 </style>

@@ -1,9 +1,15 @@
 <template>
-  <button type="button" class="btn btn-outline-danger">{{ text }}</button>
+  <button
+    type="button"
+    :class="`btn btn-outline-danger ${classes}`"
+    @click="onClick"
+  >
+    {{ label }}
+  </button>
 </template>
 <script>
 export default {
-  props: ["text"],
+  props: ["label", "onClick", "classes"],
 };
 </script>
 <style scoped>

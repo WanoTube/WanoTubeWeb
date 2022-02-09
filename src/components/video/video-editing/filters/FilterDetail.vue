@@ -17,7 +17,7 @@
       <div class="col">
         <div :id="filter_1">
           <img
-            src="../../../assets/images/sample/Filter_1.png"
+            :src="require('src/assets/images/sample/Filter_1.png')"
             width="120px"
             height="122px"
             style="object-fit: scale-down"
@@ -25,7 +25,7 @@
         </div>
         <div :id="filter_2" class="">
           <img
-            src="../../../assets/images/sample/Filter_1.png"
+            :src="require('src/assets/images/sample/Filter_1.png')"
             width="120px"
             height="122px"
             style="object-fit: scale-down"
@@ -33,7 +33,7 @@
         </div>
         <div :id="filter_3" class="">
           <img
-            src="../../../assets/images/sample/Filter_1.png"
+            :src="require('src/assets/images/sample/Filter_1.png')"
             width="120px"
             height="122px"
             style="object-fit: scale-down"

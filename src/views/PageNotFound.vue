@@ -1,28 +1,22 @@
 <template>
-  <div>
-    <NavBar></NavBar>
-    <div id="notfound">
-      <div class="notfound">
-        <div class="notfound-404">
-          <h1>Oops!</h1>
-        </div>
-        <h2>404 - Page not found</h2>
-        <p>
-          The page you are looking for might have been removed had its name
-          changed or is temporarily unavailable.
-        </p>
-        <a href="/home">Go To Homepage</a>
+  <div id="notfound">
+    <div class="notfound">
+      <div class="notfound-404">
+        <h1>Oops!</h1>
       </div>
+      <h2>404 - Page not found</h2>
+      <p>
+        The page you are looking for might have been removed had its name
+        changed or is temporarily unavailable.
+      </p>
+      <a href="/home">Go To Homepage</a>
     </div>
   </div>
 </template>
 
 <script>
-import NavBar from "../components/common/NavBar.vue";
 export default {
-  components: {
-    NavBar,
-  },
+  components: {},
   created() {
     // window.location.href = "/my-new-404-page.html";
   },

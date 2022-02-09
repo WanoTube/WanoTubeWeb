@@ -1,53 +1,55 @@
 <template>
   <nav id="sidebar" class="">
-    <SideBarDetail filename="Logo_Filled.png"></SideBarDetail>
+    <TheSideBarDetailEditing
+      filename="Logo_Filled.png"
+    ></TheSideBarDetailEditing>
     <div id="menuToggle" class="text-center align-self-center">
       <span></span>
       <span></span>
       <span></span>
     </div>
     <div id="menu-bar" class="menu-bar">
-      <SideBarDetail
+      <TheSideBarDetailEditing
         v-b-modal.browseFile
         id="create"
         filename="Add-Icon.svg"
         text="Create"
-      ></SideBarDetail>
+      ></TheSideBarDetailEditing>
       <browse-file />
       <router-link to="/editing/mymedia">
-        <SideBarDetail
+        <TheSideBarDetailEditing
           @toggle-click="greet"
           id="folder"
           filename="Folder-Icon.svg"
           text="My Media"
-        ></SideBarDetail>
+        ></TheSideBarDetailEditing>
       </router-link>
-      <SideBarDetail
+      <TheSideBarDetailEditing
         v-b-modal.recordVideo
         id="record"
         filename="Record-Icon.svg"
         text="Record"
-      ></SideBarDetail>
+      ></TheSideBarDetailEditing>
       <record-video />
       <router-link to="/editing/filter">
-        <SideBarDetail
+        <TheSideBarDetailEditing
           @toggle-click="greet"
           id="filter"
           filename="Filter-Icon.svg"
           text="Filter"
-        ></SideBarDetail>
+        ></TheSideBarDetailEditing>
       </router-link>
     </div>
   </nav>
 </template>
 
 <script>
-import BrowseFile from "../video-editing/browse-files/BrowseFile.vue";
-import RecordVideo from "../video-editing/record-video/RecordVideo.vue";
-import SideBarDetail from "./SideBarDetailEditing.vue";
+import BrowseFile from "src/components/video/video-editing/browse-files/BrowseFile.vue";
+import RecordVideo from "src/components/video/video-editing/record-video/RecordVideo.vue";
+import TheSideBarDetailEditing from "./TheSideBarDetailEditing.vue";
 export default {
   components: {
-    SideBarDetail,
+    TheSideBarDetailEditing,
     BrowseFile,
     RecordVideo,
   },
@@ -76,5 +78,5 @@ export default {
   },
 };
 </script>
-<style src="../../assets/styles/sidebar-editing.css">
+<style src="src/assets/styles/sidebar-editing.css">
 </style>

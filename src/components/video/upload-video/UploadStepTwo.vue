@@ -77,10 +77,11 @@
 </style>
 <script>
 import io from "socket.io-client";
-
-import { RepositoryFactory } from "../../utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "../../utils/utils";
 import ProgressBar from "vue-simple-progress";
+
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
+import { serverUrl } from "src/constants/system";
 
 const VideoRepository = RepositoryFactory.get("video");
 
@@ -94,7 +95,7 @@ export default {
       title: "",
       description: "",
       thumbnailVideo: this.video,
-      socket: io("http://localhost:8000", {
+      socket: io(serverUrl, {
         withCredentials: true,
       }),
       progressVal: 0,
