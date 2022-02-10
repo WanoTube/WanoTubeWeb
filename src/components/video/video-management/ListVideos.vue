@@ -1,7 +1,6 @@
 <template>
   <div class="container-fluid bg-white">
     <TheNavBar />
-    <br /><br />
     <div class="row">
       <div class="col-12">
         <br />
@@ -10,12 +9,13 @@
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
             <h1><b>Video content</b></h1>
           </div>
-          <div class="col container row justify-content-end">
+          <!-- <div class="col container row justify-content-end">
             <v-btn class="ma-2 elevation-0" color="white" @click="uploadVideo">
               <v-icon left>mdi-plus</v-icon>
               Upload video
             </v-btn>
-          </div>
+          </div> -->
+          <div class="mr-4"><UploadDialog /></div>
         </div>
         <v-data-table
           v-model="selected"
@@ -118,6 +118,7 @@ import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
+import UploadDialog from "../upload-video/UploadDialog.vue";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
@@ -125,6 +126,7 @@ export default {
     TheNavBar,
     DeleteConfirmation,
     ShowRecognitionResult,
+    UploadDialog,
   },
   data() {
     return {
@@ -225,7 +227,7 @@ export default {
     },
   },
   async mounted() {
-    //TO-DO: Check if videos is ull
+    //TO-DO: Check if videos is null
     this.videos = await this.getAllVideos();
   },
 };

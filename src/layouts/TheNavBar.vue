@@ -11,7 +11,7 @@
           </router-link>
         </div>
         <div class="col-md-4 order-md-2 order-4 d-none d-md-block">
-          <TheSearchBar></TheSearchBar>
+          <TheSearchBar />
         </div>
         <div class="col-4 d-flex justify-content-end order-2 d-md-none">
           <button v-on:click="toggle" class="d-md-none menu-toggle">
@@ -23,11 +23,12 @@
           class="col-md-4 d-flex order-md-3 order-3 nav-bar-buttons-container"
         >
           <div id="nav-bar-buttons" class="nav-bar-buttons">
-            <router-link to="/upload">
+            <v-btn icon x-large @click="navigateToVideos(true)">
               <v-avatar color="#E4E6EB" size="40">
                 <v-icon color="black" size="25">mdi-cloud-upload</v-icon>
               </v-avatar>
-            </router-link>
+            </v-btn>
+
             <a class="text-muted" href="#">
               <v-avatar color="#E4E6EB" size="40">
                 <v-icon color="black" size="25">mdi-bell</v-icon>
@@ -235,12 +236,12 @@ export default {
           action: "viewProfile",
         },
         {
-          title: "My videos",
+          title: "My Videos",
           icon: "mdi-folder-account",
           action: "viewVideos",
         },
         {
-          title: "All users",
+          title: "All Users",
           icon: "mdi-account-group",
           action: "viewUsers",
         },
@@ -266,9 +267,18 @@ export default {
         else navbarButtons.style.display = "block";
       } else navbarButtons.style.display = "block";
     },
-    navigateToVideos() {
-      if (this.currentUsername)
-        this.$router.push("/" + this.currentUsername + "/videos");
+    navigateToVideos(openDialog = false) {
+      console.log("Hello");
+      if (this.currentUsername) {
+        const newRoute = `/${this.currentUsername}/videos${
+          openDialog ? "/uploads" : ""
+        }`;
+        this.$router.push(newRoute).catch((error) => {
+          // if (error.name != "NavigationDuplicated") {
+          //   throw error;
+          // }
+        });
+      }
     },
     logIn() {
       this.$router.push("/login");

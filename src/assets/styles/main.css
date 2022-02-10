@@ -46,8 +46,9 @@ body { margin: 0 !important; }
 .vertical-center {
     transform: translate(0,-10%);
 }
-
-
 a {
     color: black !important;
+}
+.hide {
+    display: none
 }

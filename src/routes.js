@@ -95,6 +95,13 @@ export const router = new VueRouter({
 			}
 		},
 		{
+			path: '/:username/videos/uploads',
+			component: ListVideos,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
 			path: '/:username/videos/:id',
 			component: VideoDetails,
 			meta: {
