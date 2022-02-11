@@ -58,7 +58,7 @@ export default {
         let file = files[0];
         // allows image only
         if (file.type.indexOf("image/") >= 0) {
-          var reader = new FileReader();
+          const reader = new FileReader();
           reader.onload = (f) => {
             this.imageSource = f.target.result;
             this.isDragging = false;

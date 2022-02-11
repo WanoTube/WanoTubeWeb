@@ -7,59 +7,59 @@
 <script>
 export default {
   mounted() {
-    var player = document.getElementById("video-element");
-    var btnPlayPauses = document.getElementsByClassName("btnPlayPause");
-    var btnPlayPause =
+    let player = document.getElementById("video-element");
+    let btnPlayPauses = document.getElementsByClassName("btnPlayPause");
+    let btnPlayPause =
       btnPlayPauses[0].offsetWidth > 0 && btnPlayPauses[0].offsetHeight > 0
         ? btnPlayPauses[0]
         : btnPlayPauses[1];
 
-    var btnPauses = document.getElementsByClassName("btnPause");
-    var btnPause =
+    let btnPauses = document.getElementsByClassName("btnPause");
+    let btnPause =
       btnPauses[0].offsetWidth > 0 && btnPauses[0].offsetHeight > 0
         ? btnPauses[0]
         : btnPauses[1];
     btnPauses[0].style.display = "none";
     btnPauses[1].style.display = "none";
 
-    var progressBars = document.getElementsByClassName("slider");
-    var progressBar =
+    let progressBars = document.getElementsByClassName("slider");
+    let progressBar =
       progressBars[0].offsetWidth > 0 && progressBars[0].offsetHeight > 0
         ? progressBars[0]
         : progressBars[1];
 
-    var currentTimes = document.getElementsByClassName("current-time");
-    var currentTime =
+    let currentTimes = document.getElementsByClassName("current-time");
+    let currentTime =
       currentTimes[0].offsetWidth > 0 && currentTimes[0].offsetHeight > 0
         ? currentTimes[0]
         : currentTimes[1];
 
-    var durations = document.getElementsByClassName("duration");
-    var duration =
+    let durations = document.getElementsByClassName("duration");
+    let duration =
       durations[0].offsetWidth > 0 && durations[0].offsetHeight > 0
         ? durations[0]
         : durations[1];
 
-    var quickRestarts = document.getElementsByClassName("quickRestart");
-    var quickRestart =
+    let quickRestarts = document.getElementsByClassName("quickRestart");
+    let quickRestart =
       quickRestarts[0].offsetWidth > 0 && quickRestarts[0].offsetHeight > 0
         ? quickRestarts[0]
         : quickRestarts[1];
 
-    var rewinds = document.getElementsByClassName("rewind");
-    var rewind =
+    let rewinds = document.getElementsByClassName("rewind");
+    let rewind =
       rewinds[0].offsetWidth > 0 && rewinds[0].offsetHeight > 0
         ? rewinds[0]
         : rewinds[1];
 
-    var forwards = document.getElementsByClassName("forward");
-    var forward =
+    let forwards = document.getElementsByClassName("forward");
+    let forward =
       forwards[0].offsetWidth > 0 && forwards[0].offsetHeight > 0
         ? forwards[0]
         : forwards[1];
 
-    var skipTracks = document.getElementsByClassName("skipTrack");
-    var skipTrack =
+    let skipTracks = document.getElementsByClassName("skipTrack");
+    let skipTrack =
       skipTracks[0].offsetWidth > 0 && skipTracks[0].offsetHeight > 0
         ? skipTracks[0]
         : skipTracks[1];
@@ -92,7 +92,7 @@ export default {
     skipTracks[0].addEventListener("click", endVideo);
     skipTracks[1].addEventListener("click", endVideo);
 
-    var startTime, endTime;
+    let startTime, endTime;
     window.addEventListener("resize", resizeDetected);
     function resizeDetected() {
       btnPlayPause =
@@ -135,7 +135,7 @@ export default {
 
     function onClicked() {
       if (player.paused || player.ended) {
-        var playPromise = player.play();
+        let playPromise = player.play();
 
         if (playPromise !== undefined) {
           playPromise
@@ -149,7 +149,7 @@ export default {
             });
         }
       } else {
-        var pausePromise = player.pause();
+        let pausePromise = player.pause();
         changeButtonType(btnPauses[0], btnPlayPauses[0]);
         changeButtonType(btnPauses[1], btnPlayPauses[1]);
 
@@ -170,7 +170,7 @@ export default {
     }
 
     function seek(e) {
-      var percent = e.offsetX / this.offsetWidth;
+      let percent = e.offsetX / this.offsetWidth;
       player.currentTime = percent * player.duration;
       e.target.value = Math.floor(percent / 100);
       e.target.innerHTML = progressBar.value + "% played";
@@ -184,24 +184,24 @@ export default {
       updateCurrentTimeText();
 
       // Work out how much of the media has played via the duration and currentTime parameters
-      var percentage = Math.floor((100 / player.duration) * player.currentTime);
+      let percentage = Math.floor((100 / player.duration) * player.currentTime);
       // Update the progress bar's value
       progressBar.value = percentage;
       // Update the progress bar's text (for browsers that don't support the progress element)
       progressBar.innerHTML = percentage + "% played";
     }
     function updateCurrentTimeText() {
-      var totalCurrentTime = Math.floor(player.currentTime); // seconds
-      var totalDurationTime = Math.floor(player.duration); // seconds
+      let totalCurrentTime = Math.floor(player.currentTime); // seconds
+      let totalDurationTime = Math.floor(player.duration); // seconds
 
-      var sCurrentTime = convertSecondsToHMS(totalCurrentTime);
-      var sDurationTime = convertSecondsToHMS(totalDurationTime);
+      let sCurrentTime = convertSecondsToHMS(totalCurrentTime);
+      let sDurationTime = convertSecondsToHMS(totalDurationTime);
 
       currentTime.innerHTML = sCurrentTime;
       duration.innerHTML = sDurationTime;
     }
     function convertSecondsToHMS(secs) {
-      var hourCurrentTime = 0,
+      let hourCurrentTime = 0,
         minCurrentTime = 0,
         secondCurrentTime = 0;
 

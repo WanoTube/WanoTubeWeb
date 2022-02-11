@@ -260,7 +260,7 @@ export default {
   },
   methods: {
     toggle: function (event) {
-      var navbarButtons = document.getElementById("nav-bar-buttons");
+      const navbarButtons = document.getElementById("nav-bar-buttons");
       if (window.innerWidth <= 768) {
         if (navbarButtons.style.display == "block")
           navbarButtons.style.display = "none";
@@ -268,7 +268,6 @@ export default {
       } else navbarButtons.style.display = "block";
     },
     navigateToVideos(openDialog = false) {
-      console.log("Hello");
       if (this.currentUsername) {
         const newRoute = `/${this.currentUsername}/videos${
           openDialog ? "/uploads" : ""
@@ -311,7 +310,7 @@ export default {
   },
   mounted() {
     window.addEventListener("resize", resizeDetected);
-    var navBarButtons = document.getElementById("nav-bar-buttons");
+    const navBarButtons = document.getElementById("nav-bar-buttons");
     function resizeDetected() {
       if (window.innerWidth > 768) navBarButtons.style.display = "block";
       else {

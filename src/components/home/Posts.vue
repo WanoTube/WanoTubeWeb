@@ -28,7 +28,7 @@ export default {
         const dataObject = convertJSONToObject(data);
         if (!dataObject.details) {
           for (let index in dataObject) {
-            let video = dataObject[index];
+            const video = dataObject[index];
             if (video) {
               if (video.url && video.author_id) {
                 video.user = await this.getUserByAuthorId(video.author_id);
@@ -52,7 +52,7 @@ export default {
         const dataObject = convertJSONToObject(data);
         if (!dataObject.details) {
           if (dataObject) {
-            let user = dataObject.user;
+            const user = dataObject.user;
             user.username = dataObject.username;
             return user;
           }

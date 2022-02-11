@@ -118,20 +118,20 @@ export default {
       if (!file) {
         console.log("Failed to load file");
       } else {
-        let vm = this;
-        let reader = new FileReader();
+        const vm = this;
+        const reader = new FileReader();
         reader.onload = function (e) {
           vm.thumbnailVideo = e.target.result;
           // The file reader gives us an ArrayBuffer:
-          let buffer = e.target.result;
-          var uint8Array = new Uint8Array(buffer);
-          var arrayBuffer = uint8Array.buffer;
-          var blob = new Blob([arrayBuffer]);
-          let url = URL.createObjectURL(blob);
-          var vid = document.getElementById("video-drag");
-          vid.src = url;
+          const buffer = e.target.result;
+          const uint8Array = new Uint8Array(buffer);
+          const arrayBuffer = uint8Array.buffer;
+          const blob = new Blob([arrayBuffer]);
+          const url = URL.createObjectURL(blob);
+          const videoDragEl = document.getElementById("video-drag");
+          videoDragEl.src = url;
 
-          vid.onloadedmetadata = function () {
+          videoDragEl.onloadedmetadata = function () {
             const seconds = this.duration;
             let duration = "";
 
@@ -141,7 +141,7 @@ export default {
               duration = new Date(seconds * 1000).toISOString().substr(11, 8);
             vm.duration = duration;
           };
-          vid.load();
+          videoDragEl.load();
         };
         reader.readAsArrayBuffer(file);
         this.showThumbnail();
@@ -157,7 +157,6 @@ export default {
     },
     async onContinue() {
       const data = await this.uploadVideo();
-      console.log("data: ", data);
       if (data) {
         this.progressStatus = "Completed";
         this.$emit("uploadResult", data);
@@ -169,7 +168,7 @@ export default {
     },
     async uploadVideo() {
       if (this.title && this.video) {
-        let formData = new FormData();
+        const formData = new FormData();
         const user = JSON.parse(localStorage.getItem("user"));
         formData.append("title", this.title);
         formData.append("description", this.description);

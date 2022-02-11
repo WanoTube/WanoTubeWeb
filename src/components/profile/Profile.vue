@@ -174,7 +174,7 @@ export default {
       this.user = await this.getProfileInfo();
       this.videos = await this.getVideos();
       this.$nextTick(() => {
-        let videos = document.getElementsByClassName("thumbnail-video");
+        const videos = document.getElementsByClassName("thumbnail-video");
         videos.forEach((video) => {
           if (video.hasAttribute("controls")) {
             video.removeAttribute("controls");

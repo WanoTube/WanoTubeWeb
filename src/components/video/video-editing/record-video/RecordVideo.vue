@@ -110,7 +110,7 @@ export default {
     },
     async recordVideo() {
       this.isStarted = true;
-      let recordVideo = document.getElementById("recorded-video");
+      const recordVideo = document.getElementById("recorded-video");
       $("#recorded-video").animate({ height: "auto", width: "100%" }, 100);
 
       this.camera_stream = await navigator.mediaDevices.getUserMedia({
@@ -128,7 +128,7 @@ export default {
         });
 
         // event : new recorded video blob available
-        let vm = this;
+        const vm = this;
 
         this.media_recorder.addEventListener("dataavailable", function (e) {
           vm.blobs_recorded.push(e.data);
@@ -137,10 +137,10 @@ export default {
         // event : recording stopped & all blobs sent
         this.media_recorder.addEventListener("stop", function () {
           // create local object URL from the recorded video blobs
-          let video_local = URL.createObjectURL(
+          const video_local = URL.createObjectURL(
             new Blob(vm.blobs_recorded, { type: "video/webm" })
           );
-          let download_link = document.querySelector("#download-video");
+          const download_link = document.querySelector("#download-video");
 
           download_link.href = video_local;
         });
@@ -149,7 +149,7 @@ export default {
         this.media_recorder.start(1000);
       } else {
         this.media_recorder.stop();
-        let recordVideo = document.getElementById("recorded-video");
+        const recordVideo = document.getElementById("recorded-video");
         recordVideo.pause();
       }
     },

@@ -296,24 +296,24 @@ export default {
       if (!file) {
         console.log("Failed to load file");
       } else {
-        let vm = this;
-        let reader = new FileReader();
+        const vm = this;
+        const reader = new FileReader();
         reader.onload = function (e) {
           // The file reader gives us an ArrayBuffer:
-          let buffer = e.target.result;
-          var uint8Array = new Uint8Array(buffer);
-          var arrayBuffer = uint8Array.buffer;
-          var blob = new Blob([arrayBuffer]);
-          let url = URL.createObjectURL(blob);
-          var vid = document.getElementById("avatar");
+          const buffer = e.target.result;
+          const uint8Array = new Uint8Array(buffer);
+          const arrayBuffer = uint8Array.buffer;
+          const blob = new Blob([arrayBuffer]);
+          const url = URL.createObjectURL(blob);
+          const vid = document.getElementById("avatar");
           vid.src = url;
         };
         reader.readAsArrayBuffer(file);
       }
     },
     async updateAvatar() {
-      let formData = new FormData();
-      let user = JSON.parse(localStorage.getItem("user"));
+      const formData = new FormData();
+      const user = JSON.parse(localStorage.getItem("user"));
       formData.append("avatar", this.selectedFile);
       formData.append("user_id", user._id);
       const { data } = await UsersRepository.updateAvatar(formData);

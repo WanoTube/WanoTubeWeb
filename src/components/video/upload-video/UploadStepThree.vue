@@ -56,7 +56,7 @@ export default {
       this.$emit("onReturn", 2);
     },
     musicIncluded(musics) {
-      let results = [];
+      const results = [];
       musics.forEach((element) => {
         const first = element;
         const title = first.title;
@@ -64,10 +64,7 @@ export default {
         const artists = first.artists; // array
         const songArtist = artists[0].name;
 
-        let jsonResult = {};
-        jsonResult.title = title;
-        jsonResult.album = album;
-        jsonResult.songArtist = songArtist;
+        let jsonResult = { title, album, songArtist };
         console.log("audioRecognition result: " + JSON.stringify(jsonResult));
         results.push(jsonResult);
       });

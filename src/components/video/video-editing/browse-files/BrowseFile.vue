@@ -47,11 +47,11 @@ export default {
     onDrop: function (e) {
       e.stopPropagation();
       e.preventDefault();
-      var files = e.dataTransfer.files;
+      const files = e.dataTransfer.files;
       this.createFile(files[0]);
     },
     onChange(e) {
-      var files = e.target.files;
+      const files = e.target.files;
       this.createFile(files[0]);
     },
     createFile(file) {
@@ -62,22 +62,22 @@ export default {
       if (!file) {
         alert("Failed to load file");
       } else {
-        var reader = new FileReader();
+        const reader = new FileReader();
 
-        var vm = this;
+        const vm = this;
 
         reader.onload = function (e) {
           // vm.video = e.target.result;
 
           // The file reader gives us an ArrayBuffer:
-          let buffer = e.target.result;
-          var uint8Array = new Uint8Array(buffer);
-          var arrayBuffer = uint8Array.buffer;
-          var blob = new Blob([arrayBuffer]);
-          let url = URL.createObjectURL(blob);
+          const buffer = e.target.result;
+          const uint8Array = new Uint8Array(buffer);
+          const arrayBuffer = uint8Array.buffer;
+          const blob = new Blob([arrayBuffer]);
+          const url = URL.createObjectURL(blob);
           vm.video = url;
 
-          var vid = document.getElementById("video-drag");
+          const vid = document.getElementById("video-drag");
           vid.src = url;
           vid.load();
         };

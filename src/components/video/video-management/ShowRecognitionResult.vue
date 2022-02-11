@@ -58,7 +58,7 @@ export default {
       this.$emit("onClose", false);
     },
     musicIncluded(musics) {
-      let results = [];
+      const results = [];
       musics.forEach((element) => {
         const first = element;
         const title = first.title;
@@ -66,10 +66,7 @@ export default {
         const artists = first.artists; // array
         const songArtist = artists[0].name;
 
-        let jsonResult = {};
-        jsonResult.title = title;
-        jsonResult.album = album;
-        jsonResult.songArtist = songArtist;
+        const jsonResult = { title, album, songArtist };
         results.push(jsonResult);
       });
       return results;

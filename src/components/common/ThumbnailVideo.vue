@@ -97,7 +97,7 @@ export default {
   },
   created: function () {
     this.$nextTick(() => {
-      let videos = document.getElementsByClassName("preview-video");
+      const videos = document.getElementsByClassName("preview-video");
       for (let video of videos) {
         if (video.hasAttribute("controls")) {
           video.removeAttribute("controls");
