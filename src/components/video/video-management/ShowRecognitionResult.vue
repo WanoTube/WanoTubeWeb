@@ -57,7 +57,7 @@ export default {
     closeDialog() {
       this.$emit("onClose", false);
     },
-    musicIncluded(musics) {
+    checkIfIncludingMusic(musics) {
       const results = [];
       musics.forEach((element) => {
         const first = element;
@@ -77,7 +77,7 @@ export default {
       handler: function (val) {
         const data = val.recognitionResult;
         if (data) {
-          this.recResult = this.musicIncluded(data);
+          this.recResult = this.checkIfIncludingMusic(data);
         }
       },
       deep: true,

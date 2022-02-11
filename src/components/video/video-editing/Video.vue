@@ -92,7 +92,6 @@ export default {
     skipTracks[0].addEventListener("click", endVideo);
     skipTracks[1].addEventListener("click", endVideo);
 
-    let startTime, endTime;
     window.addEventListener("resize", resizeDetected);
     function resizeDetected() {
       btnPlayPause =

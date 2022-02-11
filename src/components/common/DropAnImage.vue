@@ -51,11 +51,11 @@ export default {
       this.isDragging = false;
     },
     drop(e) {
-      let files = e.dataTransfer.files;
+      const files = e.dataTransfer.files;
       this.wrongFile = false;
       // allows only 1 file
       if (files.length === 1) {
-        let file = files[0];
+        const file = files[0];
         // allows image only
         if (file.type.indexOf("image/") >= 0) {
           const reader = new FileReader();

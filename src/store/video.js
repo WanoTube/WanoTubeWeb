@@ -13,8 +13,6 @@ export const useVideoStore = defineStore("video", {
 
     uploadVideo(video) {
       this.uploadedVideo = video
-      console.log(video)
-      console.log(this.uploadedVideo)
     },
   },
 })

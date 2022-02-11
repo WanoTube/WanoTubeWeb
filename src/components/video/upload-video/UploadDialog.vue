@@ -15,7 +15,7 @@
     <template>
       <v-card>
         <v-toolbar><div class="text-h6">Upload your video</div></v-toolbar>
-        <UploadStepOne @videoWasUpdated="video = $event" />
+        <VideoUploader @videoWasUpdated="video = $event" />
         <v-card-actions class="justify-end">
           <v-btn text @click="closeCreateDialog">Close</v-btn>
         </v-card-actions>
@@ -27,7 +27,7 @@
 <script>
 import { getArrayWithoutLastElement } from "src/utils/array";
 import { useVideoStore } from "src/store/video";
-import UploadStepOne from "./UploadStepOne.vue";
+import VideoUploader from "./VideoUploader.vue";
 
 export default {
   setup() {
@@ -36,7 +36,7 @@ export default {
     return { uploadedVideo, uploadVideo, removeVideo };
   },
   components: {
-    UploadStepOne,
+    VideoUploader,
   },
   data() {
     return {
