@@ -242,14 +242,14 @@ export default {
       });
     },
 
-    readVideoFile: function (val) {
-      if (val) {
-        this.title = val.name.split(".")[0];
-        this.size = Math.round((val.size / (1024 * 1024)) * 100) / 100;
-        this.type = val.type;
-        this.createFile(val);
-      }
-    },
+    // readVideoFile: function (val) {
+    //   if (val) {
+    //     this.title = val.name.split(".")[0];
+    //     this.size = Math.round((val.size / (1024 * 1024)) * 100) / 100;
+    //     this.type = val.type;
+    //     this.createFile(val);
+    //   }
+    // },
   },
   // watch: {
   //   uploadedVideo: function (val) {
@@ -264,7 +264,7 @@ export default {
   //   },
   // },
   mounted() {
-    this.readVideoFile(this.uploadedVideo);
+    // this.readVideoFile(this.uploadedVideo);
     this.trackingUploadProgress();
   },
 };

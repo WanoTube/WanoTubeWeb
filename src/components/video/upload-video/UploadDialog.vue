@@ -26,8 +26,11 @@
 
 <script>
 import { getArrayWithoutLastElement } from "src/utils/array";
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { useVideoStore } from "src/store/video";
+import { convertJSONToObject } from "src/utils/utils";
 import VideoUploader from "./VideoUploader.vue";
+const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   setup() {
@@ -67,11 +70,66 @@ export default {
     openCreateDialog() {
       this.$router.push(this.$route.path + "/uploads");
     },
+    readVideoDuration(file, createVideoCb) {
+      if (!file) {
+        console.log("Failed to load file");
+      } else {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          // The file reader gives us an ArrayBuffer:
+          const buffer = e.target.result;
+          const uint8Array = new Uint8Array(buffer);
+          const arrayBuffer = uint8Array.buffer;
+          const blob = new Blob([arrayBuffer]);
+          const url = URL.createObjectURL(blob);
+          const videoDragEl = document.getElementById("video-drag");
+          videoDragEl.src = url;
+
+          videoDragEl.onloadedmetadata = function () {
+            this.videoDuration = this.duration;
+            createVideoCb(file, this.duration);
+          };
+          videoDragEl.load();
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    },
+
+    async createVideo(videoFile, duration) {
+      const title = videoFile.name.split(".")[0];
+      const size = Math.round((videoFile.size / (1024 * 1024)) * 100) / 100;
+      const type = videoFile.type;
+      console.log("Before Create");
+      if (videoFile) {
+        console.log("Create");
+        const formData = new FormData();
+        const user = JSON.parse(localStorage.getItem("user"));
+        formData.append("video", videoFile);
+        formData.append("author_id", user._id);
+        formData.append("duration", duration);
+        try {
+          const { data } = await VideoRepository.uploadVideo(formData);
+          if (data) {
+            const dataObject = convertJSONToObject(data);
+            if (!dataObject.details) return dataObject;
+          }
+          return null;
+        } catch (error) {
+          if (error.response) {
+            alert(error.response.data);
+          }
+        }
+      } else {
+        throw "Please input all the require fields";
+        // return null;
+      }
+    },
   },
   watch: {
     video: function (data) {
       if (data) {
         this.uploadVideo(data);
+        this.readVideoDuration(data, this.createVideo);
         this.$router.push("/upload");
       }
     },
