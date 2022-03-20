@@ -13,7 +13,7 @@
         style="max-width: 500px; border: 0; background-color: transparent"
       >
         <div class="row no-gutters">
-          <div class="col-sm-5">
+          <!-- <div class="col-sm-5">
             <video
               style="max-height: 150px"
               class="card-img h-100 align-items-center video-mask"
@@ -25,6 +25,9 @@
                 <span v-else>{{ duration }}</span>
               </p>
             </div>
+          </div> -->
+          <div class="col-sm-5">
+            <ThumbnailVideo :video="item" :isOnList="false" />
           </div>
           <div class="col-sm-7">
             <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
@@ -59,13 +62,15 @@
     <template v-slot:item.visibility="{ item }">
       <span v-if="item.visibility == 0">Public</span>
       <span v-else-if="item.visibility == 1">Private</span>
-      <span v-else-if="item.visibility == 2">Followers</span>
+      <span v-else-if="item.visibility == 2">Unpublic</span>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-icon class="mx-2" @click="onEditButtonClick(item)">mdi-pencil</v-icon>
-      <v-icon class="mx-2" @click="onDeleteButtonClick(item)"
-        >mdi-delete</v-icon
-      >
+      <v-icon class="mx-2" @click="onEditButtonClick(item)">
+        mdi-pencil
+      </v-icon>
+      <v-icon class="mx-2" @click="onDeleteButtonClick(item)">
+        mdi-delete
+      </v-icon>
     </template>
     <template v-slot:item.restriction="{ item }">
       <v-icon
@@ -82,11 +87,12 @@
 <script>
 import { convertJSONToObject } from "src/utils/utils";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   props: [],
-  components: {},
+  components: { ThumbnailVideo },
   data() {
     return {
       selected: [],
@@ -142,6 +148,7 @@ export default {
           const { data } = await VideoRepository.getAllVideoInfosWithUserId(
             author_id
           );
+          console.log({ data });
           if (data) {
             const dataObject = convertJSONToObject(data);
             if (!dataObject.details) {
@@ -155,6 +162,10 @@ export default {
           }
         }
       }
+    },
+
+    onEditButtonClick(row) {
+      this.$router.push({ path: `/${this.username}/videos/${row._id}` });
     },
   },
 
