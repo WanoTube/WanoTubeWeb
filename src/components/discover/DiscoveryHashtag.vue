@@ -79,9 +79,9 @@ export default {
   },
   methods: {
     search() {
-      let hashtags = this.hashtags;
+      const hashtags = this.hashtags;
       if (this.id) {
-        let hashtag = hashtags[this.id - 1];
+        const hashtag = hashtags[this.id - 1];
         if (hashtag) {
           this.trending_result = hashtags.filter((h) => h.id == this.id);
         } else this.trending_result = hashtags;

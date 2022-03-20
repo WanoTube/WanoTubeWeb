@@ -150,11 +150,11 @@ export default {
   },
   methods: {
     search() {
-      let allUsers = this.allUsers;
+      const allUsers = this.allUsers;
       if (this.id) {
-        let user = allUsers[this.id - 1];
+        const user = allUsers[this.id - 1];
         if (user) {
-          let username = user.username;
+          const username = user.username;
           this.searchResult = allUsers.filter((u) =>
             u.username.includes(username)
           );

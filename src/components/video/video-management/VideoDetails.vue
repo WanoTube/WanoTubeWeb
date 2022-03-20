@@ -91,6 +91,7 @@ import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 
 const VideoRepository = RepositoryFactory.get("video");
+const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
 
 export default {
   components: {
@@ -103,8 +104,6 @@ export default {
       description: "",
       thumbnailVideoUrl: "",
       video_id: this.$route.params.id,
-      activeButton: false,
-      changeInputCount: 0,
       snackbar: false,
       snackbarText: `Hello, I'm a snackbar`,
       snackbarTimeOut: 3000,
@@ -136,20 +135,10 @@ export default {
     resetInputFields() {
       this.title = this.video.title;
       this.description = this.video.description;
-      this.changeInputCount = 0;
-      this.updateActiveStatus();
-    },
-    updateActiveStatus() {
-      if (this.changeInputCount == 0) {
-        this.activeButton = !this.activeButton;
-        this.changeInputCount++;
-      }
+      this.privacy = this.video.visibility;
     },
     async saveChanges() {
-      if (this.activeButton && this.title && this.description) {
-        this.activeButton = false;
-        this.changeInputCount = 0;
-
+      if (this.isUpdated) {
         const updateVideoInfo = {
           id: this.video._id,
           title: this.title,
@@ -158,15 +147,19 @@ export default {
         };
         const { data } = await VideoRepository.updateVideo(updateVideoInfo);
         const dataObject = convertJSONToObject(data);
+        console.log({ dataObject });
         if (!dataObject.details) {
           this.isLoading = false;
-          this.info = data;
-          console.log(dataObject);
           this.snackbar = true;
           this.snackbarText = "Updated successfully";
+          this.video = {
+            ...this.video,
+            title: this.title,
+            description: this.description,
+            visibility: this.privacy,
+          };
         } else {
-          const errorString = JSON.stringify(dataObject.details);
-          console.log(errorString);
+          alert(JSON.stringify(dataObject.details));
         }
       }
     },
@@ -179,25 +172,28 @@ export default {
       this.description = this.video.description;
     }
   },
+  computed: {
+    isUpdated: function () {
+      if (!this || !this.video) return false;
+      return (
+        this.title !== this.video.title ||
+        this.description !== this.video.description ||
+        this.privacy !== this.video.visibility
+      );
+    },
+  },
   watch: {
     video: function (val) {
       if (val) {
         this.thumbnailVideoUrl =
-          "http://localhost:8000/v1/videos/stream/" + val.url;
+          `${VUE_APP_SERVER_URL}/${VUE_APP_VERSION_1}/videos/stream/` + val.url;
       }
     },
-    title: function (val) {
-      if (val != this.video.title) this.updateActiveStatus();
-      else this.changeInputCount = 0;
-    },
-    description: function (val) {
-      if (val != this.video.title) this.updateActiveStatus();
-      else this.changeInputCount = 0;
-    },
-    activeButton: function () {
+
+    isUpdated: function (val) {
       const btnReset = document.getElementById("btn-reset");
       const btnSave = document.getElementById("btn-save");
-      if (this.activeButton) {
+      if (val) {
         btnReset.classList.add("btn-reset-active");
         btnSave.classList.add("btn-save-active");
         btnReset.classList.remove("btn-reset-inactive");

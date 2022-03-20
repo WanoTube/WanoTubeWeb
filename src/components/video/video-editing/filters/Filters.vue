@@ -44,18 +44,18 @@ export default {
     FilterDetail,
   },
   mounted() {
-    var player = document.getElementById("video-element");
-    var grayScale = document.getElementById("grayscale");
-    var sepia = document.getElementById("sepia");
-    var contrast = document.getElementById("contrast");
-    var hueRotate = document.getElementById("hue-rotate");
-    var blur = document.getElementById("blur");
-    var tint = document.getElementById("tint");
-    var inkwell = document.getElementById("inkwell");
-    var invert = document.getElementById("invert");
-    var opacity = document.getElementById("opacity");
-    var brightness = document.getElementById("brightness");
-    var combo = document.getElementById("combo");
+    const player = document.getElementById("video-element");
+    const grayScale = document.getElementById("grayscale");
+    const sepia = document.getElementById("sepia");
+    const contrast = document.getElementById("contrast");
+    const hueRotate = document.getElementById("hue-rotate");
+    const blur = document.getElementById("blur");
+    const tint = document.getElementById("tint");
+    const inkwell = document.getElementById("inkwell");
+    const invert = document.getElementById("invert");
+    const opacity = document.getElementById("opacity");
+    const brightness = document.getElementById("brightness");
+    const combo = document.getElementById("combo");
     grayScale.addEventListener("click", filterGrayScale);
     sepia.addEventListener("click", filterSepia);
     contrast.addEventListener("click", filterContrast);

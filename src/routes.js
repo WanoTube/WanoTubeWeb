@@ -5,7 +5,7 @@ import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
 import Upload from './components/video/upload-video/Upload.vue'
-import ListVideos from './components/video/video-management/ListVideos.vue'
+import VideoManagement from './components/video/video-management/VideoManagement.vue'
 import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
 import Profile from './components/profile/Profile.vue'
@@ -88,8 +88,15 @@ export const router = new VueRouter({
 			component: EditProfile,
 		},
 		{
-			path: '/:username/videos/',
-			component: ListVideos,
+			path: '/:username/videos',
+			component: VideoManagement,
+			meta: {
+				requiresAuth: true
+			}
+		},
+		{
+			path: '/:username/videos/uploads',
+			component: VideoManagement,
 			meta: {
 				requiresAuth: true
 			}
@@ -140,7 +147,7 @@ router.beforeEach((to, from, next) => {
 				params: { nextUrl: to.fullPath }
 			})
 		} else {
-			let user = JSON.parse(localStorage.getItem('user'))
+			const user = JSON.parse(localStorage.getItem('user'))
 			if (to.matched.some(record => record.meta.isAdmin)) {
 				if (user.is_admin == 1) {
 					next()

@@ -2,7 +2,7 @@ import Repository from "./Repository";
 
 const resource = "/users";
 
-let header = JSON.parse(localStorage.getItem('token'));
+const header = JSON.parse(localStorage.getItem('token'));
 const config = {
 	headers: {
 		"auth-token": header

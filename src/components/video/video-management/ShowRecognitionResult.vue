@@ -57,8 +57,8 @@ export default {
     closeDialog() {
       this.$emit("onClose", false);
     },
-    musicIncluded(musics) {
-      let results = [];
+    checkIfIncludingMusic(musics) {
+      const results = [];
       musics.forEach((element) => {
         const first = element;
         const title = first.title;
@@ -66,10 +66,7 @@ export default {
         const artists = first.artists; // array
         const songArtist = artists[0].name;
 
-        let jsonResult = {};
-        jsonResult.title = title;
-        jsonResult.album = album;
-        jsonResult.songArtist = songArtist;
+        const jsonResult = { title, album, songArtist };
         results.push(jsonResult);
       });
       return results;
@@ -80,7 +77,7 @@ export default {
       handler: function (val) {
         const data = val.recognitionResult;
         if (data) {
-          this.recResult = this.musicIncluded(data);
+          this.recResult = this.checkIfIncludingMusic(data);
         }
       },
       deep: true,

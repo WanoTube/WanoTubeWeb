@@ -132,7 +132,7 @@ export default {
         };
         const { data } = await VideoRepository.commentVideo(formData);
         if (data) {
-          let dataObject = convertJSONToObject(data);
+          const dataObject = convertJSONToObject(data);
           if (!dataObject.details) if (dataObject) return dataObject;
         }
         return null;
@@ -148,7 +148,7 @@ export default {
         const dataObject = convertJSONToObject(data);
         if (!dataObject.details) {
           if (dataObject) {
-            let user = dataObject.user;
+            const user = dataObject.user;
             user.username = dataObject.username;
             return user;
           }
@@ -169,11 +169,10 @@ export default {
           this.$route.params.id
         );
         if (data) {
-          let dataObject = convertJSONToObject(data);
+          const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
             for (let index in dataObject) {
-              let comment = dataObject[index];
-              comment = await this.analyzeComment(comment);
+              const comment = await this.analyzeComment(dataObject[index]);
               if (comment) this.allComments.push(comment);
             }
           }

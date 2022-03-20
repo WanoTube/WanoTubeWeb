@@ -59,7 +59,7 @@ export default {
           this.$route.params.id
         );
         if (data) {
-          let dataObject = convertJSONToObject(data);
+          const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
             if (dataObject.url) {
               return dataObject;
@@ -79,7 +79,7 @@ export default {
         const dataObject = convertJSONToObject(data);
         if (!dataObject.details) {
           if (dataObject) {
-            let user = dataObject.user;
+            const user = dataObject.user;
             user.username = dataObject.username;
             return user;
           }
@@ -106,7 +106,7 @@ export default {
         };
         const { data } = await VideoRepository.likeVideo(formData);
         if (data) {
-          let dataObject = convertJSONToObject(data);
+          const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
             if (dataObject) {
               return dataObject;
@@ -147,7 +147,7 @@ export default {
     async likeFunction() {
       try {
         await this.likeVideo();
-        var element = document.getElementById("like-button");
+        const element = document.getElementById("like-button");
         element.classList.add("active-button");
         if (this.likes == 0) {
           $("span.liked-text").toggleClass("press", 1000);

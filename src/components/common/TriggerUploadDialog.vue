@@ -12,8 +12,7 @@
 export default {
   methods: {
     requestUploadFile() {
-      var src = this.$el.querySelector("#uploadmyfile");
-      console.log(src.files);
+      const src = this.$el.querySelector("#uploadmyfile");
     },
   },
 };
