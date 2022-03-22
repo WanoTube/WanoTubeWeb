@@ -3,7 +3,7 @@
     <router-link :to="`/${username}/profile`">
       <div class="avatar">
         <img
-          :src="`http://localhost:8000/v1/users/avatar/${avatarImg}`"
+          :src="imgSrc"
           width="41px"
           height="41px"
           class="img-responsive rounded-circle"
@@ -27,8 +27,17 @@
 </template>
 
 <script>
+import { defaultAvatarUrl } from "src/constants/user";
+import { avatarUrlPrefix } from "src/constants/user";
+
 export default {
   props: ["name", "username", "caption", "bgMusic", "avatarImg", "isPost"],
+  computed: {
+    imgSrc: function () {
+      if (!this.avatarImg) return defaultAvatarUrl;
+      return `${avatarUrlPrefix}/${this.avatarImg}`;
+    },
+  },
 };
 </script>
 <style src="src/assets/styles/post-caption.css">
