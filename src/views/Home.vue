@@ -13,26 +13,6 @@ export default {
   components: {
     TheSideBarHome,
   },
-  data() {
-    return {
-      allUsers: [],
-      suggestedAccounts: [],
-    };
-  },
-  methods: {
-    getSuggestedAccounts() {
-      this.suggestedAccounts = this.$refs.navbar.suggestedAccounts;
-    },
-    getAllUsers() {
-      this.allUsers = this.$refs.navbar.allUsers;
-    },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.getAllUsers();
-      this.getSuggestedAccounts();
-    });
-  },
 };
 </script>
 

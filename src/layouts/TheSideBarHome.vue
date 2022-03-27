@@ -2,7 +2,7 @@
   <v-card class="mx-auto">
     <v-navigation-drawer>
       <v-list>
-        <v-list-item-group v-model="model">
+        <v-list-item-group>
           <v-list-item
             v-for="item in items"
             :key="item.title"
@@ -35,10 +35,14 @@ export default {
   data() {
     return {
       items: [
-        { title: "Home", icon: "mdi-view-dashboard", to: "/" },
-        { title: "Shorts", icon: "mdi-account-box", to: "/shorts" },
-        { title: "Follows", icon: "mdi-gavel", to: "/feed/follows" },
-        { title: "History", icon: "mdi-gavel", to: "/feed/history" },
+        { title: "Home", icon: "mdi-home-variant", to: "/" },
+        { title: "Shorts", icon: "mdi-video", to: "/shorts" },
+        {
+          title: "Follows",
+          icon: "mdi-youtube-subscription",
+          to: "/feed/follows",
+        },
+        { title: "History", icon: "mdi-history", to: "/feed/history" },
       ],
       routes,
     };
