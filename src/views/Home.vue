@@ -1,12 +1,8 @@
 <template>
-  <div class="bg-secondary-color">
-    <div class="d-flex">
-      <div class="bg-white">
-        <TheSideBarHome></TheSideBarHome>
-      </div>
-      <div class="">
-        <router-view></router-view>
-      </div>
+  <div class="bg-secondary-color h-100">
+    <div class="d-flex h-100">
+      <TheSideBarHome />
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -16,26 +12,6 @@ import TheSideBarHome from "src/layouts/TheSideBarHome.vue";
 export default {
   components: {
     TheSideBarHome,
-  },
-  data() {
-    return {
-      allUsers: [],
-      suggestedAccounts: [],
-    };
-  },
-  methods: {
-    getSuggestedAccounts() {
-      this.suggestedAccounts = this.$refs.navbar.suggestedAccounts;
-    },
-    getAllUsers() {
-      this.allUsers = this.$refs.navbar.allUsers;
-    },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.getAllUsers();
-      this.getSuggestedAccounts();
-    });
   },
 };
 </script>

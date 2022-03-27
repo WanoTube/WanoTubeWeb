@@ -1,54 +1,56 @@
 <template>
-  <div class="side-bar-home" style="padding-left: 20px">
-    <br />
-    <div class="filter-buttons container">
-      <div class="filter-button-component d-none d-lg-block">
-        <img :src="require('src/assets/images/Home-Icon.svg')" class="m-r-15" />
-        <b>For you</b>
+  <v-card class="mx-auto">
+    <v-navigation-drawer>
+      <v-list v-model="model">
+        <v-list-item-group>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+            :to="item.to"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <div class="pa-4">
+        <v-btn outlined block> Logout </v-btn>
       </div>
-      <div class="filter-button-component d-none d-lg-block">
-        <img
-          :src="require('src/assets/images/Users-Icon.svg')"
-          class="m-r-15"
-          width="26px"
-          height="26px"
-        />
-        <b>Following</b>
-      </div>
-      <div class="filter-button-component d-lg-none">
-        <img :src="require('src/assets/images/Home-Icon.svg')" class="m-r-15" />
-      </div>
-      <div class="filter-button-component d-lg-none">
-        <img
-          :src="require('src/assets/images/Users-Icon.svg')"
-          class="m-r-15"
-          width="26px"
-          height="26px"
-        />
-      </div>
-    </div>
-    <div class="suggested-accounts">
-      <Accounts
-        title="Suggested Accounts:"
-        :suggestedAccounts="this.$parent.$data.suggestedAccounts"
-      ></Accounts>
-    </div>
-    <div class="discover">
-      <!-- <Accounts title="Your Top Accounts:"></Accounts> -->
-      <Discover></Discover>
-    </div>
-  </div>
+    </v-navigation-drawer>
+  </v-card>
 </template>
+
 <script>
-import Accounts from "../components/home/Accounts.vue";
-import Discover from "../components/discover/DiscoverSideBar.vue";
+import { routes } from "../routes";
+
 export default {
-  components: {
-    Accounts,
-    Discover,
+  data() {
+    return {
+      items: [
+        { title: "Home", icon: "mdi-home-variant", to: "/" },
+        { title: "Shorts", icon: "mdi-video", to: "/shorts" },
+        {
+          title: "Follows",
+          icon: "mdi-youtube-subscription",
+          to: "/feed/follows",
+        },
+        { title: "History", icon: "mdi-history", to: "/feed/history" },
+      ],
+      routes,
+      model: "1",
+    };
+  },
+  computed: {
+    routePath() {
+      return this.$route.path;
+    },
   },
 };
 </script>
-
-<style src="src/assets/styles/sidebar-home.css">
-</style>
