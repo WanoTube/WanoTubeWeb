@@ -1,5 +1,5 @@
 <template>
-  <div class="row" style="padding: 30px">
+  <div class="row" style="padding: 30px; margin: 12px">
     <div v-for="video in videos" v-bind:key="video.tittle" class="col-md-3">
       <Post :video="video" />
     </div>
