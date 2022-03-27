@@ -22,120 +22,121 @@ import PageNotFound from './views/PageNotFound.vue'
 
 Vue.use(VueRouter)
 
+export const routes = [
+	{
+		path: '/',
+		component: Home,
+		redirect: '/home',
+		children: [
+			{
+				path: '/search/:id',
+				component: Search
+			},
+			{
+				path: '/search',
+				component: Search
+			},
+			{
+				path: '/home',
+				component: Posts
+			},
+			{
+				path: '/trending/:id',
+				component: Trending
+			},
+			{
+				path: '/trending',
+				component: Trending
+			}
+		]
+	},
+	{
+		path: '/editing',
+		component: Editing,
+		redirect: '/editing/mymedia',
+		children: [
+			{
+				path: '/editing/filter',
+				component: Filter
+			},
+			{
+				path: '/editing/mymedia',
+				component: MyMedia
+			},
+			{
+				path: '/editing/browsefile',
+				component: BrowseFile
+			}
+		]
+	},
+	{
+		path: '/users/',
+		component: UserManagement,
+		meta: {
+			requiresAuth: true,
+			isAdmin: true
+		}
+	},
+	{
+		path: '/:username/profile',
+		component: Profile,
+	},
+	{
+		path: '/:username/profile/edit',
+		component: EditProfile,
+	},
+	{
+		path: '/:username/videos',
+		component: VideoManagement,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/:username/videos/uploads',
+		component: VideoManagement,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/:username/videos/:id',
+		component: VideoDetails,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/login/',
+		component: Authentication,
+	},
+	{
+		path: '/signup/',
+		component: Register,
+	},
+	{
+		path: '/watch/:id',
+		component: Watch,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: '/upload',
+		component: Upload,
+		meta: {
+			requiresAuth: true
+		}
+	},
+	{
+		path: "*",
+		component: PageNotFound
+	}
+]
+
 export const router = new VueRouter({
 	mode: 'history',
-	routes: [
-		{
-			path: '/',
-			component: Home,
-			redirect: '/home',
-			children: [
-				{
-					path: '/search/:id',
-					component: Search
-				},
-				{
-					path: '/search',
-					component: Search
-				},
-				{
-					path: '/home',
-					component: Posts
-				},
-				{
-					path: '/trending/:id',
-					component: Trending
-				},
-				{
-					path: '/trending',
-					component: Trending
-				}
-			]
-		},
-		{
-			path: '/editing',
-			component: Editing,
-			redirect: '/editing/mymedia',
-			children: [
-				{
-					path: '/editing/filter',
-					component: Filter
-				},
-				{
-					path: '/editing/mymedia',
-					component: MyMedia
-				},
-				{
-					path: '/editing/browsefile',
-					component: BrowseFile
-				}
-			]
-		},
-		{
-			path: '/users/',
-			component: UserManagement,
-			meta: {
-				requiresAuth: true,
-				isAdmin: true
-			}
-		},
-		{
-			path: '/:username/profile',
-			component: Profile,
-		},
-		{
-			path: '/:username/profile/edit',
-			component: EditProfile,
-		},
-		{
-			path: '/:username/videos',
-			component: VideoManagement,
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/:username/videos/uploads',
-			component: VideoManagement,
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/:username/videos/:id',
-			component: VideoDetails,
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/login/',
-			component: Authentication,
-		},
-		{
-			path: '/signup/',
-			component: Register,
-		},
-		{
-			path: '/watch/:id',
-			component: Watch,
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: '/upload',
-			component: Upload,
-			meta: {
-				requiresAuth: true
-			}
-		},
-		{
-			path: "*",
-			component: PageNotFound
-		}
-		// {path: '/browsefile', component: BrowseFile}
-	]
+	routes
 })
 
 // Meta Handling

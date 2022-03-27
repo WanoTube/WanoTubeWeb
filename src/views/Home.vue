@@ -1,12 +1,8 @@
 <template>
-  <div class="bg-secondary-color">
-    <div class="d-flex">
-      <div class="bg-white">
-        <TheSideBarHome></TheSideBarHome>
-      </div>
-      <div class="">
-        <router-view></router-view>
-      </div>
+  <div class="bg-secondary-color h-100">
+    <div class="d-flex h-100">
+      <TheSideBarHome />
+      <router-view></router-view>
     </div>
   </div>
 </template>
