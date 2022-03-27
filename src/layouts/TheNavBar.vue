@@ -272,11 +272,7 @@ export default {
         const newRoute = `/${this.currentUsername}/videos${
           openDialog ? "/uploads" : ""
         }`;
-        this.$router.push(newRoute).catch((error) => {
-          // if (error.name != "NavigationDuplicated") {
-          //   throw error;
-          // }
-        });
+        this.$router.push(newRoute).catch((error) => {});
       }
     },
     logIn() {

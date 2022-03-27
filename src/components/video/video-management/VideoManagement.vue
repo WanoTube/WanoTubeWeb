@@ -1,20 +1,11 @@
 <template>
   <div class="container-fluid bg-white">
-    <TheNavBar />
     <div class="row">
       <div class="col-12">
-        <br />
-        <br />
-        <div class="row">
+        <div :style="'display: flex; flex-direction: row; align-items: center'">
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
             <h1><b>Video content</b></h1>
           </div>
-          <!-- <div class="col container row justify-content-end">
-            <v-btn class="ma-2 elevation-0" color="white" @click="uploadVideo">
-              <v-icon left>mdi-plus</v-icon>
-              Upload video
-            </v-btn>
-          </div> -->
           <div class="mr-4"><UploadDialog /></div>
         </div>
         <VideosList />
@@ -32,7 +23,6 @@
 </template>
 
 <script>
-import TheNavBar from "src/layouts/TheNavBar.vue";
 import UploadDialog from "../upload-video/UploadDialog.vue";
 import VideosList from "./VideosList.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
@@ -40,7 +30,6 @@ import ShowRecognitionResult from "./ShowRecognitionResult.vue";
 
 export default {
   components: {
-    TheNavBar,
     DeleteConfirmation,
     ShowRecognitionResult,
     UploadDialog,

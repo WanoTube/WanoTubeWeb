@@ -1,14 +1,13 @@
 <template>
   <v-card class="mx-auto">
     <v-navigation-drawer>
-      <v-list>
+      <v-list v-model="model">
         <v-list-item-group>
           <v-list-item
             v-for="item in items"
             :key="item.title"
             link
             :to="item.to"
-            :aria-selectetable="true"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -45,7 +44,13 @@ export default {
         { title: "History", icon: "mdi-history", to: "/feed/history" },
       ],
       routes,
+      model: "1",
     };
+  },
+  computed: {
+    routePath() {
+      return this.$route.path;
+    },
   },
 };
 </script>
