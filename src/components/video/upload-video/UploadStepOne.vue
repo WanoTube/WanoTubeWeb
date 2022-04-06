@@ -13,15 +13,15 @@
         <div>
           <v-text-field
             v-model="title"
-            label="Title (required)"
-            placeholder="Placeholder"
+            placeholder="Title"
+            size="small"
             outlined
           ></v-text-field>
           <v-textarea
             v-model="description"
             outlined
             name="input-7-4"
-            label="Description"
+            placeholder="Description"
             value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
           ></v-textarea>
           <div class="privacy">
