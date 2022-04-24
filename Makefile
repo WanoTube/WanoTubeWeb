@@ -14,7 +14,7 @@ analyze:
 
 deploy-dev:
 	@echo "Building project ..."
-	#cp .env .env.bk && echo "REACT_APP_ENV=dev\nAPI_URL=https://captain.demo.o-redsky.xyz" > .env
+	#cp .env .env.bk && echo "API_URL=https://captain.demo.o-redsky.xyz" > .env
 	npm run build
 	cp captain-definition ./dist
 	tar -cvf www.tar ./dist
