@@ -71,6 +71,7 @@ import TheNavBar from "src/layouts/TheNavBar.vue";
 import ThumbnailVideo from "../common/ThumbnailVideo.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
+import { apiUrl } from "src/constants/system";
 const UsersRepository = RepositoryFactory.get("users");
 const VideosRepository = RepositoryFactory.get("video");
 
@@ -86,8 +87,8 @@ export default {
       user: {},
       username: "",
       videos: [],
-      videoSource: "http://localhost:8000/v1/videos/stream/",
-      avatarSource: "http://localhost:8000/v1/users/avatar/",
+      videoSource: `${apiUrl}/videos/stream/`,
+      avatarSource: `${apiUrl}/users/avatar/`,
       currentUsername: "",
     };
   },

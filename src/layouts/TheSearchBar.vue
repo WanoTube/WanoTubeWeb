@@ -1,28 +1,13 @@
 <template>
   <div>
     <form style="height: 48px" @submit="onFormSubmit">
-      <!-- <img
-        :src="require('src/assets/images/Search-Icon.svg')"
-        class="icon"
-        width="20px"
-        height="20px"
-      />
-      <input
-        @input="onSearchChange"
-        @click="showHistory"
-        v-model="currentComment"
-        id="search_in_navbar"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        autocomplete="off" 
-      />-->
       <v-autocomplete
         dense
         rounded
         solo
         flat
         outlined
+        placeholder="Search"
         append-icon="mdi-magnify"
       >
       </v-autocomplete>

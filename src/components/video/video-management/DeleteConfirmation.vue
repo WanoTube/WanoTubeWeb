@@ -14,7 +14,7 @@
                 <div class="col-md container">
                   <video
                     class="video-mask"
-                    v-bind:src="`http://localhost:8000/v1/videos/stream/${deleteDialog.video.url}`"
+                    v-bind:src="`${apiUrl}/videos/stream/${deleteDialog.video.url}`"
                   ></video>
                 </div>
                 <div class="col-md container align-middle">
@@ -57,6 +57,7 @@
 <script>
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
+import { apiUrl } from "src/constants/system";
 
 const VideoRepository = RepositoryFactory.get("video");
 export default {
@@ -64,6 +65,7 @@ export default {
   data() {
     return {
       confirmCheckbox: false,
+      apiUrl,
     };
   },
   methods: {

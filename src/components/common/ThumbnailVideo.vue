@@ -12,7 +12,7 @@
     </div>
     <div class="overlay-text">
       <p class="bottomText text-white" style="">
-        <span v-if="video.duration">{{ video.duration }}</span>
+        <span v-if="video.duration">{{ duration }}</span>
         <span v-else>{{ defaultDuration }}</span>
       </p>
     </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { formatVideoDuration } from "src/utils/duration";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
@@ -49,6 +50,12 @@ export default {
         settings: ["quality", "speed", "loop"],
       },
     };
+  },
+  computed: {
+    duration() {
+      console.log("56", formatVideoDuration(this.video.duration));
+      return formatVideoDuration(this.video.duration);
+    },
   },
   created: function () {
     this.$nextTick(() => {

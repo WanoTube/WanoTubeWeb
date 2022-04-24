@@ -20,6 +20,8 @@ import PlayerWrapper from "src/components/video/video-watch/PlayerWrapper.vue";
 import CommentWrapper from "src/components/video/video-watch/CommentWrapper.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
+import { apiUrl } from "src/constants/system";
+const { VUE_APP_SERVER_URL } = process.env;
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 
@@ -182,8 +184,8 @@ export default {
   watch: {
     video: async function (val) {
       if (val) {
-        this.videoUrl = "http://localhost:8000/v1/videos/stream/" + val.url;
-        this.defaultPoster = "http://localhost:8080/img/WatchOut.1e172f0c.png";
+        this.videoUrl = `${apiUrl}/videos/stream/` + val.url;
+        this.defaultPoster = `${VUE_APP_SERVER_URL}/img/WatchOut.1e172f0c.png`;
         this.user = await this.getUserByAuthorId(val.author_id);
       }
     },

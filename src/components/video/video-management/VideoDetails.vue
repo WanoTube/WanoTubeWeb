@@ -38,17 +38,14 @@
           <div>
             <v-text-field
               v-model="title"
-              label="Title (required)"
-              placeholder="Add a title that describes your video"
+              placeholder="Title (required)"
               outlined
             ></v-text-field>
             <v-textarea
               v-model="description"
-              outlined
               name="input-7-4"
-              label="Description"
-              placeholder="Tell viewers about your video"
-              value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+              placeholder="Description"
+              outlined
             ></v-textarea>
             <div class="privacy">
               <h5><b>Who can see this post</b></h5>

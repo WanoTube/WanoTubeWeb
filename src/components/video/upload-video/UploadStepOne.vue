@@ -13,15 +13,15 @@
         <div>
           <v-text-field
             v-model="title"
-            label="Title (required)"
-            placeholder="Placeholder"
+            placeholder="Title"
+            size="small"
             outlined
           ></v-text-field>
           <v-textarea
             v-model="description"
             outlined
             name="input-7-4"
-            label="Description"
+            placeholder="Description"
             value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
           ></v-textarea>
           <div class="privacy">
@@ -110,7 +110,7 @@ export default {
       size: 0,
       type: "",
       duration: "",
-      privacy: 0,
+      privacy: 1,
     };
   },
   rules: [
@@ -241,28 +241,7 @@ export default {
         });
       });
     },
-
-    // readVideoFile: function (val) {
-    //   if (val) {
-    //     this.title = val.name.split(".")[0];
-    //     this.size = Math.round((val.size / (1024 * 1024)) * 100) / 100;
-    //     this.type = val.type;
-    //     this.createFile(val);
-    //   }
-    // },
   },
-  // watch: {
-  //   uploadedVideo: function (val) {
-  //     console.log("uploadedVideo");
-  //     console.log(val);
-  //     if (val) {
-  //       this.title = val.name.split(".")[0];
-  //       this.size = Math.round((val.size / (1024 * 1024)) * 100) / 100;
-  //       this.type = val.type;
-  //       this.createFile(val);
-  //     }
-  //   },
-  // },
   mounted() {
     // this.readVideoFile(this.uploadedVideo);
     this.trackingUploadProgress();

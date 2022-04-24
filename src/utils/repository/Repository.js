@@ -1,7 +1,7 @@
 import axios from 'axios';
-const version = "v1/"
-const baseDomain = "http://localhost:8000/"
-const baseUrl = baseDomain + version
+const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
+console.log(VUE_APP_SERVER_URL)
+const baseUrl = `${VUE_APP_SERVER_URL}/${VUE_APP_VERSION_1}/`
 
 axios.defaults.baseURL = baseUrl
 
