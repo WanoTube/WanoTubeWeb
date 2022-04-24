@@ -14,45 +14,13 @@
           style="max-width: 500px; border: 0; background-color: transparent"
         >
           <div class="row no-gutters">
-            <!-- <div class="col-sm-5">
-            <video
-              style="max-height: 150px"
-              class="card-img h-100 align-items-center video-mask"
-              v-bind:src="`http://localhost:8000/v1/videos/stream/${item.url}`"
-            />
-            <div class="overlay-text" style="margin: 15px 10px">
-              <p class="bottomText text-white" style="">
-                <span v-if="item.duration">{{ item.duration }}</span>
-                <span v-else>{{ duration }}</span>
-              </p>
-            </div>
-          </div> -->
             <div class="col-sm-5 p-2">
               <ThumbnailVideo :video="item" :isOnList="false" />
             </div>
             <div class="col-sm-7">
-              <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
-                <!-- <p class="card-title">
-                      <span v-if="item.title.length < 60">{{
-                        item.title
-                      }}</span>
-                      <span v-else>{{
-                        item.title.substring(0, 60) + ".."
-                      }}</span>
-                    </p>
-                    <p
-                      class="card-text text-secondary"
-                      style="margin-top: -10px"
-                    >
-                      SERVER_URL
-                      <span v-if="item.description.length < 60">{{
-                        item.description
-                      }}</span>
-                      <span v-else>{{
-                        item.description.substring(0, 60) + ".."
-                      }}</span>
-                    </p> -->
-              </div>
+              <div
+                class="card-body h-100 w-100 align-items-center mr-0 pr-0"
+              ></div>
             </div>
           </div>
         </div>
@@ -95,7 +63,6 @@ import { convertJSONToObject } from "src/utils/utils";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
-const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
@@ -132,10 +99,6 @@ export default {
           text: "Date",
           value: "created_at",
         },
-        //   {
-        //       text: 'Views',
-        //       value: 'total_views',
-        //   },
         {
           text: "Comments",
           value: "total_comments",
@@ -190,6 +153,7 @@ export default {
 
   async mounted() {
     //TO-DO: Check if videos is null
+    console.log(process.env.VUE_APP_SERVER_URL);
     this.videos = await this.getAllVideos();
   },
 };
