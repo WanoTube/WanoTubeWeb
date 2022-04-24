@@ -95,6 +95,7 @@ import { convertJSONToObject } from "src/utils/utils";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
+const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
@@ -162,7 +163,6 @@ export default {
           const { data } = await VideoRepository.getAllVideoInfosWithUserId(
             author_id
           );
-          console.log({ data });
           if (data) {
             const dataObject = convertJSONToObject(data);
             if (!dataObject.details) {

@@ -18,6 +18,7 @@
 <script>
 import PostCaption from "../home/PostCaption.vue";
 import ThumbnailVideo from "../common/ThumbnailVideo.vue";
+const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
 export default {
   components: {
     PostCaption,
@@ -36,8 +37,11 @@ export default {
     },
   },
   created: function () {
-    this.src = "http://localhost:8000/v1/videos/stream/" + this.video.url;
+    this.src =
+      `${VUE_APP_SERVER_URL}/${VUE_APP_VERSION_1}/videos/stream/` +
+      this.video.url;
   },
+  computed: {},
 };
 </script>
 <style src="src/assets/styles/post.css">

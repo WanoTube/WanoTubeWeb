@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     duration() {
+      console.log("56", formatVideoDuration(this.video.duration));
       return formatVideoDuration(this.video.duration);
     },
   },
