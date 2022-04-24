@@ -235,6 +235,7 @@ export default {
       updatedProfileStatus: "",
       socket: io(VUE_APP_SERVER_URL, {
         withCredentials: true,
+        transports: ["websocket"],
       }),
     };
   },
