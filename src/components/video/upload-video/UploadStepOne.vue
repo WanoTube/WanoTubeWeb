@@ -76,7 +76,7 @@
 }
 </style>
 <script>
-import io from "socket.io-client";
+import io from "socket.io-client/dist/socket.io";
 import ProgressBar from "vue-simple-progress";
 
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
