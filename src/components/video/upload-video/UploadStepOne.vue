@@ -36,8 +36,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-end">
-          <v-btn color="primary" @click="onContinue">Upload</v-btn>
-
+          <v-btn color="primary" @click="onContinue">Save</v-btn>
           <v-btn text @click="onReturn">Back</v-btn>
         </div>
       </div>
@@ -87,14 +86,12 @@ import { useVideoStore } from "src/store/video";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
-  // props: ["video"],
   components: {
     ProgressBar,
   },
   setup() {
     const videoStore = useVideoStore();
     const { uploadedVideo } = videoStore;
-    console.log({ uploadedVideo });
     return { uploadedVideo };
   },
   data() {
@@ -170,7 +167,6 @@ export default {
         this.$emit("uploadResult", data);
         this.$emit("onContinue", 2);
       } else {
-        alert("Oh no, failed");
         this.$emit("onContinue", 1);
       }
     },
@@ -197,7 +193,6 @@ export default {
           }
         }
       } else {
-        alert("Please input all the require fields");
         return null;
       }
     },
@@ -244,7 +239,6 @@ export default {
     },
   },
   mounted() {
-    // this.readVideoFile(this.uploadedVideo);
     this.trackingUploadProgress();
   },
 };

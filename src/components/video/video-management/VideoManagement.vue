@@ -6,7 +6,7 @@
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
             <h1><b>Video content</b></h1>
           </div>
-          <div class="mr-4"><UploadDialog /></div>
+          <div><UploadDialog /></div>
         </div>
         <VideosList />
       </div>

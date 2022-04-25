@@ -55,26 +55,6 @@ export default {
     onReturn() {
       this.$emit("onReturn", 2);
     },
-    checkIfIncludingMusic(musics) {
-      const results = [];
-      musics.forEach((element) => {
-        // const first = element;
-        const { title, album, artists } = element;
-        // const title = first.title;
-        // const album = first.album.name;
-        // const artists = first.artists; // array
-        // const songArtist = artists[0].name;
-
-        const jsonResult = {
-          title,
-          album: album.name,
-          songArtist: artists[0].name,
-        };
-        console.log("audioRecognition result: " + JSON.stringify(jsonResult));
-        results.push(jsonResult);
-      });
-      return results;
-    },
   },
   watch: {
     video(newVal) {
@@ -84,13 +64,12 @@ export default {
     videoUploadResult(newVal) {
       const data = newVal;
       if (data) {
-        this.recResult = this.checkIfIncludingMusic(data.recognition_result);
+        this.recResult = data.recognition_result;
         console.log(
           "audioRecognition result: " + JSON.stringify(this.recResult)
         );
       }
     },
   },
-  created() {},
 };
 </script>

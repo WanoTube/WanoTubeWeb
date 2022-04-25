@@ -17,7 +17,6 @@
           <span style="margin-left: 5px; color: #c4c4c4">@{{ username }}</span>
           <br />
           <span v-if="caption < 50">{{ caption }}</span>
-          <!-- <span v-else>{{ caption.substring(0, 50) + ".." }}</span> -->
           <span>{{ caption }}</span>
           <br />
         </div>
@@ -35,7 +34,7 @@ export default {
   computed: {
     imgSrc: function () {
       if (!this.avatarImg) return defaultAvatarUrl;
-      return `${avatarUrlPrefix}/${this.avatarImg}`;
+      return this.avatarImg;
     },
   },
 };

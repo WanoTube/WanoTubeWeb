@@ -182,8 +182,7 @@ export default {
   watch: {
     video: function (val) {
       if (val) {
-        this.thumbnailVideoUrl =
-          `${VUE_APP_SERVER_URL}/${VUE_APP_VERSION_1}/videos/stream/` + val.url;
+        this.thumbnailVideoUrl = val.url;
       }
     },
 

@@ -18,9 +18,14 @@
               <ThumbnailVideo :video="item" :isOnList="false" />
             </div>
             <div class="col-sm-7">
-              <div
-                class="card-body h-100 w-100 align-items-center mr-0 pr-0"
-              ></div>
+              <div class="card-body h-100 w-100 align-items-center mr-0 pr-0">
+                <p class="card-title">
+                  {{ item.title }}
+                </p>
+                <p class="card-text text-secondary" style="margin-top: -10px">
+                  {{ item.description }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
