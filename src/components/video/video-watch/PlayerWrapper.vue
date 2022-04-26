@@ -1,31 +1,9 @@
 <template>
   <div class="col-md-8 d-flex justify-content-center text-center">
-    <!-- <video
-        class="col text-center"
-        controls
-        v-bind:src="`${videoUrl}`"
-      ></video> -->
     <div class="player-wrapper">
       <vue-plyr :options="playerOptions">
-        <video
-          controls
-          crossorigin
-          playsinline
-          data-poster="https://unica.vn/upload/landingpage/045402_toi-uu-kich-thuoc-thumbnail-youtube-nhanh-gon-voi-vai-cu-click-chuot_thumb.jpg"
-        >
+        <video controls playsinline :data-poster="defaultPoster">
           <source size="720" :src="videoUrl" type="video/mp4" />
-          <!-- <source
-            size="1080"
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-            type="video/mp4"
-          /> -->
-          <!-- <track
-              default
-              kind="captions"
-              label="English captions"
-              src="/path/to/english.vtt"
-              srclang="en"
-            /> -->
         </video>
       </vue-plyr>
     </div>
@@ -36,6 +14,7 @@ export default {
   props: {
     videoUrl: String,
     prevRoutePath: String,
+    defaultPoster: String,
   },
 
   data() {

@@ -101,7 +101,6 @@ export default {
       thumbnailVideo: this.video,
       socket: io(serverUrl, {
         withCredentials: true,
-        transports: ["websocket"],
       }),
       progressVal: 0,
       progressStatus: "",
@@ -224,8 +223,7 @@ export default {
         });
 
         this.socket.on("Upload to S3", function (progressPercentage) {
-          if (progressPercentage < 100)
-            vm.progressStatus = "Start uploading to S3";
+          if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
           else vm.progressStatus = "Completed";
 
           if (progressPercentage) {
