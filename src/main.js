@@ -12,6 +12,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import VuePlyr from 'vue-plyr'
+import Toasted from 'vue-toasted';
 import VueLazyLoadVideo from 'vue-lazyload-video'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 
@@ -39,6 +40,7 @@ Vue
   .use(PiniaVuePlugin)
   .use(VueLazyLoadVideo)
   .use(VuePlyr, { plyr: {} })
+  .use(Toasted)
   .component('font-awesome-icon', FontAwesomeIcon)
 
 const pinia = createPinia();

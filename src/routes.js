@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Authentication from './views/Authentication.vue'
+import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
@@ -19,114 +19,121 @@ import Filter from './components/video/video-editing/filters/Filters.vue'
 import MyMedia from './components/video/video-editing/my-media/MyMedia.vue'
 import BrowseFile from './components/video/video-editing/browse-files/BrowseFile.vue'
 import PageNotFound from './views/PageNotFound.vue'
+import Main from './Main.vue'
 
 Vue.use(VueRouter)
 
 export const routes = [
 	{
-		path: '/',
-		component: Home,
-		redirect: '/home',
-		children: [
-			{
-				path: '/search/:id',
-				component: Search
-			},
-			{
-				path: '/search',
-				component: Search
-			},
-			{
-				path: '/home',
-				component: Posts
-			},
-			{
-				path: '/trending/:id',
-				component: Trending
-			},
-			{
-				path: '/trending',
-				component: Trending
-			}
-		]
+		path: '/login',
+		component: Login,
 	},
 	{
-		path: '/editing',
-		component: Editing,
-		redirect: '/editing/mymedia',
-		children: [
-			{
-				path: '/editing/filter',
-				component: Filter
-			},
-			{
-				path: '/editing/mymedia',
-				component: MyMedia
-			},
-			{
-				path: '/editing/browsefile',
-				component: BrowseFile
-			}
-		]
-	},
-	{
-		path: '/users/',
-		component: UserManagement,
-		meta: {
-			requiresAuth: true,
-			isAdmin: true
-		}
-	},
-	{
-		path: '/:username/profile',
-		component: Profile,
-	},
-	{
-		path: '/:username/profile/edit',
-		component: EditProfile,
-	},
-	{
-		path: '/:username/videos',
-		component: VideoManagement,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/:username/videos/uploads',
-		component: VideoManagement,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/:username/videos/:id',
-		component: VideoDetails,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/login/',
-		component: Authentication,
-	},
-	{
-		path: '/signup/',
+		path: '/signup',
 		component: Register,
 	},
 	{
-		path: '/watch/:id',
-		component: Watch,
-		meta: {
-			requiresAuth: true
-		}
-	},
-	{
-		path: '/upload',
-		component: Upload,
-		meta: {
-			requiresAuth: true
-		}
+		path: '/',
+		redirect: '/home',
+		component: Main,
+		children: [
+			{
+				path: '/home',
+				component: Home,
+				children: [
+					{
+						path: '/search/:id',
+						component: Search
+					},
+					{
+						path: '/search',
+						component: Search
+					},
+					{
+						path: '/home',
+						component: Posts
+					},
+					{
+						path: '/trending/:id',
+						component: Trending
+					},
+					{
+						path: '/trending',
+						component: Trending
+					}
+				]
+			},
+			{
+				path: '/editing',
+				component: Editing,
+				redirect: '/editing/mymedia',
+				children: [
+					{
+						path: '/editing/filter',
+						component: Filter
+					},
+					{
+						path: '/editing/mymedia',
+						component: MyMedia
+					},
+					{
+						path: '/editing/browsefile',
+						component: BrowseFile
+					}
+				]
+			},
+			{
+				path: '/users',
+				component: UserManagement,
+				meta: {
+					requiresAuth: true,
+					isAdmin: true
+				}
+			},
+			{
+				path: '/:username/profile',
+				component: Profile,
+			},
+			{
+				path: '/:username/profile/edit',
+				component: EditProfile,
+			},
+			{
+				path: '/:username/videos',
+				component: VideoManagement,
+				meta: {
+					requiresAuth: true
+				}
+			},
+			{
+				path: '/:username/videos/uploads',
+				component: VideoManagement,
+				meta: {
+					requiresAuth: true
+				}
+			},
+			{
+				path: '/:username/videos/:id',
+				component: VideoDetails,
+				meta: {
+					requiresAuth: true
+				}
+			},
+			{
+				path: '/watch/:id',
+				component: Watch,
+				meta: {
+					requiresAuth: true
+				}
+			},
+			{
+				path: '/upload',
+				component: Upload,
+				meta: {
+					requiresAuth: true
+				}
+			},
+		]
 	},
 	{
 		path: "*",

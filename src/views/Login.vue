@@ -1,7 +1,10 @@
 <template>
-  <section class="ftco-section">
+  <section>
     <div class="container">
-      <div class="row justify-content-center">
+      <div
+        class="row justify-content-center align-items-center"
+        style="height: 100vh"
+      >
         <div class="col-md-12 col-lg-10">
           <div class="wrap d-md-flex">
             <div
@@ -132,7 +135,11 @@ export default {
         }
       } catch (error) {
         if (error.response) {
-          alert(error.response.data);
+          this.$toasted.show(error.response.data, {
+            position: "top-center",
+            duration: 2000,
+            type: "error",
+          });
         }
       }
     },

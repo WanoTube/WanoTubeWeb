@@ -1,14 +1,10 @@
 <template>
-  <v-app>
-    <v-main>
-      <div class="bg-secondary-color">
-        <!-- <TheNavBar ref="navbar" /> -->
-        <div class="app-wrapper">
-          <router-view />
-        </div>
-      </div>
-    </v-main>
-  </v-app>
+  <div>
+    <TheNavBar ref="navbar" />
+    <div class="main-wrapper">
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>
@@ -16,7 +12,7 @@ import TheNavBar from "src/layouts/TheNavBar.vue";
 export default {
   name: "App",
   components: {
-    // TheNavBar,
+    TheNavBar,
   },
 };
 </script>

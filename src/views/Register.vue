@@ -1,7 +1,10 @@
 <template>
-  <section class="">
+  <section>
     <div class="container">
-      <div class="row justify-content-center">
+      <div
+        class="row justify-content-center align-items-center"
+        style="height: 100vh"
+      >
         <div class="col-md-12 col-lg-10">
           <div class="wrap d-md-flex">
             <div
