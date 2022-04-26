@@ -235,7 +235,6 @@ export default {
       updatedProfileStatus: "",
       socket: io(VUE_APP_SERVER_URL, {
         withCredentials: true,
-        transports: ["websocket"],
       }),
     };
   },
@@ -343,8 +342,7 @@ export default {
         this.socket.on(
           "Upload avatar image to S3",
           function (progressPercentage) {
-            if (progressPercentage < 100)
-              vm.progressStatus = "Start uploading to S3";
+            if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
             else {
               vm.progressStatus = "Completed";
             }

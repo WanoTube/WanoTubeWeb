@@ -1,7 +1,11 @@
 <template>
   <div class="bg-secondary-color comment-view">
     <div class="row comment-view" v-if="!loading">
-      <PlayerWrapper :prevRoutePath="prevRoutePath" :videoUrl="videoUrl" />
+      <PlayerWrapper
+        :prevRoutePath="prevRoutePath"
+        :videoUrl="videoUrl"
+        :defaultPoster="defaultPoster"
+      />
       <CommentWrapper
         :avatarImg="user.avatar"
         :name="user.first_name + ' ' + user.last_name"
@@ -184,8 +188,8 @@ export default {
   watch: {
     video: async function (val) {
       if (val) {
-        this.videoUrl = `${apiUrl}/videos/stream/` + val.url;
-        this.defaultPoster = `${VUE_APP_SERVER_URL}/img/WatchOut.1e172f0c.png`;
+        this.videoUrl = val.url;
+        this.defaultPoster = val.thumbnail_url;
         this.user = await this.getUserByAuthorId(val.author_id);
       }
     },

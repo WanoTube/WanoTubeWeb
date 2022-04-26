@@ -8,23 +8,23 @@
         Back to videos
       </v-btn>
       <br /><br />
-      <div class="row">
+      <div class="row justify-content-between">
         <div class="col padding-left-right-15">
           <h1><b>Video Details</b></h1>
         </div>
-        <div class="col container row justify-content-end">
-          <button
+        <div class="col row justify-content-end">
+          <v-btn
             id="btn-reset"
-            class="btn btn-reset btn-reset-inactive"
-            @click="resetInputFields"
+            class="col btn btn-reset btn-reset-inactive"
+            @click="resetForm"
           >
-            RESET
-          </button>
+            Reset
+          </v-btn>
           <v-btn
             id="btn-save"
-            class="ma-2 btn-save btn-save-inactive"
+            class="col ml-8 btn-save btn-save-inactive"
             dark
-            @click="saveChanges"
+            @click="saveForm"
           >
             Save
           </v-btn>
@@ -47,7 +47,7 @@
               placeholder="Description"
               outlined
             ></v-textarea>
-            <div class="privacy">
+            <div class="mt-4">
               <h5><b>Who can see this post</b></h5>
               <div class="flex-center">
                 <v-radio-group row v-model="privacy">
@@ -88,7 +88,6 @@ import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 
 const VideoRepository = RepositoryFactory.get("video");
-const { VUE_APP_SERVER_URL, VUE_APP_VERSION_1 } = process.env;
 
 export default {
   components: {
@@ -129,12 +128,12 @@ export default {
       const username = user.username;
       this.$router.push({ path: `/${username}/videos` });
     },
-    resetInputFields() {
+    resetForm() {
       this.title = this.video.title;
       this.description = this.video.description;
       this.privacy = this.video.visibility;
     },
-    async saveChanges() {
+    async saveForm() {
       if (this.isUpdated) {
         const updateVideoInfo = {
           id: this.video._id,
@@ -214,9 +213,11 @@ export default {
 }
 .btn-reset-inactive {
   color: grey !important;
+  border: 1px solid grey !important;
 }
 .btn-reset {
   font-weight: 500 !important;
+  border: 1px solid #065fd4 !important;
 }
 .btn-save-active {
   background-color: #065fd4 !important;

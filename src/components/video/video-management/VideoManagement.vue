@@ -4,7 +4,7 @@
       <div class="col-12">
         <div :style="'display: flex; flex-direction: row; align-items: center'">
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
-            <h1><b>Video content</b></h1>
+            <h1><b>Channel content</b></h1>
           </div>
           <div><UploadDialog /></div>
         </div>

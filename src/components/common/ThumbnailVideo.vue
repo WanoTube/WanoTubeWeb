@@ -7,7 +7,8 @@
     >
       <img
         class="video-item-thumbnail"
-        src="https://unica.vn/upload/landingpage/045402_toi-uu-kich-thuoc-thumbnail-youtube-nhanh-gon-voi-vai-cu-click-chuot_thumb.jpg"
+        :style="`min-height: 100px; max-height: ${this.maxHeight}`"
+        :src="thumbnailUrl"
       />
     </div>
     <div class="overlay-text">
@@ -24,7 +25,7 @@ import { formatVideoDuration } from "src/utils/duration";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
-  props: ["src", "video"],
+  props: ["src", "video", "size"],
   components: {},
   methods: {
     linkToCommentView: function () {
@@ -49,15 +50,17 @@ export default {
         controls: ["progress", "current-time"],
         settings: ["quality", "speed", "loop"],
       },
+      thumbnailUrl: this.video.thumbnail_url,
+      maxHeight: this.size === "sm" ? "100px" : "200px",
     };
   },
   computed: {
     duration() {
-      console.log("56", formatVideoDuration(this.video.duration));
       return formatVideoDuration(this.video.duration);
     },
   },
   created: function () {
+    console.log(this.size);
     this.$nextTick(() => {
       const videos = document.getElementsByClassName("preview-video");
 
