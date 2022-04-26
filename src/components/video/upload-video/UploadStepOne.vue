@@ -198,25 +198,25 @@ export default {
     async trackingUploadProgress() {
       const vm = this;
       this.socket.on("connect", () => {
-        this.socket.on("Compress video", function (progress) {
-          vm.progressStatus = "Start compressing video";
-          if (progress) {
-            console.log("Compress video: " + progress.percent + "%");
-            vm.progressVal = progress.percent;
-          } else {
-            console.log("Non progress");
-          }
-        });
+        // this.socket.on("Compress video", function (progress) {
+        //   vm.progressStatus = "Start compressing video";
+        //   if (progress) {
+        //     console.log("Compress video: " + progress.percent + "%");
+        //     vm.progressVal = progress.percent;
+        //   } else {
+        //     console.log("Non progress");
+        //   }
+        // });
 
-        this.socket.on("Convert to Webm Format", function (progress) {
-          vm.progressStatus = "Start converting to webm format";
-          if (progress) {
-            console.log("Convert to Webm Format: " + progress.percent + " %");
-            vm.progressVal = progress.percent;
-          } else {
-            console.log("Non progress");
-          }
-        });
+        // this.socket.on("Convert to Webm Format", function (progress) {
+        //   vm.progressStatus = "Start converting to webm format";
+        //   if (progress) {
+        //     console.log("Convert to Webm Format: " + progress.percent + " %");
+        //     vm.progressVal = progress.percent;
+        //   } else {
+        //     console.log("Non progress");
+        //   }
+        // });
 
         this.socket.on("Convert to audio", function (progress) {
           console.log("Convert to audio: " + progress.percent + " %");
@@ -224,7 +224,7 @@ export default {
 
         this.socket.on("Upload to S3", function (progressPercentage) {
           if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
-          else vm.progressStatus = "Completed";
+          else vm.progressStatus = "Upload to storage completed!";
 
           if (progressPercentage) {
             console.log("Upload to S3: " + progressPercentage + "%");

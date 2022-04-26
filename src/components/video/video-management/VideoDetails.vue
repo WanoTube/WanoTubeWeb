@@ -68,7 +68,9 @@
             ></video>
             <div class="card-body">
               <small class="card-text text-secondary">Video link </small>
-              <p class="card-text text-primary">https://youtu.be/khzGZ2sTQ2g</p>
+              <a :href="this.watchUrl">
+                {{ this.watchUrl }}
+              </a>
             </div>
           </div>
         </div>
@@ -86,6 +88,7 @@
 import TheNavBar from "src/layouts/TheNavBar.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
+import { appUrl } from "src/constants/system";
 
 const VideoRepository = RepositoryFactory.get("video");
 
@@ -176,6 +179,9 @@ export default {
         this.description !== this.video.description ||
         this.privacy !== this.video.visibility
       );
+    },
+    watchUrl: function () {
+      return `${appUrl}/watch/${this.video._id}`;
     },
   },
   watch: {

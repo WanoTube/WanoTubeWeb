@@ -60,6 +60,10 @@
       v-bind:deleteDialog="deleteDialog"
       @onClose="deleteDialog.isOpened = $event"
     />
+    <ShowRecognitionResult
+      v-bind:recognitionDialog="recognitionDialog"
+      @onClose="recognitionDialog.isOpened = $event"
+    />
   </div>
 </template>
 
@@ -69,6 +73,7 @@ import { convertJSONToObject } from "src/utils/utils";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
+import ShowRecognitionResult from "./ShowRecognitionResult.vue";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
@@ -76,9 +81,14 @@ export default {
   components: {
     ThumbnailVideo,
     DeleteConfirmation,
+    ShowRecognitionResult,
   },
   data() {
     return {
+      recognitionDialog: {
+        isOpened: false,
+        recognitionResult: {},
+      },
       deleteDialog: {
         isOpened: false,
         video: {},
@@ -156,7 +166,12 @@ export default {
       this.deleteDialog.video = row;
     },
     formatDate(date) {
-      return moment(date).format("DD - MM - YYYY");
+      return moment(date).format("DD/MM/YYYY, hh:mm:ss");
+    },
+
+    onViewRecognitionResult(row) {
+      this.recognitionDialog.isOpened = true;
+      this.recognitionDialog.recognitionResult = row.recognition_result;
     },
   },
   async mounted() {

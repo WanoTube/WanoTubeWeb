@@ -2,12 +2,7 @@
   <div class="upload-video">
     <div class="container">
       <div class="row">
-        <div class="col-md-5 order-md-1 order-2 text-center">
-          <!-- <video muted style="object-fit:contain" width="380px">
-                        <source    src="../assets/videos/LiuYu_Tiktok1.webm" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video> -->
-        </div>
+        <div class="col-md-5 order-md-1 order-2 text-center"></div>
         <div class="col-md-7 order-md-2 order-1">
           <div class="w-100">
             <div class="input-group mb-3 caption">

@@ -24,8 +24,6 @@ import PlayerWrapper from "src/components/video/video-watch/PlayerWrapper.vue";
 import CommentWrapper from "src/components/video/video-watch/CommentWrapper.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
-import { apiUrl } from "src/constants/system";
-const { VUE_APP_SERVER_URL } = process.env;
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 

@@ -25,11 +25,11 @@
                 <br />
 
                 <b>Album: </b>
-                {{ item.album }}
+                {{ item.albumName }}
                 <br />
 
                 <b>Song artists: </b>
-                {{ item.songArtist }}
+                {{ item.artistsName }}
                 <br />
               </div>
             </div>
@@ -57,17 +57,15 @@ export default {
     closeDialog() {
       this.$emit("onClose", false);
     },
-    checkIfIncludingMusic(musics) {
+    generateRecognizedResults(recognizedResult) {
       const results = [];
-      musics.forEach((element) => {
-        const first = element;
-        const title = first.title;
-        const album = first.album.name;
-        const artists = first.artists; // array
-        const songArtist = artists[0].name;
+      recognizedResult?.metadata.music.forEach((result) => {
+        const { title, album, artists } = result;
+        const albumName = album.name;
+        const artistsName = artists.map((artist) => artist.name).join(", ");
 
-        const jsonResult = { title, album, songArtist };
-        results.push(jsonResult);
+        const record = { title, albumName, artistsName };
+        results.push(record);
       });
       return results;
     },
@@ -77,7 +75,7 @@ export default {
       handler: function (val) {
         const data = val.recognitionResult;
         if (data) {
-          this.recResult = this.checkIfIncludingMusic(data);
+          this.recResult = this.generateRecognizedResults(data);
         }
       },
       deep: true,

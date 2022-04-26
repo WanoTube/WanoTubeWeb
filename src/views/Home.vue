@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-secondary-color h-100">
+  <div class="bg-secondary-color h-100" style="overflow-y: hidden">
     <div class="d-flex h-100">
       <TheSideBarHome />
       <router-view></router-view>
