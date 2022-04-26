@@ -1,11 +1,6 @@
 <template>
-  <div class="row vertical-scrollable" style="overflow-y: scroll; margin: 2px">
-    <div
-      v-for="video in videos"
-      v-bind:key="video.tittle"
-      class="col-md-3"
-      style=""
-    >
+  <div class="row vertical-scrollable p-4 m-1" style="overflow-y: scroll">
+    <div v-for="video in videos" v-bind:key="video.tittle" class="col-md-3">
       <Post :video="video" />
     </div>
   </div>

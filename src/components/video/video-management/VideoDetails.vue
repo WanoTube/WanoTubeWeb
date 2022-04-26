@@ -165,6 +165,7 @@ export default {
   },
   async created() {
     this.video = await this.getVideo();
+    console.log(this.video);
     if (this.video) {
       this.title = this.video.title;
       this.privacy = this.video.visibility;

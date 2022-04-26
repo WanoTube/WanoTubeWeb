@@ -133,10 +133,7 @@ export default {
 
   methods: {
     async getAllVideos() {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const author_id = user._id;
-      const username = user.username;
-      this.username = username;
+      const { _id: author_id, username } = this.userInfo;
       if (this.$route.params.username == username) {
         try {
           const { data } = await VideoRepository.getAllVideoInfosWithUserId(
@@ -158,7 +155,8 @@ export default {
     },
 
     onEditButtonClick(row) {
-      this.$router.push({ path: `/${this.username}/videos/${row._id}` });
+      const { username } = this.userInfo;
+      this.$router.push({ path: `/${username}/videos/${row._id}` });
     },
 
     onDeleteButtonClick(row) {
@@ -172,6 +170,12 @@ export default {
     onViewRecognitionResult(row) {
       this.recognitionDialog.isOpened = true;
       this.recognitionDialog.recognitionResult = row.recognition_result;
+    },
+  },
+  computed: {
+    userInfo() {
+      const { _id, username } = JSON.parse(localStorage.getItem("user"));
+      return { _id, username };
     },
   },
   async mounted() {

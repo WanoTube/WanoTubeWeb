@@ -15,7 +15,8 @@
     <template>
       <v-card>
         <v-toolbar><div class="text-h6">Upload your video</div></v-toolbar>
-        <VideoUploader @videoWasUpdated="video = $event" />
+        <video id="video-drag" style="display: none"></video>
+        <VideoUploader @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
           <v-btn text @click="closeCreateDialog">Close</v-btn>
         </v-card-actions>
@@ -43,7 +44,7 @@ export default {
   },
   data() {
     return {
-      video: null,
+      videoFile: null,
     };
   },
   computed: {
@@ -56,6 +57,10 @@ export default {
         );
       },
       set: function () {},
+    },
+    getUserInfo() {
+      console.log(localStorage.getItem("user"));
+      return JSON.parse(localStorage.getItem("user"));
     },
   },
   methods: {
@@ -70,9 +75,9 @@ export default {
     openCreateDialog() {
       this.$router.push(this.$route.path + "/uploads");
     },
-    readVideoDuration(file, createVideoCb) {
+    readVideoDuration(file, userInfo, router, createVideoFn) {
       if (!file) {
-        console.log("Failed to load file");
+        throw new Error("Failed to load file");
       } else {
         const reader = new FileReader();
         reader.onload = function (e) {
@@ -85,9 +90,12 @@ export default {
           const videoDragEl = document.getElementById("video-drag");
           videoDragEl.src = url;
 
-          videoDragEl.onloadedmetadata = function () {
-            this.videoDuration = this.duration;
-            createVideoCb(file, this.duration);
+          videoDragEl.onloadedmetadata = async function () {
+            const { _id } = await createVideoFn(file, this.duration);
+
+            router.push({
+              path: `/${userInfo.username}/videos/${_id}`,
+            });
           };
           videoDragEl.load();
         };
@@ -95,16 +103,13 @@ export default {
       }
     },
 
-    async createVideo(videoFile, duration) {
-      const title = videoFile.name.split(".")[0];
-      const size = Math.round((videoFile.size / (1024 * 1024)) * 100) / 100;
-      const type = videoFile.type;
+    async createVideo(file, duration) {
       console.log("Before Create");
-      if (videoFile) {
+      if (file) {
         console.log("Create");
         const formData = new FormData();
         const user = JSON.parse(localStorage.getItem("user"));
-        formData.append("video", videoFile);
+        formData.append("video", file);
         formData.append("author_id", user._id);
         formData.append("duration", duration);
         try {
@@ -120,17 +125,20 @@ export default {
           }
         }
       } else {
-        throw "Please input all the require fields";
-        // return null;
+        throw new Error("Please input all the require fields");
       }
     },
   },
   watch: {
-    video: function (data) {
-      if (data) {
-        this.uploadVideo(data);
-        this.readVideoDuration(data, this.createVideo);
-        this.$router.push("/upload");
+    videoFile: function (file) {
+      if (file) {
+        this.uploadVideo(file);
+        this.readVideoDuration(
+          file,
+          this.getUserInfo,
+          this.$router,
+          this.createVideo
+        );
       }
     },
   },

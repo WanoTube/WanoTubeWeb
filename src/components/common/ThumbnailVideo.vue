@@ -60,7 +60,6 @@ export default {
     },
   },
   created: function () {
-    console.log(this.size);
     this.$nextTick(() => {
       const videos = document.getElementsByClassName("preview-video");
 

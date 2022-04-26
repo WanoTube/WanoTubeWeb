@@ -22,7 +22,7 @@
           v-if="currentUsername"
           class="col-md-4 d-flex order-md-3 order-3 nav-bar-buttons-container"
         >
-          <div id="nav-bar-buttons" class="nav-bar-buttons">
+          <div id="nav-bar-buttons" class="nav-bar-buttons mr-6">
             <v-btn icon x-large @click="navigateToVideos(true)">
               <v-avatar color="#E4E6EB" size="40">
                 <v-icon color="black" size="25">mdi-cloud-upload</v-icon>
@@ -40,8 +40,8 @@
                   <img
                     class="rounded-circle img-responsive"
                     v-bind:src="avatarUrl"
-                    width="41px"
-                    height="41px"
+                    width="40px"
+                    height="40px"
                   />
                 </a>
               </template>
