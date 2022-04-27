@@ -1,13 +1,13 @@
 <template>
-  <div class="container post-card" style="padding: 0" v-cloak>
-    <div class="card non-border" style="background-color: transparent">
+  <div class="container post-card mb-4 mt-4" style="padding: 0" v-cloak>
+    <div class="card non-border flex-row" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" :isOnList="false" />
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"
-          :avatarImg="video.user.avatar"
-          :name="video.user.first_name + ' ' + video.user.last_name"
-          :username="video.user.username"
+          :avatarImg="video.author.avatar"
+          :name="video.author.first_name + ' ' + video.author.last_name"
+          :username="video.author.username"
           :caption="video.description"
           bgMusic="Crazy Frog"
         />
