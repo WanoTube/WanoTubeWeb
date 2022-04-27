@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-8 d-flex justify-content-center text-center">
     <div class="player-wrapper">
-      <vue-plyr :options="playerOptions">
+      <vue-plyr :options="playerOptions" ref="plyr">
         <video controls playsinline :data-poster="defaultPoster">
           <source size="720" :src="videoUrl" type="video/mp4" />
         </video>
@@ -15,6 +15,7 @@ export default {
     videoUrl: String,
     prevRoutePath: String,
     defaultPoster: String,
+    onPlay: Function,
   },
 
   data() {
@@ -37,6 +38,9 @@ export default {
         settings: ["quality", "speed"],
       },
     };
+  },
+  mounted: function () {
+    this.$refs.plyr.player.on("play", this.onPlay);
   },
 };
 </script>

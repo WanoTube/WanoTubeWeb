@@ -27,7 +27,11 @@ function uploadVideo(payload) {
 }
 
 function updateVideo(payload) {
-	return Repository.put(`${resource}/update`, payload);
+	return Repository.patch(`${resource}/update`, payload);
+}
+
+function increaseView({ videoId, viewerId }) {
+	return Repository.patch(`${resource}/update/${videoId}`, { viewerId });
 }
 
 function deleteVideo(payload) {
@@ -82,5 +86,6 @@ export default {
 	getVideoTotalComments,
 	commentVideo,
 	deleteComment,
+	increaseView,
 	getVideoTotalViews
 }

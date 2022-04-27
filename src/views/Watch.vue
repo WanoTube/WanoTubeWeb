@@ -5,6 +5,7 @@
         :prevRoutePath="prevRoutePath"
         :videoUrl="videoUrl"
         :defaultPoster="defaultPoster"
+        :onPlay="increaseView"
       />
       <CommentWrapper
         :avatarImg="user.avatar"
@@ -20,14 +21,16 @@
   </div>
 </template>
 <script>
-import PlayerWrapper from "src/components/video/video-watch/PlayerWrapper.vue";
-import CommentWrapper from "src/components/video/video-watch/CommentWrapper.vue";
-import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "src/utils/utils";
+import PlayerWrapper from "../components/video/video-watch/PlayerWrapper.vue";
+import CommentWrapper from "../components/video/video-watch/CommentWrapper.vue";
+import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "../utils/utils";
+import { increaseViewRequest } from "../utils/http/videoRequest";
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 
 import $ from "jquery";
+import { duration } from "moment";
 export default {
   computed: {
     prevRoutePath() {
@@ -54,6 +57,7 @@ export default {
       user: {},
       prevRoute: null,
       currentUser: {},
+      canIncreaseView: true,
     };
   },
   methods: {
@@ -90,7 +94,6 @@ export default {
           return null;
         } else {
           const errorString = JSON.stringify(dataObject.details);
-          console.log(errorString);
         }
       } catch (error) {
         if (error.response) {
@@ -163,6 +166,17 @@ export default {
         if (error.response) {
           alert(error.response.data);
         }
+      }
+    },
+    async increaseView() {
+      if (this.canIncreaseView) {
+        this.canIncreaseView = false;
+        setTimeout(() => {
+          increaseViewRequest({
+            videoId: this.video._id,
+            viewerId: JSON.parse(localStorage.getItem("user"))._id,
+          });
+        }, this.video.duration / 10);
       }
     },
   },
