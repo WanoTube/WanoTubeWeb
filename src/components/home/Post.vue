@@ -5,9 +5,9 @@
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"
-          :avatarImg="video.user.avatar"
-          :name="video.user.first_name + ' ' + video.user.last_name"
-          :username="video.user.username"
+          :avatarImg="video.author_id.avatar"
+          :name="video.author_id.first_name + ' ' + video.author_id.last_name"
+          :username="video.author_id.username"
           :caption="video.description"
           bgMusic="Crazy Frog"
         />
@@ -38,7 +38,6 @@ export default {
   created: function () {
     this.src = this.video.thumbnail_url;
   },
-  computed: {},
 };
 </script>
 <style src="src/assets/styles/post.css">

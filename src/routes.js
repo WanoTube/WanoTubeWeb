@@ -4,22 +4,23 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
+import Watch from './views/Watch.vue'
+import PageNotFound from './views/PageNotFound.vue'
+import Main from './Main.vue'
+
 import Upload from './components/video/upload-video/Upload.vue'
 import VideoManagement from './components/video/video-management/VideoManagement.vue'
 import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
 import Profile from './components/profile/Profile.vue'
 import EditProfile from './components/profile/EditProfile.vue'
-
-import Watch from './views/Watch.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
+import History from './components/home/History'
 import Trending from './components/discover/Trending.vue'
 import Filter from './components/video/video-editing/filters/Filters.vue'
 import MyMedia from './components/video/video-editing/my-media/MyMedia.vue'
 import BrowseFile from './components/video/video-editing/browse-files/BrowseFile.vue'
-import PageNotFound from './views/PageNotFound.vue'
-import Main from './Main.vue'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,10 @@ export const routes = [
 					{
 						path: '/search/:id',
 						component: Search
+					},
+					{
+						path: '/feed/history',
+						component: History,
 					},
 					{
 						path: '/search',

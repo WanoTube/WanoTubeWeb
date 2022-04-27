@@ -38,11 +38,11 @@ export default {
           }
         } else {
           const errorString = JSON.stringify(dataObject.details);
-          console.log(errorString);
+          throw errorString;
         }
       } catch (error) {
         if (error.response) {
-          alert(error.response.data);
+          throw error.response.data;
         }
       }
     },
@@ -59,11 +59,11 @@ export default {
           return null;
         } else {
           const errorString = JSON.stringify(dataObject.details);
-          console.log(errorString);
+          throw errorString;
         }
       } catch (error) {
         if (error.response) {
-          alert(error.response.data);
+          throw error.response.data;
         }
       }
     },

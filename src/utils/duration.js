@@ -4,7 +4,7 @@ const convertToTwoDigits = function (number) {
   return `0${number}`
 }
 
-export const formatVideoDuration = function (duration) {
+export function formatVideoDuration(duration) {
 
   if (duration < 60) return `00:${convertToTwoDigits(parseInt(duration))}`;
   if (duration < 3600) {
