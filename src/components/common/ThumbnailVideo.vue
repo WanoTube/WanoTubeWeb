@@ -7,7 +7,7 @@
     >
       <img
         class="video-item-thumbnail"
-        :style="`min-height: 100px; max-height: ${this.maxHeight}`"
+        :style="`min-height: ${minHeight}; max-height: ${this.maxHeight};max-width: ${maxWidth}`"
         :src="thumbnailUrl"
       />
     </div>
@@ -51,7 +51,9 @@ export default {
         settings: ["quality", "speed", "loop"],
       },
       thumbnailUrl: this.video.thumbnail_url,
+      minHeight: this.size === "sm" ? "100px" : "150px",
       maxHeight: this.size === "sm" ? "100px" : "200px",
+      maxWidth: this.size === "md" ? "300px" : "auto",
     };
   },
   computed: {

@@ -17,8 +17,7 @@
         <v-toolbar>
           <div class="text-h6">Upload your video</div>
         </v-toolbar>
-        <progress-bar v-if="progressStatus" :val="progressVal" size="tiny">
-        </progress-bar>
+        <progress-bar v-if="progressStatus" :val="progressVal"> </progress-bar>
         <video id="video-drag" style="display: none"></video>
         <UploadVideoInput @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
@@ -73,7 +72,6 @@ export default {
       set: function () {},
     },
     getUserInfo() {
-      console.log(localStorage.getItem("user"));
       return JSON.parse(localStorage.getItem("user"));
     },
   },

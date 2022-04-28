@@ -57,7 +57,8 @@
       </template>
     </v-data-table>
     <DeleteConfirmation
-      v-bind:deleteDialog="deleteDialog"
+      :onDeleteRow="onDeleteRow"
+      :deleteDialog="deleteDialog"
       @onClose="deleteDialog.isOpened = $event"
     />
     <ShowRecognitionResult
@@ -170,6 +171,10 @@ export default {
     onViewRecognitionResult(row) {
       this.recognitionDialog.isOpened = true;
       this.recognitionDialog.recognitionResult = row.recognition_result;
+    },
+
+    async onDeleteRow() {
+      this.videos = await this.getAllVideos();
     },
   },
   computed: {

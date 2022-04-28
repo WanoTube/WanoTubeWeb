@@ -1,7 +1,7 @@
 <template>
   <div class="container post-card mb-4 mt-4" style="padding: 0" v-cloak>
     <div class="card non-border flex-row" style="background-color: transparent">
-      <ThumbnailVideo :src="src" :video="video" :isOnList="false" />
+      <ThumbnailVideo :src="src" :video="video" :isOnList="false" size="md" />
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"

@@ -27,7 +27,6 @@
 
 <script>
 import { defaultAvatarUrl } from "src/constants/user";
-import { avatarUrlPrefix } from "src/constants/user";
 
 export default {
   props: ["name", "username", "caption", "bgMusic", "avatarImg", "isPost"],
