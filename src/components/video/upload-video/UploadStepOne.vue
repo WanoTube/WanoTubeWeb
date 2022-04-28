@@ -110,10 +110,10 @@ export default {
       privacy: 1,
     };
   },
-  rules: [
-    (value) => !!value || "Required.",
-    (value) => (value && value.length >= 3) || "Min 3 characters",
-  ],
+  // rules: [
+  //   (value) => !!value || "Required.",
+  //   (value) => (value && value.length >= 3) || "Min 3 characters",
+  // ],
   methods: {
     onReturn() {
       this.$emit("onContinue", 2);

@@ -14,9 +14,13 @@
     </template>
     <template>
       <v-card>
-        <v-toolbar><div class="text-h6">Upload your video</div></v-toolbar>
+        <v-toolbar>
+          <div class="text-h6">Upload your video</div>
+        </v-toolbar>
+        <progress-bar v-if="progressStatus" :val="progressVal" size="tiny">
+        </progress-bar>
         <video id="video-drag" style="display: none"></video>
-        <VideoUploader @videoWasUpdated="videoFile = $event" />
+        <UploadVideoInput @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
           <v-btn text @click="closeCreateDialog">Close</v-btn>
         </v-card-actions>
@@ -26,11 +30,15 @@
 </template>
 
 <script>
+import io from "socket.io-client/dist/socket.io";
+import ProgressBar from "vue-simple-progress";
+
+import { serverUrl } from "src/constants/system";
 import { getArrayWithoutLastElement } from "src/utils/array";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { useVideoStore } from "src/store/video";
 import { convertJSONToObject } from "src/utils/utils";
-import VideoUploader from "./VideoUploader.vue";
+import UploadVideoInput from "./UploadVideoInput.vue";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
@@ -40,11 +48,17 @@ export default {
     return { uploadedVideo, uploadVideo, removeVideo };
   },
   components: {
-    VideoUploader,
+    UploadVideoInput,
+    ProgressBar,
   },
   data() {
     return {
       videoFile: null,
+      socket: io(serverUrl, {
+        withCredentials: true,
+      }),
+      progressVal: 0,
+      progressStatus: "",
     };
   },
   computed: {
@@ -128,6 +142,47 @@ export default {
         throw new Error("Please input all the require fields");
       }
     },
+
+    async trackingUploadProgress() {
+      const vm = this;
+      this.socket.on("connect", () => {
+        // this.socket.on("Compress video", function (progress) {
+        //   vm.progressStatus = "Start compressing video";
+        //   if (progress) {
+        //     console.log("Compress video: " + progress.percent + "%");
+        //     vm.progressVal = progress.percent;
+        //   } else {
+        //     console.log("Non progress");
+        //   }
+        // });
+
+        // this.socket.on("Convert to Webm Format", function (progress) {
+        //   vm.progressStatus = "Start converting to webm format";
+        //   if (progress) {
+        //     console.log("Convert to Webm Format: " + progress.percent + " %");
+        //     vm.progressVal = progress.percent;
+        //   } else {
+        //     console.log("Non progress");
+        //   }
+        // });
+
+        this.socket.on("Convert to audio", function (progress) {
+          console.log("Convert to audio: " + progress.percent + " %");
+        });
+
+        this.socket.on("Upload to S3", function (progressPercentage) {
+          if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
+          else vm.progressStatus = "Upload to storage completed!";
+
+          if (progressPercentage) {
+            console.log("Upload to S3: " + progressPercentage + "%");
+            vm.progressVal = progressPercentage;
+          } else {
+            console.log("Non progress");
+          }
+        });
+      });
+    },
   },
   watch: {
     videoFile: function (file) {
@@ -141,6 +196,9 @@ export default {
         );
       }
     },
+  },
+  mounted() {
+    this.trackingUploadProgress();
   },
 };
 </script>

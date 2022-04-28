@@ -146,7 +146,6 @@ export default {
         };
         const { data } = await VideoRepository.updateVideo(updateVideoInfo);
         const dataObject = convertJSONToObject(data);
-        console.log({ dataObject });
         if (!dataObject.details) {
           this.isLoading = false;
           this.snackbar = true;
@@ -165,7 +164,6 @@ export default {
   },
   async created() {
     this.video = await this.getVideo();
-    console.log(this.video);
     if (this.video) {
       this.title = this.video.title;
       this.privacy = this.video.visibility;
