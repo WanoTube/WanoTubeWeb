@@ -10,6 +10,7 @@
       <div v-for="video in historyDate.videos" v-bind:key="video.tittle">
         <HorizontalPost :video="video" />
       </div>
+      <hr />
     </div>
   </div>
 </template>
@@ -32,6 +33,7 @@ export default {
   },
   created: async function () {
     this.watchedHistoryDates = (await getWatchHistory()).watchedHistoryDates;
+    console.log(this.watchedHistoryDates);
   },
 };
 </script>

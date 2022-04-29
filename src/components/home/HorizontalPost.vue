@@ -6,9 +6,10 @@
         <PostCaption
           isPost="true"
           :avatarImg="video.author.avatar"
-          :name="video.author.first_name + ' ' + video.author.last_name"
           :username="video.author.username"
-          :caption="video.description"
+          :title="video.title"
+          :createdAt="video.created_at"
+          :totalViews="video.total_views"
           bgMusic="Crazy Frog"
         />
       </div>

@@ -13,12 +13,12 @@
     <div>
       <div class="row">
         <div class="col" style="padding-bottom: 0">
-          <b>{{ name }}</b>
-          <span style="margin-left: 5px; color: #c4c4c4">@{{ username }}</span>
-          <br />
-          <span v-if="caption < 50">{{ caption }}</span>
-          <span>{{ caption }}</span>
-          <br />
+          <b class="ellipsis-2">{{ title }}</b>
+          <div class="video-info">
+            {{ username }}
+            <br />
+            {{ totalViews }} views • {{ createdAt }}
+          </div>
         </div>
       </div>
     </div>
@@ -29,7 +29,17 @@
 import { defaultAvatarUrl } from "src/constants/user";
 
 export default {
-  props: ["name", "username", "caption", "bgMusic", "avatarImg", "isPost"],
+  props: [
+    "name",
+    "username",
+    "caption",
+    "bgMusic",
+    "avatarImg",
+    "isPost",
+    "title",
+    "totalViews",
+    "createdAt",
+  ],
   computed: {
     imgSrc: function () {
       if (!this.avatarImg) return defaultAvatarUrl;
@@ -39,4 +49,10 @@ export default {
 };
 </script>
 <style src="src/assets/styles/post-caption.css">
+</style>
+
+<style>
+.video-info {
+  font-size: 14px;
+}
 </style>

@@ -1,0 +1,1 @@
+export const userInfoFromLocalStorage = JSON.parse(localStorage.getItem('user'));
