@@ -8,7 +8,7 @@
           <img
             v-if="user.avatar"
             class="rounded-circle img-responsive"
-            v-bind:src="avatarSource + user.avatar"
+            v-bind:src="user.avatar"
             width="150px"
             height="150px"
           />

@@ -15,9 +15,8 @@
         <div class="col" style="padding-bottom: 0">
           <b class="ellipsis-2">{{ title }}</b>
           <div class="video-info">
-            {{ username }}
-            <br />
-            {{ totalViews }} views • {{ createdAt }}
+            <div>{{ username }}</div>
+            <div>{{ totalViews }} views • {{ createdAt }}</div>
           </div>
         </div>
       </div>

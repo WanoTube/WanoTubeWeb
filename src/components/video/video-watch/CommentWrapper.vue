@@ -2,14 +2,15 @@
   <div class="col-md-4 order-1 order-sm-2">
     <div class="card non-border">
       <div class="card-header container bg-white">
-        <PostCaption
+        <!-- <PostCaption
           isPost="true"
           :avatarImg="avatarImg"
           :name="name"
           :username="username"
           :caption="caption"
           bgMusic="Crazy Frog"
-        />
+        /> -->
+        <b>Comments</b>
         <router-link to="/" class="d-sm-none">
           <span class="fa fa-times fa-2x exit-button"></span>
         </router-link>
@@ -190,7 +191,7 @@ export default {
   },
 
   components: {
-    PostCaption,
+    // PostCaption,
     CommentSection,
   },
 };

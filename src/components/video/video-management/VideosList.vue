@@ -74,7 +74,7 @@
       @onClose="deleteDialog.isOpened = $event"
     />
     <ShowRecognitionResult
-      v-bind:recognitionDialog="recognitionDialog"
+      :recognitionDialog="recognitionDialog"
       @onClose="recognitionDialog.isOpened = $event"
     />
   </div>

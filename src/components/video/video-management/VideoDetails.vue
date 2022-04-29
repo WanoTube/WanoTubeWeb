@@ -38,25 +38,18 @@
           <div>
             <v-text-field
               v-model="title"
-              placeholder="Title (required)"
-              outlined
+              label="Title"
+              filled
+              placeholder="Add a title that describe your video"
+              spellcheck="false"
             ></v-text-field>
             <v-textarea
               v-model="description"
-              name="input-7-4"
-              placeholder="Description"
-              outlined
+              label="Description"
+              placeholder="Tell viewers about your video"
+              filled
+              spellcheck="false"
             ></v-textarea>
-            <div class="mt-4">
-              <h5><b>Who can see this post</b></h5>
-              <div class="flex-center">
-                <v-radio-group row v-model="privacy">
-                  <v-radio :label="`Public`" :value="0"></v-radio>
-                  <v-radio :label="`Private`" :value="1"></v-radio>
-                  <v-radio :label="`Friends`" :value="2"></v-radio>
-                </v-radio-group>
-              </div>
-            </div>
           </div>
         </div>
         <div class="col-md-4">
@@ -64,7 +57,7 @@
             <video
               id="video-thumbail"
               controls
-              v-bind:src="thumbnailVideoUrl"
+              :src="thumbnailVideoUrl"
             ></video>
             <div class="card-body">
               <small class="card-text text-secondary">Video link </small>
@@ -72,6 +65,30 @@
                 {{ this.watchUrl }}
               </a>
             </div>
+          </div>
+          <div class="mt-4">
+            <v-select
+              :items="visibilities"
+              v-model="privacy"
+              :prepend-inner-icon="visibilityIcon"
+              filled
+              label="Visibility"
+              dense
+            ></v-select>
+          </div>
+          <div class="mt-4">
+            <v-text-field
+              v-model="restriction"
+              label="Restriction"
+              filled
+              readonly
+              @click="openRestrictionDescription"
+            ></v-text-field>
+
+            <ShowRecognitionResult
+              :recognitionDialog="recognitionDialog"
+              @onClose="recognitionDialog.isOpened = $event"
+            />
           </div>
         </div>
       </div>
@@ -86,6 +103,7 @@
 
 <script>
 import TheNavBar from "src/layouts/TheNavBar.vue";
+import ShowRecognitionResult from "./ShowRecognitionResult.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 import { appUrl } from "src/constants/system";
@@ -95,18 +113,29 @@ const VideoRepository = RepositoryFactory.get("video");
 export default {
   components: {
     TheNavBar,
+    ShowRecognitionResult,
   },
   data() {
     return {
       video: {},
       title: "",
       description: "",
+      restriction: "None",
       thumbnailVideoUrl: "",
       video_id: this.$route.params.id,
       snackbar: false,
-      snackbarText: `Hello, I'm a snackbar`,
+      snackbarText: "Hello, I'm a snackbar",
       snackbarTimeOut: 3000,
       privacy: 0,
+      visibilities: [
+        { text: "Public", value: 0 },
+        { text: "Private", value: 1 },
+        { text: "Unpublic", value: 2 },
+      ],
+      recognitionDialog: {
+        isOpened: false,
+        recognitionResult: {},
+      },
     };
   },
   methods: {
@@ -161,6 +190,11 @@ export default {
         }
       }
     },
+    openRestrictionDescription() {
+      if (!this.video.recognition_result) return;
+      this.recognitionDialog.recognitionResult = this.video.recognition_result;
+      this.recognitionDialog.isOpened = true;
+    },
   },
   async created() {
     this.video = await this.getVideo();
@@ -168,9 +202,17 @@ export default {
       this.title = this.video.title;
       this.privacy = this.video.visibility;
       this.description = this.video.description;
+      this.restriction = this.video.recognition_result
+        ? "Copyright claim"
+        : "None";
     }
   },
   computed: {
+    visibilityIcon: function () {
+      if (this.privacy === 0) return "mdi-eye";
+      if (this.privacy === 1) return "mdi-eye-off";
+      return "mdi-eye-minus";
+    },
     isUpdated: function () {
       if (!this || !this.video) return false;
       return (
@@ -237,9 +279,6 @@ export default {
   padding: 0 0 !important;
   margin: 0 0 !important;
 }
-</style>
-
-<style>
 .v-input--selection-controls .v-input__slot > .v-label,
 .v-input--selection-controls .v-radio > .v-label {
   margin: 0 !important;

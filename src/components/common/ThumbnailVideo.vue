@@ -13,7 +13,7 @@
       />
     </div>
     <div class="overlay-text">
-      <p class="bottomText text-white" style="">
+      <p class="bottomText text-white">
         <span v-if="video.duration">{{ duration }}</span>
         <span v-else>{{ defaultDuration }}</span>
       </p>
