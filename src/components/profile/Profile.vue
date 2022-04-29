@@ -39,9 +39,9 @@
             </div>
           </div>
           <div style="margin-top: 15px">
-            <span
-              ><b>{{ user.first_name }} {{ user.last_name }}</b></span
-            >
+            <span>
+              <b>{{ user.first_name }} {{ user.last_name }}</b>
+            </span>
             <p v-if="user.description">{{ user.description }}</p>
             <p v-else>{{ caption }}</p>
           </div>
@@ -53,13 +53,10 @@
         <div
           v-for="video in videos"
           v-bind:key="video.tittle"
-          class="col-4 video-feed"
+          class="col-3 video-feed"
           @click="linkToCommentView(video._id)"
         >
-          <ThumbnailVideo
-            :src="videoSource + video.url"
-            :video="video"
-          ></ThumbnailVideo>
+          <ProfilePost :video="video" />
         </div>
       </div>
     </div>
@@ -68,17 +65,17 @@
 
 <script>
 import TheNavBar from "src/layouts/TheNavBar.vue";
-import ThumbnailVideo from "../common/ThumbnailVideo.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 import { apiUrl } from "src/constants/system";
+import ProfilePost from "./ProfilePost.vue";
 const UsersRepository = RepositoryFactory.get("users");
 const VideosRepository = RepositoryFactory.get("video");
 
 export default {
   components: {
     TheNavBar,
-    ThumbnailVideo,
+    ProfilePost,
   },
   data() {
     return {

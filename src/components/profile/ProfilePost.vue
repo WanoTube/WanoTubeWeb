@@ -1,13 +1,12 @@
 <template>
-  <div class="container post-card mb-4 mt-4" style="padding: 0" v-cloak>
+  <div class="container post-card" style="padding: 0" v-cloak>
     <v-skeleton-loader
       v-show="!isImageLoaded"
       v-bind="attrs"
-      type="image"
-      :tile="true"
+      type="image, list-item-avatar-three-line"
     ></v-skeleton-loader>
     <div
-      class="card non-border flex-row"
+      class="card non-border"
       style="background-color: transparent"
       v-show="isImageLoaded"
     >
@@ -15,14 +14,11 @@
         :src="src"
         :video="video"
         :isOnList="false"
-        size="md"
         :onImageLoaded="onImageLoaded"
       />
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"
-          :avatarImg="video.author.avatar"
-          :username="video.author.username"
           :title="video.title"
           :createdAt="video.created_at"
           :totalViews="video.total_views"
@@ -47,8 +43,6 @@ export default {
       isImageLoaded: false,
       attrs: {
         class: "mb-6",
-        "max-height": 162,
-        "min-height": 150,
       },
     };
   },

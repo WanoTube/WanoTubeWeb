@@ -1,7 +1,21 @@
 <template>
   <div class="container post-card" style="padding: 0" v-cloak>
-    <div class="card non-border" style="background-color: transparent">
-      <ThumbnailVideo :src="src" :video="video" :isOnList="false" />
+    <v-skeleton-loader
+      v-show="!isImageLoaded"
+      v-bind="attrs"
+      type="image, list-item-avatar-three-line"
+    ></v-skeleton-loader>
+    <div
+      class="card non-border"
+      style="background-color: transparent"
+      v-show="isImageLoaded"
+    >
+      <ThumbnailVideo
+        :src="src"
+        :video="video"
+        :isOnList="false"
+        :onImageLoaded="onImageLoaded"
+      />
       <div class="card-text container non-border">
         <PostCaption
           isPost="true"
@@ -28,9 +42,17 @@ export default {
   data() {
     return {
       src: "",
+      isImageLoaded: false,
+      attrs: {
+        class: "mb-6",
+      },
     };
   },
-  methods: {},
+  methods: {
+    onImageLoaded() {
+      this.isImageLoaded = true;
+    },
+  },
   watch: {
     video(val) {
       this.duration = val.duration;

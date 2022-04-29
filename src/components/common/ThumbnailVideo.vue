@@ -6,6 +6,7 @@
       @mouseover="onMouseOver"
     >
       <img
+        @load="onImageLoaded"
         class="video-item-thumbnail"
         :style="`min-height: ${minHeight}; max-height: ${this.maxHeight};max-width: ${maxWidth}`"
         :src="thumbnailUrl"
@@ -25,7 +26,7 @@ import { formatVideoDuration } from "src/utils/duration";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
-  props: ["src", "video", "size"],
+  props: ["src", "video", "size", "onImageLoaded"],
   components: {},
   methods: {
     linkToCommentView: function () {
@@ -51,8 +52,10 @@ export default {
         settings: ["quality", "speed", "loop"],
       },
       thumbnailUrl: this.video.thumbnail_url,
-      minHeight: this.size === "sm" ? "100px" : "150px",
-      maxHeight: this.size === "sm" ? "100px" : "200px",
+      minHeight:
+        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
+      maxHeight:
+        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
       maxWidth: this.size === "md" ? "300px" : "auto",
     };
   },
