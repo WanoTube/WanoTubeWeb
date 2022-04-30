@@ -135,7 +135,7 @@ export default {
         }
       } catch (error) {
         if (error.response) {
-          this.$toasted.show(error.response.data, {
+          this.$toasted.show(error.message, {
             position: "top-center",
             duration: 2000,
             type: "error",

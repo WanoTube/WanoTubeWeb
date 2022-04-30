@@ -17,10 +17,6 @@ function getUser(userId) {
 	return Repository.get(`${resource}/${userId}`);
 }
 
-function getUserByUsername(username) {
-	return Repository.get(`${resource}/search?username=${username}`);
-}
-
 function getAccountByUserId(userId) {
 	return Repository.get(`${resource}/account/${userId}`);
 }
@@ -48,7 +44,6 @@ function updateAvatar(payload) {
 export default {
 	get,
 	getUser,
-	getUserByUsername,
 	getAccountByUserId,
 	createUser,
 	updateUser,

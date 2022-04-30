@@ -6,16 +6,9 @@
       <div class="row">
         <div class="col-sm-4 avatar-profile">
           <img
-            v-if="user.avatar"
+            v-if="channel.user_id"
             class="rounded-circle img-responsive"
-            v-bind:src="user.avatar"
-            width="150px"
-            height="150px"
-          />
-          <img
-            v-else
-            class="rounded-circle img-responsive"
-            v-bind:src="avatarSource + 'default_avatar.png'"
+            :src="channel.user_id.avatar"
             width="150px"
             height="150px"
           />
@@ -24,12 +17,12 @@
           <div class="row">
             <div class="col-sm-3" style="padding-top: 20px">
               <h4 class="username" style="margin-bottom: 0; padding-bottom: 0">
-                {{ username }}
+                {{ channel.username }}
               </h4>
             </div>
             <div class="col-sm-9">
               <button
-                v-if="currentUsername == username"
+                v-if="myChannelUsername === channel.username"
                 type="button"
                 class="btn btn-outline-secondary"
                 @click="navigateToEditProfile"
@@ -37,13 +30,6 @@
                 Edit Profile
               </button>
             </div>
-          </div>
-          <div style="margin-top: 15px">
-            <span>
-              <b>{{ user.first_name }} {{ user.last_name }}</b>
-            </span>
-            <p v-if="user.description">{{ user.description }}</p>
-            <p v-else>{{ caption }}</p>
           </div>
         </div>
       </div>
@@ -65,12 +51,11 @@
 
 <script>
 import TheNavBar from "src/layouts/TheNavBar.vue";
-import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "src/utils/utils";
-import { apiUrl } from "src/constants/system";
+import {
+  getAllChannelPublicVideos,
+  getChannelPublicInformation,
+} from "src/utils/http/videoRequest";
 import ProfilePost from "./ProfilePost.vue";
-const UsersRepository = RepositoryFactory.get("users");
-const VideosRepository = RepositoryFactory.get("video");
 
 export default {
   components: {
@@ -79,14 +64,8 @@ export default {
   },
   data() {
     return {
-      caption: "",
-      src: "https://www.bigbuckbunny.org/",
-      user: {},
-      username: "",
+      channel: {},
       videos: [],
-      videoSource: `${apiUrl}/videos/stream/`,
-      avatarSource: `${apiUrl}/users/avatar/`,
-      currentUsername: "",
     };
   },
   methods: {
@@ -96,81 +75,15 @@ export default {
       });
     },
     navigateToEditProfile() {
-      this.$router.push("/" + this.username + "/profile/edit");
-    },
-    async getProfileInfo() {
-      try {
-        const username = this.$route.params.username;
-        this.username = username;
-        const { data } = await UsersRepository.getUserByUsername(username);
-        const dataObject = convertJSONToObject(data);
-        if (!dataObject.details) {
-          return dataObject;
-        }
-        return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-        return null;
-      }
-    },
-    async getAllPublicVideosByUserId(userId) {
-      try {
-        const { data } =
-          await VideosRepository.getAllPublicVideoInfosWithUserId(userId);
-        const dataObject = convertJSONToObject(data);
-        if (!dataObject.details) {
-          return dataObject;
-        }
-        return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-        return null;
-      }
-    },
-    async getAllVideosByUserId(userId) {
-      try {
-        const { data } = await VideosRepository.getAllVideoInfosWithUserId(
-          userId
-        );
-        const dataObject = convertJSONToObject(data);
-        if (!dataObject.details) {
-          return dataObject;
-        }
-        return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-        return null;
-      }
-    },
-    async getVideos() {
-      const requestedUsername = this.$route.params.username;
-      const user = JSON.parse(localStorage.getItem("user"));
-      const userId = user._id;
-      if (user) {
-        this.currentUsername = user.username;
-        if (requestedUsername == this.currentUsername) {
-          // get all videos of this user
-          return await this.getAllVideosByUserId(userId);
-        } else {
-          // get all public videos of this user
-          return await this.getAllPublicVideosByUserId(userId);
-        }
-      } else {
-        // get all public videos of this user
-        return await this.getAllPublicVideosByUserId(userId);
-      }
+      this.$router.push("/" + this.channel.username + "/profile/edit");
     },
   },
+
   async created() {
     try {
-      this.user = await this.getProfileInfo();
-      this.videos = await this.getVideos();
+      const { _id, channelId } = JSON.parse(localStorage.getItem("user"));
+      this.channel = await getChannelPublicInformation(channelId);
+      this.videos = await getAllChannelPublicVideos(_id);
       this.$nextTick(() => {
         const videos = document.getElementsByClassName("thumbnail-video");
         videos.forEach((video) => {
@@ -180,24 +93,17 @@ export default {
         });
       });
     } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
+      this.$toasted.show(error.message, {
+        position: "top-center",
+        duration: 5000,
+        type: "success",
+      });
     }
   },
-  watch: {
-    "$route.params.username": {
-      handler: function () {
-        this.$nextTick(() => {
-          // this.show = true
-          console.log("re-render start");
-          this.$nextTick(() => {
-            console.log("re-render end");
-          });
-        });
-      },
-      deep: true,
-      immediate: true,
+
+  computed: {
+    myChannelUsername() {
+      return this.$route.params.username;
     },
   },
 };

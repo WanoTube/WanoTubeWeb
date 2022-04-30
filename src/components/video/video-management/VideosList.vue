@@ -82,12 +82,10 @@
 
 <script>
 import moment from "moment";
-import { convertJSONToObject } from "src/utils/utils";
-import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { getAllChannelVideos } from "src/utils/http/videoRequest";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
-const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   props: [],
@@ -150,28 +148,6 @@ export default {
   },
 
   methods: {
-    async getAllVideos() {
-      const { _id: author_id, username } = this.userInfo;
-      if (this.$route.params.username == username) {
-        try {
-          const { data } = await VideoRepository.getAllVideoInfosWithUserId(
-            author_id
-          );
-          if (data) {
-            const dataObject = convertJSONToObject(data);
-            if (!dataObject.details) {
-              return dataObject;
-            }
-          }
-          return null;
-        } catch (error) {
-          if (error.response) {
-            alert(error.response.data);
-          }
-        }
-      }
-    },
-
     onEditButtonClick(row) {
       const { username } = this.userInfo;
       this.$router.push({ path: `/${username}/videos/${row._id}` });
@@ -191,7 +167,7 @@ export default {
     },
 
     async onDeleteRow() {
-      this.videos = await this.getAllVideos();
+      this.videos = await this.getAllChannelVideos();
     },
 
     onImageLoaded() {
@@ -206,7 +182,7 @@ export default {
   },
   async mounted() {
     //TO-DO: Check if videos is null
-    this.videos = await this.getAllVideos();
+    this.videos = await getAllChannelVideos();
   },
 };
 </script>
