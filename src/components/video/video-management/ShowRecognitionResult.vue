@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-dialog v-model="recognitionDialog.isOpened" max-width="400">
+      <v-dialog v-model="recognitionDialog.isOpened" max-width="600">
         <div class="container">
           <v-card class="container">
             <v-card-text>
@@ -9,28 +9,63 @@
                 <h5><b>Recognition Results:</b></h5>
               </div>
             </v-card-text>
-            <div v-for="(item, index) in recResult" :key="index" class="card">
-              <div class="card-body">
-                <b>Song Title: </b>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  :href="
-                    'https://www.youtube.com/results?search_query=' + item.title
-                  "
-                  class="text-primary"
-                >
-                  {{ item.title }}</a
-                >
-                <br />
+            <div v-if="isFromACRCloudBucket === true">
+              <div
+                v-for="(item, index) in recResult"
+                :key="index"
+                class="card mb-4"
+              >
+                <div class="card-body">
+                  <b>Song Title: </b>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    :href="
+                      'https://www.youtube.com/results?search_query=' +
+                      item.title
+                    "
+                    class="text-primary"
+                  >
+                    {{ item.title }}</a
+                  >
+                  <br />
 
-                <b>Album: </b>
-                {{ item.albumName }}
-                <br />
+                  <b>Album: </b>
+                  {{ item.albumName }}
+                  <br />
 
-                <b>Song artists: </b>
-                {{ item.artistsName }}
-                <br />
+                  <b>Artists: </b>
+                  {{ item.artistsName }}
+                  <br />
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <div
+                v-for="(item, index) in recResult"
+                :key="index"
+                class="card mb-4"
+              >
+                <div class="card-body">
+                  <b>Song Title: </b>
+                  {{ item.title }}
+                  <br />
+
+                  <b>Owner: </b>
+                  {{ item.owner }}
+                  <br />
+
+                  <b>Link: </b>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    :href="item.url"
+                    class="text-primary"
+                  >
+                    {{ item.url }}
+                  </a>
+                  <br />
+                </div>
               </div>
             </div>
             <v-card-actions class="justify-end">
@@ -51,6 +86,7 @@ export default {
   data() {
     return {
       recResult: [],
+      isFromACRCloudBucket: false,
     };
   },
   methods: {
@@ -59,14 +95,26 @@ export default {
     },
     generateRecognizedResults(recognizedResult) {
       const results = [];
-      recognizedResult?.metadata.music.forEach((result) => {
-        const { title, album, artists } = result;
-        const albumName = album.name;
-        const artistsName = artists.map((artist) => artist.name).join(", ");
+      const musicFromACRCloudBucket = recognizedResult.metadata.music;
+      if (musicFromACRCloudBucket) {
+        this.isFromACRCloudBucket = true;
+        musicFromACRCloudBucket.forEach((result) => {
+          const { title, album, artists } = result;
+          const albumName = album.name;
+          const artistsName = artists.map((artist) => artist.name).join(", ");
 
-        const record = { title, albumName, artistsName };
-        results.push(record);
-      });
+          const record = { title, albumName, artistsName };
+          results.push(record);
+        });
+      } else {
+        this.isFromACRCloudBucket = false;
+        const musicFromWanotubeBucket = recognizedResult.metadata.custom_files;
+        musicFromWanotubeBucket.forEach((result) => {
+          const { title, owner, url } = result;
+          results.push({ title, owner, url });
+        });
+      }
+
       return results;
     },
   },

@@ -6,13 +6,14 @@
       @mouseover="onMouseOver"
     >
       <img
+        @load="onImageLoaded"
         class="video-item-thumbnail"
-        :style="`min-height: 100px; max-height: ${this.maxHeight}`"
+        :style="`min-height: ${minHeight}; max-height: ${this.maxHeight};max-width: ${maxWidth}`"
         :src="thumbnailUrl"
       />
     </div>
     <div class="overlay-text">
-      <p class="bottomText text-white" style="">
+      <p class="bottomText text-white">
         <span v-if="video.duration">{{ duration }}</span>
         <span v-else>{{ defaultDuration }}</span>
       </p>
@@ -25,7 +26,7 @@ import { formatVideoDuration } from "src/utils/duration";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
-  props: ["src", "video", "size"],
+  props: ["src", "video", "size", "onImageLoaded"],
   components: {},
   methods: {
     linkToCommentView: function () {
@@ -51,7 +52,11 @@ export default {
         settings: ["quality", "speed", "loop"],
       },
       thumbnailUrl: this.video.thumbnail_url,
-      maxHeight: this.size === "sm" ? "100px" : "200px",
+      minHeight:
+        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
+      maxHeight:
+        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
+      maxWidth: this.size === "md" ? "300px" : "auto",
     };
   },
   computed: {

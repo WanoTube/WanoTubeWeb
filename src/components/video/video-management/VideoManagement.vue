@@ -6,7 +6,7 @@
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
             <h1><b>Channel content</b></h1>
           </div>
-          <div><UploadDialog /></div>
+          <div><UploadDialogButton /></div>
         </div>
         <VideosList />
       </div>
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-import UploadDialog from "../upload-video/UploadDialog.vue";
+import UploadDialogButton from "../upload-video/UploadDialogButton.vue";
 import VideosList from "./VideosList.vue";
 
 export default {
   components: {
-    UploadDialog,
+    UploadDialogButton,
     VideosList,
   },
 };

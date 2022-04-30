@@ -14,7 +14,7 @@
                 <div class="col-md container">
                   <video
                     class="video-mask"
-                    v-bind:src="`${apiUrl}/videos/stream/${deleteDialog.video.url}`"
+                    :src="deleteDialog.video.url"
                   ></video>
                 </div>
                 <div class="col-md container align-middle">
@@ -61,7 +61,7 @@ import { apiUrl } from "src/constants/system";
 
 const VideoRepository = RepositoryFactory.get("video");
 export default {
-  props: ["deleteDialog"],
+  props: ["deleteDialog", "onDeleteRow"],
   data() {
     return {
       confirmCheckbox: false,
@@ -79,12 +79,18 @@ export default {
         if (data) {
           const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
-            if (dataObject.deletedCount == 0)
-              alert("Cannot delete this video! ");
+            if (dataObject.deletedCount === 0)
+              return alert("Cannot delete this video! ");
+
+            this.$toasted.show("Video deleted!", {
+              position: "top-center",
+              duration: 2000,
+              type: "success",
+            });
             this.closeDialog();
-            location.reload();
+            this.onDeleteRow();
           } else {
-            alert(dataObject.details);
+            return alert(dataObject.details);
           }
         } else {
           alert("Cannot delete this video! ");

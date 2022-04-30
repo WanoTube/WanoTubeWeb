@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-skeleton-loader
+      v-show="!isImageLoaded"
+      v-bind="attrs"
+      type="table-tbody"
+      :tile="true"
+    ></v-skeleton-loader>
     <v-data-table
       v-model="selected"
       :headers="headers"
@@ -7,6 +13,7 @@
       item-key="name"
       show-select
       class="elevation-1"
+      v-show="isImageLoaded"
     >
       <template v-slot:item.title="{ item }">
         <div
@@ -15,7 +22,12 @@
         >
           <div class="row no-gutters">
             <div class="col-sm-5 p-2" style="height: 100%">
-              <ThumbnailVideo :video="item" :isOnList="false" size="sm" />
+              <ThumbnailVideo
+                :video="item"
+                :isOnList="false"
+                size="sm"
+                :onImageLoaded="onImageLoaded"
+              />
             </div>
             <div class="col-sm-7">
               <div class="card-body">
@@ -57,11 +69,12 @@
       </template>
     </v-data-table>
     <DeleteConfirmation
-      v-bind:deleteDialog="deleteDialog"
+      :onDeleteRow="onDeleteRow"
+      :deleteDialog="deleteDialog"
       @onClose="deleteDialog.isOpened = $event"
     />
     <ShowRecognitionResult
-      v-bind:recognitionDialog="recognitionDialog"
+      :recognitionDialog="recognitionDialog"
       @onClose="recognitionDialog.isOpened = $event"
     />
   </div>
@@ -69,12 +82,10 @@
 
 <script>
 import moment from "moment";
-import { convertJSONToObject } from "src/utils/utils";
-import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { getAllChannelVideos } from "src/utils/http/videoRequest";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
-const VideoRepository = RepositoryFactory.get("video");
 
 export default {
   props: [],
@@ -128,32 +139,15 @@ export default {
           value: "actions",
         },
       ],
+      isImageLoaded: false,
+      attrs: {
+        class: "mb-6",
+        "max-height": 152,
+      },
     };
   },
 
   methods: {
-    async getAllVideos() {
-      const { _id: author_id, username } = this.userInfo;
-      if (this.$route.params.username == username) {
-        try {
-          const { data } = await VideoRepository.getAllVideoInfosWithUserId(
-            author_id
-          );
-          if (data) {
-            const dataObject = convertJSONToObject(data);
-            if (!dataObject.details) {
-              return dataObject;
-            }
-          }
-          return null;
-        } catch (error) {
-          if (error.response) {
-            alert(error.response.data);
-          }
-        }
-      }
-    },
-
     onEditButtonClick(row) {
       const { username } = this.userInfo;
       this.$router.push({ path: `/${username}/videos/${row._id}` });
@@ -171,6 +165,14 @@ export default {
       this.recognitionDialog.isOpened = true;
       this.recognitionDialog.recognitionResult = row.recognition_result;
     },
+
+    async onDeleteRow() {
+      this.videos = await this.getAllChannelVideos();
+    },
+
+    onImageLoaded() {
+      this.isImageLoaded = true;
+    },
   },
   computed: {
     userInfo() {
@@ -180,7 +182,7 @@ export default {
   },
   async mounted() {
     //TO-DO: Check if videos is null
-    this.videos = await this.getAllVideos();
+    this.videos = await getAllChannelVideos();
   },
 };
 </script>
@@ -188,19 +190,5 @@ export default {
 <style scoped>
 .selected {
   background-color: red;
-}
-.ellipsis-1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-}
-.ellipsis-3 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
 }
 </style>

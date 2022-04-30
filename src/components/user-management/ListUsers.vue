@@ -65,10 +65,16 @@ export default {
       selected: [],
       headers: [
         {
-          text: "Fullname",
+          text: "First Name",
           align: "start",
           sortable: false,
           value: "first_name",
+        },
+        {
+          text: "Last Name",
+          align: "start",
+          sortable: false,
+          value: "last_name",
         },
         {
           text: "Email",
