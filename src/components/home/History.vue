@@ -33,7 +33,6 @@ export default {
   },
   created: async function () {
     this.watchedHistoryDates = (await getWatchHistory()).watchedHistoryDates;
-    console.log(this.watchedHistoryDates);
   },
 };
 </script>

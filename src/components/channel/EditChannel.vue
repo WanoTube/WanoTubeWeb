@@ -168,7 +168,7 @@
               <v-btn
                 color="#FAFAFA"
                 class="mr-4 text-center"
-                @click="navigateToProgile"
+                @click="navigateToProfile"
               >
                 Cancel
               </v-btn>
@@ -239,9 +239,9 @@ export default {
     };
   },
   methods: {
-    navigateToProgile() {
-      const username = this.$route.params.username;
-      this.$router.push("/" + username + "/profile");
+    navigateToProfile() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      this.$router.push(`channel/${userInfo.channelId}`);
     },
     async getAccountInfo() {
       try {
@@ -388,6 +388,10 @@ export default {
         }
       }
     },
+    navigateToChannel() {
+      const { channelId } = JSON.parse(localStorage.getItem("user"));
+      this.$router.push(`/channel/${channelId}`);
+    },
   },
   async created() {
     try {
@@ -422,12 +426,12 @@ export default {
         (this.updatedProfileStatus == "" ||
           this.updatedProfileStatus == "Completed")
       ) {
-        this.$router.push("/" + this.username + "/profile");
+        this.navigateToChannel();
       }
     },
     updatedProfileStatus() {
       if (this.progressStatus == "" || this.progressStatus == "Completed") {
-        this.$router.push("/" + this.username + "/profile");
+        this.navigateToChannel();
       }
     },
   },

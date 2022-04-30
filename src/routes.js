@@ -12,8 +12,8 @@ import Upload from './components/video/upload-video/Upload.vue'
 import VideoManagement from './components/video/video-management/VideoManagement.vue'
 import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
-import Profile from './components/profile/Profile.vue'
-import EditProfile from './components/profile/EditProfile.vue'
+import Channel from './components/channel/Channel.vue'
+import EditChannel from './components/channel/EditChannel.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
 import History from './components/home/History'
@@ -65,7 +65,15 @@ export const routes = [
 					{
 						path: '/trending',
 						component: Trending
-					}
+					},
+					{
+						path: '/channel/:channelId',
+						component: Channel,
+					},
+					{
+						path: '/channel/:channelId/edit',
+						component: EditChannel,
+					},
 				]
 			},
 			{
@@ -94,14 +102,6 @@ export const routes = [
 					requiresAuth: true,
 					isAdmin: true
 				}
-			},
-			{
-				path: '/:username/profile',
-				component: Profile,
-			},
-			{
-				path: '/:username/profile/edit',
-				component: EditProfile,
 			},
 			{
 				path: '/:username/videos',

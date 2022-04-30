@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <router-link :to="`/${username}/profile`">
+    <router-link :to="`/channel/${video.user._id}`" v-if="isPost">
       <div class="avatar">
         <img
           :src="imgSrc"
@@ -13,10 +13,10 @@
     <div>
       <div class="row">
         <div class="col" style="padding-bottom: 0">
-          <b class="ellipsis-2">{{ title }}</b>
+          <b class="ellipsis-2">{{ video.title }}</b>
           <div class="video-info">
-            <div>{{ username }}</div>
-            <div>{{ totalViews }} views • {{ createdAt }}</div>
+            <div v-if="isPost">{{ video.user.username }}</div>
+            <div>{{ video.total_views }} views • {{ video.created_at }}</div>
           </div>
         </div>
       </div>
@@ -28,21 +28,19 @@
 import { defaultAvatarUrl } from "src/constants/user";
 
 export default {
-  props: [
-    "name",
-    "username",
-    "caption",
-    "bgMusic",
-    "avatarImg",
-    "isPost",
-    "title",
-    "totalViews",
-    "createdAt",
-  ],
+  props: {
+    video: {
+      type: Object,
+    },
+    isPost: {
+      type: Boolean,
+      default: true,
+    },
+  },
   computed: {
     imgSrc: function () {
-      if (!this.avatarImg) return defaultAvatarUrl;
-      return this.avatarImg;
+      if (!this.video.user) return defaultAvatarUrl;
+      return this.video.user.avatar;
     },
   },
 };

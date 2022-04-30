@@ -1,35 +1,30 @@
 <template>
-  <div>
-    <TheNavBar />
-    <br /><br /><br /><br />
+  <div class="row vertical-scrollable p-4 m-1">
     <div class="container" :key="$route.fullPath">
-      <div class="row">
-        <div class="col-sm-4 avatar-profile">
-          <img
-            v-if="channel.user_id"
-            class="rounded-circle img-responsive"
-            :src="channel.user_id.avatar"
-            width="150px"
-            height="150px"
-          />
-        </div>
-        <div class="col-sm-7">
-          <div class="row">
-            <div class="col-sm-3" style="padding-top: 20px">
-              <h4 class="username" style="margin-bottom: 0; padding-bottom: 0">
-                {{ channel.username }}
-              </h4>
-            </div>
-            <div class="col-sm-9">
-              <button
-                v-if="myChannelUsername === channel.username"
-                type="button"
-                class="btn btn-outline-secondary"
-                @click="navigateToEditProfile"
-              >
-                Edit Profile
-              </button>
-            </div>
+      <div class="row ml-4 mr-4">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center" style="gap: 20px">
+            <img
+              v-if="channel.user_id"
+              class="rounded-circle img-responsive"
+              :src="channel.user_id.avatar"
+              width="80px"
+              height="80px"
+            />
+            <h4 class="username" style="margin-bottom: 0; padding-bottom: 0">
+              {{ channel.username }}
+            </h4>
+          </div>
+          <div>
+            <v-btn
+              v-if="isMyChannel"
+              type="button"
+              color="primary"
+              elevation="0"
+              @click="navigateToEditChannel"
+            >
+              Manage Channel
+            </v-btn>
           </div>
         </div>
       </div>
@@ -42,7 +37,7 @@
           class="col-3 video-feed"
           @click="linkToCommentView(video._id)"
         >
-          <ProfilePost :video="video" />
+          <ChannelPost :video="video" />
         </div>
       </div>
     </div>
@@ -50,17 +45,15 @@
 </template>
 
 <script>
-import TheNavBar from "src/layouts/TheNavBar.vue";
 import {
   getAllChannelPublicVideos,
   getChannelPublicInformation,
 } from "src/utils/http/videoRequest";
-import ProfilePost from "./ProfilePost.vue";
+import ChannelPost from "./ChannelPost.vue";
 
 export default {
   components: {
-    TheNavBar,
-    ProfilePost,
+    ChannelPost,
   },
   data() {
     return {
@@ -74,8 +67,9 @@ export default {
         path: "/watch/" + id,
       });
     },
-    navigateToEditProfile() {
-      this.$router.push("/" + this.channel.username + "/profile/edit");
+    navigateToEditChannel() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      this.$router.push(`/channel/${userInfo.channelId}/edit`);
     },
   },
 
@@ -102,8 +96,11 @@ export default {
   },
 
   computed: {
-    myChannelUsername() {
-      return this.$route.params.username;
+    isMyChannel() {
+      return (
+        this.$route.params.channelId ===
+        JSON.parse(localStorage.getItem("user")).channelId
+      );
     },
   },
 };
@@ -113,14 +110,10 @@ export default {
   color: black !important;
   font-weight: 500 !important;
   border-color: #dbdbdb !important;
-  /* padding: 0 !important; */
   font-size: 14px !important;
 }
 .username {
   font-weight: 400;
-}
-.avatar-profile {
-  text-align: center;
 }
 @media only screen and (min-width: 960px) {
   .avatar-profile {

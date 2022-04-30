@@ -19,7 +19,7 @@
           </button>
         </div>
         <div
-          v-if="currentUsername"
+          v-if="user._id"
           class="col-md-4 d-flex order-md-3 order-3 nav-bar-buttons-container"
         >
           <div id="nav-bar-buttons" class="nav-bar-buttons mr-6">
@@ -39,7 +39,7 @@
                 <a class="text-muted" v-bind="attrs" v-on="on">
                   <img
                     class="rounded-circle img-responsive"
-                    v-bind:src="avatarUrl"
+                    :src="avatarUrl"
                     width="40px"
                     height="40px"
                   />
@@ -105,135 +105,11 @@ export default {
   data() {
     return {
       currentUsername: "",
-      allUsers: [
-        {
-          id: "1",
-          name: "Nguyễn Đắc Thiên Ngân",
-          username: "@ndt_ngan",
-          caption: "Heo Bối is my full name",
-          avatar_img: "woman (1).png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "2",
-          name: "Nguyễn Lê Bách",
-          username: "@nl_bach",
-          caption: "Bách bạch bạch bạch",
-          avatar_img: "hipster.png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "3",
-          name: "Chung Thái Dung",
-          username: "@ct_dung",
-          caption: "Solo không?",
-          avatar_img: "woman (4).png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "4",
-          name: "Tân Hữu Toàn",
-          username: "@th_toan",
-          caption: "Hả gì, ai biết gì đâu",
-          avatar_img: "man.png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "5",
-          name: "Nguyễn Chí Thành",
-          username: "@nc_thanh",
-          caption: "Hé lô cả nhà iu",
-          avatar_img: "man (1).png",
-          bg_music: "Crazy Cat",
-        },
-        {
-          id: "6",
-          name: "Phạm Ngọc Thịnh",
-          username: "@pn_thinh",
-          caption: ".",
-          avatar_img: "man (3).png",
-          bg_music: "Crazy Cat",
-        },
-        {
-          id: "7",
-          name: "Nguyễn Nhật Long",
-          username: "@nn_long",
-          caption: "Mình độc thân",
-          avatar_img: "man (4).png",
-          bg_music: "Crazy Bear",
-        },
-        {
-          id: "8",
-          name: "Ung Bảo Tiên",
-          username: "@ub_tien",
-          caption: "Tiên Bảo Bảo",
-          avatar_img: "woman.png",
-          bg_music: "Crazy Plant",
-        },
-        {
-          id: "9",
-          name: "Trương Minh Hiếu",
-          username: "@tm_hieu",
-          caption: "Finn Trương",
-          avatar_img: "hipster.png",
-          bg_music: "Crazy Plant",
-        },
-        {
-          id: "10",
-          name: "Trần Phương Duy",
-          username: "@tp_duy",
-          caption: "Hiện đang làm việc tại Thegioididong",
-          avatar_img: "man (3).png",
-          bg_music: "Crazy Plant",
-        },
-        {
-          id: "11",
-          name: "Đinh Ngọc Uyên Phương",
-          username: "@dnu_phuong",
-          caption: "Thèm bún bò",
-          avatar_img: "woman (2).png",
-          bg_music: "Crazy Plant",
-        },
-        {
-          id: "12",
-          name: "Nguyễn Thị Quỳnh Ngân",
-          username: "@ntq_ngan",
-          caption: "Đặc Đặc, mama ai ni",
-          avatar_img: "woman (3).png",
-          bg_music: "Crazy Plant",
-        },
-      ],
-      suggestedAccounts: [
-        {
-          id: "1",
-          name: "INTO1–刘宇",
-          username: "@into1_liuyu_",
-          caption: "Super Cool",
-          avatar_img: "Liuyu.png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "2",
-          name: "INTO1-周柯宇",
-          username: "@into1_daniel",
-          caption: "Daniel 周柯宇",
-          avatar_img: "ZhouKeYu.png",
-          bg_music: "Crazy Frog",
-        },
-        {
-          id: "3",
-          name: "INTO1–林墨",
-          username: "@into1_linmo_",
-          caption: "Phi thường hoàn mỹ",
-          avatar_img: "Momo.png",
-          bg_music: "Crazy Frog",
-        },
-      ],
       items: [
         {
-          title: "My Profile",
+          title: "My Channel",
           icon: "mdi-account-circle",
-          action: "viewProfile",
+          action: "viewChannel",
         },
         {
           title: "My Videos",
@@ -268,8 +144,8 @@ export default {
       } else navbarButtons.style.display = "block";
     },
     navigateToVideos(openDialog = false) {
-      if (this.currentUsername) {
-        const newRoute = `/${this.currentUsername}/videos${
+      if (this.user._id) {
+        const newRoute = `/${this.user.currentUsername}/videos${
           openDialog ? "/uploads" : ""
         }`;
         this.$router.push(newRoute).catch((error) => {});
@@ -285,9 +161,8 @@ export default {
       localStorage.clear();
       (this.currentUsername = ""), this.$router.push("/login");
     },
-    viewProfile() {
-      this.$router.push("/" + this.currentUsername + "/profile");
-      location.reload();
+    viewChannel() {
+      this.$router.push(`/channel/${this.user.channelId}`);
     },
     viewUsers() {
       this.$router.push("/users");
@@ -295,8 +170,8 @@ export default {
     menuActionClick(action) {
       if (action === "viewVideos") {
         this.navigateToVideos();
-      } else if (action === "viewProfile") {
-        this.viewProfile();
+      } else if (action === "viewChannel") {
+        this.viewChannel();
       } else if (action === "viewUsers") {
         this.viewUsers();
       } else if (action === "logOut") {
@@ -325,12 +200,7 @@ export default {
   },
   created() {
     this.isAdmin = JSON.parse(localStorage.getItem("is_admin"));
-
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      this.currentUsername = user.username;
-      if (user.avatar) this.avatar = user.avatar;
-    }
+    this.user = JSON.parse(localStorage.getItem("user"));
   },
 };
 </script>
