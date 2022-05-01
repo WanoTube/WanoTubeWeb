@@ -53,9 +53,6 @@ export default {
   methods: {
     formatToChinaDate,
   },
-  created() {
-    console.log(this.video);
-  },
 };
 </script>
 <style src="src/assets/styles/post-caption.css">

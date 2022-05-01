@@ -3,7 +3,7 @@
     <br />
     <PostCaption :video="video" />
     <br />
-    <VideoInteration />
+    <VideoInteration :video="video" />
     <br />
     <LinkClip />
   </div>
