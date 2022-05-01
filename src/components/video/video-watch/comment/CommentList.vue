@@ -1,98 +1,26 @@
 <template>
-  <div>
-    <div class="card-body">
-      <div class="list-comments" ref="commentContainer">
-        <Comment
-          v-for="c in allComments"
-          :key="c._id"
-          :name="c.user.first_name + ' ' + c.user.last_name"
-          :username="c.user.username"
-          :caption="c.content"
-          :bg_music="c.bg_music"
-          :filename="c.user.avatar"
-        />
-      </div>
-    </div>
-    <div class="comment-section container" style="position: relative">
-      <div class="row comment-bar-wrapper" style="position: relative">
-        <div class="d-flex col">
-          <!-- <button
-            width="20px"
-            height="20px"
-            class="icon-button"
-            @click="showSuggestions"
-          >
-            <i class="fa fa-at"></i>
-          </button> -->
-          <v-btn icon color="black" @click="showSuggestions">
-            <v-icon>fa fa-at</v-icon>
-          </v-btn>
-          <form class="d-flex" style="flex: 1" @submit="postComment">
-            <div class="d-flex form-control input-container">
-              <input
-                @input="onCommentChange"
-                ref="commentInput"
-                v-model="currentComment"
-                id="commentInput"
-                class="search_in_navbar"
-                type="search"
-                placeholder="Enter your comment"
-                aria-label="Comment"
-                autocomplete="off"
-                spellcheck="false"
-              />
-            </div>
-          </form>
-        </div>
-        <!-- <span
-            id="post-button"
-            class="row align-items-center post-button h-100 text-center"
-            style="cursor: pointer"
-            @click="postComment"
-          >
-            <b class="col">Post</b>
-          </span> -->
-        <v-btn icon color="black" @click="postComment">
-          <v-icon>fa-paper-plane</v-icon>
-        </v-btn>
-        <div v-if="!isHidden" class="tag-people-component">
-          <div class="d-flex list-users">
-            <div
-              v-for="u in suggestedUsernames.all"
-              :key="u.id"
-              class="d-flex"
-              :class="[u.selected ? 'user-selected' : '']"
-              @click="onUserSelected(u)"
-            >
-              <img
-                :src="require('src/assets/images/Account.png')"
-                width="41px"
-                height="41px"
-              />
-              <p class="h-100" style="transform: translateY(+20%)">
-                {{ u.username }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="list-comment p-4" ref="commentContainer">
+    <CommentItem
+      v-for="c in allComments"
+      :key="c._id"
+      :username="c.user.username"
+      :caption="c.content"
+      :avatar="c.user.avatar"
+    />
   </div>
 </template>
-<style src="src/assets/styles/comment-section.css"></style>
-<style src="src/assets/styles/comment-bar.css"></style>
+<style src="src/assets/styles/comment.css"></style>
 <script>
-import Comment from "../comment/Comment.vue";
-
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
+import CommentItem from "./CommentItem.vue";
 
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 
 export default {
   components: {
-    Comment,
+    CommentItem,
   },
   data: function () {
     return {
@@ -317,8 +245,4 @@ export default {
 </script>
 
 <style>
-.comment-bar-wrapper {
-  display: flex;
-  align-items: center;
-}
 </style>

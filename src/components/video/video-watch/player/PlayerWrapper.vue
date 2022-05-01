@@ -2,8 +2,8 @@
   <div class="col-md-8 d-flex justify-content-center text-center">
     <div class="player-wrapper">
       <vue-plyr :options="playerOptions" ref="plyr">
-        <video controls playsinline :data-poster="defaultPoster">
-          <source size="720" :src="videoUrl" type="video/mp4" />
+        <video controls playsinline :data-poster="video.thumbnail_url">
+          <source size="720" :src="video.url" type="video/mp4" />
         </video>
       </vue-plyr>
     </div>
@@ -11,13 +11,7 @@
 </template>
 <script>
 export default {
-  props: {
-    videoUrl: String,
-    prevRoutePath: String,
-    defaultPoster: String,
-    onPlay: Function,
-  },
-
+  props: ["video", "onPlay"],
   data() {
     return {
       playerOptions: {

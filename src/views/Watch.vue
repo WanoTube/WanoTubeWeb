@@ -1,28 +1,14 @@
 <template>
   <div class="bg-secondary-color comment-view">
     <div class="row comment-view" v-if="!loading">
-      <PlayerWrapper
-        :prevRoutePath="prevRoutePath"
-        :videoUrl="videoUrl"
-        :defaultPoster="defaultPoster"
-        :onPlay="increaseView"
-      />
-      <CommentWrapper
-        :avatarImg="user.avatar"
-        :name="user.first_name + ' ' + user.last_name"
-        :username="user.username"
-        :caption="video.description"
-        :likeFunction="likeFunction"
-        :commentFunction="commentFunction"
-        :comments="comments"
-        :likes="likes"
-      />
+      <PlayerWrapper :video="video" :onPlay="increaseView" />
+      <CommentWrapper :video="video" />
     </div>
   </div>
 </template>
 <script>
-import PlayerWrapper from "../components/video/video-watch/PlayerWrapper.vue";
-import CommentWrapper from "../components/video/video-watch/CommentWrapper.vue";
+import PlayerWrapper from "../components/video/video-watch/player/PlayerWrapper.vue";
+import CommentWrapper from "../components/video/video-watch/comment/CommentWrapper.vue";
 import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "../utils/utils";
 import { increaseViewRequest } from "../utils/http/videoRequest";
@@ -30,13 +16,7 @@ const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 
 import $ from "jquery";
-import { duration } from "moment";
 export default {
-  computed: {
-    prevRoutePath() {
-      return this.prevRoute ? this.prevRoute.path : "/";
-    },
-  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       vm.prevRoute = from;
@@ -52,8 +32,6 @@ export default {
       likes: 0,
       comments: 8,
       video: {},
-      videoUrl: "",
-      defaultPoster: "",
       user: {},
       prevRoute: null,
       currentUser: {},
@@ -100,9 +78,6 @@ export default {
           alert(error.response.data);
         }
       }
-    },
-    commentFunction() {
-      this.$refs.commentSection.commentFunction();
     },
     async likeVideo() {
       if (!this.currentUser) return;
@@ -200,13 +175,10 @@ export default {
   watch: {
     video: async function (val) {
       if (val) {
-        this.videoUrl = val.url;
-        this.defaultPoster = val.thumbnail_url;
         this.user = await this.getUserByAuthorId(val.author_id);
       }
     },
   },
 };
 </script>
-<style src="src/assets/styles/comment-view.css">
-</style>
+<style src="src/assets/styles/comment.css"></style>

@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import PostCaption from "../home/PostCaption.vue";
+import PostCaption from "./PostCaption.vue";
 import ThumbnailVideo from "../common/ThumbnailVideo.vue";
 export default {
   components: {

@@ -1,14 +1,7 @@
 <template>
-  <div class="">
+  <div>
     <div class="d-flex">
       <div class="avatar">
-        <!-- <img
-          :src="avatarUrl"
-          width="41px"
-          height="41px"
-          class="img-responsive rounded-circle"
-          style="object-fit: cover"
-        /> -->
         <img
           src="https://cdn3.vectorstock.com/i/1000x1000/75/62/smiling-avatar-boy-graphic-vector-9437562.jpg"
           width="41px"
@@ -17,14 +10,11 @@
           style="object-fit: cover"
         />
         <br />
-        <!-- <div class="text-center">
-                    <img src="../../assets/images/CheckBox-Icon.svg">
-                </div> -->
       </div>
       <div class="w-100">
         <div class="row">
           <div class="col-10">
-            <b>{{ name }}</b> <span style="color: #c4c4c4">{{ username }}</span>
+            <b>{{ username }}</b>
             <br />
             {{ caption }}
             <br />
@@ -58,12 +48,12 @@
 
 <script>
 import $ from "jquery";
-import { avatarUrlPrefix, defaultAvatarUrl } from "../../constants/user";
+import { avatarUrlPrefix, defaultAvatarUrl } from "src/constants/user";
 export default {
-  props: ["name", "username", "caption", "image", "filename"],
+  props: ["username", "caption", "avatar"],
   computed: {
     avatarUrl: function () {
-      return this.filename ? avatarUrlPrefix + this.filename : defaultAvatarUrl;
+      return this.avatar ? avatarUrlPrefix + this.avatar : defaultAvatarUrl;
     },
   },
   methods: {
