@@ -25,7 +25,7 @@ export default {
     async getVideos() {
       try {
         const { data } = await VideoRepository.getAllPublicVideoInfos();
-        const dataObject = convertJSONToObject(data);
+        const dataObject = convertJSONToObject(data.videos);
         if (!dataObject.details) {
           for (let index in dataObject) {
             const video = dataObject[index];

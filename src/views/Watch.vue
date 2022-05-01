@@ -43,7 +43,7 @@ export default {
           this.$route.params.id
         );
         if (data) {
-          const dataObject = convertJSONToObject(data);
+          const dataObject = convertJSONToObject(data.video);
           if (!dataObject.details) {
             if (dataObject.url) {
               return dataObject;
