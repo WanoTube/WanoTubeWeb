@@ -17,15 +17,7 @@
         :onImageLoaded="onImageLoaded"
       />
       <div class="card-text container non-border">
-        <PostCaption
-          isPost="true"
-          :avatarImg="video.user.avatar"
-          :username="video.user.username"
-          :title="video.title"
-          :createdAt="video.created_at"
-          :totalViews="video.total_views"
-          bgMusic="Crazy Frog"
-        />
+        <PostCaption :video="video" />
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <v-skeleton-loader
       v-show="!isImageLoaded"
       v-bind="attrs"
-      type="image, list-item-avatar-three-line"
+      type="card"
     ></v-skeleton-loader>
     <div
       class="card non-border"
@@ -16,14 +16,8 @@
         :isOnList="false"
         :onImageLoaded="onImageLoaded"
       />
-      <div class="card-text container non-border">
-        <PostCaption
-          isPost="true"
-          :title="video.title"
-          :createdAt="video.created_at"
-          :totalViews="video.total_views"
-          bgMusic="Crazy Frog"
-        />
+      <div class="card-text non-border">
+        <PostCaption :isPost="false" :video="video" />
       </div>
     </div>
   </div>
