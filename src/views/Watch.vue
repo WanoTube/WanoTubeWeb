@@ -13,7 +13,6 @@ import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "../utils/utils";
 import { increaseViewRequest } from "../utils/http/videoRequest";
 const VideoRepository = RepositoryFactory.get("video");
-const UsersRepository = RepositoryFactory.get("users");
 
 import $ from "jquery";
 export default {
@@ -32,7 +31,6 @@ export default {
       likes: 0,
       comments: 8,
       video: {},
-      user: {},
       prevRoute: null,
       currentUser: {},
       canIncreaseView: true,
@@ -53,26 +51,6 @@ export default {
           }
         }
         return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-      }
-    },
-    async getUserByAuthorId(authorId) {
-      try {
-        const { data } = await UsersRepository.getUser(authorId);
-        const dataObject = convertJSONToObject(data);
-        if (!dataObject.details) {
-          if (dataObject) {
-            const user = dataObject.user;
-            user.username = dataObject.username;
-            return user;
-          }
-          return null;
-        } else {
-          const errorString = JSON.stringify(dataObject.details);
-        }
       } catch (error) {
         if (error.response) {
           alert(error.response.data);
@@ -168,16 +146,9 @@ export default {
   async created() {
     this.video = await this.getVideo();
     this.currentUser = JSON.parse(localStorage.getItem("user"));
-    this.likes = await this.getAllLikes();
-    this.comments = await this.getAllComments();
+    // this.likes = await this.getAllLikes();
+    // this.comments = await this.getAllComments();
     this.loading = false;
-  },
-  watch: {
-    video: async function (val) {
-      if (val) {
-        this.user = await this.getUserByAuthorId(val.author_id);
-      }
-    },
   },
 };
 </script>

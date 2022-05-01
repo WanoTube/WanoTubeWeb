@@ -4,16 +4,15 @@
       <div class="avatar">
         <img
           src="https://cdn3.vectorstock.com/i/1000x1000/75/62/smiling-avatar-boy-graphic-vector-9437562.jpg"
-          width="41px"
-          height="41px"
+          width="40px"
+          height="40px"
           class="img-responsive rounded-circle"
           style="object-fit: cover"
         />
-        <br />
       </div>
       <div class="w-100">
         <div class="row">
-          <div class="col-10">
+          <div class="col-10 pt-0">
             <b>{{ username }}</b>
             <br />
             {{ caption }}

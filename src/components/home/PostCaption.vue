@@ -3,20 +3,26 @@
     <router-link :to="`/channel/${video.user._id}`" v-if="isPost">
       <div class="avatar">
         <img
-          :src="imgSrc"
-          width="41px"
-          height="41px"
+          :src="avatarSrc"
+          width="42px"
+          height="42px"
           class="img-responsive rounded-circle"
         />
       </div>
     </router-link>
     <div>
       <div class="row">
-        <div class="col" style="padding-bottom: 0">
+        <div
+          class="col d-flex flex-column"
+          style="padding-bottom: 0; padding-top: 0"
+        >
           <b class="ellipsis-2">{{ video.title }}</b>
           <div class="video-info">
             <div v-if="isPost">{{ video.user.username }}</div>
-            <div>{{ video.total_views }} views • {{ video.created_at }}</div>
+            <div>
+              {{ video.total_views }} views •
+              {{ formatToChinaDate(video.created_at) }}
+            </div>
           </div>
         </div>
       </div>
@@ -26,6 +32,7 @@
 
 <script>
 import { defaultAvatarUrl } from "src/constants/user";
+import { formatToChinaDate } from "src/utils/date";
 
 export default {
   props: {
@@ -38,10 +45,16 @@ export default {
     },
   },
   computed: {
-    imgSrc: function () {
+    avatarSrc: function () {
       if (!this.video.user) return defaultAvatarUrl;
       return this.video.user.avatar;
     },
+  },
+  methods: {
+    formatToChinaDate,
+  },
+  created() {
+    console.log(this.video);
   },
 };
 </script>
