@@ -2,17 +2,31 @@ import { defineStore } from "pinia"
 
 export const useVideoStore = defineStore("video", {
   state: () => {
-    return { uploadedVideo: "" }
+    return {
+      uploadedVideo: "",
+      currentVideoComments: null,
+    }
   },
-  // could also be defined as
-  // state: () => ({ count: 0 })
+  getters: {
+    getCurrentVideoComments: (state) => {
+      return this.currentVideoComments;
+    }
+  },
   actions: {
     removeVideo() {
-      this.uploadedVideo = null
+      this.uploadedVideo = null;
     },
 
     uploadVideo(video) {
-      this.uploadedVideo = video
+      this.uploadedVideo = video;
     },
+
+    getCurrentVideoComments(comments) {
+      this.currentVideoComments = [...comments];
+    },
+
+    sendComment(comment) {
+      this.currentVideoComments.push(comment);
+    }
   },
 })

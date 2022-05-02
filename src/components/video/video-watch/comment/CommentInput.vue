@@ -3,20 +3,21 @@
     <div class="d-flex col">
       <v-form class="d-flex" style="flex: 1" @submit="postComment">
         <v-text-field
+          ref="commentInput"
+          v-model="comment"
+          placeholder="Add Comment..."
+          id="commentInput"
           dense
-          v-model="message"
-          :append-icon="marker ? 'mdi-map-marker' : 'mdi-map-marker-off'"
-          :append-outer-icon="message ? 'mdi-send' : 'mdi-microphone'"
-          prepend-icon="mdi-emoticon"
+          append-icon="mdi-emoticon"
+          append-outer-icon="mdi-send"
           solo-inverted
           flat
           clear-icon="mdi-close-circle"
           clearable
           type="text"
-          @click:append="toggleMarker"
-          @click:append-outer="sendMessage"
+          @click:append-outer="postComment"
           @click:prepend="changeIcon"
-          @click:clear="clearMessage"
+          @click:clear="clearComment"
         ></v-text-field>
       </v-form>
     </div>
@@ -33,39 +34,47 @@
 }
 </style>
 <script>
+import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import { convertJSONToObject } from "src/utils/utils";
+const VideoRepository = RepositoryFactory.get("video");
+
 export default {
   data() {
     return {
-      suggestedUsernames: [],
-      currentComment: null,
-      isHidden: true,
-
-      password: "Password",
-      show: false,
-      message: "Hey!",
-      marker: true,
-      iconIndex: 0,
+      comment: "",
     };
   },
   methods: {
-    postComment() {},
-    showSuggestions() {},
-    onUserSelected() {},
-    onCommentChange() {},
-
-    toggleMarker() {
-      this.marker = !this.marker;
+    changeIcon() {},
+    async postComment(e) {
+      e.preventDefault();
+      const newComment = await this.sendCommentVideoRequest();
+      this.$emit("addToCommentList", newComment);
+      this.clearComment();
     },
-    sendMessage() {
-      this.clearMessage();
+    clearComment() {
+      this.comment = "";
     },
-    clearMessage() {
-      this.message = "";
-    },
-    changeIcon() {
-      this.iconIndex === this.icons.length - 1
-        ? (this.iconIndex = 0)
-        : this.iconIndex++;
+    async sendCommentVideoRequest() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      if (!userInfo) return;
+      try {
+        const formData = {
+          content: this.comment,
+          video_id: this.$route.params.id,
+          author_id: userInfo._id,
+        };
+        const { data } = await VideoRepository.commentVideo(formData);
+        if (data) {
+          const dataObject = convertJSONToObject(data);
+          if (!dataObject.details) if (dataObject) return dataObject;
+        }
+        return null;
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data);
+        }
+      }
     },
   },
 };

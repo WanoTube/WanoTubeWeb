@@ -2,8 +2,8 @@
   <div class="col-md-4 order-1 order-sm-2">
     <div class="card non-border h-100">
       <CommentWrapperHeader :video="video" />
-      <CommentList :video="video" ref="commentSection" />
-      <CommentInput :video="video" />
+      <CommentList ref="commentSection" />
+      <CommentInput @addToCommentList="postedComment = $event" />
     </div>
   </div>
 </template>
@@ -15,10 +15,20 @@ import CommentInput from "./CommentInput.vue";
 
 export default {
   props: ["video"],
+  data() {
+    return {
+      postedComment: "",
+    };
+  },
   components: {
     CommentList,
     CommentWrapperHeader,
     CommentInput,
+  },
+  watch: {
+    postedComment(val) {
+      this.$refs.commentSection.addToCommentList(val);
+    },
   },
 };
 </script>

@@ -23,8 +23,5 @@ export default {
     CommentIcon,
     ShareIcon,
   },
-  created() {
-    console.log(this.video);
-  },
 };
 </script>
