@@ -1,5 +1,5 @@
 <template>
-  <div class="row vertical-scrollable p-4 m-4">
+  <div class="row vertical-scrollable p-4 m-4" style="overflow-y: scroll">
     <div
       v-for="historyDate in watchedHistoryDates"
       v-bind:key="historyDate.date"
