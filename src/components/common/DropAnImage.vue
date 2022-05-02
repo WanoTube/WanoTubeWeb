@@ -103,7 +103,7 @@ export default {
   justify-content: center;
   padding: 1rem;
   transition: background-color 0.2s ease-in-out;
-  font-family: sans-serif;
+  font-family: "sans-serif";
 }
 .isDragging {
   background-color: #999;

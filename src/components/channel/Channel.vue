@@ -35,7 +35,6 @@
           v-for="video in videos"
           v-bind:key="video.tittle"
           class="col-3 video-feed"
-          @click="linkToCommentView(video._id)"
         >
           <ChannelPost :video="video" />
         </div>
@@ -62,11 +61,6 @@ export default {
     };
   },
   methods: {
-    linkToCommentView: function (id) {
-      this.$router.push({
-        path: "/watch/" + id,
-      });
-    },
     navigateToEditChannel() {
       const userInfo = JSON.parse(localStorage.getItem("user"));
       this.$router.push(`/channel/${userInfo.channelId}/edit`);
@@ -75,17 +69,9 @@ export default {
 
   async created() {
     try {
-      const { _id, channelId } = JSON.parse(localStorage.getItem("user"));
+      const { channelId } = this.$route.params;
       this.channel = await getChannelPublicInformation(channelId);
-      this.videos = await getAllChannelPublicVideos(_id);
-      this.$nextTick(() => {
-        const videos = document.getElementsByClassName("thumbnail-video");
-        videos.forEach((video) => {
-          if (video.hasAttribute("controls")) {
-            video.removeAttribute("controls");
-          }
-        });
-      });
+      this.videos = await getAllChannelPublicVideos(channelId);
     } catch (error) {
       this.$toasted.show(error.message, {
         position: "top-center",
@@ -93,6 +79,13 @@ export default {
         type: "success",
       });
     }
+  },
+
+  async beforeRouteUpdate(to, from, next) {
+    const { channelId } = to.params;
+    this.channel = await getChannelPublicInformation(channelId);
+    this.videos = await getAllChannelPublicVideos(channelId);
+    next();
   },
 
   computed: {
@@ -119,8 +112,5 @@ export default {
   .avatar-profile {
     text-align: right !important;
   }
-}
-.thumbnail-video {
-  cursor: pointer;
 }
 </style>

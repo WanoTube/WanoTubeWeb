@@ -15,6 +15,7 @@ import VuePlyr from 'vue-plyr'
 import Toasted from 'vue-toasted';
 import VueLazyLoadVideo from 'vue-lazyload-video'
 import { createPinia, PiniaVuePlugin } from 'pinia'
+import VueClipboard from 'vue-clipboard2'
 
 import App from './App.vue'
 import { router } from './routes'
@@ -41,6 +42,7 @@ Vue
   .use(VueLazyLoadVideo)
   .use(VuePlyr, { plyr: {} })
   .use(Toasted)
+  .use(VueClipboard)
   .component('font-awesome-icon', FontAwesomeIcon)
 
 const pinia = createPinia();

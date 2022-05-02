@@ -1,0 +1,249 @@
+.comment-view {
+  height: calc(100vh - 70px);
+}
+
+@media only screen and (max-width: 576px) {
+  .comment-view .container {
+    /* padding-right: 0 !important;
+    margin-right: 0 !important; */
+  }
+}
+
+.comment-view div img {
+  max-height: 650px !important;
+  object-fit: scale-down;
+}
+
+.d-none .exit-button {
+  color: white;
+  position: absolute;
+  top: 25px;
+  left: 50px;
+}
+
+.d-sm-none .exit-button {
+  color: black !important;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.liked-text {
+  position: absolute;
+  bottom: 30px;
+  left: -15px;
+  right: 0;
+  visibility: hidden;
+  transition: 0.6s;
+  /* z-index: -2; */
+  font-size: 15px;
+  color: transparent;
+  font-weight: 400;
+}
+
+.press {
+  bottom: 50px;
+  font-size: 14px;
+  visibility: visible;
+  animation: fade 1s;
+}
+
+@keyframes fade {
+  0% {
+    color: transparent;
+  }
+
+  50% {
+    color: #e23b3b;
+  }
+
+  100% {
+    color: transparent;
+  }
+}
+
+.numbers {
+  margin-left: 15px;
+}
+
+.input-container {
+  background: #C4C4C499 !important;
+  border-radius: 50px !important;
+  border: 1px solid transparent !important;
+}
+
+.input-container:focus {
+  background-color: yellow !important;
+  border: 1px solid red !important;
+}
+
+#search_in_navbar {
+  /* border-radius: 30px; */
+  color: #828282;
+  border: 1px solid transparent;
+  background: transparent !important;
+  width: 100%;
+}
+
+.search_in_navbar {
+  color: #828282;
+  border: 1px solid transparent;
+  background: transparent !important;
+  width: 100%;
+}
+
+input[type="search"],
+input[type="text"],
+textarea,
+select {
+  outline: none;
+}
+
+
+.icon {
+  color: black;
+  text-align: center;
+  margin: auto;
+  margin-right: 5px;
+}
+
+.comment-input {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  border-top: 1px solid lightgray;
+}
+
+.post-button {
+  margin-left: 15px;
+  margin-right: 15px;
+  border-radius: 15px;
+  color: #f14b4b;
+  border: 1px solid #f14b4b;
+  margin: auto;
+}
+
+.post-button:hover {
+  color: white;
+  border: 1px solid transparent;
+  background-color: #f14b4b;
+}
+
+.post-button:active {
+  color: white;
+  border: 1px solid transparent;
+  background-color: #f14b4b;
+}
+
+/* .comment-bar .icon {
+    
+} */
+
+.tag-people-component {
+  border-radius: 9px !important;
+
+  background-color: white;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  position: absolute;
+  left: 20px;
+  bottom: 50px;
+  width: 300px;
+  height: 165px;
+  overflow: scroll;
+}
+
+.list-users {
+  display: flex;
+  flex-direction: column !important;
+  /* align-items: flex-start; */
+}
+
+.list-users .d-flex {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.list-users .d-flex:hover {
+  background-color: #e3e4e5;
+  cursor: pointer;
+}
+
+.list-users .d-flex img {
+  margin-right: 10px;
+}
+
+.user-selected {
+  background-color: #f3f3f3;
+}
+
+.icon-button {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  border: none;
+  /* margin-right: 10px; */
+  width: 40px !important;
+}
+
+.icon-button:hover {
+  background-color: #e4e6e9;
+}
+
+.comment-wrapper-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+/* SCROLL BAR */
+/* total width */
+.list-comment {
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 56vh;
+  background-color: whitesmoke;
+}
+
+.list-comment::-webkit-scrollbar,
+.tag-people-component::-webkit-scrollbar {
+  background-color: #fff;
+  width: 16px;
+}
+
+/* background of the scrollbar except button or resizer */
+.list-comment::-webkit-scrollbar-track,
+.tag-people-component::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+/* scrollbar itself */
+.list-comment::-webkit-scrollbar-thumb,
+.tag-people-component::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 16px;
+  border: 4px solid #fff;
+}
+
+/* set button(top and bottom of the scrollbar) */
+.list-comment::-webkit-scrollbar-button,
+.tag-people-component::-webkit-scrollbar-button {
+  display: none;
+}
+
+.filters::-webkit-scrollbar {
+  background-color: #fff;
+  width: 16px;
+}

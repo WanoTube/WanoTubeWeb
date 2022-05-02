@@ -1,6 +1,6 @@
 <template>
-  <div class="row vertical-scrollable p-4 m-1" style="overflow-y: scroll">
-    <div v-for="video in videos" :key="video.tittle" class="col-md-3">
+  <div class="row p-4 m-1">
+    <div v-for="video in videos" :key="video.tittle" class="col-md-4">
       <Post :video="video" />
     </div>
   </div>
@@ -11,7 +11,7 @@ import { convertJSONToObject } from "src/utils/utils";
 const VideoRepository = RepositoryFactory.get("video");
 const UsersRepository = RepositoryFactory.get("users");
 
-import Post from "./Post.vue";
+import Post from "../../../home/Post.vue";
 export default {
   data() {
     return {

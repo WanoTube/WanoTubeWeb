@@ -5,9 +5,9 @@ export const getAllChannelVideos = () => {
   return httpRequest({ endpoint: `/channels/videos`, requireToken: true });
 }
 
-export const getAllChannelPublicVideos = (authorId) => {
+export const getAllChannelPublicVideos = (channelId) => {
   console.log("Get All Channel's Public Videos");
-  return httpRequest({ endpoint: `/channels/author/${authorId}/videos` });
+  return httpRequest({ endpoint: `/channels/${channelId}/videos` });
 }
 
 export const getChannelPublicInformation = (channelId) => {
