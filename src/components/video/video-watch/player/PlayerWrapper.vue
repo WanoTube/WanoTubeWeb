@@ -1,5 +1,8 @@
 <template>
-  <div class="col-md-8 d-flex justify-content-center text-center">
+  <div
+    class="col-md-8 d-flex flex-column vertical-scrollable h-100"
+    style="overflow-y: scroll"
+  >
     <div class="player-wrapper">
       <vue-plyr :options="playerOptions" ref="plyr">
         <video controls playsinline :data-poster="video.thumbnail_url">
@@ -7,9 +10,11 @@
         </video>
       </vue-plyr>
     </div>
+    <SuggesttedVideos />
   </div>
 </template>
 <script>
+import SuggesttedVideos from "./SuggesttedVideos.vue";
 export default {
   props: ["video", "onPlay"],
   data() {
@@ -32,6 +37,9 @@ export default {
         settings: ["quality", "speed"],
       },
     };
+  },
+  components: {
+    SuggesttedVideos,
   },
   mounted: function () {
     this.$refs.plyr.player.on("play", this.onPlay);

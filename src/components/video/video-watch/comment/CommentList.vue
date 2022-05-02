@@ -1,12 +1,22 @@
 <template>
-  <div class="list-comment p-4" ref="commentContainer">
-    <CommentItem
-      v-for="c in comments"
-      :key="c._id"
-      :username="c.user.username"
-      :caption="c.content"
-      :avatar="c.user.avatar"
-    />
+  <div>
+    <div class="list-comment p-4" ref="commentContainer" v-if="!!comments">
+      <CommentItem
+        v-for="c in comments"
+        :key="c._id"
+        :username="c.user.username"
+        :caption="c.content"
+        :avatar="c.user.avatar"
+      />
+    </div>
+    <div class="list-comment p-4" v-else>
+      <v-skeleton-loader
+        v-for="s in skeletons"
+        :key="s"
+        v-bind="attrs"
+        type="list-item-avatar-three-line"
+      ></v-skeleton-loader>
+    </div>
   </div>
 </template>
 <style src="src/assets/styles/comment.css"></style>
@@ -24,7 +34,11 @@ export default {
   },
   data: function () {
     return {
-      comments: [],
+      comments: null,
+      skeletons: [1, 2, 3, 4, 5],
+      attrs: {
+        class: "mb-6",
+      },
     };
   },
   methods: {
@@ -83,7 +97,7 @@ export default {
     },
     scrollToTop() {
       const commentContainerRef = this.$refs.commentContainer;
-      commentContainerRef.scrollTop = 0;
+      if (commentContainerRef) commentContainerRef.scrollTop = 0;
     },
     addToCommentList(comment) {
       this.comments.unshift(comment);
@@ -98,6 +112,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

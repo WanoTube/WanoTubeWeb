@@ -16,7 +16,7 @@
           clearable
           type="text"
           @click:append-outer="postComment"
-          @click:prepend="changeIcon"
+          @click:append="changeIcon"
           @click:clear="clearComment"
         ></v-text-field>
       </v-form>
@@ -45,7 +45,9 @@ export default {
     };
   },
   methods: {
-    changeIcon() {},
+    changeIcon() {
+      console.log("icon");
+    },
     async postComment(e) {
       e.preventDefault();
       const newComment = await this.sendCommentVideoRequest();
