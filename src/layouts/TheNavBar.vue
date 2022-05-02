@@ -145,9 +145,7 @@ export default {
     },
     navigateToVideos(openDialog = false) {
       if (this.user._id) {
-        const newRoute = `/${this.user.currentUsername}/videos${
-          openDialog ? "/uploads" : ""
-        }`;
+        const newRoute = `/videos${openDialog ? "/uploads" : ""}`;
         this.$router.push(newRoute).catch((error) => {});
       }
     },
@@ -162,10 +160,10 @@ export default {
       (this.currentUsername = ""), this.$router.push("/login");
     },
     viewChannel() {
-      this.$router.push(`/channel/${this.user.channelId}`);
+      this.$router.push(`/channel/${this.user.channelId}`).catch(() => {});
     },
     viewUsers() {
-      this.$router.push("/users");
+      this.$router.push("/users").catch(() => {});
     },
     menuActionClick(action) {
       if (action === "viewVideos") {

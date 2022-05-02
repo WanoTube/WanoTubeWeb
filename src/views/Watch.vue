@@ -28,20 +28,14 @@ export default {
   data() {
     return {
       loading: true,
-      likes: 0,
-      comments: 8,
       video: {},
-      prevRoute: null,
-      currentUser: {},
       canIncreaseView: true,
     };
   },
   methods: {
-    async getVideo() {
+    async getVideo(id) {
       try {
-        const { data } = await VideoRepository.getVideoById(
-          this.$route.params.id
-        );
+        const { data } = await VideoRepository.getVideoById(id);
         if (data) {
           const dataObject = convertJSONToObject(data.video);
           if (!dataObject.details) {
@@ -51,70 +45,6 @@ export default {
           }
         }
         return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-      }
-    },
-    async likeVideo() {
-      if (!this.currentUser) return;
-      try {
-        const formData = {
-          target_id: this.$route.params.id,
-          author_id: this.currentUser._id,
-        };
-        const { data } = await VideoRepository.likeVideo(formData);
-        if (data) {
-          const dataObject = convertJSONToObject(data);
-          if (!dataObject.details) {
-            if (dataObject) {
-              return dataObject;
-            }
-          }
-        }
-        return null;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-      }
-    },
-    async getAllLikes() {
-      try {
-        const { data } = await VideoRepository.getVideoTotalLikes(
-          this.$route.params.id
-        );
-        return data;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-      }
-    },
-    async getAllComments() {
-      try {
-        const { data } = await VideoRepository.getVideoTotalComments(
-          this.$route.params.id
-        );
-        return data;
-      } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
-        }
-      }
-    },
-    async likeFunction() {
-      try {
-        await this.likeVideo();
-        const element = document.getElementById("like-button");
-        element.classList.add("active-button");
-        if (this.likes == 0) {
-          $("span.liked-text").toggleClass("press", 1000);
-          await new Promise((r) => setTimeout(r, 1000));
-          $("span.liked-text").removeClass("press");
-          this.likes = (parseInt(this.likes) + 1).toString();
-        } else this.likes = (this.likes - 1).toString();
       } catch (error) {
         if (error.response) {
           alert(error.response.data);
@@ -143,11 +73,12 @@ export default {
       $(this).find("path").css("fill", "black");
     });
   },
+  async beforeRouteUpdate(to, from, next) {
+    this.video = await this.getVideo(to.params.id);
+    next();
+  },
   async created() {
-    this.video = await this.getVideo();
-    this.currentUser = JSON.parse(localStorage.getItem("user"));
-    // this.likes = await this.getAllLikes();
-    // this.comments = await this.getAllComments();
+    this.video = await this.getVideo(this.$route.params.id);
     this.loading = false;
   },
 };

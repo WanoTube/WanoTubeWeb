@@ -54,6 +54,7 @@ export default {
           if (dataObject) {
             const user = dataObject.user;
             user.username = dataObject.username;
+            user.channel_id = dataObject.channel_id;
             return user;
           }
           return null;

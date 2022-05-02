@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <router-link :to="`/channel/${video.user._id}`" v-if="isPost">
+    <router-link :to="`/channel/${video.user.channel_id}`" v-if="isPost">
       <div class="avatar">
         <img
           :src="avatarSrc"

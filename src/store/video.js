@@ -4,12 +4,6 @@ export const useVideoStore = defineStore("video", {
   state: () => {
     return {
       uploadedVideo: "",
-      currentVideoComments: null,
-    }
-  },
-  getters: {
-    getCurrentVideoComments: (state) => {
-      return this.currentVideoComments;
     }
   },
   actions: {
@@ -20,13 +14,5 @@ export const useVideoStore = defineStore("video", {
     uploadVideo(video) {
       this.uploadedVideo = video;
     },
-
-    getCurrentVideoComments(comments) {
-      this.currentVideoComments = [...comments];
-    },
-
-    sendComment(comment) {
-      this.currentVideoComments.push(comment);
-    }
   },
 })

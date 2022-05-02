@@ -44,6 +44,20 @@ export default {
   mounted: function () {
     this.$refs.plyr.player.on("play", this.onPlay);
   },
+  watch: {
+    video: function (val) {
+      const player = this.$refs.plyr.player;
+      player.source = {
+        type: "video",
+        sources: [
+          {
+            src: val.url,
+          },
+        ],
+      };
+      player.currentTime = 0;
+    },
+  },
 };
 </script>
 

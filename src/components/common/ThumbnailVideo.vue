@@ -1,10 +1,10 @@
 <template>
-  <div class="card-body" style="padding: 0; position: relative">
-    <div
-      @click="linkToCommentView"
-      style="cursor: pointer"
-      @mouseover="onMouseOver"
-    >
+  <div
+    class="card-body"
+    style="padding: 0; position: relative; cursor: pointer"
+    @click="linkToCommentView"
+  >
+    <div @mouseover="onMouseOver">
       <img
         @load="onImageLoaded"
         class="video-item-thumbnail"
@@ -30,9 +30,7 @@ export default {
   components: {},
   methods: {
     linkToCommentView: function () {
-      this.$router.push({
-        path: "/watch/" + this.video._id,
-      });
+      this.$router.push("/watch/" + this.video._id).catch(() => {});
     },
     onMouseOver: function () {
       setTimeout(() => {

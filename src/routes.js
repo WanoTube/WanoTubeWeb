@@ -118,14 +118,14 @@ export const routes = [
 				}
 			},
 			{
-				path: '/:username/videos',
+				path: '/videos',
 				component: VideoManagement,
 				meta: {
 					requiresAuth: true
 				}
 			},
 			{
-				path: '/:username/videos/uploads',
+				path: '/videos/uploads',
 				component: VideoManagement,
 				meta: {
 					requiresAuth: true
