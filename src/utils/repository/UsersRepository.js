@@ -5,7 +5,7 @@ const resource = "/users";
 const header = JSON.parse(localStorage.getItem('token'));
 const config = {
 	headers: {
-		"auth-token": header
+		"Authorization": `Bear ${header}`
 	}
 }
 

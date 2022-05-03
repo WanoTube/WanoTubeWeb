@@ -2,6 +2,13 @@ import Repository from "./Repository";
 
 const resource = "/videos";
 
+const header = JSON.parse(localStorage.getItem('token'));
+const config = {
+	headers: {
+		"authorization": `Bear ${header}`
+	}
+}
+
 function get() {
 	return Repository.get(`${resource}`);
 }
@@ -15,7 +22,7 @@ function getVideoById(video_id) {
 }
 
 function uploadVideo(payload) {
-	return Repository.post(`${resource}/upload`, payload);
+	return Repository.post(`${resource}/upload`, payload, config);
 }
 
 function updateVideo(payload) {

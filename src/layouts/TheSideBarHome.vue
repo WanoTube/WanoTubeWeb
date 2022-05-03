@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "Home", icon: "mdi-home-variant", to: "/" },
+        { title: "Home", icon: "mdi-home-variant", to: "/home" },
         { title: "Shorts", icon: "mdi-video", to: "/shorts" },
         {
           title: "Follows",

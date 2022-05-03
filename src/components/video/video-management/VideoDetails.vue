@@ -197,7 +197,8 @@ export default {
     },
   },
   async created() {
-    this.video = await this.getVideo();
+    const { video } = await this.getVideo();
+    this.video = video;
     if (this.video) {
       this.title = this.video.title;
       this.privacy = this.video.visibility;
@@ -205,6 +206,7 @@ export default {
       this.restriction = this.video.recognition_result
         ? "Copyright claim"
         : "None";
+      console.log(this.video);
     }
   },
   computed: {
