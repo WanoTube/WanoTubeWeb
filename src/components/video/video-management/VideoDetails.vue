@@ -156,9 +156,7 @@ export default {
       }
     },
     backToVideos() {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const username = user.username;
-      this.$router.push({ path: `/${username}/videos` });
+      this.$router.push("/videos");
     },
     resetForm() {
       this.title = this.video.title;
