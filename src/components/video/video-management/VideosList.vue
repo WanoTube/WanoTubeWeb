@@ -183,6 +183,7 @@ export default {
   async mounted() {
     //TO-DO: Check if videos is null
     this.videos = await getAllChannelVideos();
+    if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };
 </script>
