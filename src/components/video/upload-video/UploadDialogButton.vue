@@ -55,7 +55,7 @@ export default {
       videoFile: null,
       socket: io(serverUrl, {
         withCredentials: true,
-        transports: ["websocket"],
+        transports: ["polling"],
       }),
       progressVal: 0,
       progressStatus: "",
@@ -198,6 +198,7 @@ export default {
   },
   mounted() {
     this.trackingUploadProgress();
+    console.log(serverUrl);
   },
 };
 </script>
