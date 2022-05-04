@@ -37,7 +37,7 @@ export default {
       try {
         const { data } = await VideoRepository.getVideoById(id);
         if (data) {
-          const dataObject = convertJSONToObject(data.video);
+          const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
             if (dataObject.url) {
               return dataObject;
