@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <router-link :to="`/channel/${video.user.channel_id}`" v-if="isPost">
+    <router-link :to="`/channel/${video.user.channel_id}`" v-if="showAvatar">
       <div class="avatar">
         <img
           :src="avatarSrc"
@@ -16,12 +16,22 @@
           class="col d-flex flex-column"
           style="padding-bottom: 0; padding-top: 0"
         >
-          <b class="ellipsis-2">{{ video.title }}</b>
+          <b class="ellipsis-2 mb-1">{{ video.title }}</b>
           <div class="video-info">
-            <div v-if="isPost">{{ video.user.username }}</div>
+            <div v-if="showAvatar">
+              <router-link
+                :to="`/channel/${video.user.channel_id}`"
+                class="caption-title"
+              >
+                <div>{{ video.user.username }}</div>
+              </router-link>
+            </div>
             <div>
               {{ video.total_views }} views •
               {{ formatToChinaDate(video.created_at) }}
+              <div v-if="showCaption" class="ellipsis-3 mt-2">
+                {{ video.description }}
+              </div>
             </div>
           </div>
         </div>
@@ -39,7 +49,11 @@ export default {
     video: {
       type: Object,
     },
-    isPost: {
+    showCaption: {
+      type: Boolean,
+      default: false,
+    },
+    showAvatar: {
       type: Boolean,
       default: true,
     },
@@ -61,5 +75,15 @@ export default {
 <style>
 .video-info {
   font-size: 14px;
+  color: gray;
+}
+.caption-title {
+  text-decoration: none;
+}
+.caption-title div {
+  color: gray;
+}
+.caption-title div:hover {
+  color: black;
 }
 </style>

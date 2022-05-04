@@ -2,7 +2,7 @@
   <div class="card non-border">
     <div class="card-header container bg-white non-border">
       <AccountDetail
-        isPost="false"
+        :showAvatar="false"
         :avatar_img="avatar_img"
         :name="name"
         :username="username"

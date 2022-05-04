@@ -27,7 +27,14 @@
 
 <script>
 export default {
-  props: ["name", "username", "caption", "bg_music", "avatar_img", "isPost"],
+  props: [
+    "name",
+    "username",
+    "caption",
+    "bg_music",
+    "avatar_img",
+    "showAvatar",
+  ],
 };
 </script>
 <style src="src/assets/styles/post-caption.css">

@@ -16,7 +16,7 @@
         :isOnList="false"
         :onImageLoaded="onImageLoaded"
       />
-      <div class="card-text container non-border">
+      <div class="card-text mt-2 mb-4 non-border">
         <PostCaption :video="video" />
       </div>
     </div>

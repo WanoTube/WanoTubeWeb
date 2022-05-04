@@ -19,7 +19,7 @@
         :onImageLoaded="onImageLoaded"
       />
       <div class="card-text container non-border">
-        <PostCaption :video="video" />
+        <PostCaption :video="video" :showCaption="true" :showAvatar="false" />
       </div>
     </div>
   </div>

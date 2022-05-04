@@ -3,4 +3,6 @@ src/assets/videos
 yarn.lock
 package-lock.json
 
+.env.production
+.env.development
 .env
