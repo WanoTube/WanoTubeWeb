@@ -19,5 +19,4 @@ deploy-dev:
 	tar -cvf www.tar ./dist
 	echo "=== Pls use private password ==="
 	npx caprover deploy -t www.tar -a www -h https://captain.demo.o-redsky.xyz
-	#mv .env.bk .env
 	rm -rf dist && rm -rf www.tar

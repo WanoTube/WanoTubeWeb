@@ -204,7 +204,6 @@ export default {
       this.restriction = this.video.recognition_result
         ? "Copyright claim"
         : "None";
-      console.log(this.video);
     }
   },
   computed: {

@@ -189,9 +189,8 @@ import io from "socket.io-client";
 import TheNavBar from "src/layouts/TheNavBar.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
-import { apiUrl } from "src/constants/system";
+import { apiUrl, serverUrl } from "src/constants/system";
 const UsersRepository = RepositoryFactory.get("users");
-const { VUE_APP_SERVER_URL } = process.env;
 
 export default {
   components: {
@@ -233,8 +232,9 @@ export default {
       progressVal: 0,
       progressStatus: "",
       updatedProfileStatus: "",
-      socket: io(VUE_APP_SERVER_URL, {
+      socket: io(serverUrl, {
         withCredentials: true,
+        transports: ["websocket"],
       }),
     };
   },

@@ -55,6 +55,7 @@ export default {
       videoFile: null,
       socket: io(serverUrl, {
         withCredentials: true,
+        transports: ["websocket"],
       }),
       progressVal: 0,
       progressStatus: "",
