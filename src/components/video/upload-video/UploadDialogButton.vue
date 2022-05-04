@@ -198,7 +198,6 @@ export default {
   },
   mounted() {
     this.trackingUploadProgress();
-    console.log(serverUrl);
   },
 };
 </script>

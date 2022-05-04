@@ -186,7 +186,6 @@ export default {
         navBarButtons.style.display = "none";
       }
     }
-    console.log("The Nav");
   },
   computed: {
     menuItems() {
