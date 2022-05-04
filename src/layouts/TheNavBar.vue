@@ -19,7 +19,7 @@
           </button>
         </div>
         <div
-          v-if="user._id"
+          v-if="user"
           class="col-md-4 d-flex order-md-3 order-3 nav-bar-buttons-container"
         >
           <div id="nav-bar-buttons" class="nav-bar-buttons mr-6">
@@ -186,6 +186,7 @@ export default {
         navBarButtons.style.display = "none";
       }
     }
+    console.log("The Nav");
   },
   computed: {
     menuItems() {
