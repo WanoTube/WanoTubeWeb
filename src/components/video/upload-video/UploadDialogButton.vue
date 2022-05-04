@@ -17,7 +17,7 @@
         <v-toolbar>
           <div class="text-h6">Upload your video</div>
         </v-toolbar>
-        <progress-bar v-if="progressStatus" :val="progressVal"> </progress-bar>
+        <progress-bar v-if="progressStatus" :val="progressVal"></progress-bar>
         <video id="video-drag" style="display: none"></video>
         <UploadVideoInput @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import io from "socket.io-client/dist/socket.io";
+import io from "socket.io-client";
 import ProgressBar from "vue-simple-progress";
 
 import { serverUrl } from "src/constants/system";
@@ -144,6 +144,8 @@ export default {
 
     async trackingUploadProgress() {
       const vm = this;
+      const token = JSON.parse(localStorage.getItem("token"));
+      this.socket.auth = { token };
       this.socket.on("connect", () => {
         // this.socket.on("Compress video", function (progress) {
         //   vm.progressStatus = "Start compressing video";
