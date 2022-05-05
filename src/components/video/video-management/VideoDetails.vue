@@ -55,12 +55,14 @@
         <div class="col-md-4">
           <div class="card">
             <video
-              id="video-thumbail"
+              class="video-thumbnail"
+              style="border: 1px solid lightgray"
               controls
-              :src="thumbnailVideoUrl"
+              :src="video.url"
+              :poster="video.thumbnail_url"
             ></video>
             <div class="card-body">
-              <small class="card-text text-secondary">Video link </small>
+              <small class="card-text text-secondary">Video link: </small>
               <a :href="this.watchUrl">
                 {{ this.watchUrl }}
               </a>
@@ -121,7 +123,6 @@ export default {
       title: "",
       description: "",
       restriction: "None",
-      thumbnailVideoUrl: "",
       video_id: this.$route.params.id,
       snackbar: false,
       snackbarText: "Hello, I'm a snackbar",
@@ -224,12 +225,6 @@ export default {
     },
   },
   watch: {
-    video: function (val) {
-      if (val) {
-        this.thumbnailVideoUrl = val.url;
-      }
-    },
-
     isUpdated: function (val) {
       const btnReset = document.getElementById("btn-reset");
       const btnSave = document.getElementById("btn-save");
@@ -280,5 +275,9 @@ export default {
 .v-input--selection-controls .v-input__slot > .v-label,
 .v-input--selection-controls .v-radio > .v-label {
   margin: 0 !important;
+}
+.video-thumbnail {
+  width: 100%;
+  height: 250px;
 }
 </style>

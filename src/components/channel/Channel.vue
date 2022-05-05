@@ -90,10 +90,9 @@ export default {
 
   computed: {
     isMyChannel() {
-      return (
-        this.$route.params.channelId ===
-        JSON.parse(localStorage.getItem("user")).channelId
-      );
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      if (!userInfo) return false;
+      return this.$route.params.channelId === userInfo.channelId;
     },
   },
 };
