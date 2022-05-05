@@ -1,6 +1,8 @@
 <template>
   <div class="bg-secondary-color comment-view">
-    <div v-if="!loading && noVideoFound"><NotFoundVideo /></div>
+    <div v-if="!loading && noVideoFound">
+      <UnavailableVideo :message="unavailableVideoMessage" />
+    </div>
     <div class="row comment-view" v-else-if="!loading">
       <PlayerWrapper :video="video" :onPlay="increaseView" />
       <CommentWrapper :video="video" />
@@ -10,7 +12,7 @@
 <script>
 import PlayerWrapper from "../components/video/video-watch/player/PlayerWrapper.vue";
 import CommentWrapper from "../components/video/video-watch/comment/CommentWrapper.vue";
-import NotFoundVideo from "../components/video/video-watch/NotFoundVideo.vue";
+import UnavailableVideo from "../components/video/video-watch/UnavailableVideo.vue";
 import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "../utils/utils";
 import { increaseViewRequest } from "../utils/http/videoRequest";
@@ -26,12 +28,13 @@ export default {
   components: {
     PlayerWrapper,
     CommentWrapper,
-    NotFoundVideo,
+    UnavailableVideo,
   },
   data() {
     return {
       loading: true,
       noVideoFound: false,
+      unavailableVideoMessage: false,
       video: {},
       canIncreaseView: true,
     };
@@ -52,6 +55,8 @@ export default {
       } catch (error) {
         if (error.response.status === 400) {
           this.noVideoFound = true;
+          console.log(error.response);
+          this.unavailableVideoMessage = error.response.data.message;
         }
       }
     },

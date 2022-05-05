@@ -5,7 +5,7 @@ const resource = "/videos";
 const header = JSON.parse(localStorage.getItem('token'));
 const config = {
 	headers: {
-		"authorization": `Bear ${header}`
+		"authorization": `Bear ${header ? header : ""}`
 	}
 }
 
@@ -18,7 +18,7 @@ function getAllPublicVideoInfos() {
 }
 
 function getVideoById(video_id) {
-	return Repository.get(`${resource}/${video_id}`);
+	return Repository.get(`${resource}/${video_id}`, config);
 }
 
 function uploadVideo(payload) {
