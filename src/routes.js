@@ -40,10 +40,7 @@ export const routes = [
 		children: [
 			{
 				path: '/watch/:id',
-				component: Watch,
-				meta: {
-					requiresAuth: true
-				}
+				component: Watch
 			},
 			{
 				path: '/upload',

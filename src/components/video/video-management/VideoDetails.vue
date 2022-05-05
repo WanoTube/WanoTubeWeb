@@ -72,11 +72,16 @@
             <v-select
               :items="visibilities"
               v-model="privacy"
-              :prepend-inner-icon="visibilityIcon"
               filled
               label="Visibility"
               dense
-            ></v-select>
+            >
+              <template v-slot:prepend-inner>
+                <v-icon :color="visibilityIcon.color">{{
+                  visibilityIcon.icon
+                }}</v-icon>
+              </template>
+            </v-select>
           </div>
           <div class="mt-4">
             <v-text-field
@@ -132,6 +137,7 @@ export default {
         { text: "Public", value: 0 },
         { text: "Private", value: 1 },
         { text: "Unpublic", value: 2 },
+        { text: "Blocked", value: 3, disabled: true },
       ],
       recognitionDialog: {
         isOpened: false,
@@ -208,9 +214,28 @@ export default {
   },
   computed: {
     visibilityIcon: function () {
-      if (this.privacy === 0) return "mdi-eye";
-      if (this.privacy === 1) return "mdi-eye-off";
-      return "mdi-eye-minus";
+      switch (this.privacy) {
+        case 0:
+          return {
+            icon: "mdi-eye",
+            color: "green",
+          };
+        case 1:
+          return {
+            icon: "mdi-eye-off",
+            color: "gray",
+          };
+        case 2:
+          return {
+            icon: "mdi-eye",
+            color: "gray",
+          };
+        default:
+          return {
+            icon: "mdi-eye-off",
+            color: "red",
+          };
+      }
     },
     isUpdated: function () {
       if (!this || !this.video) return false;
