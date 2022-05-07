@@ -61,7 +61,7 @@
                     </span>
                   </v-avatar>
                   <span style="width: 20px"></span>
-                  <v-list-item-title>
+                  <v-list-item-title class="lato">
                     {{ item.title }}
                   </v-list-item-title>
                   <v-list-item-icon>

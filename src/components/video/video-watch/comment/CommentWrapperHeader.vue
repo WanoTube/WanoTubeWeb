@@ -5,7 +5,7 @@
     <br />
     <VideoInteration :video="video" />
     <br />
-    <LinkClip />
+    <LinkClip :id="video._id" />
   </div>
 </template>
 <style src="src/assets/styles/comment.css"></style>
