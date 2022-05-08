@@ -1,21 +1,21 @@
 import httpRequest from './httpRequest';
 
-export const getAllChannelVideos = () => {
+export const getAllChannelVideosRequest = () => {
   console.log("Get All Channel's Videos");
   return httpRequest({ endpoint: `/channels/videos`, requireToken: true });
 }
 
-export const getAllChannelPublicVideos = (channelId) => {
+export const getAllChannelPublicVideosRequest = (channelId) => {
   console.log("Get All Channel's Public Videos");
   return httpRequest({ endpoint: `/channels/${channelId}/videos` });
 }
 
-export const getChannelPublicInformation = (channelId) => {
+export const getChannelPublicInformationRequest = (channelId) => {
   console.log("Get Channel Public Information");
   return httpRequest({ endpoint: `/channels/${channelId}/info` });
 }
 
-export const getWatchHistory = () => {
+export const getWatchHistoryRequest = () => {
   console.log("Get History");
   return httpRequest({ endpoint: `/videos/history`, requireToken: true });
 }

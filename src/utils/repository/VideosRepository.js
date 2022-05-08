@@ -26,15 +26,15 @@ function uploadVideo(payload) {
 }
 
 function updateVideo(payload) {
-	return Repository.patch(`${resource}/update`, payload);
+	return Repository.patch(`${resource}/update`, payload, config);
+}
+
+function deleteVideo(payload) {
+	return Repository.post(`${resource}/delete/`, payload, config);
 }
 
 function increaseView({ videoId, viewerId }) {
 	return Repository.patch(`${resource}/update/${videoId}`, { viewerId });
-}
-
-function deleteVideo(payload) {
-	return Repository.post(`${resource}/delete/`, payload);
 }
 
 function getVideoLikes(videoId) {

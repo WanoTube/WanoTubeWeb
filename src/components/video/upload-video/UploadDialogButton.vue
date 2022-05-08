@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="isCreateMode" persistent max-width="1000">
+  <v-dialog v-model="isUploadMode" persistent max-width="1000">
     <template v-slot:activator="{ on, attrs }">
       <v-btn
-        color="indigo"
+        color="pink"
         dark
         v-bind="attrs"
         v-on="on"
@@ -15,7 +15,7 @@
     <template>
       <v-card>
         <v-toolbar>
-          <div class="text-h6">Upload your video</div>
+          <h4>Upload your video</h4>
         </v-toolbar>
         <progress-bar v-if="progressStatus" :val="progressVal"></progress-bar>
         <video id="video-drag" style="display: none"></video>
@@ -62,7 +62,7 @@ export default {
     };
   },
   computed: {
-    isCreateMode: {
+    isUploadMode: {
       get: function () {
         return (
           this.$route.path.split("/")[
@@ -147,7 +147,7 @@ export default {
       const token = JSON.parse(localStorage.getItem("token"));
       this.socket.auth = { token };
       this.socket.on("connect", () => {
-        // this.socket.on("Compress video", function (progress) {
+        // this.socket.on("Compress v ideo", function (progress) {
         //   vm.progressStatus = "Start compressing video";
         //   if (progress) {
         //     console.log("Compress video: " + progress.percent + "%");

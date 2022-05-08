@@ -64,6 +64,6 @@ export default {
 <style>
 .player-wrapper {
   width: 100%;
-  height: 580px;
+  height: 600px;
 }
 </style>

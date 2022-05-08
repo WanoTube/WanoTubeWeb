@@ -2,7 +2,7 @@
   <div
     class="card-body"
     style="padding: 0; position: relative; cursor: pointer"
-    @click="linkToCommentView"
+    @click="goToWatch"
   >
     <div @mouseover="onMouseOver">
       <img
@@ -29,7 +29,7 @@ export default {
   props: ["src", "video", "size", "onImageLoaded"],
   components: {},
   methods: {
-    linkToCommentView: function () {
+    goToWatch: function () {
       this.$router.push("/watch/" + this.video._id).catch(() => {});
     },
     onMouseOver: function () {

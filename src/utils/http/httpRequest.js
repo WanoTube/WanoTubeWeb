@@ -16,7 +16,6 @@ const httpRequest = async ({
   isFormData = false
 }) => {
   let config;
-
   if (requireToken) {
     const accessTokenJSON = localStorage.getItem('token');
     if (accessTokenJSON) {

@@ -1,9 +1,12 @@
-.blog-header{
+.blog-header {
   /* overflow: hidden; */
   background-color: white !important;
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 100%; /* Full width */
+  position: fixed;
+  /* Set the navbar to fixed position */
+  top: 0;
+  /* Position the navbar at the top of the page */
+  width: 100%;
+  /* Full width */
   z-index: 2000;
   border-bottom: 1px solid #C4C4C499;
   height: 70px;
@@ -11,7 +14,7 @@
 
 
 
-.brand-title{
+.brand-title {
   margin-left: 10px;
   font-weight: bold;
   font-size: 24px;
@@ -19,25 +22,27 @@
   color: black;
 }
 
-.menu-toggle{
+.menu-toggle {
   border: solid 1px transparent;
   background-color: transparent;
 }
 
-.menu-toggle:hover{
+.menu-toggle:hover {
   border: solid 1px black;
 }
-.nav-bar-buttons{
+
+.nav-bar-buttons {
   z-index: 2000 !important;
 }
 
 @media only screen and (max-width: 768px) {
-  .nav-bar-buttons{
-    display:none;
+  .nav-bar-buttons {
+    display: none;
   }
 }
+
 @media only screen and (max-width: 576px) {
-  .nav-bar-buttons{
+  .nav-bar-buttons {
     /* position: absolute; */
     padding-top: 15px;
     padding-bottom: 15px;
@@ -46,22 +51,26 @@
     /* border: 1px solid #c4c4c4 !important; */
     backdrop-filter: saturate(180%) blur(10px);
   }
-  .nav-bar-buttons-container{
+
+  .nav-bar-buttons-container {
     justify-content: center !important;
 
   }
-  .nav-bar-buttons a{
+
+  .nav-bar-buttons a {
     margin-left: 0px;
     margin-right: 20px;
-    
+
   }
 }
+
 @media only screen and (min-width: 576px) {
-  .nav-bar-buttons-container{
-    
-    justify-content: flex-end ;
+  .nav-bar-buttons-container {
+
+    justify-content: flex-end;
   }
-  .nav-bar-buttons a{
+
+  .nav-bar-buttons a {
     margin-left: 20px;
   }
 }

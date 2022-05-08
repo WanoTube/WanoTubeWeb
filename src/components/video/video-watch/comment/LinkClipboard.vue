@@ -1,10 +1,10 @@
 <template>
   <div class="link-clipboard">
-    <v-text-field filled dense disabled :value="message">dqef</v-text-field>
+    <v-text-field filled dense disabled :value="link"></v-text-field>
     <v-btn
       type="button"
       outlined
-      v-clipboard:copy="message"
+      v-clipboard:copy="link"
       v-clipboard:success="onCopy"
       v-clipboard:error="onError"
     >
@@ -19,11 +19,13 @@
 }
 </style>
 <script>
+import { appUrl } from "src/constants/system";
 export default {
-  data: function () {
-    return {
-      message: "http://localhost:8080/watch/626a6aa0b3dc273feb837fa7",
-    };
+  props: ["id"],
+  computed: {
+    link: function () {
+      return `${appUrl}/watch/${this.id}`;
+    },
   },
   methods: {
     onCopy: function (e) {
