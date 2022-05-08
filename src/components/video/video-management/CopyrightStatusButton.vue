@@ -78,6 +78,8 @@
 </style>
 
 <script>
+import { getCopyrightStatus } from "src/utils/http/userRequest";
+
 export default {
   data() {
     return {
@@ -148,8 +150,11 @@ export default {
     };
   },
   methods: {
-    openDialog() {
+    async openDialog() {
       this.showDialog = true;
+      console.log("Hello");
+      const a = await getCopyrightStatus();
+      console.log(a);
     },
     closeDialog() {
       this.showDialog = false;

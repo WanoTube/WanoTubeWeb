@@ -82,7 +82,7 @@
 
 <script>
 import moment from "moment";
-import { getAllChannelVideos } from "src/utils/http/videoRequest";
+import { getAllChannelVideosRequest } from "src/utils/http/videoRequest";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
@@ -167,7 +167,7 @@ export default {
     },
 
     async onDeleteRow() {
-      this.videos = await this.getAllChannelVideos();
+      this.videos = await this.getAllChannelVideosRequest();
     },
 
     onImageLoaded() {
@@ -182,7 +182,7 @@ export default {
   },
   async mounted() {
     //TO-DO: Check if videos is null
-    this.videos = await getAllChannelVideos();
+    this.videos = await getAllChannelVideosRequest();
     if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };

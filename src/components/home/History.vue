@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { getWatchHistory } from "src/utils/http/videoRequest";
+import { getWatchHistoryRequest } from "src/utils/http/videoRequest";
 import { formatToChinaDate } from "src/utils/date";
 
 import HorizontalPost from "./HorizontalPost.vue";
@@ -32,7 +32,9 @@ export default {
     formatToChinaDate,
   },
   created: async function () {
-    this.watchedHistoryDates = (await getWatchHistory()).watchedHistoryDates;
+    this.watchedHistoryDates = (
+      await getWatchHistoryRequest()
+    ).watchedHistoryDates;
   },
 };
 </script>

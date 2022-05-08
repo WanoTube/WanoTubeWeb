@@ -45,8 +45,8 @@
 
 <script>
 import {
-  getAllChannelPublicVideos,
-  getChannelPublicInformation,
+  getAllChannelPublicVideosRequest,
+  getChannelPublicInformationRequest,
 } from "src/utils/http/videoRequest";
 import ChannelPost from "./ChannelPost.vue";
 
@@ -70,8 +70,8 @@ export default {
   async created() {
     try {
       const { channelId } = this.$route.params;
-      this.channel = await getChannelPublicInformation(channelId);
-      this.videos = await getAllChannelPublicVideos(channelId);
+      this.channel = await getChannelPublicInformationRequest(channelId);
+      this.videos = await getAllChannelPublicVideosRequest(channelId);
     } catch (error) {
       this.$toasted.show(error.message, {
         position: "top-center",
@@ -83,8 +83,8 @@ export default {
 
   async beforeRouteUpdate(to, from, next) {
     const { channelId } = to.params;
-    this.channel = await getChannelPublicInformation(channelId);
-    this.videos = await getAllChannelPublicVideos(channelId);
+    this.channel = await getChannelPublicInformationRequest(channelId);
+    this.videos = await getAllChannelPublicVideosRequest(channelId);
     next();
   },
 

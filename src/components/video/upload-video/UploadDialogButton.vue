@@ -147,7 +147,7 @@ export default {
       const token = JSON.parse(localStorage.getItem("token"));
       this.socket.auth = { token };
       this.socket.on("connect", () => {
-        // this.socket.on("Compress video", function (progress) {
+        // this.socket.on("Compress v ideo", function (progress) {
         //   vm.progressStatus = "Start compressing video";
         //   if (progress) {
         //     console.log("Compress video: " + progress.percent + "%");
@@ -172,6 +172,7 @@ export default {
         });
 
         this.socket.on("Upload to S3", function (progressPercentage) {
+          console.log(progressPercentage);
           if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
           else vm.progressStatus = "Upload to storage completed!";
 
