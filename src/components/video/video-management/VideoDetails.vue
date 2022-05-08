@@ -125,6 +125,7 @@ export default {
   data() {
     return {
       video: {},
+      user: {},
       title: "",
       description: "",
       restriction: "None",

@@ -9,13 +9,7 @@
       >
         <div class="helper"></div>
         <label class="btn display-inline">
-          <img
-            :src="require('src/assets/images/Folder_Black.png')"
-            width="90px"
-            height="90px"
-            style="max-width: 90px"
-          />
-
+          <v-icon size="100">mdi-cloud-upload</v-icon>
           <p class="padding-20">
             Drag and drop files from your computer, or
             <b class="text-primary">browse files</b>

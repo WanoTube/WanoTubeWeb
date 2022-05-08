@@ -40,27 +40,28 @@
           <br />
           <h5>{{ strikeMessage }}</h5>
           <v-data-table
-            :headers="copyrightStrikeEvent.headers"
-            :items="copyrightStrikeEvent.body"
+            :headers="headers"
+            :items="copyrightStrikeEvent"
             hide-default-footer
             v-if="strikeCount !== 0"
           >
-            <template v-slot:item.event="{ item }">
-              <v-icon color="red">mdi-minus-circle</v-icon> &nbsp;
-              {{ item.event }}
+            <template v-slot:item.type> Music </template>
+            <template v-slot:item.event="{ index }">
+              <v-icon color="red">mdi-minus-circle</v-icon> &nbsp; STRIKE
+              {{ index + 1 }}
             </template>
             <template v-slot:item.content="{ item }">
-              <div class="pt-4 pb-4">
-                <h5>
-                  <b>{{ item.content.title }}</b>
-                </h5>
-                <b>Reason:</b> {{ item.content.reason }} <br />
-                <b>Issued Date:</b> {{ item.content.issuedDate }}
+              <div class="pt-4 pb-4" style="max-width: 400px">
+                <h6>
+                  <b>{{ item.video_title }}</b>
+                </h6>
+                <b>Reason:</b> Copyright Claimed <br />
+                <b>Issued Date:</b> {{ formatToChinaDate(item.issued_date) }}
               </div>
             </template>
           </v-data-table>
           <br />
-          <h5>
+          <h5 v-if="copyrightStrikeEvent.length < 3">
             You may have to disable your account if you have 3 or more strikes
             with a 3 month period
           </h5>
@@ -73,16 +74,14 @@
     </template>
   </v-dialog>
 </template>
-
-<style scoped>
-</style>
-
 <script>
 import { getCopyrightStatus } from "src/utils/http/userRequest";
+import { formatToChinaDate } from "src/utils/date";
 
 export default {
   data() {
     return {
+      copyrightStrikeEvent: [],
       showDialog: false,
       statusIcons: [
         "mdi-emoticon-dead",
@@ -91,81 +90,51 @@ export default {
         "mdi-emoticon-excited",
       ],
       strikeMessages: [
-        "You have 3 or more copyright strikes. Your account will be disable soon, unless they are resolved. During this duration, strike expiration will be paused and you will not be able to upload new videos",
+        "You have 3 or more copyright strikes. Your account will be disabled soon, unless they are resolved. During this duration, strike expiration will be paused and you will not be able to upload new videos",
         "Careful! You have two copyright strike. One more and we may have disable your acount!",
         "You get 1 copyright strike",
         "You get 0 copyright strike",
       ],
-      copyrightStrikeEvent: {
-        headers: [
-          {
-            text: "Type",
-            align: "start",
-            sortable: false,
-            value: "type",
-          },
-          {
-            text: "Event",
-            align: "start",
-            sortable: false,
-            value: "event",
-          },
-          {
-            text: "Content",
-            align: "start",
-            sortable: false,
-            value: "content",
-          },
-        ],
-        body: [
-          {
-            type: "Music",
-            event: "STRIKE 1",
-            content: {
-              title: "Liverpool vs Chelsea",
-              reason: "Copyright claimed",
-              issuedDate: "May 11, 2022",
-            },
-          },
-          {
-            type: "Music",
-            event: "STRIKE 2",
-            content: {
-              title: "Liverpool vs Chelsea",
-              reason: "Copyright claimed",
-              issuedDate: "May 11, 2022",
-            },
-          },
-          {
-            type: "Music",
-            event: "STRIKE 3",
-            content: {
-              title: "Liverpool vs Chelsea",
-              reason: "Copyright claimed",
-              issuedDate: "May 11, 2022",
-            },
-          },
-        ],
-      },
+      headers: [
+        {
+          text: "Type",
+          align: "start",
+          sortable: false,
+          value: "type",
+        },
+        {
+          text: "Event",
+          align: "start",
+          sortable: false,
+          value: "event",
+        },
+        {
+          text: "Content",
+          align: "start",
+          sortable: false,
+          value: "content",
+        },
+      ],
     };
   },
   methods: {
     async openDialog() {
       this.showDialog = true;
-      console.log("Hello");
-      const a = await getCopyrightStatus();
-      console.log(a);
+      const data = await getCopyrightStatus();
+      this.copyrightStrikeEvent = data.strikes;
+      this.copyrightStatus = data.blocked_status;
     },
     closeDialog() {
       this.showDialog = false;
     },
+    formatToChinaDate,
   },
   computed: {
     strikeMessage() {
       return this.strikeMessages[3 - this.strikeCount];
     },
     strikeCount() {
-      return this.copyrightStrikeEvent.body.length;
+      return this.copyrightStrikeEvent.length;
     },
   },
 };

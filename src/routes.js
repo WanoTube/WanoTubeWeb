@@ -46,7 +46,8 @@ export const routes = [
 				path: '/upload',
 				component: Upload,
 				meta: {
-					requiresAuth: true
+					requireAuth: true,
+
 				}
 			},
 			{
@@ -110,7 +111,7 @@ export const routes = [
 				path: '/users',
 				component: UserManagement,
 				meta: {
-					requiresAuth: true,
+					requireAuth: true,
 					isAdmin: true
 				}
 			},
@@ -118,21 +119,21 @@ export const routes = [
 				path: '/videos',
 				component: VideoManagement,
 				meta: {
-					requiresAuth: true
+					requireAuth: true
 				}
 			},
 			{
 				path: '/videos/uploads',
 				component: VideoManagement,
 				meta: {
-					requiresAuth: true
+					requireAuth: true
 				}
 			},
 			{
 				path: '/:username/videos/:id',
 				component: VideoDetails,
 				meta: {
-					requiresAuth: true
+					requireAuth: true
 				}
 			},
 
@@ -151,8 +152,8 @@ export const router = new VueRouter({
 
 // Meta Handling
 router.beforeEach((to, from, next) => {
-	if (to.matched.some(record => record.meta.requiresAuth)) {
-		if (localStorage.getItem('token') == null) {
+	if (to.matched.some(record => record.meta.requireAuth)) {
+		if (!localStorage.getItem('token')) {
 			next({
 				path: '/login',
 				params: { nextUrl: to.fullPath }
