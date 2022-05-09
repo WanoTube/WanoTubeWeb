@@ -107,7 +107,6 @@ export default {
       this.$emit("customizedThumbnailSelected", {
         index: 0,
         file: this.customizedThumbnail,
-        src: this.customizedThumbnailSrc,
       });
     },
   },

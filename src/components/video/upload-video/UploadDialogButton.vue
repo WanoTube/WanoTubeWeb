@@ -117,7 +117,6 @@ export default {
     },
 
     async createVideo(file, duration) {
-      console.log("Before Create");
       if (file) {
         console.log("Create");
         const formData = new FormData();

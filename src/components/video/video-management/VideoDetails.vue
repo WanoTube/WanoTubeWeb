@@ -233,13 +233,17 @@ export default {
     },
     async saveForm() {
       if (this.isUpdated) {
-        const updateVideoInfo = {
-          id: this.video._id,
-          title: this.title,
-          description: this.description,
-          privacy: this.privacy,
-        };
-        const { data } = await VideoRepository.updateVideo(updateVideoInfo);
+        const formData = new FormData();
+        formData.append("id", this.video._id);
+        formData.append("title", this.title);
+        formData.append("description", this.description);
+        formData.append("privacy", this.privacy);
+        formData.append("thumbnailIndex", this.selectedThumbnail.index);
+        if (this.selectedThumbnail.file) {
+          formData.append("thumbnailFile", this.selectedThumbnail.file);
+        }
+
+        const { data } = await VideoRepository.updateVideo(formData);
         const dataObject = convertJSONToObject(data);
         if (!dataObject.details) {
           this.isLoading = false;
