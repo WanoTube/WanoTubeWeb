@@ -58,18 +58,23 @@
               </h6>
               <div class="d-flex flex-row gap-2">
                 <div class="d-flex flex-grow-1 thumbnail-item">
-                  <ThumbnailUploader />
+                  <ThumbnailUploader
+                    :selectedThumbnail="selectedThumbnail"
+                    @customizedThumbnailSelected="selectedThumbnail = $event"
+                  />
                 </div>
                 <div
                   class="flex-grow-1 border thumbnail-item"
-                  v-for="n in 3"
+                  v-for="(item, index) in thumbnailList"
                   role="button"
-                  :key="n"
+                  @click="onSelectThumbnail(index + 1)"
+                  :key="index"
                 >
                   <v-img
-                    style="background-color: pink"
+                    style="background-color: black"
+                    contain
                     :aspect-ratio="16 / 9"
-                    :src="video.thumbnail_url"
+                    :src="item"
                   >
                     <template v-slot:placeholder>
                       <v-row
@@ -83,6 +88,20 @@
                         ></v-progress-circular>
                       </v-row>
                     </template>
+                    <v-overlay
+                      :opacity="
+                        selectedThumbnail.index === index + 1 ? '0' : '0.6'
+                      "
+                      absolute
+                      color="grey"
+                      class="
+                        d-flex
+                        justify-content-end
+                        align-items-start
+                        full-size
+                      "
+                    >
+                    </v-overlay>
                   </v-img>
                 </div>
               </div>
@@ -167,6 +186,7 @@ export default {
       user: {},
       title: "",
       description: "",
+      selectedThumbnail: { index: 1 },
       restriction: "None",
       video_id: this.$route.params.id,
       snackbar: false,
@@ -183,6 +203,11 @@ export default {
         isOpened: false,
         recognitionResult: {},
       },
+      thumbnailList: [
+        "https://picsum.photos/536/354",
+        "https://picsum.photos/id/237/536/354",
+        "https://picsum.photos/seed/picsum/536/354",
+      ],
     };
   },
   methods: {
@@ -239,6 +264,10 @@ export default {
       if (!this.video.recognition_result) return;
       this.recognitionDialog.recognitionResult = this.video.recognition_result;
       this.recognitionDialog.isOpened = true;
+    },
+    onSelectThumbnail(index) {
+      this.selectedThumbnail.index = index;
+      this.selectedThumbnail.src = this.thumbnailList[index - 1];
     },
   },
   async created() {

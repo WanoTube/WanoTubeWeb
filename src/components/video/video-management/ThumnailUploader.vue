@@ -14,7 +14,7 @@
         <div
           role="button"
           @click="openFileDialog"
-          v-if="!selectedThumbnail"
+          v-if="!customizedThumbnail"
           class="
             d-flex
             flex-column
@@ -28,10 +28,11 @@
           <span>Upload thumbnail</span>
         </div>
         <v-img
-          style="background-color: pink; cursor: pointer; position: relative"
+          style="background-color: black; cursor: pointer; position: relative"
           :aspect-ratio="16 / 9"
-          :src="selectedThumbnailSrc"
+          :src="customizedThumbnailSrc"
           :contain="true"
+          @click="onSelectCustomizedThumbnail"
           v-else
         >
           <template v-slot:placeholder>
@@ -42,26 +43,31 @@
               ></v-progress-circular>
             </v-row>
           </template>
-          <v-fade-transition>
-            <v-overlay
-              opacity="0"
-              v-if="hover"
-              absolute
-              color="black"
-              class="d-flex justify-content-end align-items-start full-size"
+          <v-overlay
+            :opacity="selectedThumbnail.index === 0 ? '0' : '0.6'"
+            absolute
+            color="grey"
+            class="d-flex justify-content-end align-items-start full-size"
+          >
+          </v-overlay>
+          <v-overlay
+            opacity="0"
+            v-if="hover"
+            absolute
+            color="black"
+            class="d-flex justify-content-end align-items-start full-size"
+          >
+            <v-btn
+              class="mx-2"
+              fab
+              dark
+              small
+              color="gray"
+              @click="openFileDialog"
             >
-              <v-btn
-                class="mx-2"
-                fab
-                dark
-                small
-                color="gray"
-                @click="openFileDialog"
-              >
-                <v-icon dark> mdi-lead-pencil </v-icon>
-              </v-btn>
-            </v-overlay>
-          </v-fade-transition>
+              <v-icon dark> mdi-lead-pencil </v-icon>
+            </v-btn>
+          </v-overlay>
         </v-img>
       </template>
     </v-hover>
@@ -78,10 +84,11 @@
 
 <script>
 export default {
+  props: ["selectedThumbnail"],
   data() {
     return {
-      selectedThumbnail: null,
-      selectedThumbnailSrc: null,
+      customizedThumbnail: null,
+      customizedThumbnailSrc: null,
       overlay: false,
     };
   },
@@ -94,13 +101,20 @@ export default {
     },
     onFileSelected(e) {
       if (this.$refs.uploaderRef.files[0])
-        this.selectedThumbnail = this.$refs.uploaderRef.files[0];
+        this.customizedThumbnail = this.$refs.uploaderRef.files[0];
+    },
+    onSelectCustomizedThumbnail() {
+      this.$emit("customizedThumbnailSelected", {
+        index: 0,
+        file: this.customizedThumbnail,
+        src: this.customizedThumbnailSrc,
+      });
     },
   },
   watch: {
-    selectedThumbnail: function (val) {
+    customizedThumbnail: function (val) {
       if (!val) return;
-      this.selectedThumbnailSrc = URL.createObjectURL(val);
+      this.customizedThumbnailSrc = URL.createObjectURL(val);
     },
   },
 };
