@@ -14,7 +14,7 @@
         <div
           role="button"
           @click="openFileDialog"
-          v-if="!customizedThumbnail"
+          v-if="!showCustomizedThumbnail"
           class="
             d-flex
             flex-column
@@ -30,7 +30,7 @@
         <v-img
           style="background-color: black; cursor: pointer; position: relative"
           :aspect-ratio="16 / 9"
-          :src="customizedThumbnailSrc"
+          :src="customizedThumbnailSrc || thumbnailUrl"
           :contain="true"
           @click="onSelectCustomizedThumbnail"
           v-else
@@ -84,7 +84,7 @@
 
 <script>
 export default {
-  props: ["selectedThumbnail"],
+  props: ["thumbnailUrl", "thumbnailIndex", "selectedThumbnail"],
   data() {
     return {
       customizedThumbnail: null,
@@ -104,16 +104,27 @@ export default {
         this.customizedThumbnail = this.$refs.uploaderRef.files[0];
     },
     onSelectCustomizedThumbnail() {
+      console.log(this.customizedThumbnailSrc);
       this.$emit("customizedThumbnailSelected", {
         index: 0,
+        url: this.customizedThumbnailSrc,
         file: this.customizedThumbnail,
       });
     },
+    created() {},
   },
   watch: {
     customizedThumbnail: function (val) {
       if (!val) return;
       this.customizedThumbnailSrc = URL.createObjectURL(val);
+    },
+  },
+  computed: {
+    showCustomizedThumbnail() {
+      return (
+        (this.thumbnailIndex === 0 && this.thumbnailUrl) ||
+        this.customizedThumbnail
+      );
     },
   },
 };
