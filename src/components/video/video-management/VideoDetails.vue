@@ -50,6 +50,43 @@
               filled
               spellcheck="false"
             ></v-textarea>
+            <div>
+              <h6><b>Thumbnail</b></h6>
+              <h6 style="color: gray">
+                Select or upload a picture that shows what's in your video. A
+                good thumbnail stands out and draws viewers' attention.
+              </h6>
+              <div class="d-flex flex-row gap-2">
+                <div class="d-flex flex-grow-1 thumbnail-item">
+                  <ThumbnailUploader />
+                </div>
+                <div
+                  class="flex-grow-1 border thumbnail-item"
+                  v-for="n in 3"
+                  role="button"
+                  :key="n"
+                >
+                  <v-img
+                    style="background-color: pink"
+                    :aspect-ratio="16 / 9"
+                    :src="video.thumbnail_url"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="col-md-4">
@@ -110,6 +147,7 @@
 
 <script>
 import TheNavBar from "src/layouts/TheNavBar.vue";
+import ThumbnailUploader from "./ThumnailUploader.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
@@ -121,6 +159,7 @@ export default {
   components: {
     TheNavBar,
     ShowRecognitionResult,
+    ThumbnailUploader,
   },
   data() {
     return {
@@ -305,5 +344,11 @@ export default {
 .video-thumbnail {
   width: 100%;
   height: 250px;
+}
+.thumbnail-input {
+  display: none;
+}
+.thumbnail-item {
+  flex-basis: 0;
 }
 </style>
