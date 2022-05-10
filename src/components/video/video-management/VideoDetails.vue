@@ -116,7 +116,7 @@
               style="border: 1px solid lightgray"
               controls
               :src="video.url"
-              :poster="video.thumbnail_url"
+              :poster="selectedThumbnail.url"
             ></video>
             <div class="card-body">
               <small class="card-text text-secondary">Video link: </small>
@@ -269,7 +269,10 @@ export default {
       this.recognitionDialog.isOpened = true;
     },
     onSelectThumbnail(index) {
-      this.selectedThumbnail = { index };
+      this.selectedThumbnail.index = index;
+      if (index !== 0) {
+        this.selectedThumbnail.url = this.thumbnailList[index - 1];
+      }
     },
   },
   async created() {
@@ -319,7 +322,10 @@ export default {
         this.title !== this.video.title ||
         this.description !== this.video.description ||
         this.privacy !== this.video.visibility ||
-        this.selectedThumbnail.index !== this.video.thumbnail_key_index
+        this.selectedThumbnail.index !== this.video.thumbnail_key_index ||
+        (this.selectedThumbnail.index === 0 &&
+          !!this.selectedThumbnail.url &&
+          this.selectedThumbnail.url !== this.video.thumbnail_url)
       );
     },
     watchUrl: function () {

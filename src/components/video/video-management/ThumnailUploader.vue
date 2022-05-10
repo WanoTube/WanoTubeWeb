@@ -100,23 +100,24 @@ export default {
       e.stopPropagation();
     },
     onFileSelected(e) {
-      if (this.$refs.uploaderRef.files[0])
+      if (this.$refs.uploaderRef.files[0]) {
         this.customizedThumbnail = this.$refs.uploaderRef.files[0];
+        this.customizedThumbnailSrc = URL.createObjectURL(
+          this.customizedThumbnail
+        );
+        this.$emit("customizedThumbnailSelected", {
+          index: 0,
+          url: this.customizedThumbnailSrc,
+          file: this.customizedThumbnail,
+        });
+      }
     },
     onSelectCustomizedThumbnail() {
-      console.log(this.customizedThumbnailSrc);
       this.$emit("customizedThumbnailSelected", {
         index: 0,
         url: this.customizedThumbnailSrc,
         file: this.customizedThumbnail,
       });
-    },
-    created() {},
-  },
-  watch: {
-    customizedThumbnail: function (val) {
-      if (!val) return;
-      this.customizedThumbnailSrc = URL.createObjectURL(val);
     },
   },
   computed: {
