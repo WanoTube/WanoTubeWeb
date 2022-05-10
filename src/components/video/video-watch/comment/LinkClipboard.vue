@@ -29,10 +29,9 @@ export default {
   },
   methods: {
     onCopy: function (e) {
-      this.$toasted.show("Copied", {
+      this.$toasted.success("Copied", {
         position: "top-center",
         duration: 2000,
-        type: "success",
       });
     },
     onError: function (e) {

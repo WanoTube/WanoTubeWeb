@@ -8,23 +8,24 @@
 </template>
 
 <script>
-import { storeToRefs } from "pinia";
 import TheNavBar from "src/layouts/TheNavBar.vue";
 import { useUserStore } from "./store/user";
 import { getWatchLaterVideosRequest } from "./utils/http/videoRequest";
+import { getFollowInfoRequest } from "./utils/http/userRequest";
 export default {
   setup() {
     const userStore = useUserStore();
-    const { getWatchLaterVideos } = userStore;
-    const { watchLaterVideos } = storeToRefs(userStore);
-    return { watchLaterVideos, getWatchLaterVideos };
+    const { getWatchLaterVideos, getFollowInfo } = userStore;
+    return { getWatchLaterVideos, getFollowInfo };
   },
   components: {
     TheNavBar,
   },
   async created() {
-    const data = await getWatchLaterVideosRequest();
-    this.getWatchLaterVideos(data.videos);
+    const { followings, number_of_followers } = await getFollowInfoRequest();
+    this.getFollowInfo(followings, number_of_followers);
+    const watchLaterVideosData = await getWatchLaterVideosRequest();
+    this.getWatchLaterVideos(watchLaterVideosData.videos);
   },
 };
 </script>

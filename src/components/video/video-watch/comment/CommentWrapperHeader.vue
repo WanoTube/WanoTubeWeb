@@ -1,7 +1,10 @@
 <template>
   <div class="comment-wrapper-header bg-white">
     <br />
-    <PostCaption :video="video" />
+    <div class="d-flex flex-row justify-content-between">
+      <PostCaption :video="video" />
+      <FollowButton :channelId="video.user.channel_id" />
+    </div>
     <br />
     <VideoInteration :video="video" />
     <br />
@@ -13,12 +16,14 @@
 import PostCaption from "src/components/home/PostCaption.vue";
 import VideoInteration from "./VideoInteraction.vue";
 import LinkClip from "./LinkClipboard.vue";
+import FollowButton from "./FollowButton.vue";
 export default {
   props: ["video"],
   components: {
     PostCaption,
     VideoInteration,
     LinkClip,
+    FollowButton,
   },
 };
 </script>

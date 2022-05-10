@@ -14,3 +14,20 @@ export const getCopyrightStatusRequest = () => {
   console.log("Get Copyright Status")
   return httpRequest({ endpoint: `/users/copyright-status`, requireToken: true });
 }
+
+export const followChannelRequest = (videoId) => {
+  console.log("Follow Channel")
+  return httpRequest({ endpoint: `/channels/${videoId}/follow`, method: 'patch', requireToken: true });
+}
+
+export const unfollowChannelRequest = (videoId) => {
+  console.log("Unfollow Channel")
+  return httpRequest({ endpoint: `/channels/${videoId}/unfollow`, method: 'patch', requireToken: true });
+}
+
+export const getFollowInfoRequest = () => {
+  console.log("Get Follow Info")
+  return httpRequest({ endpoint: `/users/follow-info`, requireToken: true });
+}
+
+

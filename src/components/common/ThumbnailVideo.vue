@@ -27,24 +27,37 @@
           color="grey"
           class="d-flex justify-content-end align-items-end full-size"
         >
-          <v-chip
-            v-if="isPost && !isInWatchLaterLlist"
-            class="ma-2"
-            label
-            color="pink"
-            @click="watchLater"
-          >
-            <v-icon>mdi-clock</v-icon>
-          </v-chip>
-          <v-chip
-            v-else-if="isPost"
-            class="ma-2"
-            label
-            color="pink"
-            @click="removeWatchLaterVideo"
-          >
-            <v-icon>mdi-check</v-icon>
-          </v-chip>
+          <v-tooltip bottom v-if="isPost && !isInWatchLaterLlist">
+            <template v-slot:activator="{ on, attrs }">
+              <v-chip
+                class="ma-2"
+                label
+                color="pink"
+                @click="watchLater"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-clock</v-icon>
+              </v-chip>
+            </template>
+            <span>Watch Later</span>
+          </v-tooltip>
+          <v-tooltip bottom v-else-if="isPost">
+            <template v-slot:activator="{ on, attrs }">
+              <v-chip
+                class="ma-2"
+                label
+                color="pink"
+                @click="removeWatchLaterVideo"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-check</v-icon>
+              </v-chip>
+            </template>
+            <span>Added</span>
+          </v-tooltip>
+
           <v-chip class="ma-2" label color="black">
             {{ video.duration ? duration : defaultDuration }}
           </v-chip>
