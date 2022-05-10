@@ -7,7 +7,7 @@
       <div class="card-text container non-border">
         <b class="container post-card">{{ historyDate.date }}</b>
       </div>
-      <div v-for="video in historyDate.videos" v-bind:key="video.tittle">
+      <div v-for="video in historyDate.videos" :key="video.tittle">
         <HorizontalPost :video="video" />
       </div>
       <hr />

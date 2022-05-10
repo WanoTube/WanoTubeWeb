@@ -1,22 +1,37 @@
 <template>
   <div
     class="card-body"
-    style="padding: 0; position: relative; cursor: pointer"
+    :style="`padding: 0; position: relative; cursor: pointer; width: ${
+      horizontal ? '300px' : 'auto'
+    }`"
     @click="goToWatch"
   >
     <div @mouseover="onMouseOver">
-      <img
-        @load="onImageLoaded"
-        class="video-item-thumbnail"
-        :style="`min-height: ${minHeight}; max-height: ${this.maxHeight};max-width: ${maxWidth}`"
+      <v-img
+        class="grey darken-4"
+        contain
+        :aspect-ratio="16 / 9"
         :src="thumbnailUrl"
-      />
-    </div>
-    <div class="overlay-text">
-      <p class="bottomText text-white">
-        <span v-if="video.duration">{{ duration }}</span>
-        <span v-else>{{ defaultDuration }}</span>
-      </p>
+      >
+        <template v-slot:placeholder>
+          <v-row class="fill-height ma-0" align="center" justify="center">
+            <v-progress-circular
+              indeterminate
+              color="grey lighten-5"
+            ></v-progress-circular>
+          </v-row>
+        </template>
+        <v-overlay
+          :opacity="0"
+          absolute
+          color="grey"
+          class="d-flex justify-content-end align-items-end full-size"
+        >
+          <v-chip class="ma-2" label color="black">
+            {{ video.duration ? duration : defaultDuration }}
+          </v-chip>
+        </v-overlay>
+      </v-img>
     </div>
   </div>
 </template>
@@ -26,7 +41,7 @@ import { formatVideoDuration } from "src/utils/duration";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
-  props: ["src", "video", "size", "onImageLoaded"],
+  props: ["src", "video", "size", "onImageLoaded", "horizontal"],
   components: {},
   methods: {
     goToWatch: function () {
@@ -50,11 +65,6 @@ export default {
         settings: ["quality", "speed", "loop"],
       },
       thumbnailUrl: this.video.thumbnail_url,
-      minHeight:
-        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
-      maxHeight:
-        this.size === "sm" ? "100px" : this.size === "md" ? "auto" : "200px",
-      maxWidth: this.size === "md" ? "300px" : "auto",
     };
   },
   computed: {
@@ -76,24 +86,4 @@ export default {
 };
 </script>
 <style src="src/assets/styles/post.css">
-</style>
-<style>
-.overlay-text {
-  position: absolute;
-  bottom: 10%;
-  right: 0;
-  margin: 1px 10px;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.overlay-text .bottomText {
-  color: white;
-  background-color: black;
-  border-radius: 2px;
-  padding: 2px;
-  font-size: 12px;
-  font-weight: 500;
-  margin: 0;
-}
 </style>

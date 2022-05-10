@@ -1,22 +1,11 @@
 <template>
   <div class="container post-card mb-4 mt-4" style="padding: 0" v-cloak>
-    <v-skeleton-loader
-      v-show="!isImageLoaded"
-      v-bind="attrs"
-      type="image"
-      :tile="true"
-    ></v-skeleton-loader>
-    <div
-      class="card non-border flex-row"
-      style="background-color: transparent"
-      v-show="isImageLoaded"
-    >
+    <div class="card non-border flex-row" style="background-color: transparent">
       <ThumbnailVideo
         :src="src"
         :video="video"
         :isOnList="false"
-        size="md"
-        :onImageLoaded="onImageLoaded"
+        :horizontal="true"
       />
       <div class="card-text container non-border">
         <PostCaption :video="video" :showCaption="true" :showAvatar="false" />
@@ -36,18 +25,12 @@ export default {
   data() {
     return {
       src: "",
-      isImageLoaded: false,
       attrs: {
         class: "mb-6",
         "max-height": 162,
         "min-height": 150,
       },
     };
-  },
-  methods: {
-    onImageLoaded() {
-      this.isImageLoaded = true;
-    },
   },
   watch: {
     video(val) {

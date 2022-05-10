@@ -1,11 +1,5 @@
 <template>
   <div>
-    <v-skeleton-loader
-      v-show="!isImageLoaded"
-      v-bind="attrs"
-      type="table-tbody"
-      :tile="true"
-    ></v-skeleton-loader>
     <v-data-table
       v-model="selected"
       :headers="headers"
@@ -13,7 +7,6 @@
       item-key="name"
       show-select
       class="elevation-1"
-      v-show="isImageLoaded"
     >
       <template v-slot:item.title="{ item }">
         <div
@@ -22,12 +15,7 @@
         >
           <div class="row no-gutters">
             <div class="col-sm-5 p-2" style="height: 100%">
-              <ThumbnailVideo
-                :video="item"
-                :isOnList="false"
-                size="sm"
-                :onImageLoaded="onImageLoaded"
-              />
+              <ThumbnailVideo :video="item" :isOnList="false" size="sm" />
             </div>
             <div class="col-sm-7">
               <div class="card-body">
@@ -139,7 +127,6 @@ export default {
           value: "actions",
         },
       ],
-      isImageLoaded: false,
       attrs: {
         class: "mb-6",
         "max-height": 152,
@@ -168,10 +155,6 @@ export default {
 
     async onDeleteRow() {
       this.videos = await this.getAllChannelVideosRequest();
-    },
-
-    onImageLoaded() {
-      this.isImageLoaded = true;
     },
   },
   computed: {
