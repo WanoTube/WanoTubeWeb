@@ -4,7 +4,7 @@
       <v-list v-model="model">
         <v-list-item-group>
           <v-list-item
-            v-for="item in items"
+            v-for="item in filteredMenuItems"
             :key="item.title"
             link
             :to="item.to"
@@ -33,24 +33,44 @@ import { routes } from "../routes";
 export default {
   data() {
     return {
-      items: [
+      menuItems: [
         { title: "Home", icon: "mdi-home-variant", to: "/home" },
         { title: "Shorts", icon: "mdi-video", to: "/shorts" },
         {
           title: "Follows",
           icon: "mdi-youtube-subscription",
           to: "/feed/follows",
+          isAuthenticated: true,
         },
-        { title: "History", icon: "mdi-history", to: "/feed/history" },
+        {
+          title: "History",
+          icon: "mdi-history",
+          to: "/feed/history",
+          isAuthenticated: true,
+        },
+        {
+          title: "Watch Later",
+          icon: "mdi-clock",
+          to: "/feed/watch-later",
+          isAuthenticated: true,
+        },
       ],
       routes,
       model: "1",
+      isAuthenticated: false,
     };
   },
   computed: {
     routePath() {
       return this.$route.path;
     },
+    filteredMenuItems() {
+      if (this.isAuthenticated) return this.menuItems;
+      return this.menuItems.filter((item, index) => !item.isAuthenticated);
+    },
+  },
+  created() {
+    this.isAuthenticated = !!localStorage.getItem("user");
   },
 };
 </script>

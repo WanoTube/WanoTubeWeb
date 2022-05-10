@@ -27,6 +27,24 @@
           color="grey"
           class="d-flex justify-content-end align-items-end full-size"
         >
+          <v-chip
+            v-if="!isInWatchLaterLlist"
+            class="ma-2"
+            label
+            color="pink"
+            @click="watchLater"
+          >
+            <v-icon>mdi-clock</v-icon>
+          </v-chip>
+          <v-chip
+            v-else
+            class="ma-2"
+            label
+            color="pink"
+            @click="removeWatchLaterVideo"
+          >
+            <v-icon>mdi-check</v-icon>
+          </v-chip>
           <v-chip class="ma-2" label color="black">
             {{ video.duration ? duration : defaultDuration }}
           </v-chip>
@@ -38,14 +56,40 @@
 
 <script>
 import { formatVideoDuration } from "src/utils/duration";
+import { useUserStore } from "src/store/user";
+import {
+  watchLaterRequest,
+  removeWatchLaterVideoRequest,
+} from "../../utils/http/videoRequest";
+import { storeToRefs } from "pinia";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {
+  setup() {
+    const userStore = useUserStore();
+    const { addToWatchLaterVideos, removeFromWatchLaterVideos } = userStore;
+    const { watchLaterVideos } = storeToRefs(userStore);
+    return {
+      watchLaterVideos,
+      addToWatchLaterVideos,
+      removeFromWatchLaterVideos,
+    };
+  },
   props: ["src", "video", "size", "onImageLoaded", "horizontal"],
   components: {},
   methods: {
-    goToWatch: function () {
+    goToWatch: function (e) {
       this.$router.push("/watch/" + this.video._id).catch(() => {});
+    },
+    watchLater(e) {
+      e.stopPropagation();
+      watchLaterRequest(this.video._id);
+      this.addToWatchLaterVideos(this.video);
+    },
+    removeWatchLaterVideo(e) {
+      e.stopPropagation();
+      removeWatchLaterVideoRequest(this.video._id);
+      this.removeFromWatchLaterVideos(this.video._id);
     },
     onMouseOver: function () {
       setTimeout(() => {
@@ -70,6 +114,9 @@ export default {
   computed: {
     duration() {
       return formatVideoDuration(this.video.duration);
+    },
+    isInWatchLaterLlist() {
+      return !!this.watchLaterVideos.find((vid) => vid._id === this.video._id);
     },
   },
   created: function () {

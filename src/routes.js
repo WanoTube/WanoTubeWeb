@@ -16,7 +16,8 @@ import Channel from './components/channel/Channel.vue'
 import EditChannel from './components/channel/EditChannel.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
-import History from './components/home/History'
+import History from './components/home/History.vue'
+import WatchLater from './components/home/WatchLater.vue'
 import Trending from './components/discover/Trending.vue'
 import Filter from './components/video/video-editing/filters/Filters.vue'
 import MyMedia from './components/video/video-editing/my-media/MyMedia.vue'
@@ -61,6 +62,10 @@ export const routes = [
 					{
 						path: '/feed/history',
 						component: History,
+					},
+					{
+						path: '/feed/watch-later',
+						component: WatchLater,
 					},
 					{
 						path: '/search',

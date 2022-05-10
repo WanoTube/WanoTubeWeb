@@ -88,13 +88,14 @@
 import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "../utils/utils";
 const UsersRepository = RepositoryFactory.get("auth");
+
 export default {
   data() {
     return {
       isLoading: false,
       progress: 50,
-      email: "",
-      password: "",
+      email: "tuanpham@gmail.com",
+      password: "12345678",
       rules: {
         required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Min 8 characters",
@@ -147,5 +148,6 @@ export default {
       this.$router.push({ path: "signup" });
     },
   },
+  created() {},
 };
 </script>

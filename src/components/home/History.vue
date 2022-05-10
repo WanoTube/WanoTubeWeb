@@ -1,17 +1,18 @@
 <template>
-  <div class="row vertical-scrollable p-4 m-4" style="overflow-y: scroll">
-    <div
-      v-for="historyDate in watchedHistoryDates"
-      v-bind:key="historyDate.date"
-    >
-      <div class="card-text container non-border">
-        <b class="container post-card">{{ historyDate.date }}</b>
-      </div>
+  <div
+    class="row d-flex flex-column vertical-scrollable p-4 m-4"
+    style="overflow-y: scroll"
+  >
+    <h5><b>Watch History</b></h5>
+    <br />
+    <div v-for="historyDate in watchedHistoryDates" :key="historyDate.date">
+      <b>{{ historyDate.date }}</b>
       <div v-for="video in historyDate.videos" :key="video.tittle">
         <HorizontalPost :video="video" />
       </div>
       <hr />
     </div>
+    <div v-if="!hasVideos">This list has no video</div>
   </div>
 </template>
 <script>
@@ -30,6 +31,11 @@ export default {
   },
   methods: {
     formatToChinaDate,
+  },
+  computed: {
+    hasVideos() {
+      return this.watchedHistoryDates.length !== 0;
+    },
   },
   created: async function () {
     this.watchedHistoryDates = (

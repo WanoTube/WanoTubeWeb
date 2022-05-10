@@ -75,7 +75,7 @@
   </v-dialog>
 </template>
 <script>
-import { getCopyrightStatus } from "src/utils/http/userRequest";
+import { getCopyrightStatusRequest } from "src/utils/http/userRequest";
 import { formatToChinaDate } from "src/utils/date";
 
 export default {
@@ -120,7 +120,7 @@ export default {
   methods: {
     async openDialog() {
       this.showDialog = true;
-      const data = await getCopyrightStatus();
+      const data = await getCopyrightStatusRequest();
       this.copyrightStrikeEvent = data.strikes;
       this.copyrightStatus = data.blocked_status;
     },
