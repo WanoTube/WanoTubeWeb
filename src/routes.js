@@ -17,6 +17,7 @@ import EditChannel from './components/channel/EditChannel.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
 import History from './components/home/History.vue'
+import Follow from './components/home/Follow.vue'
 import UnderDeveloped from './components/home/UnderDeveloped.vue'
 import WatchLater from './components/home/WatchLater.vue'
 import Trending from './components/discover/Trending.vue'
@@ -74,7 +75,7 @@ export const routes = [
 					},
 					{
 						path: '/feed/follow',
-						component: UnderDeveloped,
+						component: Follow,
 					},
 					{
 						path: '/search',

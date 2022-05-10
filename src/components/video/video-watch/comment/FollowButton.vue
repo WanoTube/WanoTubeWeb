@@ -1,17 +1,26 @@
 <template>
   <div>
-    <v-btn
-      v-if="!follow"
-      depressed
-      dark
-      color="pink"
-      @click="toggleFollowButton"
-    >
-      Follow
-    </v-btn>
-    <v-btn v-else outlined color="pink" @click="toggleFollowButton">
-      Unfollow
-    </v-btn>
+    <div v-if="!isCreator">
+      <v-btn
+        v-if="!follow"
+        depressed
+        dark
+        color="pink"
+        @click="toggleFollowButton"
+      >
+        Follow
+      </v-btn>
+      <v-btn v-else outlined color="pink" @click="toggleFollowButton">
+        Unfollow
+      </v-btn>
+    </div>
+    <div v-else>
+      <router-link :to="`/channel/${channelId}`" style="text-decoration: none">
+        <v-btn depressed dark color="pink" @click="toggleFollowButton">
+          Edit Video
+        </v-btn>
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -49,6 +58,13 @@ export default {
         await unfollowChannelRequest(this.channelId);
         this.unfollowChannel(this.channelId);
       }
+    },
+  },
+  computed: {
+    isCreator() {
+      return (
+        this.channelId === JSON.parse(localStorage.getItem("user")).channelId
+      );
     },
   },
   created() {
