@@ -17,6 +17,7 @@ import EditChannel from './components/channel/EditChannel.vue'
 import Search from './components/discover/Search.vue'
 import Posts from './components/home/Posts.vue'
 import History from './components/home/History.vue'
+import UnderDeveloped from './components/home/UnderDeveloped.vue'
 import WatchLater from './components/home/WatchLater.vue'
 import Trending from './components/discover/Trending.vue'
 import Filter from './components/video/video-editing/filters/Filters.vue'
@@ -66,6 +67,14 @@ export const routes = [
 					{
 						path: '/feed/watch-later',
 						component: WatchLater,
+					},
+					{
+						path: '/feed/shorts',
+						component: UnderDeveloped,
+					},
+					{
+						path: '/feed/follow',
+						component: UnderDeveloped,
 					},
 					{
 						path: '/search',

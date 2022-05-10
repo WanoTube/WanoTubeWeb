@@ -28,7 +28,7 @@
           class="d-flex justify-content-end align-items-end full-size"
         >
           <v-chip
-            v-if="!isInWatchLaterLlist"
+            v-if="isPost && !isInWatchLaterLlist"
             class="ma-2"
             label
             color="pink"
@@ -37,7 +37,7 @@
             <v-icon>mdi-clock</v-icon>
           </v-chip>
           <v-chip
-            v-else
+            v-else-if="isPost"
             class="ma-2"
             label
             color="pink"
@@ -75,7 +75,7 @@ export default {
       removeFromWatchLaterVideos,
     };
   },
-  props: ["src", "video", "size", "onImageLoaded", "horizontal"],
+  props: ["src", "video", "size", "isPost", "horizontal"],
   components: {},
   methods: {
     goToWatch: function (e) {

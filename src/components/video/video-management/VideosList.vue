@@ -15,7 +15,7 @@
         >
           <div class="row no-gutters">
             <div class="col-sm-5 p-2" style="height: 100%">
-              <ThumbnailVideo :video="item" :isOnList="false" size="sm" />
+              <ThumbnailVideo :video="item" />
             </div>
             <div class="col-sm-7">
               <div class="card-body">

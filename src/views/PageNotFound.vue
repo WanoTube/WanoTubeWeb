@@ -14,15 +14,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  components: {},
-  created() {
-    // window.location.href = "/my-new-404-page.html";
-  },
-};
-</script>
-
 <style>
 #notfound {
   position: relative;

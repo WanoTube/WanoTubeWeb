@@ -24,7 +24,6 @@ export default {
   },
   async created() {
     const data = await getWatchLaterVideosRequest();
-    console.log(data.videos);
     this.getWatchLaterVideos(data.videos);
   },
 };

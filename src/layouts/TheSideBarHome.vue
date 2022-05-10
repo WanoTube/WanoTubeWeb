@@ -35,11 +35,11 @@ export default {
     return {
       menuItems: [
         { title: "Home", icon: "mdi-home-variant", to: "/home" },
-        { title: "Shorts", icon: "mdi-video", to: "/shorts" },
+        { title: "Shorts", icon: "mdi-video", to: "/feed/shorts" },
         {
-          title: "Follows",
+          title: "Follow",
           icon: "mdi-youtube-subscription",
-          to: "/feed/follows",
+          to: "/feed/follow",
           isAuthenticated: true,
         },
         {
