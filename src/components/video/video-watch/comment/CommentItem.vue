@@ -3,7 +3,7 @@
     <div class="d-flex">
       <div class="avatar">
         <img
-          src="https://cdn3.vectorstock.com/i/1000x1000/75/62/smiling-avatar-boy-graphic-vector-9437562.jpg"
+          :src="avatarUrl"
           width="40px"
           height="40px"
           class="img-responsive rounded-circle"
@@ -47,12 +47,12 @@
 
 <script>
 import $ from "jquery";
-import { avatarUrlPrefix, defaultAvatarUrl } from "src/constants/user";
+import { defaultAvatarUrl } from "src/constants/user";
 export default {
   props: ["username", "caption", "avatar"],
   computed: {
     avatarUrl: function () {
-      return this.avatar ? avatarUrlPrefix + this.avatar : defaultAvatarUrl;
+      return this.avatar ?? defaultAvatarUrl;
     },
   },
   methods: {

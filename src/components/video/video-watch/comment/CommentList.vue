@@ -99,16 +99,19 @@ export default {
       const commentContainerRef = this.$refs.commentContainer;
       if (commentContainerRef) commentContainerRef.scrollTop = 0;
     },
-    addToCommentList(comment) {
+    async addToCommentList(comment) {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      comment = await this.analyzeComment({
+        ...comment,
+        author_id: userInfo._id,
+      });
       this.comments.unshift(comment);
       this.scrollToTop();
     },
   },
   async mounted() {
-    // window.addEventListener("keydown", this.onSelectAnotherUsername);
     this.comments = await this.getAllVideoComments();
     this.scrollToTop();
-    // this.currentUser = JSON.parse(localStorage.getItem("user"));
   },
 };
 </script>
