@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex mt-2">
     <router-link :to="`/channel/${video.user.channel_id}`" v-if="showAvatar">
       <div class="avatar">
-        <img
+        <v-img
           :src="avatarSrc"
           width="42px"
           height="42px"
@@ -18,7 +18,7 @@
         >
           <b class="ellipsis-2 mb-1">{{ video.title }}</b>
           <div class="video-info">
-            <div v-if="showAvatar">
+            <div v-if="showChannelName">
               <router-link
                 :to="`/channel/${video.user.channel_id}`"
                 class="caption-title"
@@ -27,9 +27,11 @@
               </router-link>
             </div>
             <div>
-              {{ video.total_views }} views •
-              {{ formatToChinaDate(video.created_at) }}
-              <div v-if="showCaption" class="ellipsis-3 mt-2">
+              <span v-if="showViews">{{ video.total_views }} views</span>
+              <span v-if="showCreatedDate">
+                • {{ formatToChinaDate(video.created_at) }}</span
+              >
+              <div v-if="showDescription" class="ellipsis-2 mt-2">
                 {{ video.description }}
               </div>
             </div>
@@ -49,13 +51,25 @@ export default {
     video: {
       type: Object,
     },
-    showCaption: {
+    showAvatar: {
       type: Boolean,
       default: false,
     },
-    showAvatar: {
+    showChannelName: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    showViews: {
+      type: Boolean,
+      default: false,
+    },
+    showDescription: {
+      type: Boolean,
+      default: false,
+    },
+    showCreatedDate: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

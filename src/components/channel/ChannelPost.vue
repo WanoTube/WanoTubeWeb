@@ -3,7 +3,7 @@
     <div class="card non-border" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" />
       <div class="card-text non-border">
-        <PostCaption :showAvatar="false" :video="video" />
+        <PostCaption :video="video" :showViews="true" :showCreatedDate="true" />
       </div>
     </div>
   </div>

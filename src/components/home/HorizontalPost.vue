@@ -3,7 +3,12 @@
     <div class="card non-border flex-row" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" :horizontal="true" />
       <div class="card-text container non-border">
-        <PostCaption :video="video" :showCaption="true" :showAvatar="false" />
+        <PostCaption
+          :video="video"
+          :showChannelName="true"
+          :showViews="true"
+          :showDescription="true"
+        />
       </div>
     </div>
   </div>

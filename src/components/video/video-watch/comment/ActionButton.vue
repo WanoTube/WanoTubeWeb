@@ -15,11 +15,9 @@
       </v-btn>
     </div>
     <div v-else>
-      <router-link :to="`/channel/${channelId}`" style="text-decoration: none">
-        <v-btn depressed dark color="pink" @click="toggleFollowButton">
-          Edit Video
-        </v-btn>
-      </router-link>
+      <v-btn depressed dark color="pink" @click="navigateToEditVideo">
+        Edit Video
+      </v-btn>
     </div>
   </div>
 </template>
@@ -41,7 +39,7 @@ export default {
       unfollowChannel,
     };
   },
-  props: ["channelId"],
+  props: ["channelId", "videoId"],
   data() {
     return {
       follow: false,
@@ -58,6 +56,10 @@ export default {
         await unfollowChannelRequest(this.channelId);
         this.unfollowChannel(this.channelId);
       }
+    },
+    navigateToEditVideo() {
+      const { username } = JSON.parse(localStorage.getItem("user"));
+      this.$router.push(`/${username}/videos/${this.videoId}`);
     },
   },
   computed: {

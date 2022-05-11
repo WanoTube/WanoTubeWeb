@@ -15,17 +15,16 @@
               {{ channel.username }}
             </h4>
           </div>
-          <div>
+          <router-link to="/videos" style="text-decoration: none">
             <v-btn
               v-if="isMyChannel"
               type="button"
               color="primary"
               elevation="0"
-              @click="navigateToEditChannel"
             >
               Manage Channel
             </v-btn>
-          </div>
+          </router-link>
         </div>
       </div>
       <br />
@@ -36,7 +35,7 @@
           v-bind:key="video.tittle"
           class="col-3 video-feed"
         >
-          <ChannelPost :video="video" />
+          <ChannelPost :video="video" :showChannelName="false" />
         </div>
       </div>
     </div>
@@ -59,12 +58,6 @@ export default {
       channel: {},
       videos: [],
     };
-  },
-  methods: {
-    navigateToEditChannel() {
-      const userInfo = JSON.parse(localStorage.getItem("user"));
-      this.$router.push(`/channel/${userInfo.channelId}/edit`);
-    },
   },
 
   async created() {

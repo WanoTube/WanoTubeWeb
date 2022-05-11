@@ -3,7 +3,13 @@
     <div class="card non-border" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" :isPost="true" />
       <div class="card-text mt-2 mb-4 non-border">
-        <PostCaption :video="video" />
+        <PostCaption
+          :video="video"
+          :showAvatar="true"
+          :showChannelName="true"
+          :showViews="true"
+          :showCreatedDate="true"
+        />
       </div>
     </div>
   </div>

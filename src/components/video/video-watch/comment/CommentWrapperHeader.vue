@@ -3,7 +3,7 @@
     <br />
     <div class="d-flex flex-row justify-content-between">
       <PostCaption :video="video" />
-      <FollowButton :channelId="video.user.channel_id" />
+      <ActionButton :channelId="video.user.channel_id" :videoId="video._id" />
     </div>
     <br />
     <VideoInteration :video="video" />
@@ -16,14 +16,14 @@
 import PostCaption from "src/components/home/PostCaption.vue";
 import VideoInteration from "./VideoInteraction.vue";
 import LinkClip from "./LinkClipboard.vue";
-import FollowButton from "./FollowButton.vue";
+import ActionButton from "./ActionButton.vue";
 export default {
   props: ["video"],
   components: {
     PostCaption,
     VideoInteration,
     LinkClip,
-    FollowButton,
+    ActionButton,
   },
 };
 </script>
