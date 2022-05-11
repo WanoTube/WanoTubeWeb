@@ -7,6 +7,7 @@
     <div v-for="video in watchLaterVideos" :key="video._id">
       <HorizontalPost :video="video" />
     </div>
+    <div v-if="!hasVideos">This list has no video</div>
   </div>
 </template>
 <script>
@@ -25,6 +26,11 @@ export default {
   },
   methods: {
     formatToChinaDate,
+  },
+  computed: {
+    hasVideos() {
+      return this.watchLaterVideos.length !== 0;
+    },
   },
 };
 </script>

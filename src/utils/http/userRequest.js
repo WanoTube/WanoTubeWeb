@@ -30,4 +30,10 @@ export const getFollowInfoRequest = () => {
   return httpRequest({ endpoint: `/users/follow-info`, requireToken: true });
 }
 
+export const getFollowingChannelsRequest = () => {
+  console.log("Get Following Channels")
+  return httpRequest({ endpoint: `/users/followings`, requireToken: true });
+}
+
+
 

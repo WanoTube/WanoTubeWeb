@@ -3,7 +3,12 @@
     <div class="card non-border" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" />
       <div class="card-text non-border">
-        <PostCaption :video="video" :showViews="true" :showCreatedDate="true" />
+        <PostCaption
+          :video="video"
+          :showViews="true"
+          :showCreatedDate="true"
+          className="mt-4"
+        />
       </div>
     </div>
   </div>

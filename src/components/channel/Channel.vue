@@ -1,19 +1,24 @@
 <template>
-  <div class="row vertical-scrollable p-4 m-1">
+  <div class="row vertical-scrollable p-4 m-4">
     <div class="container" :key="$route.fullPath">
       <div class="row ml-4 mr-4">
         <div class="d-flex align-items-center justify-content-between">
           <div class="d-flex align-items-center" style="gap: 20px">
-            <img
+            <v-img
               v-if="channel.user_id"
               class="rounded-circle img-responsive"
               :src="channel.user_id.avatar"
               width="80px"
               height="80px"
             />
-            <h4 class="username" style="margin-bottom: 0; padding-bottom: 0">
-              {{ channel.username }}
-            </h4>
+            <div>
+              <h4 class="username">
+                {{ channel.username }}
+              </h4>
+              <h6 class="followers">
+                {{ channel.number_of_followers }} followers
+              </h6>
+            </div>
           </div>
           <router-link to="/videos" style="text-decoration: none">
             <v-btn
@@ -99,6 +104,9 @@ export default {
 }
 .username {
   font-weight: 400;
+}
+.followers {
+  color: grey;
 }
 @media only screen and (min-width: 960px) {
   .avatar-profile {

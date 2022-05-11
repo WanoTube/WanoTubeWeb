@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex mt-2">
+  <div :class="`d-flex ${className}`">
     <router-link :to="`/channel/${video.user.channel_id}`" v-if="showAvatar">
       <div class="avatar">
         <v-img
@@ -70,6 +70,10 @@ export default {
     showCreatedDate: {
       type: Boolean,
       default: false,
+    },
+    className: {
+      type: String,
+      default: "",
     },
   },
   computed: {
