@@ -64,7 +64,6 @@ export default {
         const formData = {
           content: this.comment,
           video_id: this.$route.params.id,
-          author_id: userInfo._id,
         };
         const { data } = await VideoRepository.commentVideo(formData);
         if (data) {

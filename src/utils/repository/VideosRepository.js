@@ -58,7 +58,7 @@ function getVideoTotalComments(videoId) {
 }
 
 function commentVideo(payload) {
-	return Repository.post(`${resource}/comment/`, payload);
+	return Repository.post(`${resource}/comment/`, payload, config);
 }
 
 function deleteComment(payload) {
