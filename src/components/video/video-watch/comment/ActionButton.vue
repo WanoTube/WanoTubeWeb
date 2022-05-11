@@ -11,7 +11,7 @@
         Follow
       </v-btn>
       <v-btn v-else outlined color="pink" @click="toggleFollowButton">
-        Unfollow
+        Following
       </v-btn>
     </div>
     <div v-else>

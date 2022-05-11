@@ -7,7 +7,7 @@
       <CommentIcon :totalComments="video.total_comments" />
     </div>
     <div class="col text-center">
-      <ShareIcon />
+      <ShareIcon :videoId="video._id" />
     </div>
   </div>
 </template>

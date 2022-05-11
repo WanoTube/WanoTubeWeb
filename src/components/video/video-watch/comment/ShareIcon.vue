@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    v-clipboard:copy="link"
+    v-clipboard:success="onCopy"
+    v-clipboard:error="onError"
+  >
     <svg
       class="button"
       width="36"
@@ -14,6 +18,27 @@
         fill="black"
       />
     </svg>
-    <span class="numbers">1</span>
   </div>
 </template>
+<script>
+import { appUrl } from "src/constants/system";
+export default {
+  props: ["videoId"],
+  computed: {
+    link: function () {
+      return `${appUrl}/watch/${this.videoId}`;
+    },
+  },
+  methods: {
+    onCopy: function (e) {
+      this.$toasted.success("Copied", {
+        position: "top-center",
+        duration: 2000,
+      });
+    },
+    onError: function (e) {
+      alert("Failed to copy texts");
+    },
+  },
+};
+</script>
