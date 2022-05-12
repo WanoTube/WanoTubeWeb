@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="list-comment p-4" ref="commentContainer" v-if="!!comments">
-      <CommentItem v-for="c in comments" :key="c._id" :comment="c" />
+      <CommentItem
+        v-for="c in comments"
+        :key="c._id"
+        ref="commentItemsRef"
+        :comment="c"
+        :analyzeComment="analyzeComment"
+      />
     </div>
     <div class="list-comment p-4" v-else>
       <v-skeleton-loader
@@ -23,9 +29,6 @@ const UsersRepository = RepositoryFactory.get("users");
 import CommentItem from "./CommentItem.vue";
 
 export default {
-  components: {
-    CommentItem,
-  },
   data: function () {
     return {
       comments: null,
@@ -34,6 +37,9 @@ export default {
         class: "mb-6",
       },
     };
+  },
+  components: {
+    CommentItem,
   },
   methods: {
     async getUserByAuthorId(authorId) {
@@ -99,8 +105,12 @@ export default {
         ...comment,
         author_id: userInfo._id,
       });
-      this.comments.unshift(comment);
-      this.scrollToTop();
+      // this.$refs.commentItemsRef.map((ref) => ref.comment);
+      const commentItem = this.$refs.commentItemsRef.find((ref) => {
+        return ref.comment._id === comment.reply_to;
+      });
+      commentItem.viewMoreReplies();
+      if (!comment.is_reply) this.comments.unshift(comment);
     },
   },
   async mounted() {

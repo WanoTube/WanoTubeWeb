@@ -28,6 +28,19 @@
     >
       <picker @select="selectEmoji" />
     </div>
+    <div
+      v-if="!!repliedComment"
+      class="d-flex flex-row justify-content-between p-2 w-100 replyto-popup"
+    >
+      <div style="max-width: 95%">
+        Replies to <b>{{ repliedComment.username }}</b>
+        <br />
+        <span class="ellipsis-1 replied-comment">{{
+          repliedComment.content
+        }}</span>
+      </div>
+      <v-icon @click="cancelReply">mdi-close</v-icon>
+    </div>
   </div>
 </template>
 <style src="src/assets/styles/comment.css"></style>
@@ -45,19 +58,37 @@
   left: 0;
   transform: translate(50%, -100%);
 }
+.replyto-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  transform: translate(0, -100%);
+}
+.replied-comment {
+  font-size: 14px;
+  color: grey;
+}
 </style>
 <script>
+import { storeToRefs } from "pinia";
 import { Picker } from "emoji-mart-vue";
+import { useCommentStore } from "src/store/comment";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 const VideoRepository = RepositoryFactory.get("video");
 
 export default {
+  setup() {
+    const commentStore = useCommentStore();
+    const { cancelReply } = commentStore;
+    const { repliedComment } = storeToRefs(commentStore);
+    return { cancelReply, repliedComment };
+  },
   data() {
     return {
       comment: "",
       isShowingPopup: false,
-      replyTo: null,
     };
   },
 
@@ -80,6 +111,7 @@ export default {
       const newComment = await this.sendCommentVideoRequest();
       this.$emit("addToCommentList", { ...newComment, number_of_replies: 0 });
       this.clearComment();
+      this.cancelReply();
     },
     clearComment() {
       this.comment = "";
@@ -91,11 +123,14 @@ export default {
         const formData = {
           content: this.comment,
           video_id: this.$route.params.id,
+          reply_to: this.repliedComment?.id,
         };
         const { data } = await VideoRepository.commentVideo(formData);
         if (data) {
           const dataObject = convertJSONToObject(data);
-          if (!dataObject.details) if (dataObject) return dataObject;
+          if (!dataObject.details)
+            if (dataObject)
+              return { ...dataObject, reply_to: this.repliedComment?.id };
         }
         return null;
       } catch (error) {

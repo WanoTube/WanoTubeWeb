@@ -12,7 +12,7 @@
       </div>
       <div class="w-100">
         <div class="d-flex flex-row">
-          <div class="pt-0 w-100">
+          <div class="pt-0 w-100 pr-4">
             <span class="channel-name">{{ comment.user.username }}</span>
             <br />
             {{ comment.content }}
@@ -20,7 +20,15 @@
             <span class="subtitle">
               {{ formatToChinaDate(comment.created_at) }}
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span role="button" @click="reply"> Reply </span>
+              <span
+                v-if="!comment.is_reply"
+                role="button"
+                @click="
+                  replyTo(comment._id, comment.content, comment.user.username)
+                "
+              >
+                Reply
+              </span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <b
                 role="button"
@@ -70,13 +78,21 @@
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
 import $ from "jquery";
+import { useCommentStore } from "../../../../store/comment";
 import { defaultAvatarUrl } from "src/constants/user";
 import { formatToChinaDate } from "src/utils/date";
 import { getCommentRepliesRequest } from "src/utils/http/commentRequest";
 export default {
   name: "CommentItem",
-  props: ["comment"],
+  setup() {
+    const commentStore = useCommentStore();
+    const { repliedComment } = storeToRefs(commentStore);
+    const { replyTo } = commentStore;
+    return { repliedComment, replyTo };
+  },
+  props: ["comment", "analyzeComment"],
   data() {
     return {
       fetchingReplies: false,
@@ -86,9 +102,6 @@ export default {
   computed: {
     avatarUrl: function () {
       return this.comment.user.avatar ?? defaultAvatarUrl;
-    },
-    child() {
-      return { ...this.comment, is_reply: true };
     },
   },
   methods: {
@@ -102,10 +115,10 @@ export default {
     reply() {
       alert("Reply");
     },
-    async viewMoreReplies(commentId) {
+    async viewMoreReplies() {
       this.fetchingReplies = true;
       setTimeout(async () => {
-        this.replies = await getCommentRepliesRequest(commentId);
+        this.replies = await getCommentRepliesRequest(this.comment._id);
         this.fetchingReplies = false;
       }, 500);
     },
@@ -126,7 +139,7 @@ export default {
 </style>
 <style>
 .channel-name {
-  font-weight: bold;
+  font-weight: 900;
   font-size: 18px;
   font-family: "Lato", Arial, sans-serif;
 }
