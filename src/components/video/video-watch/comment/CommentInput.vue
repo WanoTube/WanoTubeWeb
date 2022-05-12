@@ -57,11 +57,14 @@ export default {
     return {
       comment: "",
       isShowingPopup: false,
+      replyTo: null,
     };
   },
+
   components: {
     Picker,
   },
+
   methods: {
     selectEmoji(emoji) {
       this.comment += emoji.native;
@@ -75,7 +78,7 @@ export default {
     async postComment(e) {
       e.preventDefault();
       const newComment = await this.sendCommentVideoRequest();
-      this.$emit("addToCommentList", newComment);
+      this.$emit("addToCommentList", { ...newComment, number_of_replies: 0 });
       this.clearComment();
     },
     clearComment() {

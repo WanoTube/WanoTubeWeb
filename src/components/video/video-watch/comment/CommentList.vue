@@ -105,7 +105,6 @@ export default {
   },
   async mounted() {
     this.comments = await this.getAllVideoComments();
-    console.log(this.comments);
     this.scrollToTop();
   },
 };

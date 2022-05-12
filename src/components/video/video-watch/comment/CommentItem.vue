@@ -11,19 +11,28 @@
         />
       </div>
       <div class="w-100">
-        <div class="row">
-          <div class="col-10 pt-0">
-            <b>{{ comment.user.username }}</b>
+        <div class="d-flex flex-row">
+          <div class="pt-0 w-100">
+            <span class="channel-name">{{ comment.user.username }}</span>
             <br />
             {{ comment.content }}
             <br />
             <span class="subtitle">
-              {{ formatToChinaDate(comment.created_at) }}&nbsp;&nbsp;&nbsp;
-              <span role="button" @click="reply">Reply</span>
+              {{ formatToChinaDate(comment.created_at) }}
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span role="button" @click="reply"> Reply </span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <b
+                role="button"
+                @click="viewMoreReplies(comment._id)"
+                v-if="!comment.is_reply"
+              >
+                View more replies ({{ comment.number_of_replies }})
+              </b>
             </span>
             <br />
           </div>
-          <div class="col-2">
+          <div class="d-flex align-items-center mr-4">
             <svg
               @click="loveSVGFunction($event)"
               class="heart-icon"
@@ -46,19 +55,40 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="fetchingReplies"
+      style="width: 100%"
+      class="d-flex flex-row justify-content-center"
+    >
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
     <br />
+    <div style="padding-left: 50px" v-for="reply in replies" :key="reply._id">
+      <CommentItem :comment="reply" v-if="!comment.is_reply" />
+    </div>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
 import { defaultAvatarUrl } from "src/constants/user";
-import { formatToChinaDate } from "../../../../utils/date";
+import { formatToChinaDate } from "src/utils/date";
+import { getCommentRepliesRequest } from "src/utils/http/commentRequest";
 export default {
+  name: "CommentItem",
   props: ["comment"],
+  data() {
+    return {
+      fetchingReplies: false,
+      replies: null,
+    };
+  },
   computed: {
     avatarUrl: function () {
       return this.comment.user.avatar ?? defaultAvatarUrl;
+    },
+    child() {
+      return { ...this.comment, is_reply: true };
     },
   },
   methods: {
@@ -71,6 +101,13 @@ export default {
     },
     reply() {
       alert("Reply");
+    },
+    async viewMoreReplies(commentId) {
+      this.fetchingReplies = true;
+      setTimeout(async () => {
+        this.replies = await getCommentRepliesRequest(commentId);
+        this.fetchingReplies = false;
+      }, 500);
     },
   },
   mounted() {
@@ -88,6 +125,11 @@ export default {
 <style src="src/assets/styles/post-caption.css">
 </style>
 <style>
+.channel-name {
+  font-weight: bold;
+  font-size: 18px;
+  font-family: "Lato", Arial, sans-serif;
+}
 .subtitle {
   color: grey;
   font-size: 14px;
