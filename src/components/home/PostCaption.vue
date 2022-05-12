@@ -31,11 +31,30 @@
               <span v-if="showCreatedDate">
                 • {{ formatToChinaDate(video.created_at) }}</span
               >
-              <div v-if="showDescription" class="ellipsis-2 mt-2">
-                {{ video.description }}
-              </div>
             </div>
           </div>
+        </div>
+        <div
+          v-if="showDescription"
+          :class="`ellipsis-${descriptionLines} mt-2`"
+          :role="`${canReadMoreDescription ? 'button' : ''}`"
+          @click="showDescriptionDialog"
+        >
+          <span>{{ video.description }}</span>
+          <v-dialog
+            v-model="isShowingDescriptionDialog"
+            scrollable
+            width="1000px"
+            height="800px"
+          >
+            <v-card>
+              <v-toolbar color="primary" dark>{{ video.title }}</v-toolbar>
+              <v-card-text>
+                <h4 class="pt-4 pl-4">Description:</h4>
+                <h6 class="pa-4">{{ video.description }}</h6>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
     </div>
@@ -67,6 +86,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    descriptionLines: {
+      type: Number,
+      default: 2,
+    },
     showCreatedDate: {
       type: Boolean,
       default: false,
@@ -75,6 +98,15 @@ export default {
       type: String,
       default: "",
     },
+    canReadMoreDescription: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      isShowingDescriptionDialog: false,
+    };
   },
   computed: {
     avatarSrc: function () {
@@ -84,6 +116,9 @@ export default {
   },
   methods: {
     formatToChinaDate,
+    showDescriptionDialog() {
+      this.isShowingDescriptionDialog = true;
+    },
   },
 };
 </script>

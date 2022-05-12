@@ -69,7 +69,8 @@ export default {
     try {
       const { channelId } = this.$route.params;
       this.channel = await getChannelPublicInformationRequest(channelId);
-      this.videos = await getAllChannelPublicVideosRequest(channelId);
+      const { videos } = await getAllChannelPublicVideosRequest(channelId);
+      this.videos = videos;
     } catch (error) {
       this.$toasted.show(error.message, {
         position: "top-center",
@@ -82,7 +83,8 @@ export default {
   async beforeRouteUpdate(to, from, next) {
     const { channelId } = to.params;
     this.channel = await getChannelPublicInformationRequest(channelId);
-    this.videos = await getAllChannelPublicVideosRequest(channelId);
+    const { videos } = await getAllChannelPublicVideosRequest(channelId);
+    this.videos = videos;
     next();
   },
 

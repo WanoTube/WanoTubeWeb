@@ -1,7 +1,10 @@
 <template>
   <div class="comment-wrapper-header bg-white">
     <br />
-    <div class="d-flex flex-row justify-content-between gap-4">
+    <div
+      class="d-flex flex-row justify-content-between gap-4 mb-2"
+      style="height: 12vh"
+    >
       <PostCaption
         :video="video"
         :showAvatar="true"
@@ -9,10 +12,11 @@
         :showCreatedDate="true"
         :showDescription="true"
         :showViews="true"
+        :descriptionLines="1"
+        :canReadMoreDescription="true"
       />
       <ActionButton :channelId="video.user.channel_id" :videoId="video._id" />
     </div>
-    <br />
     <VideoInteration :video="video" />
     <br />
   </div>
