@@ -11,14 +11,36 @@
         />
       </div>
       <div class="w-100">
-        <div class="row">
-          <div class="col-10 pt-0">
-            <b>{{ username }}</b>
+        <div class="d-flex flex-row">
+          <div class="pt-0 w-100 pr-4">
+            <span class="channel-name">{{ comment.user.username }}</span>
             <br />
-            {{ caption }}
+            {{ comment.content }}
+            <br />
+            <span class="subtitle">
+              {{ formatToChinaDate(comment.created_at) }}
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span
+                v-if="!comment.is_reply"
+                role="button"
+                @click="
+                  replyTo(comment._id, comment.content, comment.user.username)
+                "
+              >
+                Reply
+              </span>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <b
+                role="button"
+                @click="viewMoreReplies(comment._id)"
+                v-if="!comment.is_reply"
+              >
+                View more replies ({{ comment.number_of_replies }})
+              </b>
+            </span>
             <br />
           </div>
-          <div class="col-2">
+          <div class="d-flex align-items-center mr-4">
             <svg
               @click="loveSVGFunction($event)"
               class="heart-icon"
@@ -41,26 +63,64 @@
         </div>
       </div>
     </div>
+    <div
+      v-if="fetchingReplies"
+      style="width: 100%"
+      class="d-flex flex-row justify-content-center"
+    >
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
     <br />
+    <div style="padding-left: 50px" v-for="reply in replies" :key="reply._id">
+      <CommentItem :comment="reply" v-if="!comment.is_reply" />
+    </div>
   </div>
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
 import $ from "jquery";
+import { useCommentStore } from "../../../../store/comment";
 import { defaultAvatarUrl } from "src/constants/user";
+import { formatToChinaDate } from "src/utils/date";
+import { getCommentRepliesRequest } from "src/utils/http/commentRequest";
 export default {
-  props: ["username", "caption", "avatar"],
+  name: "CommentItem",
+  setup() {
+    const commentStore = useCommentStore();
+    const { repliedComment } = storeToRefs(commentStore);
+    const { replyTo } = commentStore;
+    return { repliedComment, replyTo };
+  },
+  props: ["comment", "analyzeComment"],
+  data() {
+    return {
+      fetchingReplies: false,
+      replies: null,
+    };
+  },
   computed: {
     avatarUrl: function () {
-      return this.avatar ?? defaultAvatarUrl;
+      return this.comment.user.avatar ?? defaultAvatarUrl;
     },
   },
   methods: {
-    loveSVGFunction: function (e) {
+    formatToChinaDate,
+    loveSVGFunction(e) {
       e.currentTarget.classList.toggle("animate");
     },
-    lovePathFunction: function (e) {
+    lovePathFunction(e) {
       e.currentTarget.classList.toggle("active");
+    },
+    reply() {
+      alert("Reply");
+    },
+    async viewMoreReplies() {
+      this.fetchingReplies = true;
+      setTimeout(async () => {
+        this.replies = await getCommentRepliesRequest(this.comment._id);
+        this.fetchingReplies = false;
+      }, 500);
     },
   },
   mounted() {
@@ -76,4 +136,15 @@ export default {
 };
 </script>
 <style src="src/assets/styles/post-caption.css">
+</style>
+<style>
+.channel-name {
+  font-weight: 900;
+  font-size: 18px;
+  font-family: "Lato", Arial, sans-serif;
+}
+.subtitle {
+  color: grey;
+  font-size: 14px;
+}
 </style>

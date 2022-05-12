@@ -68,13 +68,13 @@
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
 import { formatVideoDuration } from "src/utils/duration";
 import { useUserStore } from "src/store/user";
 import {
   watchLaterRequest,
   removeWatchLaterVideoRequest,
-} from "../../utils/http/videoRequest";
-import { storeToRefs } from "pinia";
+} from "src/utils/http/videoRequest";
 const TIME_UNTIL_SHOW_POPUP = 1000;
 
 export default {

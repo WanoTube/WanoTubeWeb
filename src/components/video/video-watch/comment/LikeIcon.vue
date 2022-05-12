@@ -4,8 +4,8 @@
     <svg
       id="like-button"
       class="button"
-      width="36"
-      height="36"
+      width="30"
+      height="30"
       @click="handleLikeVideo"
       viewBox="0 0 48 48"
       fill="none"

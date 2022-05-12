@@ -154,7 +154,8 @@ export default {
     },
 
     async onDeleteRow() {
-      this.videos = await this.getAllChannelVideosRequest();
+      const { videos } = await getAllChannelVideosRequest();
+      this.videos = videos;
     },
   },
   computed: {
@@ -165,7 +166,8 @@ export default {
   },
   async mounted() {
     //TO-DO: Check if videos is null
-    this.videos = await getAllChannelVideosRequest();
+    const { videos } = await getAllChannelVideosRequest();
+    this.videos = videos;
     if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };
