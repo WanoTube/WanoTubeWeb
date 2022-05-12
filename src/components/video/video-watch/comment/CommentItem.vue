@@ -13,9 +13,14 @@
       <div class="w-100">
         <div class="row">
           <div class="col-10 pt-0">
-            <b>{{ username }}</b>
+            <b>{{ comment.user.username }}</b>
             <br />
-            {{ caption }}
+            {{ comment.content }}
+            <br />
+            <span class="subtitle">
+              {{ formatToChinaDate(comment.created_at) }}&nbsp;&nbsp;&nbsp;
+              <span role="button" @click="reply">Reply</span>
+            </span>
             <br />
           </div>
           <div class="col-2">
@@ -48,19 +53,24 @@
 <script>
 import $ from "jquery";
 import { defaultAvatarUrl } from "src/constants/user";
+import { formatToChinaDate } from "../../../../utils/date";
 export default {
-  props: ["username", "caption", "avatar"],
+  props: ["comment"],
   computed: {
     avatarUrl: function () {
-      return this.avatar ?? defaultAvatarUrl;
+      return this.comment.user.avatar ?? defaultAvatarUrl;
     },
   },
   methods: {
-    loveSVGFunction: function (e) {
+    formatToChinaDate,
+    loveSVGFunction(e) {
       e.currentTarget.classList.toggle("animate");
     },
-    lovePathFunction: function (e) {
+    lovePathFunction(e) {
       e.currentTarget.classList.toggle("active");
+    },
+    reply() {
+      alert("Reply");
     },
   },
   mounted() {
@@ -76,4 +86,10 @@ export default {
 };
 </script>
 <style src="src/assets/styles/post-caption.css">
+</style>
+<style>
+.subtitle {
+  color: grey;
+  font-size: 14px;
+}
 </style>

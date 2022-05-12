@@ -1,13 +1,7 @@
 <template>
   <div>
     <div class="list-comment p-4" ref="commentContainer" v-if="!!comments">
-      <CommentItem
-        v-for="c in comments"
-        :key="c._id"
-        :username="c.user.username"
-        :caption="c.content"
-        :avatar="c.user.avatar"
-      />
+      <CommentItem v-for="c in comments" :key="c._id" :comment="c" />
     </div>
     <div class="list-comment p-4" v-else>
       <v-skeleton-loader
@@ -111,6 +105,7 @@ export default {
   },
   async mounted() {
     this.comments = await this.getAllVideoComments();
+    console.log(this.comments);
     this.scrollToTop();
   },
 };

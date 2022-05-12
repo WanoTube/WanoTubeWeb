@@ -16,10 +16,17 @@
           clearable
           type="text"
           @click:append-outer="postComment"
-          @click:append="changeIcon"
+          @click:append="showEmojiPopup"
           @click:clear="clearComment"
         ></v-text-field>
       </v-form>
+    </div>
+    <div
+      class="emoji-popup"
+      v-if="isShowingPopup"
+      v-click-outside="clickOutsiteEmojiPopup"
+    >
+      <picker @select="selectEmoji" />
     </div>
   </div>
 </template>
@@ -32,8 +39,15 @@
 .v-input >>> .v-text-field__details {
   display: none;
 }
+.emoji-popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(50%, -100%);
+}
 </style>
 <script>
+import { Picker } from "emoji-mart-vue";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
 const VideoRepository = RepositoryFactory.get("video");
@@ -42,11 +56,21 @@ export default {
   data() {
     return {
       comment: "",
+      isShowingPopup: false,
     };
   },
+  components: {
+    Picker,
+  },
   methods: {
-    changeIcon() {
-      console.log("icon");
+    selectEmoji(emoji) {
+      this.comment += emoji.native;
+    },
+    showEmojiPopup() {
+      this.isShowingPopup = !this.isShowingPopup;
+    },
+    clickOutsiteEmojiPopup() {
+      if (this.isShowingPopup) this.isShowingPopup = false;
     },
     async postComment(e) {
       e.preventDefault();
