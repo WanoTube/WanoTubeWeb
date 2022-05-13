@@ -39,12 +39,15 @@
         {{ formatDate(item) }}
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-icon class="mx-2" @click="onEditButtonClick(item)">
+        <v-icon class="mr-4" @click="onEditButtonClick(item)">
           mdi-pencil
         </v-icon>
-        <v-icon class="mx-2" @click="onDeleteButtonClick(item)">
+        <v-icon class="mr-4 ml-4" @click="onDeleteButtonClick(item)">
           mdi-delete
         </v-icon>
+        <router-link :to="`/watch/${item._id}`" class="dec-none">
+          <v-icon class="mx-2"> mdi-presentation-play </v-icon>
+        </router-link>
       </template>
       <template v-slot:item.restriction="{ item }">
         <v-icon

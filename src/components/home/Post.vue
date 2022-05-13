@@ -1,5 +1,11 @@
 <template>
-  <div class="container post-card" style="padding: 0" v-cloak>
+  <div
+    class="container post-card"
+    style="padding: 0"
+    v-cloak
+    role="button"
+    @click="goToWatch"
+  >
     <div class="card non-border" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" :isPost="true" />
       <div class="card-text mt-2 mb-4 non-border">
@@ -30,6 +36,11 @@ export default {
         class: "mb-6",
       },
     };
+  },
+  methods: {
+    goToWatch: function (e) {
+      this.$router.push("/watch/" + this.video._id).catch(() => {});
+    },
   },
   watch: {
     video(val) {

@@ -1,5 +1,11 @@
 <template>
-  <div class="container post-card mb-4 mt-4" style="padding: 0" v-cloak>
+  <div
+    class="container post-card mb-4 mt-4"
+    style="padding: 0"
+    v-cloak
+    role="button"
+    @click="goToWatch"
+  >
     <div class="card non-border flex-row" style="background-color: transparent">
       <ThumbnailVideo :src="src" :video="video" :horizontal="true" />
       <div class="card-text container non-border">
@@ -31,6 +37,11 @@ export default {
         "min-height": 150,
       },
     };
+  },
+  methods: {
+    goToWatch: function (e) {
+      this.$router.push("/watch/" + this.video._id).catch(() => {});
+    },
   },
   watch: {
     video(val) {

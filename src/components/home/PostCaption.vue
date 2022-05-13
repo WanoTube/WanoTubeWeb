@@ -1,15 +1,13 @@
 <template>
   <div :class="`d-flex ${className}`">
-    <router-link :to="`/channel/${video.user.channel_id}`" v-if="showAvatar">
-      <div class="avatar">
-        <v-img
-          :src="avatarSrc"
-          width="42px"
-          height="42px"
-          class="img-responsive rounded-circle"
-        />
-      </div>
-    </router-link>
+    <div class="avatar" v-if="showAvatar" @click="goToChannel">
+      <v-img
+        :src="avatarSrc"
+        width="42px"
+        height="42px"
+        class="img-responsive rounded-circle"
+      />
+    </div>
     <div>
       <div class="row">
         <div
@@ -18,13 +16,13 @@
         >
           <b class="ellipsis-2 mb-1">{{ video.title }}</b>
           <div class="video-info">
-            <div v-if="showChannelName">
-              <router-link
-                :to="`/channel/${video.user.channel_id}`"
-                class="caption-title"
-              >
-                <div>{{ video.user.username }}</div>
-              </router-link>
+            <div
+              v-if="showChannelName"
+              @click="goToChannel"
+              class="caption-title"
+              role="button"
+            >
+              {{ video.user.username }}
             </div>
             <div>
               <span v-if="showViews">{{ video.total_views }} views</span>
@@ -119,6 +117,11 @@ export default {
     showDescriptionDialog() {
       this.isShowingDescriptionDialog = true;
     },
+    goToChannel(e) {
+      e.stopPropagation();
+      console.log("channel");
+      this.$router.push(`/channel/${this.video.user.channel_id}`);
+    },
   },
 };
 </script>
@@ -131,12 +134,10 @@ export default {
   color: gray;
 }
 .caption-title {
-  text-decoration: none;
-}
-.caption-title div {
   color: gray;
+  display: inline;
 }
-.caption-title div:hover {
+.caption-title:hover {
   color: black;
 }
 </style>

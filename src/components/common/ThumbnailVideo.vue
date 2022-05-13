@@ -1,10 +1,9 @@
 <template>
   <div
     class="card-body"
-    :style="`padding: 0; position: relative; cursor: pointer; width: ${
+    :style="`padding: 0; position: relative; width: ${
       horizontal ? '300px' : 'auto'
     }`"
-    @click="goToWatch"
   >
     <div @mouseover="onMouseOver">
       <v-img
@@ -91,9 +90,6 @@ export default {
   props: ["src", "video", "size", "isPost", "horizontal"],
   components: {},
   methods: {
-    goToWatch: function (e) {
-      this.$router.push("/watch/" + this.video._id).catch(() => {});
-    },
     watchLater(e) {
       e.stopPropagation();
       watchLaterRequest(this.video._id);
