@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto">
-    <v-navigation-drawer>
+    <v-navigation-drawer permanent>
       <v-list v-model="model">
         <v-list-item-group>
           <v-list-item

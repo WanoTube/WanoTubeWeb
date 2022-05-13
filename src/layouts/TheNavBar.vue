@@ -128,7 +128,6 @@ export default {
         },
       ],
       isAdmin: false,
-      avatarUrl: defaultAvatarUrl,
     };
   },
   components: {
@@ -194,6 +193,11 @@ export default {
         return this.items.filter(function (value, index, arr) {
           return index != 2;
         });
+    },
+    avatarUrl() {
+      return (
+        JSON.parse(localStorage.getItem("user")).avatar || defaultAvatarUrl
+      );
     },
   },
   created() {
