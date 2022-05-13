@@ -408,7 +408,7 @@ export default {
 }
 .video-thumbnail {
   width: 100%;
-  height: 250px;
+  aspect-ratio: 16/9;
 }
 .thumbnail-input {
   display: none;

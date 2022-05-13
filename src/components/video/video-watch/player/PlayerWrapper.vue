@@ -5,7 +5,12 @@
   >
     <div class="player-wrapper">
       <vue-plyr :options="playerOptions" ref="plyr">
-        <video controls playsinline :data-poster="video.thumbnail_url">
+        <video
+          class="player"
+          controls
+          playsinline
+          :data-poster="video.thumbnail_url"
+        >
           <source size="720" :src="video.url" type="video/mp4" />
         </video>
       </vue-plyr>
@@ -64,6 +69,10 @@ export default {
 <style>
 .player-wrapper {
   width: 100%;
-  height: 600px;
+  background: red;
+}
+.player {
+  width: 100%;
+  aspect-ratio: 16/9;
 }
 </style>
