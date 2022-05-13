@@ -4,6 +4,7 @@ export const useVideoStore = defineStore("video", {
   state: () => {
     return {
       uploadedVideo: "",
+      videoTags: [],
     }
   },
   actions: {
@@ -14,5 +15,9 @@ export const useVideoStore = defineStore("video", {
     uploadVideo(video) {
       this.uploadedVideo = video;
     },
+
+    getVideoTags(tags) {
+      this.videoTags = tags;
+    }
   },
 })

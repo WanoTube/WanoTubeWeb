@@ -10,13 +10,21 @@
 <script>
 import TheNavBar from "src/layouts/TheNavBar.vue";
 import { useUserStore } from "./store/user";
-import { getWatchLaterVideosRequest } from "./utils/http/videoRequest";
+import { useVideoStore } from "./store/video";
+import {
+  getWatchLaterVideosRequest,
+  getVideoTags,
+} from "./utils/http/videoRequest";
 import { getFollowInfoRequest } from "./utils/http/userRequest";
 export default {
   setup() {
     const userStore = useUserStore();
     const { getWatchLaterVideos, getFollowInfo } = userStore;
-    return { getWatchLaterVideos, getFollowInfo };
+
+    const videoStore = useVideoStore();
+    const { getVideoTags } = videoStore;
+
+    return { getWatchLaterVideos, getFollowInfo, getVideoTags };
   },
   components: {
     TheNavBar,
@@ -24,8 +32,10 @@ export default {
   async created() {
     const { followings, number_of_followers } = await getFollowInfoRequest();
     this.getFollowInfo(followings, number_of_followers);
-    const watchLaterVideosData = await getWatchLaterVideosRequest();
-    this.getWatchLaterVideos(watchLaterVideosData.videos);
+    const { videos } = await getWatchLaterVideosRequest();
+    this.getWatchLaterVideos(videos);
+    const { tags } = await getVideoTags();
+    this.getVideoTags(tags);
   },
 };
 </script>

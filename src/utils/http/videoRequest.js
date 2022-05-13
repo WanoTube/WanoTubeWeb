@@ -40,4 +40,8 @@ export const getWatchLaterVideosRequest = (videoId) => {
   return httpRequest({ endpoint: `/videos/watch-later`, requireToken: true });
 }
 
+export const getVideoTags = () => {
+  console.log("Get Video Tags");
+  return httpRequest({ endpoint: `/videos/tags` });
+}
 
