@@ -106,11 +106,14 @@ export default {
         author_id: userInfo._id,
       });
       // this.$refs.commentItemsRef.map((ref) => ref.comment);
-      const commentItem = this.$refs.commentItemsRef.find((ref) => {
-        return ref.comment._id === comment.reply_to;
-      });
-      commentItem.viewMoreReplies();
-      if (!comment.is_reply) this.comments.unshift(comment);
+      if (comment.is_reply) {
+        const commentItem = this.$refs.commentItemsRef.find((ref) => {
+          return ref.comment._id === comment.reply_to;
+        });
+        commentItem.viewMoreReplies();
+      } else {
+        this.comments.unshift(comment);
+      }
     },
   },
   async mounted() {
