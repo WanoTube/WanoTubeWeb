@@ -47,7 +47,7 @@ export default {
       this.duration = val.duration;
     },
   },
-  created: function () {
+  created() {
     this.src = this.video.thumbnail_url;
   },
 };

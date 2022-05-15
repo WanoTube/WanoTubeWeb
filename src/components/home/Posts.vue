@@ -2,6 +2,7 @@
   <div
     class="row m-4 d-flex flex-column vertical-scrollable"
     style="overflow-y: scroll"
+    @scroll="onScroll"
   >
     <div style="width: 100%" class="posts-list">
       <div v-for="video in videos" :key="video.tittle">
@@ -11,7 +12,7 @@
   </div>
 </template>
 <script>
-import { getFeedRequest } from "../../utils/http/videoRequest";
+import { getFeedRequest } from "src/utils/http/videoRequest";
 
 import Post from "./Post.vue";
 export default {
@@ -23,9 +24,21 @@ export default {
   components: {
     Post,
   },
-  created: async function () {
-    const { videos } = await getFeedRequest();
-    this.videos = videos;
+  methods: {
+    async loadMorePosts() {
+      const { videos } = await getFeedRequest();
+      this.videos = [...this.videos, ...videos];
+    },
+    onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      const reachEndOfDiv = scrollTop + clientHeight >= scrollHeight;
+      if (reachEndOfDiv) {
+        this.loadMorePosts();
+        console.log("End");
+      }
+    },
+  },
+  async created() {
+    this.loadMorePosts();
   },
 };
 </script>
