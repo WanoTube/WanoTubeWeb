@@ -16,7 +16,7 @@
                 {{ channel.username }}
               </h4>
               <h6 class="followers">
-                {{ channel.number_of_followers }} followers
+                {{ formatSuffixNumber(channel.number_of_followers) }} followers
               </h6>
             </div>
           </div>
@@ -52,6 +52,7 @@ import {
   getAllChannelPublicVideosRequest,
   getChannelPublicInformationRequest,
 } from "src/utils/http/videoRequest";
+import { formatSuffixNumber } from "src/utils/number";
 import ChannelPost from "./ChannelPost.vue";
 
 export default {
@@ -64,7 +65,9 @@ export default {
       videos: [],
     };
   },
-
+  methods: {
+    formatSuffixNumber,
+  },
   async created() {
     try {
       const { channelId } = this.$route.params;
