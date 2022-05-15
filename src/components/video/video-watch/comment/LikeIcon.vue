@@ -60,14 +60,15 @@
         </filter>
       </defs>
     </svg>
-    <span class="numbers">{{ likes }}</span>
+    <span class="numbers">{{ formatSuffixNumber(likes) }}</span>
   </div>
 </template>
 
 <script>
+import $ from "jquery";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "src/utils/utils";
-import $ from "jquery";
+import { formatSuffixNumber } from "src/utils/number";
 
 const VideoRepository = RepositoryFactory.get("video");
 
@@ -79,6 +80,7 @@ export default {
     };
   },
   methods: {
+    formatSuffixNumber,
     async postLikeVideo() {
       const userInfo = JSON.parse(localStorage.getItem("user"));
       if (!userInfo) return;

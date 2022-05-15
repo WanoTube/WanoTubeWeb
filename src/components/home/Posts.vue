@@ -1,15 +1,17 @@
 <template>
-  <div class="row vertical-scrollable p-4 m-1" style="overflow-y: scroll">
-    <div v-for="video in videos" :key="video.tittle" class="col-md-3">
-      <Post :video="video" />
+  <div
+    class="row m-4 d-flex flex-column vertical-scrollable"
+    style="overflow-y: scroll"
+  >
+    <div style="width: 100%" class="posts-list">
+      <div v-for="video in videos" :key="video.tittle">
+        <Post :video="video" />
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
-import { convertJSONToObject } from "src/utils/utils";
 import { getFeedRequest } from "../../utils/http/videoRequest";
-const UsersRepository = RepositoryFactory.get("users");
 
 import Post from "./Post.vue";
 export default {
@@ -27,3 +29,11 @@ export default {
   },
 };
 </script>
+<style>
+.posts-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 30px;
+}
+</style>

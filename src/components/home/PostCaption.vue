@@ -25,7 +25,9 @@
               {{ channelUsername }}
             </div>
             <div>
-              <span v-if="showViews">{{ video.total_views }} views</span>
+              <span v-if="showViews"
+                >{{ formatSuffixNumber(video.total_views) }} views</span
+              >
               <span v-if="showCreatedDate">
                 • {{ formatToChinaDate(video.created_at) }}</span
               >
@@ -62,6 +64,7 @@
 <script>
 import { defaultAvatarUrl } from "src/constants/user";
 import { formatToChinaDate } from "src/utils/date";
+import { formatSuffixNumber } from "src/utils/number";
 
 export default {
   props: {
@@ -117,12 +120,12 @@ export default {
   },
   methods: {
     formatToChinaDate,
+    formatSuffixNumber,
     showDescriptionDialog() {
       this.isShowingDescriptionDialog = true;
     },
     goToChannel(e) {
       e.stopPropagation();
-      console.log("channel");
       this.$router.push(`/channel/${this.video.user.channel_id}`);
     },
   },

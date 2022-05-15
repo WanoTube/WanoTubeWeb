@@ -62,11 +62,15 @@
         </filter>
       </defs>
     </svg>
-    <span class="numbers">{{ totalComments }}</span>
+    <span class="numbers">{{ formatSuffixNumber(totalComments) }}</span>
   </div>
 </template>
 <script>
+import { formatSuffixNumber } from "src/utils/number";
 export default {
   props: ["totalComments"],
+  methods: {
+    formatSuffixNumber,
+  },
 };
 </script>
