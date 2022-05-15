@@ -22,7 +22,7 @@
               class="caption-title"
               role="button"
             >
-              {{ video.user.username }}
+              {{ channelUsername }}
             </div>
             <div>
               <span v-if="showViews">{{ video.total_views }} views</span>
@@ -107,9 +107,12 @@ export default {
     };
   },
   computed: {
-    avatarSrc: function () {
+    avatarSrc() {
       if (!this.video.user) return defaultAvatarUrl;
       return this.video.user.avatar;
+    },
+    channelUsername() {
+      return this.video.user?.username;
     },
   },
   methods: {

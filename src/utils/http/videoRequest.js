@@ -40,8 +40,18 @@ export const getWatchLaterVideosRequest = (videoId) => {
   return httpRequest({ endpoint: `/videos/watch-later`, requireToken: true });
 }
 
-export const getVideoTags = () => {
+export const getVideoTagsRequest = () => {
   console.log("Get Video Tags");
   return httpRequest({ endpoint: `/videos/tags` });
 }
 
+export const getFeedRequest = () => {
+  console.log("Get Feed");
+  return httpRequest({ endpoint: `/videos/feed` });
+}
+
+export const getVideoSuggestionRequest = (videoId) => {
+  console.log("Get Video Suggestion");
+  return httpRequest({ endpoint: `/videos/${videoId}/suggestion` });
+
+}

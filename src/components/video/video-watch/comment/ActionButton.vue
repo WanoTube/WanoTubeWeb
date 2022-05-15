@@ -39,7 +39,7 @@ export default {
       unfollowChannel,
     };
   },
-  props: ["channelId", "videoId"],
+  props: ["video"],
   data() {
     return {
       follow: false,
@@ -59,10 +59,13 @@ export default {
     },
     navigateToEditVideo() {
       const { username } = JSON.parse(localStorage.getItem("user"));
-      this.$router.push(`/${username}/videos/${this.videoId}`);
+      this.$router.push(`/${username}/videos/${this.video._id}`);
     },
   },
   computed: {
+    channelId() {
+      return this.video.user?.channel_id;
+    },
     isCreator() {
       return (
         this.channelId === JSON.parse(localStorage.getItem("user")).channelId

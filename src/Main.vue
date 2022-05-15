@@ -13,7 +13,7 @@ import { useUserStore } from "./store/user";
 import { useVideoStore } from "./store/video";
 import {
   getWatchLaterVideosRequest,
-  getVideoTags,
+  getVideoTagsRequest,
 } from "./utils/http/videoRequest";
 import { getFollowInfoRequest } from "./utils/http/userRequest";
 export default {
@@ -34,7 +34,7 @@ export default {
     this.getFollowInfo(followings, number_of_followers);
     const { videos } = await getWatchLaterVideosRequest();
     this.getWatchLaterVideos(videos);
-    const { tags } = await getVideoTags();
+    const { tags } = await getVideoTagsRequest();
     this.getVideoTags(tags);
   },
 };
