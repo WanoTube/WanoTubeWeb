@@ -41,21 +41,23 @@ export default {
   },
   methods: {
     async getVideo(id) {
+      this.loading = true;
       try {
         const { data } = await VideoRepository.getVideoById(id);
         if (data) {
           const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
             if (dataObject.url) {
+              this.loading = false;
               return dataObject;
             }
           }
         }
         return null;
       } catch (error) {
-        if (error.response.status === 400) {
+        if (error.response?.status === 400) {
           this.noVideoFound = true;
-          console.log(error.response);
+          this.loading = false;
           this.unavailableVideoMessage = error.response.data.message;
         }
       }

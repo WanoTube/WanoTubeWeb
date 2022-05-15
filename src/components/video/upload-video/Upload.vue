@@ -1,6 +1,5 @@
 <template>
   <div class="upload-video bg-white h-100">
-    <TheNavBar />
     <div class="container">
       <br /><br /><br />
       <v-btn class="ma-2 elevation-0" color="white" @click="backToVideos">
@@ -47,13 +46,11 @@
 </style>
 
 <script>
-import TheNavBar from "src/layouts/TheNavBar.vue";
 import UploadStepOne from "./UploadStepOne.vue";
 import UploadStepTwo from "./UploadStepTwo.vue";
 
 export default {
   components: {
-    TheNavBar,
     UploadStepOne,
     UploadStepTwo,
   },

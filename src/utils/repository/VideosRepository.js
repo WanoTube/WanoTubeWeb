@@ -2,13 +2,6 @@ import Repository from "./Repository";
 
 const resource = "/videos";
 
-const header = JSON.parse(localStorage.getItem('token'));
-const config = {
-	headers: {
-		"authorization": `Bear ${header ? header : ""}`
-	}
-}
-
 function get() {
 	return Repository.get(`${resource}`);
 }
@@ -18,18 +11,42 @@ function getAllPublicVideoInfos() {
 }
 
 function getVideoById(video_id) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
 	return Repository.get(`${resource}/${video_id}`, config);
 }
 
 function uploadVideo(payload) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
 	return Repository.post(`${resource}/upload`, payload, config);
 }
 
 function updateVideo(payload) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
 	return Repository.patch(`${resource}/update`, payload, config);
 }
 
 function deleteVideo(payload) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
 	return Repository.post(`${resource}/delete/`, payload, config);
 }
 
@@ -58,6 +75,12 @@ function getVideoTotalComments(videoId) {
 }
 
 function commentVideo(payload) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
 	return Repository.post(`${resource}/comment/`, payload, config);
 }
 

@@ -1,7 +1,21 @@
 <template>
   <div>
     <br /><br /><br />
-    <div class="container">
+    <v-row
+      class="fill-height ma-0"
+      align="center"
+      justify="center"
+      v-if="loading"
+    >
+      <v-progress-circular
+        indeterminate
+        color="grey lighten-5"
+      ></v-progress-circular>
+    </v-row>
+    <div v-else-if="noVideoFound">
+      <UnavailableVideo :message="unavailableVideoMessage" />
+    </div>
+    <div class="container" v-else>
       <v-btn tile color="transparent" @click="backToVideos">
         <v-icon left> mdi-arrow-left </v-icon>
         Back to videos
@@ -179,6 +193,7 @@
 <script>
 import { storeToRefs } from "pinia";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
+import UnavailableVideo from "../../../components/video/video-watch/UnavailableVideo.vue";
 import { convertJSONToObject } from "src/utils/utils";
 import { appUrl } from "src/constants/system";
 import { useVideoStore } from "src/store/video";
@@ -191,6 +206,7 @@ export default {
   components: {
     ShowRecognitionResult,
     ThumbnailUploader,
+    UnavailableVideo,
   },
   setup() {
     const videoStore = useVideoStore();
@@ -222,22 +238,29 @@ export default {
         recognitionResult: {},
       },
       thumbnailList: [],
+      loading: true,
+      noVideoFound: false,
+      unavailableVideoMessage: false,
     };
   },
   methods: {
     async getVideo() {
       try {
+        this.loading = true;
         const { data } = await VideoRepository.getVideoById(this.video_id);
         if (data) {
           const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {
+            this.loading = false;
             return dataObject;
           }
         }
         return null;
       } catch (error) {
-        if (error.response) {
-          alert(error.response.data);
+        if (error.response?.status === 400) {
+          this.noVideoFound = true;
+          this.loading = false;
+          this.unavailableVideoMessage = error.response.data.message;
         }
       }
     },
@@ -296,6 +319,7 @@ export default {
     },
   },
   async created() {
+    this.loading = false;
     this.video = await this.getVideo();
     if (this.video) {
       this.title = this.video.title;
@@ -338,7 +362,7 @@ export default {
       }
     },
     isUpdated: function () {
-      if (!this || !this.video) return false;
+      if (!this.video) return false;
       return (
         this.title !== this.video.title ||
         this.description !== this.video.description ||
@@ -355,6 +379,7 @@ export default {
   },
   watch: {
     isUpdated: function (val) {
+      if (this.loading) return;
       const btnReset = document.getElementById("btn-reset");
       const btnSave = document.getElementById("btn-save");
       if (val) {

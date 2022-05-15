@@ -2,14 +2,13 @@ import Repository from "./Repository";
 
 const resource = "/users";
 
-const header = JSON.parse(localStorage.getItem('token'));
-const config = {
-	headers: {
-		"Authorization": `Bear ${header}`
-	}
-}
-
 function get() {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"Authorization": `Bear ${header}`
+		}
+	}
 	return Repository.get(`${resource}`, config);
 }
 

@@ -121,8 +121,8 @@ export default {
         console.log("Create");
         const formData = new FormData();
         const user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
         formData.append("video", file);
-        formData.append("author_id", user._id);
         formData.append("duration", duration);
         try {
           const { data } = await VideoRepository.uploadVideo(formData);
