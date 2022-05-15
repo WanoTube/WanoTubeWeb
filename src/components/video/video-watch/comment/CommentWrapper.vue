@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 order-1 order-sm-2">
     <div class="card non-border h-100">
-      <CommentWrapperHeader :video="video" />
+      <CommentWrapperHeader v-if="video.user" :video="video" />
       <CommentList ref="commentSection" />
       <CommentInput @addToCommentList="postedComment = $event" />
     </div>
