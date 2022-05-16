@@ -17,7 +17,11 @@
         <v-toolbar>
           <h4>Upload your video</h4>
         </v-toolbar>
-        <progress-bar v-if="progressStatus" :val="progressVal"></progress-bar>
+        <progress-bar
+          v-if="uploadProgressStatus"
+          :val="uploadProgressValue"
+        ></progress-bar>
+        <div style="text-align: center">{{ uploadProgressStatus }}</div>
         <video id="video-drag" style="display: none"></video>
         <UploadVideoInput @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
@@ -29,10 +33,9 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+import { storeToRefs } from "pinia";
 import ProgressBar from "vue-simple-progress";
 
-import { serverUrl } from "src/constants/system";
 import { getArrayWithoutLastElement } from "src/utils/array";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
 import { useVideoStore } from "src/store/video";
@@ -44,7 +47,15 @@ export default {
   setup() {
     const videoStore = useVideoStore();
     const { uploadedVideo, uploadVideo, removeVideo } = videoStore;
-    return { uploadedVideo, uploadVideo, removeVideo };
+    const { uploadProgressStatus, uploadProgressValue } =
+      storeToRefs(videoStore);
+    return {
+      uploadedVideo,
+      uploadVideo,
+      removeVideo,
+      uploadProgressStatus,
+      uploadProgressValue,
+    };
   },
   components: {
     UploadVideoInput,
@@ -53,12 +64,6 @@ export default {
   data() {
     return {
       videoFile: null,
-      socket: io(serverUrl, {
-        withCredentials: true,
-        transports: ["polling"],
-      }),
-      progressVal: 0,
-      progressStatus: "",
     };
   },
   computed: {
@@ -121,7 +126,6 @@ export default {
         console.log("Create");
         const formData = new FormData();
         const user = JSON.parse(localStorage.getItem("user"));
-        console.log(user);
         formData.append("video", file);
         formData.append("duration", duration);
         try {
@@ -140,52 +144,9 @@ export default {
         throw new Error("Please input all the require fields");
       }
     },
-
-    async trackingUploadProgress() {
-      const vm = this;
-      const token = JSON.parse(localStorage.getItem("token"));
-      this.socket.auth = { token };
-      this.socket.on("connect", () => {
-        // this.socket.on("Compress v ideo", function (progress) {
-        //   vm.progressStatus = "Start compressing video";
-        //   if (progress) {
-        //     console.log("Compress video: " + progress.percent + "%");
-        //     vm.progressVal = progress.percent;
-        //   } else {
-        //     console.log("Non progress");
-        //   }
-        // });
-
-        // this.socket.on("Convert to Webm Format", function (progress) {
-        //   vm.progressStatus = "Start converting to webm format";
-        //   if (progress) {
-        //     console.log("Convert to Webm Format: " + progress.percent + " %");
-        //     vm.progressVal = progress.percent;
-        //   } else {
-        //     console.log("Non progress");
-        //   }
-        // });
-
-        this.socket.on("Convert to audio", function (progress) {
-          console.log("Convert to audio: " + progress.percent + " %");
-        });
-
-        this.socket.on("Upload to S3", function (progressPercentage) {
-          if (progressPercentage < 100) vm.progressStatus = "Uploading ...";
-          else vm.progressStatus = "Upload to storage completed!";
-
-          if (progressPercentage) {
-            console.log("Upload to S3: " + progressPercentage + "%");
-            vm.progressVal = progressPercentage;
-          } else {
-            console.log("Non progress");
-          }
-        });
-      });
-    },
   },
   watch: {
-    videoFile: function (file) {
+    videoFile(file) {
       if (file) {
         this.uploadVideo(file);
         this.readVideoDuration(
@@ -196,9 +157,6 @@ export default {
         );
       }
     },
-  },
-  mounted() {
-    this.trackingUploadProgress();
   },
 };
 </script>

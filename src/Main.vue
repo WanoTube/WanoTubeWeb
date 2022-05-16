@@ -22,9 +22,9 @@ export default {
     const { getWatchLaterVideos, getFollowInfo } = userStore;
 
     const videoStore = useVideoStore();
-    const { getVideoTags } = videoStore;
+    const { getVideoTags, connectSocket } = videoStore;
 
-    return { getWatchLaterVideos, getFollowInfo, getVideoTags };
+    return { getWatchLaterVideos, getFollowInfo, getVideoTags, connectSocket };
   },
   components: {
     TheNavBar,
@@ -36,6 +36,8 @@ export default {
     this.getWatchLaterVideos(videos);
     const { tags } = await getVideoTagsRequest();
     this.getVideoTags(tags);
+
+    this.connectSocket();
   },
 };
 </script>
