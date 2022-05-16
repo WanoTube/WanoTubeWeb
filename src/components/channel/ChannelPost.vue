@@ -7,7 +7,7 @@
     v-cloak
   >
     <div class="card non-border" style="background-color: transparent">
-      <ThumbnailVideo :src="src" :video="video" />
+      <ThumbnailVideo :video="video" />
       <div class="card-text non-border">
         <PostCaption
           :video="video"
