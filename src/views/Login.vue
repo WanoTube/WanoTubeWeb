@@ -87,9 +87,16 @@
 <script>
 import { RepositoryFactory } from "../utils/repository/RepositoryFactory";
 import { convertJSONToObject } from "../utils/utils";
+import { useVideoStore } from "../store/video";
 const UsersRepository = RepositoryFactory.get("auth");
 
 export default {
+  setup() {
+    const videoStore = useVideoStore();
+    const { connectSocket } = videoStore;
+
+    return { connectSocket };
+  },
   data() {
     return {
       isLoading: false,
@@ -122,6 +129,7 @@ export default {
             if (this.$route.params.nextUrl != null) {
               this.$router.push(this.$route.params.nextUrl);
             } else {
+              this.connectSocket();
               if (isAdmin == 1) {
                 this.$router.push("users");
               } else {

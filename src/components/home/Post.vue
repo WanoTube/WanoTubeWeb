@@ -7,7 +7,7 @@
     @click="goToWatch"
   >
     <div class="card non-border" style="background-color: transparent">
-      <ThumbnailVideo :src="src" :video="video" :isPost="true" />
+      <ThumbnailVideo :video="video" :isPost="true" />
       <div class="card-text mt-2 mb-4 non-border">
         <PostCaption
           :video="video"

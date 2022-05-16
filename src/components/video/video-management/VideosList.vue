@@ -36,7 +36,7 @@
         <span v-else-if="item.visibility == 2">Unpublic</span>
       </template>
       <template v-slot:item.created_at="{ item }">
-        {{ formatDate(item) }}
+        {{ formatDate(item.created_at) }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-icon class="mr-4" @click="onEditButtonClick(item)">
@@ -171,6 +171,11 @@ export default {
     //TO-DO: Check if videos is null
     const { videos } = await getAllChannelVideosRequest();
     this.videos = videos;
+    console.log(
+      videos.map((video) =>
+        moment(video.created_at).format("DD-MM-YYYY hh:mm:ss")
+      )
+    );
     if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };

@@ -7,7 +7,7 @@
     @click="goToWatch"
   >
     <div class="card non-border flex-row" style="background-color: transparent">
-      <ThumbnailVideo :src="src" :video="video" :horizontal="true" />
+      <ThumbnailVideo :video="video" :horizontal="true" />
       <div class="card-text container non-border">
         <PostCaption
           :video="video"

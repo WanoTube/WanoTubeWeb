@@ -87,7 +87,7 @@ export default {
       removeFromWatchLaterVideos,
     };
   },
-  props: ["src", "video", "size", "isPost", "horizontal"],
+  props: ["video", "isPost", "horizontal"],
   components: {},
   methods: {
     watchLater(e) {
@@ -117,7 +117,6 @@ export default {
         controls: ["progress", "current-time"],
         settings: ["quality", "speed", "loop"],
       },
-      thumbnailUrl: this.video.thumbnail_url,
     };
   },
   computed: {
@@ -126,6 +125,9 @@ export default {
     },
     isInWatchLaterLlist() {
       return !!this.watchLaterVideos.find((vid) => vid._id === this.video._id);
+    },
+    thumbnailUrl() {
+      return this.video.thumbnail_url;
     },
   },
   created: function () {
