@@ -171,11 +171,6 @@ export default {
     //TO-DO: Check if videos is null
     const { videos } = await getAllChannelVideosRequest();
     this.videos = videos;
-    console.log(
-      videos.map((video) =>
-        moment(video.created_at).format("DD-MM-YYYY hh:mm:ss")
-      )
-    );
     if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };
