@@ -15,7 +15,7 @@
         </video>
       </vue-plyr>
     </div>
-    <SuggesttedVideos />
+    <SuggesttedVideos :video="video" />
   </div>
 </template>
 <script>
