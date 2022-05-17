@@ -15,7 +15,14 @@
         >
           <div class="row no-gutters">
             <div class="col-sm-5 p-2" style="height: 100%">
-              <ThumbnailVideo :video="item" />
+              <ThumbnailVideo
+                :video="{
+                  ...item,
+                  thumbnail_url: processingVideos[item._id].thumbnailUrl,
+                }"
+                v-if="doesAttachUploadedThumbnail(item)"
+              />
+              <ThumbnailVideo :video="item" v-else />
             </div>
             <div class="col-sm-7">
               <div class="card-body">
@@ -31,9 +38,7 @@
         </div>
       </template>
       <template v-slot:item.visibility="{ item }">
-        <span v-if="item.visibility == 0">Public</span>
-        <span v-else-if="item.visibility == 1">Private</span>
-        <span v-else-if="item.visibility == 2">Unpublic</span>
+        <span>{{ renderVisibility(item) }}</span>
       </template>
       <template v-slot:item.created_at="{ item }">
         {{ formatDate(item.created_at) }}
@@ -50,13 +55,14 @@
         </router-link>
       </template>
       <template v-slot:item.restriction="{ item }">
-        <v-icon
+        <!-- <v-icon
           v-if="item.recognition_result"
           class="mx-2"
           @click="onViewRecognitionResult(item)"
           >mdi-alert-circle</v-icon
         >
-        <v-icon v-else class="mx-2">mdi-check-circle</v-icon>
+        <v-icon v-else class="mx-2">mdi-check-circle</v-icon> -->
+        <span> {{ renderRestriction(item) }} </span>
       </template>
     </v-data-table>
     <DeleteConfirmation
@@ -73,13 +79,20 @@
 
 <script>
 import moment from "moment";
+import { storeToRefs } from "pinia";
+
 import { getAllChannelVideosRequest } from "src/utils/http/videoRequest";
 import ThumbnailVideo from "src/components/common/ThumbnailVideo.vue";
+import { useVideoStore } from "src/store/video";
 import DeleteConfirmation from "./DeleteConfirmation.vue";
 import ShowRecognitionResult from "./ShowRecognitionResult.vue";
 
 export default {
-  props: [],
+  setup() {
+    const videoStore = useVideoStore();
+    const { processingVideos } = storeToRefs(videoStore);
+    return { processingVideos };
+  },
   components: {
     ThumbnailVideo,
     DeleteConfirmation,
@@ -139,7 +152,6 @@ export default {
 
   methods: {
     onEditButtonClick(row) {
-      const { username } = this.userInfo;
       this.$router.push({ path: `/videos/${row._id}` });
     },
 
@@ -160,6 +172,49 @@ export default {
       const { videos } = await getAllChannelVideosRequest();
       this.videos = videos;
     },
+    renderVisibility(item) {
+      // render upload or process status
+      const processingVideo = this.processingVideos[item._id];
+      if (
+        processingVideo &&
+        processingVideo.type === "Process" &&
+        !processingVideo.complete
+      )
+        return processingVideo.message;
+
+      switch (parseInt(item.visibility)) {
+        case 0:
+          return "Public";
+        case 1:
+          return "Private";
+        case 2:
+          return "Unpublic";
+        default:
+          return "Public";
+      }
+    },
+    renderRestriction(item) {
+      // render upload or process status
+      const processingVideo = this.processingVideos[item._id];
+      if (processingVideo) {
+        if (processingVideo.type === "Check") {
+          if (processingVideo.complete) {
+            return processingVideo.recognizedMusic ? "Copyright claim" : "None";
+          } else {
+            return processingVideo.message;
+          }
+        } else return "";
+      }
+      return item.recognition_result ? "Copyright claim" : "None";
+    },
+    doesAttachUploadedThumbnail(item) {
+      return (
+        this.processingVideos[item._id] &&
+        ((this.processingVideos[item._id].type === "Process" &&
+          this.processingVideos[item._id].complete) ||
+          this.processingVideos[item._id].type === "Check")
+      );
+    },
   },
   computed: {
     userInfo() {
@@ -168,10 +223,8 @@ export default {
     },
   },
   async mounted() {
-    //TO-DO: Check if videos is null
     const { videos } = await getAllChannelVideosRequest();
     this.videos = videos;
-    if (this.videos.length === 0) this.isImageLoaded = true;
   },
 };
 </script>

@@ -47,13 +47,14 @@ export const useVideoStore = defineStore("video", {
           this.processingVideos = tempProcessingVideos;
         });
 
-        this.socket.on("process-completed", ({ videoId }) => {
+        this.socket.on("process-completed", ({ videoId, thumbnailUrl }) => {
           const videoInfo = {
             ...this.processingVideos[videoId],
             type: "Process",
             progress: 100,
             message: "Processes complete.",
             complete: true,
+            thumbnailUrl
           }
           const tempProcessingVideos = { ...this.processingVideos };
           tempProcessingVideos[videoId] = videoInfo;
@@ -73,13 +74,14 @@ export const useVideoStore = defineStore("video", {
           this.processingVideos = tempProcessingVideos;
         });
 
-        this.socket.on("recognized-completed", ({ videoId }) => {
+        this.socket.on("recognized-completed", ({ videoId, recognizedMusic }) => {
           const videoInfo = {
             ...this.processingVideos[videoId],
             type: "Check",
             progress: 100,
             message: "Checks complete.",
             complete: true,
+            recognizedMusic
           }
           const tempProcessingVideos = { ...this.processingVideos };
           tempProcessingVideos[videoId] = videoInfo;

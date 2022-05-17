@@ -10,16 +10,25 @@
         <div class="helper"></div>
         <label class="btn display-inline">
           <v-icon size="100">mdi-cloud-upload</v-icon>
-          <p class="padding-20">
-            Drag and drop files from your computer, or
-            <b class="text-primary">browse files</b>
-          </p>
-          <input
-            type="file"
-            name="video"
-            @change="onChange"
-            accept="video/mp4,video/x-m4v,video/quicktime,video/*"
-          />
+          <div v-if="!isUploading">
+            <p class="padding-20">
+              Drag and drop files from your computer, or
+              <b class="text-primary">browse files</b>
+            </p>
+            <input
+              type="file"
+              name="video"
+              @change="onChange"
+              accept="video/mp4,video/x-m4v,video/quicktime,video/*"
+            />
+          </div>
+          <div v-else>
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              :size="100"
+            ></v-progress-circular>
+          </div>
         </label>
       </div>
     </div>
@@ -30,7 +39,7 @@
 export default {
   data() {
     return {
-      mulableVideo: {},
+      mutableVideo: null,
     };
   },
   methods: {
@@ -38,18 +47,17 @@ export default {
       e.stopPropagation();
       e.preventDefault();
       const files = e.dataTransfer.files;
-      this.mulableVideo = files[0];
-      if (this.mulableVideo) {
-        console.log("Hi file");
-        this.$emit("videoWasUpdated", this.mulableVideo);
+      this.mutableVideo = files[0];
+      if (this.mutableVideo) {
+        this.$emit("videoWasUpdated", this.mutableVideo);
         this.$emit("onContinue", 2);
       }
     },
     onChange(e) {
       const files = e.target.files;
-      this.mulableVideo = files[0];
-      if (this.mulableVideo) {
-        this.$emit("videoWasUpdated", this.mulableVideo);
+      this.mutableVideo = files[0];
+      if (this.mutableVideo) {
+        this.$emit("videoWasUpdated", this.mutableVideo);
         this.$emit("onContinue", 2);
       }
     },
@@ -58,6 +66,11 @@ export default {
     },
     onReturn() {
       this.$router.push({ path: `/` });
+    },
+  },
+  computed: {
+    isUploading() {
+      return !!this.mutableVideo;
     },
   },
 };
