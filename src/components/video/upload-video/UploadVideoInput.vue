@@ -40,6 +40,7 @@ export default {
       const files = e.dataTransfer.files;
       this.mulableVideo = files[0];
       if (this.mulableVideo) {
+        console.log("Hi file");
         this.$emit("videoWasUpdated", this.mulableVideo);
         this.$emit("onContinue", 2);
       }

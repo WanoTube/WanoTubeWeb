@@ -27,7 +27,7 @@ function uploadVideo(payload) {
 			"authorization": `Bear ${header ? header : ""}`
 		}
 	}
-	return Repository.post(`${resource}/upload`, payload, config);
+	return Repository.post(`${resource}`, payload, config);
 }
 
 function updateVideo(payload) {
