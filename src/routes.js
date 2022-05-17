@@ -145,7 +145,7 @@ export const routes = [
 				}
 			},
 			{
-				path: '/:username/videos/:id',
+				path: '/videos/:id',
 				component: VideoDetails,
 				meta: {
 					requireAuth: true

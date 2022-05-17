@@ -112,7 +112,7 @@ export default {
             const { _id } = await createVideoFn(file, this.duration);
 
             router.push({
-              path: `/${userInfo.username}/videos/${_id}`,
+              path: `/videos/${_id}`,
             });
           };
           videoDragEl.load();

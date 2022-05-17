@@ -140,7 +140,7 @@ export default {
   methods: {
     onEditButtonClick(row) {
       const { username } = this.userInfo;
-      this.$router.push({ path: `/${username}/videos/${row._id}` });
+      this.$router.push({ path: `/videos/${row._id}` });
     },
 
     onDeleteButtonClick(row) {

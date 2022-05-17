@@ -33,7 +33,6 @@ export default {
   async created() {
     const { followingChannels } = await getFollowingChannelsRequest();
     this.followingChannels = followingChannels;
-    console.log(this.followingChannels);
   },
 };
 </script>
