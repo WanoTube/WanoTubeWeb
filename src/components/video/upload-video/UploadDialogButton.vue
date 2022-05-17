@@ -17,11 +17,11 @@
         <v-toolbar>
           <h4>Upload your video</h4>
         </v-toolbar>
-        <progress-bar
+        <!-- <progress-bar
           v-if="uploadProgressStatus"
           :val="uploadProgressValue"
         ></progress-bar>
-        <div style="text-align: center">{{ uploadProgressStatus }}</div>
+        <div style="text-align: center">{{ uploadProgressStatus }}</div> -->
         <video id="video-drag" style="display: none"></video>
         <UploadVideoInput @videoWasUpdated="videoFile = $event" />
         <v-card-actions class="justify-end">
@@ -34,7 +34,7 @@
 
 <script>
 import { storeToRefs } from "pinia";
-import ProgressBar from "vue-simple-progress";
+// import ProgressBar from "vue-simple-progress";
 
 import { getArrayWithoutLastElement } from "src/utils/array";
 import { RepositoryFactory } from "src/utils/repository/RepositoryFactory";
@@ -46,20 +46,22 @@ const VideoRepository = RepositoryFactory.get("video");
 export default {
   setup() {
     const videoStore = useVideoStore();
-    const { uploadedVideo, uploadVideo, removeVideo } = videoStore;
-    const { uploadProgressStatus, uploadProgressValue } =
-      storeToRefs(videoStore);
+    // const { uploadProgressStatus, uploadProgressValue } =
+    //   storeToRefs(videoStore);
+    // return {
+    //   uploadProgressStatus,
+    //   uploadProgressValue,
+    // };
+    const { uploadedVideoId } = storeToRefs(videoStore);
+    const { removeUploadedVideo } = videoStore;
     return {
-      uploadedVideo,
-      uploadVideo,
-      removeVideo,
-      uploadProgressStatus,
-      uploadProgressValue,
+      uploadedVideoId,
+      removeUploadedVideo,
     };
   },
   components: {
     UploadVideoInput,
-    ProgressBar,
+    // ProgressBar,
   },
   data() {
     return {
@@ -83,7 +85,7 @@ export default {
   },
   methods: {
     closeCreateDialog() {
-      this.removeVideo();
+      // this.removeVideo();
 
       const newPath = getArrayWithoutLastElement(
         this.$route.path.split("/")
@@ -109,11 +111,11 @@ export default {
           videoDragEl.src = url;
 
           videoDragEl.onloadedmetadata = async function () {
-            const { _id } = await createVideoFn(file, this.duration);
+            await createVideoFn(file, this.duration);
 
-            router.push({
-              path: `/${userInfo.username}/videos/${_id}`,
-            });
+            // router.push({
+            //   path: `/videos/${_id}`,
+            // });
           };
           videoDragEl.load();
         };
@@ -125,11 +127,12 @@ export default {
       if (file) {
         console.log("Create");
         const formData = new FormData();
-        const user = JSON.parse(localStorage.getItem("user"));
         formData.append("video", file);
         formData.append("duration", duration);
         try {
+          console.log("Begin uploading");
           const { data } = await VideoRepository.uploadVideo(formData);
+          console.log("End upload");
           if (data) {
             const dataObject = convertJSONToObject(data);
             if (!dataObject.details) return dataObject;
@@ -148,13 +151,20 @@ export default {
   watch: {
     videoFile(file) {
       if (file) {
-        this.uploadVideo(file);
         this.readVideoDuration(
           file,
           this.getUserInfo,
           this.$router,
           this.createVideo
         );
+      }
+    },
+    uploadedVideoId(videoId) {
+      if (videoId) {
+        this.removeUploadedVideo();
+        this.$router.push({
+          path: `/videos/${videoId}`,
+        });
       }
     },
   },

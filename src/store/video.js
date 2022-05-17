@@ -6,22 +6,16 @@ import { serverUrl } from "src/constants/system";
 export const useVideoStore = defineStore("video", {
   state: () => {
     return {
-      uploadedVideo: "",
+      uploadedVideoId: null,
       videoTags: [],
       socket: null,
-      uploadProgressStatus: "",
-      uploadProgressValue: 0
+      processingVideos: {}
+      // uploadProgressStatus: "",
+      // uploadProgressValue: 0,
+
     }
   },
   actions: {
-    removeVideo() {
-      this.uploadedVideo = null;
-    },
-
-    uploadVideo(video) {
-      this.uploadedVideo = video;
-    },
-
     getVideoTags(tags) {
       this.videoTags = tags;
     },
@@ -36,27 +30,62 @@ export const useVideoStore = defineStore("video", {
       this.socket.auth = { token };
 
       this.socket.on("connect", () => {
-        this.socket.on("Convert to audio", (progress) => {
-          console.log("Convert to audio: " + progress.percent + " %");
+        this.socket.on("upload-completed", (videoId) => {
+          this.uploadedVideoId = videoId;
         });
 
-        this.socket.on("Upload to S3", (progressPercentage) => {
-          if (!progressPercentage) {
-            this.uploadProgressValue = 0;
-            return;
+        this.socket.on("track-processing-progress", ({ videoId, progress }) => {
+          const videoInfo = {
+            ...this.processingVideos[videoId],
+            type: "Process",
+            progress: progress,
+            message: `Processing ${progress}% ...`,
+            complete: false
+          };
+          const tempProcessingVideos = { ...this.processingVideos };
+          tempProcessingVideos[videoId] = videoInfo;
+          this.processingVideos = tempProcessingVideos;
+        });
+
+        this.socket.on("process-completed", ({ videoId, thumbnailUrl }) => {
+          const videoInfo = {
+            ...this.processingVideos[videoId],
+            type: "Process",
+            progress: 100,
+            message: "Processes complete.",
+            complete: true,
+            thumbnailUrl
           }
-          if (progressPercentage < 100) {
-            this.uploadProgressStatus = `Processing ${progressPercentage.toFixed(1)}%`;
-            this.uploadProgressValue = progressPercentage;
+          const tempProcessingVideos = { ...this.processingVideos };
+          tempProcessingVideos[videoId] = videoInfo;
+          this.processingVideos = tempProcessingVideos;
+        });
+
+        this.socket.on("track-recognition-progress", ({ videoId, progress }) => {
+          const videoInfo = {
+            ...this.processingVideos[videoId],
+            type: "Check",
+            progress: progress,
+            message: `Checking ${progress}% ...`,
+            complete: false
           }
-          else {
-            this.uploadProgressStatus = "Completed!";
-            this.uploadProgressValue = 100;
-            setTimeout(() => {
-              this.uploadProgressStatus = "";
-              this.uploadProgressValue = 0;
-            }, 2000);
+          const tempProcessingVideos = { ...this.processingVideos };
+          tempProcessingVideos[videoId] = videoInfo;
+          this.processingVideos = tempProcessingVideos;
+        });
+
+        this.socket.on("recognized-completed", ({ videoId, recognizedMusic }) => {
+          const videoInfo = {
+            ...this.processingVideos[videoId],
+            type: "Check",
+            progress: 100,
+            message: "Checks complete.",
+            complete: true,
+            recognizedMusic
           }
+          const tempProcessingVideos = { ...this.processingVideos };
+          tempProcessingVideos[videoId] = videoInfo;
+          this.processingVideos = tempProcessingVideos;
         });
       });
     },
@@ -65,6 +94,8 @@ export const useVideoStore = defineStore("video", {
       this.socket = null;
     },
 
-
+    removeUploadedVideo() {
+      this.uploadedVideoId = null;
+    }
   },
 })
