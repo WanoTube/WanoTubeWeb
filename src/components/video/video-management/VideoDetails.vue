@@ -61,6 +61,7 @@
               placeholder="Tell viewers about your video"
               outlined
               dense
+              rows="10"
               spellcheck="false"
             ></v-textarea>
             <div>

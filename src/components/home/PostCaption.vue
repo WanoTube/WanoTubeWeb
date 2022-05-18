@@ -48,10 +48,10 @@
             height="800px"
           >
             <v-card>
-              <v-toolbar color="primary" dark>{{ video.title }}</v-toolbar>
+              <v-toolbar color="primary" dark>Description</v-toolbar>
               <v-card-text>
-                <h4 class="pt-4 pl-4">Description:</h4>
-                <h6 class="pa-4">{{ video.description }}</h6>
+                <h5 class="pt-4 pl-4">{{ video.title }}</h5>
+                <h6 class="pa-4 description" v-html="description"></h6>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -65,6 +65,7 @@
 import { defaultAvatarUrl } from "src/constants/user";
 import { formatToChinaDate } from "src/utils/date";
 import { formatSuffixNumber } from "src/utils/number";
+import linkifyHtml from "linkify-html";
 
 export default {
   props: {
@@ -117,6 +118,9 @@ export default {
     channelUsername() {
       return this.video.user?.username;
     },
+    description() {
+      return linkifyHtml(this.video.description);
+    },
   },
   methods: {
     formatToChinaDate,
@@ -145,5 +149,13 @@ export default {
 }
 .caption-title:hover {
   color: black;
+}
+.description {
+  white-space: break-spaces;
+  line-height: 30px;
+  color: black;
+}
+.description a {
+  color: blue !important;
 }
 </style>
