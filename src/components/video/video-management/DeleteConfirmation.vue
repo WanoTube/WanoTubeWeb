@@ -93,6 +93,7 @@ export default {
             return alert(dataObject.details);
           }
         } else {
+          console.log("fjekwj");
           alert("Cannot delete this video! ");
         }
       } catch (error) {

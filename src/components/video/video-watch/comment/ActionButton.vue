@@ -58,8 +58,7 @@ export default {
       }
     },
     navigateToEditVideo() {
-      const { username } = JSON.parse(localStorage.getItem("user"));
-      this.$router.push(`/${username}/videos/${this.channelId}`);
+      this.$router.push(`/videos/${this.videoId}`);
     },
   },
   computed: {

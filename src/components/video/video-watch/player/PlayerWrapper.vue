@@ -68,33 +68,6 @@ export default {
       }
     },
   },
-  mounted() {
-    const player = this.$refs.videoPlayer;
-    // const url = this.video.url;
-    const url =
-      "https://d1td7i7nd90xol.cloudfront.net/output/0.14/cambongfa/cambongfa.m3u8.m3u8";
-
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.on(Hls.Events.MANIFEST_PARSED, (e, data) => {
-        const availableQualities = data.levels.map((l) => l.height);
-        this.playerOptions.quality = {
-          default: 0, //Default - AUTO
-          options: availableQualities,
-          forced: true,
-          onChange: (e) => this.updateQuality(e),
-        };
-        const plyr = new Plyr(player, this.playerOptions);
-        hls.attachMedia(this.$refs.videoPlayer);
-        this.hls = hls;
-        plyr.on("play", this.onPlay);
-      });
-    } else {
-      player.src = url;
-      new Plyr(player, this.defaultOptions);
-    }
-  },
   computed: {
     isHlsFormat() {
       if (!this.video.url) return true;
@@ -104,6 +77,35 @@ export default {
       );
     },
   },
+  watch: {
+    video(val) {
+      if (!val) return;
+      console.log(val);
+      const player = this.$refs.videoPlayer;
+
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(val.manifest_url);
+        hls.on(Hls.Events.MANIFEST_PARSED, (e, data) => {
+          const availableQualities = data.levels.map((l) => l.height);
+          this.playerOptions.quality = {
+            default: 0, //Default - AUTO
+            options: availableQualities,
+            forced: true,
+            onChange: (e) => this.updateQuality(e),
+          };
+          const plyr = new Plyr(player, this.playerOptions);
+          hls.attachMedia(this.$refs.videoPlayer);
+          this.hls = hls;
+
+          plyr.on("play", this.onPlay);
+        });
+      } else {
+        player.src = val.manifest_url;
+        new Plyr(player, this.defaultOptions);
+      }
+    },
+  },
 };
 </script>
 
@@ -111,6 +113,7 @@ export default {
 .player-wrapper {
   width: 100%;
   background: black;
+  color: white;
 }
 .player {
   width: 100%;

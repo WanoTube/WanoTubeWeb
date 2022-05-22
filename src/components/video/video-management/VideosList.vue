@@ -40,6 +40,17 @@
       <template v-slot:item.visibility="{ item }">
         <span>{{ renderVisibility(item) }}</span>
       </template>
+      <template v-slot:item.status="{ item }">
+        <v-chip color="green" dark v-if="item.status === 'COMPLETED'">{{
+          renderStatusMessage(item)
+        }}</v-chip>
+        <v-chip color="yellow" v-else-if="item.status === 'CHECKING'">{{
+          renderStatusMessage(item)
+        }}</v-chip>
+        <v-chip color="blue" v-else-if="item.status === 'PROCESSING'" dark>{{
+          renderStatusMessage(item)
+        }}</v-chip>
+      </template>
       <template v-slot:item.created_at="{ item }">
         {{ formatDate(item.created_at) }}
       </template>
@@ -55,13 +66,6 @@
         </router-link>
       </template>
       <template v-slot:item.restriction="{ item }">
-        <!-- <v-icon
-          v-if="item.recognition_result"
-          class="mx-2"
-          @click="onViewRecognitionResult(item)"
-          >mdi-alert-circle</v-icon
-        >
-        <v-icon v-else class="mx-2">mdi-check-circle</v-icon> -->
         <span> {{ renderRestriction(item) }} </span>
       </template>
     </v-data-table>
@@ -127,6 +131,10 @@ export default {
           sortable: false,
         },
         {
+          text: "Status",
+          value: "status",
+        },
+        {
           text: "Date",
           value: "created_at",
         },
@@ -173,15 +181,6 @@ export default {
       this.videos = videos;
     },
     renderVisibility(item) {
-      // render upload or process status
-      const processingVideo = this.processingVideos[item._id];
-      if (
-        processingVideo &&
-        processingVideo.type === "Process" &&
-        !processingVideo.complete
-      )
-        return processingVideo.message;
-
       switch (parseInt(item.visibility)) {
         case 0:
           return "Public";
@@ -194,25 +193,18 @@ export default {
       }
     },
     renderRestriction(item) {
-      // render upload or process status
-      const processingVideo = this.processingVideos[item._id];
-      if (processingVideo) {
-        if (processingVideo.type === "Check") {
-          if (processingVideo.complete) {
-            return processingVideo.recognizedMusic ? "Copyright claim" : "None";
-          } else {
-            return processingVideo.message;
-          }
-        } else return "";
-      }
       return item.recognition_result ? "Copyright claim" : "None";
+    },
+    renderStatusMessage(item) {
+      if (this.processingVideos[item._id]) {
+        return this.processingVideos[item._id].status;
+      }
+      return item.status;
     },
     doesAttachUploadedThumbnail(item) {
       return (
         this.processingVideos[item._id] &&
-        ((this.processingVideos[item._id].type === "Process" &&
-          this.processingVideos[item._id].complete) ||
-          this.processingVideos[item._id].type === "Check")
+        this.processingVideos[item._id].status !== "PROCESSING"
       );
     },
   },

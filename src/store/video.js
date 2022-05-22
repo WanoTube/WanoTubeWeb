@@ -10,8 +10,6 @@ export const useVideoStore = defineStore("video", {
       videoTags: [],
       socket: null,
       processingVideos: {}
-      // uploadProgressStatus: "",
-      // uploadProgressValue: 0,
 
     }
   },
@@ -32,59 +30,35 @@ export const useVideoStore = defineStore("video", {
       this.socket.on("connect", () => {
         this.socket.on("upload-completed", (videoId) => {
           this.uploadedVideoId = videoId;
-        });
 
-        this.socket.on("track-processing-progress", ({ videoId, progress }) => {
-          const videoInfo = {
-            ...this.processingVideos[videoId],
-            type: "Process",
-            progress: progress,
-            message: `Processing ${progress}% ...`,
-            complete: false
-          };
           const tempProcessingVideos = { ...this.processingVideos };
-          tempProcessingVideos[videoId] = videoInfo;
+          tempProcessingVideos[videoId] = {
+            status: "PROCESSING",
+            processed: false,
+            checked: false
+          };
           this.processingVideos = tempProcessingVideos;
         });
 
         this.socket.on("process-completed", ({ videoId, thumbnailUrl }) => {
-          const videoInfo = {
-            ...this.processingVideos[videoId],
-            type: "Process",
-            progress: 100,
-            message: "Processes complete.",
-            complete: true,
-            thumbnailUrl
-          }
           const tempProcessingVideos = { ...this.processingVideos };
-          tempProcessingVideos[videoId] = videoInfo;
+          tempProcessingVideos[videoId] = {
+            status: "CHECKING",
+            thumbnailUrl,
+            processed: true,
+            checked: false
+          };
           this.processingVideos = tempProcessingVideos;
         });
 
-        this.socket.on("track-recognition-progress", ({ videoId, progress }) => {
-          const videoInfo = {
-            ...this.processingVideos[videoId],
-            type: "Check",
-            progress: progress,
-            message: `Checking ${progress}% ...`,
-            complete: false
-          }
+        this.socket.on("check-completed", ({ videoId, recognizedMusic }) => {
           const tempProcessingVideos = { ...this.processingVideos };
-          tempProcessingVideos[videoId] = videoInfo;
-          this.processingVideos = tempProcessingVideos;
-        });
-
-        this.socket.on("recognized-completed", ({ videoId, recognizedMusic }) => {
-          const videoInfo = {
-            ...this.processingVideos[videoId],
-            type: "Check",
-            progress: 100,
-            message: "Checks complete.",
-            complete: true,
-            recognizedMusic
-          }
-          const tempProcessingVideos = { ...this.processingVideos };
-          tempProcessingVideos[videoId] = videoInfo;
+          tempProcessingVideos[videoId] = {
+            status: "COMPLETED",
+            recognizedMusic,
+            processed: true,
+            checked: true
+          };
           this.processingVideos = tempProcessingVideos;
         });
       });

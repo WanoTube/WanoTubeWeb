@@ -33,7 +33,6 @@ export default {
       const reachEndOfDiv = scrollTop + clientHeight >= scrollHeight;
       if (reachEndOfDiv) {
         this.loadMorePosts();
-        console.log("End");
       }
     },
   },

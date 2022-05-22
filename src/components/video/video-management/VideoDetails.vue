@@ -10,14 +10,17 @@
           <v-icon left> mdi-arrow-left </v-icon>
           Back to videos
         </v-btn>
-        <v-chip
-          color="pink"
-          dark
-          label
-          v-if="statusMessage && statusMessage !== ''"
-        >
-          {{ statusMessage }}
-        </v-chip>
+        <div v-if="statusMessage && statusMessage !== ''">
+          <v-chip color="green" dark v-if="statusMessage === 'COMPLETED'">{{
+            statusMessage
+          }}</v-chip>
+          <v-chip color="yellow" v-if="statusMessage === 'CHECKING'">{{
+            statusMessage
+          }}</v-chip>
+          <v-chip color="blue" v-if="statusMessage === 'PROCESSING'" dark>{{
+            statusMessage
+          }}</v-chip>
+        </div>
       </div>
       <br />
       <div class="row justify-content-between">
@@ -141,18 +144,21 @@
         <div class="col-md-4">
           <div class="card">
             <video
+              v-if="video.status === 'COMPLETED'"
               class="video-thumbnail"
               style="border: 1px solid lightgray"
               controls
               :src="video.url"
               :poster="selectedThumbnail.url"
             ></video>
-            <div class="card-body">
+            <div v-else class="video-thumbnail"></div>
+            <div class="card-body" v-if="video.status === 'COMPLETED'">
               <small class="card-text text-secondary">Video link: </small>
               <a :href="this.watchUrl">
                 {{ this.watchUrl }}
               </a>
             </div>
+            <div v-else class="card-body">We are processing this video.</div>
           </div>
           <div class="mt-4">
             <h6><b>Visibility</b></h6>
@@ -342,9 +348,6 @@ export default {
       }
     },
   },
-  async created() {
-    this.fetchVideo();
-  },
   computed: {
     visibilityIcon() {
       switch (this.privacy) {
@@ -404,15 +407,28 @@ export default {
     },
     async processingVideos(val) {
       if (!val || !val[this.video._id]) return;
-      this.statusMessage = val[this.video._id].message;
+      this.statusMessage = val[this.video._id].status;
 
-      if (!val[this.video._id].complete) return;
-      const processedVideo = await this.getVideo();
-      if (val[this.video._id].type === "Process")
+      if (val[this.video._id].processed) {
+        const processedVideo = await this.getVideo();
         this.getThumbnail(processedVideo);
-      else if (val[this.video._id].type === "Check")
+      } else if (val[this.video._id].checked) {
+        const processedVideo = await this.getVideo();
         this.getRestriction(processedVideo);
+      }
     },
+  },
+  async created() {
+    await this.fetchVideo();
+    if (this.processingVideos[this.video._id]) {
+      this.statusMessage = this.processingVideos[this.video._id].status;
+      return;
+    }
+    if (this.video.status === "COMPLETED") {
+      this.statusMessage = "";
+      return;
+    }
+    this.statusMessage = this.video.status;
   },
 };
 </script>
@@ -450,6 +466,7 @@ export default {
   margin: 0 !important;
 }
 .video-thumbnail {
+  background-color: black;
   width: 100%;
   aspect-ratio: 16/9;
 }

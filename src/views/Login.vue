@@ -101,7 +101,7 @@ export default {
     return {
       isLoading: false,
       progress: 50,
-      email: "tuanpham@gmail.com",
+      email: "user1@gmail.com",
       password: "12345678",
       rules: {
         required: (value) => !!value || "Required.",
