@@ -80,7 +80,6 @@ export default {
   watch: {
     video(val) {
       if (!val) return;
-      console.log(val);
       const player = this.$refs.videoPlayer;
 
       if (Hls.isSupported()) {

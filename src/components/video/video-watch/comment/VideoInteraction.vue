@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col text-center">
-      <LikeIcon :totalLikes="video.total_likes" />
+      <LikeIcon :video="video" />
     </div>
     <div class="col text-center">
       <CommentIcon :totalComments="video.total_comments" />
