@@ -5,7 +5,10 @@
         <v-text-field
           ref="commentInput"
           v-model="comment"
-          placeholder="Add Comment..."
+          :placeholder="
+            disableCommentBar ? 'Login to comment' : 'Add Comment...'
+          "
+          :disabled="disableCommentBar"
           id="commentInput"
           dense
           append-icon="mdi-emoticon"
@@ -91,11 +94,15 @@ export default {
       isShowingPopup: false,
     };
   },
-
   components: {
     Picker,
   },
-
+  computed: {
+    disableCommentBar() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      return !userInfo;
+    },
+  },
   methods: {
     selectEmoji(emoji) {
       this.comment += emoji.native;

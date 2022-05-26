@@ -21,7 +21,7 @@
               {{ formatToChinaDate(comment.created_at) }}
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span
-                v-if="!comment.is_reply"
+                v-if="showReplyButton"
                 role="button"
                 @click="
                   replyTo(comment._id, comment.content, comment.user.username)
@@ -170,8 +170,12 @@ export default {
     },
     showActionMenu() {
       const userInfo = JSON.parse(localStorage.getItem("user"));
-      console.log(this.comment.author_id);
-      return this.comment.user._id === userInfo._id;
+      return this.comment.user?._id === userInfo?._id;
+    },
+    showReplyButton() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      if (!userInfo || !userInfo._id) return false;
+      return !this.comment.is_reply;
     },
   },
   methods: {
@@ -181,9 +185,6 @@ export default {
     },
     lovePathFunction(e) {
       e.currentTarget.classList.toggle("active");
-    },
-    reply() {
-      alert("Reply");
     },
     async viewMoreReplies() {
       this.fetchingReplies = true;

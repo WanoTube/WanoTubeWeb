@@ -122,7 +122,7 @@ export default {
   },
   created() {
     const userInfo = JSON.parse(localStorage.getItem("user"));
-    this.isLike = this.video.likes.includes(userInfo.channelId);
+    this.isLike = this.video.likes.includes(userInfo?.channelId);
   },
 };
 </script>

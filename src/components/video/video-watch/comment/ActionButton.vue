@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     async toggleFollowButton() {
+      if (!this.channelId) return;
       this.follow = !this.follow;
 
       if (this.follow) {
@@ -63,12 +64,13 @@ export default {
   },
   computed: {
     isCreator() {
-      return (
-        this.channelId === JSON.parse(localStorage.getItem("user")).channelId
-      );
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      if (!this.channelId || userInfo) return;
+      return this.channelId === userInfo?.channelId;
     },
   },
   created() {
+    if (!this.channelId) return;
     this.follow = !!this.followingChannels.find(
       (chaId) => chaId === this.channelId
     );
