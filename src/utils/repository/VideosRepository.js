@@ -62,8 +62,14 @@ function getVideoTotalLikes(videoId) {
 	return Repository.get(`${resource}/${videoId}/total-likes/`);
 }
 
-function likeVideo(payload) {
-	return Repository.post(`${resource}/like/`, payload);
+function likeVideo(videoId) {
+	const header = JSON.parse(localStorage.getItem('token'));
+	const config = {
+		headers: {
+			"authorization": `Bear ${header ? header : ""}`
+		}
+	}
+	return Repository.post(`${resource}/like/${videoId}`, {}, config);
 }
 
 function getVideoComments(videoId) {

@@ -1,12 +1,17 @@
 <template>
   <div>
-    <form style="height: 48px" @submit="onFormSubmit">
+    <form style="height: 48px" @submit="onSearchChange">
       <v-autocomplete
+        v-model="model"
+        @change="onSearchChange"
+        @keyup="onSearchKeyUp"
+        style="background-color: white; width: 100%"
         dense
         rounded
         solo
         flat
         outlined
+        :items="suggestions"
         placeholder="Search"
         append-icon="mdi-magnify"
       >
@@ -17,51 +22,49 @@
 
 <style  src="src/assets/styles/search-bar.css"></style>
 <script>
+import _ from "lodash";
+import { getSearchSuggestionRequest } from "../utils/http/videoRequest";
+
+const DEBOUNCE_TIME = 300;
+
 export default {
-  components: {},
   methods: {
     showHistory() {},
-    onFormSubmit(e) {},
     onUserSelected(user) {},
-    onSearchChange(e) {},
+    onSearchChange(e) {
+      if (typeof e.preventDefault === "function") {
+        e.preventDefault();
+      }
+      this.$router.push("/search?v=" + this.model);
+    },
+    onSearchKeyUp: _.debounce(async function (e) {
+      const keyword = e.target.value;
+      if (keyword === "") return;
+      const response = await getSearchSuggestionRequest(keyword);
+      this.suggestions = response.searchedResults.map(
+        (result) => result.keyword
+      );
+    }, DEBOUNCE_TIME),
     generateSuggestedUsernames(inputUsername) {},
     onSelectAnotherUsername(e) {},
   },
   mounted() {
     window.addEventListener("keydown", this.onSelectAnotherUsername);
   },
-  data: function () {
+  data() {
     return {
-      isShowHistory: false,
-      isHidden: true,
-      isSendComment: false,
-      currentComment: "",
-      currentID: -1,
-      allUsernames: [
-        { id: 1, username: "ndt_ngan" },
-        { id: 2, username: "nl_bach" },
-        { id: 3, username: "ct_dung" },
-        { id: 4, username: "th_toan" },
-        { id: 5, username: "nc_thanh" },
-        { id: 6, username: "pn_thinh" },
-        { id: 7, username: "nn_long" },
-        { id: 8, username: "ub_tien" },
-        { id: 9, username: "tm_hieu" },
-        { id: 10, username: "tp_duy" },
-        { id: 11, username: "dnu_phuong" },
-        { id: 12, username: "ntq_ngan" },
-      ],
-      suggestedUsernames: {
-        all: [],
-        current: -1,
-      },
-      searchHistory: [
-        { id: 1, username: "ndt_ngan" },
-        { id: 2, username: "nl_bach" },
-        { id: 3, username: "ct_dung" },
-        { id: 4, username: "nc_thanh" },
-      ],
+      model: null,
+      suggestions: [],
     };
   },
 };
 </script>
+
+<style>
+.v-text-field__details {
+  display: none;
+}
+.v-select-list {
+  width: 100% !important;
+}
+</style>

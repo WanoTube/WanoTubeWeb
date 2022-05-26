@@ -30,12 +30,16 @@ export default {
     TheNavBar,
   },
   async created() {
+    const { tags } = await getVideoTagsRequest();
+    this.getVideoTags(tags);
+
+    const token = JSON.parse(localStorage.getItem("token"));
+    if (!token) return;
+
     const { followings, number_of_followers } = await getFollowInfoRequest();
     this.getFollowInfo(followings, number_of_followers);
     const { videos } = await getWatchLaterVideosRequest();
     this.getWatchLaterVideos(videos);
-    const { tags } = await getVideoTagsRequest();
-    this.getVideoTags(tags);
 
     this.connectSocket();
   },

@@ -5,7 +5,7 @@
     @scroll="onScroll"
   >
     <div style="width: 100%" class="posts-list">
-      <div v-for="video in videos" :key="video.tittle">
+      <div v-for="video in videos" :key="generateFeedKey(video._id)">
         <Post :video="video" />
       </div>
     </div>
@@ -13,7 +13,6 @@
 </template>
 <script>
 import { getFeedRequest } from "src/utils/http/videoRequest";
-
 import Post from "./Post.vue";
 export default {
   data() {
@@ -34,6 +33,9 @@ export default {
       if (reachEndOfDiv) {
         this.loadMorePosts();
       }
+    },
+    generateFeedKey(key) {
+      return key + Math.random().toFixed(5);
     },
   },
   async created() {

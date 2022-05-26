@@ -85,11 +85,7 @@ export default {
       const userInfo = JSON.parse(localStorage.getItem("user"));
       if (!userInfo) return;
       try {
-        const formData = {
-          target_id: this.$route.params.id,
-          author_id: userInfo._id,
-        };
-        const { data } = await VideoRepository.likeVideo(formData);
+        const { data } = await VideoRepository.likeVideo(this.$route.params.id);
         if (data) {
           const dataObject = convertJSONToObject(data);
           if (!dataObject.details) {

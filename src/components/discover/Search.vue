@@ -2,7 +2,7 @@
   <div class="container post-card">
     <div class="d-flex" style="flex-direction: column">
       <h2>Users</h2>
-      <Account
+      <!-- <Account
         v-for="a in this.searchResult"
         :key="a.id"
         :name="a.name"
@@ -11,9 +11,9 @@
         :bg_music="a.bg_music"
         :avatar_img="a.avatar_img"
       >
-      </Account>
+      </Account> -->
     </div>
-    <DiscoveryHashtag title="Discovery"></DiscoveryHashtag>
+    <!-- <DiscoveryHashtag title="Discovery"></DiscoveryHashtag>
     <div class="card-body">
       <Post></Post>
     </div>
@@ -21,7 +21,7 @@
     <DiscoveryHashtag title="Discovery"></DiscoveryHashtag>
     <div class="card-body">
       <Post></Post>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -30,9 +30,9 @@ import Post from "../home/Post.vue";
 import DiscoveryHashtag from "./DiscoveryHashtag.vue";
 export default {
   components: {
-    Account,
-    Post,
-    DiscoveryHashtag,
+    // Account,
+    // Post,
+    // DiscoveryHashtag,
   },
   watch: {
     "$route.params.id": {

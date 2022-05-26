@@ -47,11 +47,21 @@ export const getVideoTagsRequest = () => {
 
 export const getFeedRequest = () => {
   console.log("Get Feed");
-  return httpRequest({ endpoint: `/videos/feed` });
+  return httpRequest({ endpoint: `/videos/feed`, requireToken: true });
 }
 
 export const getVideoSuggestionRequest = (videoId) => {
   console.log("Get Video Suggestion");
   return httpRequest({ endpoint: `/videos/${videoId}/suggestion` });
 
+}
+
+export const getSearchSuggestionRequest = (keyword) => {
+  console.log("Get Search Suggestion");
+  return httpRequest({ endpoint: `/videos/search-suggestions?keyword=${keyword}` });
+}
+
+export const getSearchResultRequest = (keyword) => {
+  console.log("Get Search Result");
+  return httpRequest({ endpoint: `/videos/search-results?keyword=${keyword}` });
 }

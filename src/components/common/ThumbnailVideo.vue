@@ -130,7 +130,7 @@ export default {
       return this.video.thumbnail_url;
     },
   },
-  created: function () {
+  created() {
     this.$nextTick(() => {
       const videos = document.getElementsByClassName("preview-video");
 
