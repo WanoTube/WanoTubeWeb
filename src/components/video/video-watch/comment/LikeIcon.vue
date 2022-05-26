@@ -104,7 +104,9 @@ export default {
     },
     async handleLikeVideo() {
       try {
-        const { totalLikes, likeStatus } = await this.postLikeVideo();
+        const userInfo = JSON.parse(localStorage.getItem("user"));
+        if (!userInfo) return;
+        const { totalLikes } = await this.postLikeVideo();
         this.totalLikes = totalLikes;
         this.isLike = !this.isLike;
         // if (this.totalLikes == 0) {

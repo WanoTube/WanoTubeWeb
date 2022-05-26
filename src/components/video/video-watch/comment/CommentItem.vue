@@ -55,8 +55,8 @@
               </template>
               <v-list>
                 <v-list-item
-                  v-for="(item, index) in commentMenuItems"
-                  :key="index"
+                  v-for="item in filteredCommentMenuItems"
+                  :key="item._id"
                   @click="item.action(comment)"
                 >
                   <v-avatar color="#E4E6EB" size="35">
@@ -106,7 +106,7 @@
     </div>
     <br />
     <div style="padding-left: 50px" v-for="reply in replies" :key="reply._id">
-      <CommentItem :comment="reply" v-if="!comment.is_reply" />
+      <CommentItem :video="video" :comment="reply" v-if="!comment.is_reply" />
     </div>
   </div>
 </template>
@@ -131,17 +131,17 @@ export default {
     const { replyTo } = commentStore;
     return { repliedComment, replyTo };
   },
-  props: ["comment"],
+  props: ["comment", "video"],
   data() {
     return {
+      userInfo: JSON.parse(localStorage.getItem("user")),
       fetchingReplies: false,
       replies: null,
       commentMenuItems: [
         {
-          title: "Delete",
+          title: "Remove",
           icon: "mdi-delete",
           action: async (comment) => {
-            console.log(comment);
             const isDelete = confirm("Do you want to delete");
             if (!isDelete) return;
             await removeCommentRequest(comment._id);
@@ -157,8 +157,11 @@ export default {
           icon: "mdi-block-helper",
           action: async (comment) => {
             await hideCommentFromChannelRequest(comment.author_id);
-            console.log(comment._id, "hide");
-            console.log(comment.author_id, "hide");
+            if (this.$parent.comment) {
+              this.$parent.viewMoreReplies();
+            } else {
+              this.$parent.fetchComments();
+            }
           },
         },
       ],
@@ -169,13 +172,23 @@ export default {
       return this.comment.user.avatar ?? defaultAvatarUrl;
     },
     showActionMenu() {
-      const userInfo = JSON.parse(localStorage.getItem("user"));
-      return this.comment.user?._id === userInfo?._id;
+      return this.filteredCommentMenuItems.length !== 0;
     },
     showReplyButton() {
-      const userInfo = JSON.parse(localStorage.getItem("user"));
-      if (!userInfo || !userInfo._id) return false;
+      if (!this.userInfo || !this.userInfo._id) return false;
       return !this.comment.is_reply;
+    },
+    filteredCommentMenuItems() {
+      const items = [];
+      if (this.comment.user?._id === this.userInfo?._id)
+        items.push(this.commentMenuItems[0]);
+      if (
+        !!this.userInfo &&
+        this.video?.user.channel_id === this.userInfo?.channelId
+      ) {
+        items.push(this.commentMenuItems[1]);
+      }
+      return items;
     },
   },
   methods: {

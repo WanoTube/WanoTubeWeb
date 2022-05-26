@@ -6,6 +6,7 @@
         :key="c._id"
         ref="commentItemsRef"
         :comment="c"
+        :video="video"
       />
     </div>
     <div class="list-comment p-4" v-else>
@@ -28,6 +29,7 @@ const UsersRepository = RepositoryFactory.get("users");
 import CommentItem from "./CommentItem.vue";
 
 export default {
+  props: ["video"],
   data: function () {
     return {
       comments: null,
