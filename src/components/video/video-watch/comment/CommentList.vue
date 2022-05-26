@@ -6,7 +6,6 @@
         :key="c._id"
         ref="commentItemsRef"
         :comment="c"
-        :analyzeComment="analyzeComment"
       />
     </div>
     <div class="list-comment p-4" v-else>
@@ -115,9 +114,12 @@ export default {
         this.comments.unshift(comment);
       }
     },
+    async fetchComments() {
+      this.comments = await this.getAllVideoComments();
+    },
   },
   async mounted() {
-    this.comments = await this.getAllVideoComments();
+    await this.fetchComments();
     this.scrollToTop();
   },
 };

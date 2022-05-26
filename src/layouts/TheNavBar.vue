@@ -34,7 +34,7 @@
                 <v-icon color="black" size="25">mdi-bell</v-icon>
               </v-avatar>
             </a>
-            <v-menu offset-y style="">
+            <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
                 <a class="text-muted" v-bind="attrs" v-on="on">
                   <img

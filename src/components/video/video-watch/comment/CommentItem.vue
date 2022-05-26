@@ -33,14 +33,48 @@
               <b
                 role="button"
                 @click="viewMoreReplies(comment._id)"
-                v-if="!comment.is_reply"
+                v-if="!comment.is_reply && comment.number_of_replies !== 0"
               >
                 View more replies ({{ comment.number_of_replies }})
               </b>
             </span>
             <br />
           </div>
-          <div class="d-flex align-items-center mr-4">
+          <div
+            class="
+              d-flex
+              flex-column
+              justify-content-center
+              align-items-center
+              mr-4
+            "
+          >
+            <v-menu offset-y v-if="showActionMenu">
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon v-bind="attrs" v-on="on">mdi-dots-horizontal</v-icon>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(item, index) in commentMenuItems"
+                  :key="index"
+                  @click="item.action(comment)"
+                >
+                  <v-avatar color="#E4E6EB" size="35">
+                    <span class="white--text">
+                      <v-icon
+                        color="black"
+                        v-text="item.icon"
+                        size="24"
+                      ></v-icon>
+                    </span>
+                  </v-avatar>
+                  <span style="width: 20px"></span>
+                  <v-list-item-title class="lato">
+                    {{ item.title }}
+                  </v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
             <svg
               @click="loveSVGFunction($event)"
               class="heart-icon"
@@ -80,10 +114,15 @@
 <script>
 import { storeToRefs } from "pinia";
 import $ from "jquery";
-import { useCommentStore } from "../../../../store/comment";
+import { useCommentStore } from "src/store/comment";
 import { defaultAvatarUrl } from "src/constants/user";
 import { formatToChinaDate } from "src/utils/date";
-import { getCommentRepliesRequest } from "src/utils/http/commentRequest";
+import {
+  getCommentRepliesRequest,
+  removeCommentRequest,
+} from "src/utils/http/commentRequest";
+import { hideCommentFromChannelRequest } from "src/utils/http/userRequest";
+
 export default {
   name: "CommentItem",
   setup() {
@@ -92,16 +131,47 @@ export default {
     const { replyTo } = commentStore;
     return { repliedComment, replyTo };
   },
-  props: ["comment", "analyzeComment"],
+  props: ["comment"],
   data() {
     return {
       fetchingReplies: false,
       replies: null,
+      commentMenuItems: [
+        {
+          title: "Delete",
+          icon: "mdi-delete",
+          action: async (comment) => {
+            console.log(comment);
+            const isDelete = confirm("Do you want to delete");
+            if (!isDelete) return;
+            await removeCommentRequest(comment._id);
+            if (this.$parent.comment) {
+              this.$parent.viewMoreReplies();
+            } else {
+              this.$parent.fetchComments();
+            }
+          },
+        },
+        {
+          title: "Hide from channel",
+          icon: "mdi-block-helper",
+          action: async (comment) => {
+            await hideCommentFromChannelRequest(comment.author_id);
+            console.log(comment._id, "hide");
+            console.log(comment.author_id, "hide");
+          },
+        },
+      ],
     };
   },
   computed: {
-    avatarUrl: function () {
+    avatarUrl() {
       return this.comment.user.avatar ?? defaultAvatarUrl;
+    },
+    showActionMenu() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      console.log(this.comment.author_id);
+      return this.comment.user._id === userInfo._id;
     },
   },
   methods: {

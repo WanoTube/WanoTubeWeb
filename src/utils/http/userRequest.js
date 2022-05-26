@@ -35,5 +35,9 @@ export const getFollowingChannelsRequest = () => {
   return httpRequest({ endpoint: `/users/followings`, requireToken: true });
 }
 
+export const hideCommentFromChannelRequest = (userId) => {
+  console.log("Hide Comment From Channel Request")
+  return httpRequest({ endpoint: `/channels//users/${userId}/hide`, method: 'patch', requireToken: true });
+}
 
 
