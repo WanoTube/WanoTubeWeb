@@ -1,10 +1,9 @@
 <template>
   <div>
-    <br /><br /><br />
     <div v-if="noVideoFound">
       <UnavailableVideo :message="unavailableVideoMessage" />
     </div>
-    <div class="container" v-else>
+    <div class="row m-4" v-else>
       <div class="d-flex justify-content-between align-items-center">
         <v-btn tile color="transparent" @click="backToVideos">
           <v-icon left> mdi-arrow-left </v-icon>
@@ -25,7 +24,7 @@
       <br />
       <div class="row justify-content-between">
         <div class="col padding-left-right-15">
-          <h1><b>Video Details</b></h1>
+          <h2><b>Video Details</b></h2>
         </div>
         <div class="col row justify-content-end">
           <v-btn
@@ -270,7 +269,7 @@ export default {
       }
     },
     backToVideos() {
-      this.$router.push("/videos");
+      this.$router.push("/studio/videos");
     },
     resetForm() {
       this.title = this.video.title;
@@ -434,6 +433,9 @@ export default {
 </script>
 
 <style scoped>
+h6 {
+  margin-top: 0.75em;
+}
 .v-btn--is-elevated {
   box-shadow: none !important;
 }

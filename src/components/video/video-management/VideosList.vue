@@ -6,7 +6,8 @@
       :items="videos"
       item-key="name"
       show-select
-      class="elevation-1"
+      class="elevation-1 vertical-scrollable"
+      style="overflow-y: scroll; height: 80vh"
     >
       <template v-slot:item.title="{ item }">
         <div
@@ -160,7 +161,7 @@ export default {
 
   methods: {
     onEditButtonClick(row) {
-      this.$router.push({ path: `/videos/${row._id}` });
+      this.$router.push({ path: `/studio/videos/${row._id}` });
     },
 
     onDeleteButtonClick(row) {

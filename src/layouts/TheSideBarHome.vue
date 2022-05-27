@@ -31,30 +31,9 @@
 import { routes } from "../routes";
 
 export default {
+  props: ["menuItems"],
   data() {
     return {
-      menuItems: [
-        { title: "Home", icon: "mdi-home-variant", to: "/home" },
-        { title: "Shorts", icon: "mdi-video", to: "/feed/shorts" },
-        {
-          title: "Follow",
-          icon: "mdi-youtube-subscription",
-          to: "/feed/follow",
-          isAuthenticated: true,
-        },
-        {
-          title: "History",
-          icon: "mdi-history",
-          to: "/feed/history",
-          isAuthenticated: true,
-        },
-        {
-          title: "Watch Later",
-          icon: "mdi-clock",
-          to: "/feed/watch-later",
-          isAuthenticated: true,
-        },
-      ],
       routes,
       model: "1",
       isAuthenticated: false,
@@ -66,7 +45,7 @@ export default {
     },
     filteredMenuItems() {
       if (this.isAuthenticated) return this.menuItems;
-      return this.menuItems.filter((item, index) => !item.isAuthenticated);
+      return this.menuItems.filter((item, index) => !item.requireAuth);
     },
   },
   created() {

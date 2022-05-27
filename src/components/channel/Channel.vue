@@ -20,7 +20,7 @@
               </h6>
             </div>
           </div>
-          <router-link to="/videos" style="text-decoration: none">
+          <router-link to="/studio/videos" style="text-decoration: none">
             <v-btn
               v-if="isMyChannel"
               type="button"

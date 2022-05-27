@@ -101,6 +101,15 @@
 <script>
 import TheSearchBar from "./TheSearchBar.vue";
 import { defaultAvatarUrl } from "src/constants/user";
+
+const menuItemsActions = {
+  VIEW_CHANNEL: "VIEW_CHANNEL",
+  VIEW_MY_VIDEOS: "VIEW_MY_VIDEOS",
+  VIEW_STUDIO: "VIEW_STUDIO",
+  VIEW_USERS: "VIEW_USERS",
+  LOGOUT: "LOGOUT",
+};
+
 export default {
   data() {
     return {
@@ -109,22 +118,27 @@ export default {
         {
           title: "My Channel",
           icon: "mdi-account-circle",
-          action: "viewChannel",
+          action: menuItemsActions.VIEW_CHANNEL,
         },
+        // {
+        //   title: "My Videos",
+        //   icon: "mdi-folder-account",
+        //   action: menuItemsActions.VIEW_MY_VIDEOS,
+        // },
         {
-          title: "My Videos",
+          title: "My Studio",
           icon: "mdi-folder-account",
-          action: "viewVideos",
+          action: menuItemsActions.VIEW_STUDIO,
         },
         {
           title: "All Users",
           icon: "mdi-account-group",
-          action: "viewUsers",
+          action: menuItemsActions.VIEW_USERS,
         },
         {
           title: "Log Out",
           icon: "mdi-logout",
-          action: "logOut",
+          action: menuItemsActions.LOGOUT,
         },
       ],
       isAdmin: false,
@@ -142,12 +156,12 @@ export default {
         else navbarButtons.style.display = "block";
       } else navbarButtons.style.display = "block";
     },
-    navigateToVideos(openDialog = false) {
-      if (this.user._id) {
-        const newRoute = `/videos${openDialog ? "/uploads" : ""}`;
-        this.$router.push(newRoute).catch((error) => {});
-      }
-    },
+    // navigateToVideos(openDialog = false) {
+    //   if (this.user._id) {
+    //     const newRoute = `/videos${openDialog ? "/uploads" : ""}`;
+    //     this.$router.push(newRoute).catch((error) => {});
+    //   }
+    // },
     logIn() {
       this.$router.push("/login");
     },
@@ -164,15 +178,25 @@ export default {
     viewUsers() {
       this.$router.push("/users").catch(() => {});
     },
+    viewStudio() {
+      this.$router.push("/studio").catch(() => {});
+    },
     menuActionClick(action) {
-      if (action === "viewVideos") {
-        this.navigateToVideos();
-      } else if (action === "viewChannel") {
-        this.viewChannel();
-      } else if (action === "viewUsers") {
-        this.viewUsers();
-      } else if (action === "logOut") {
-        this.logOut();
+      switch (action) {
+        // case menuItemsActions.VIEW_MY_VIDEOS:
+        //   this.navigateToVideos();
+        //   break;
+        case menuItemsActions.VIEW_CHANNEL:
+          this.viewChannel();
+          break;
+        case menuItemsActions.VIEW_USERS:
+          this.viewUsers();
+          break;
+        case menuItemsActions.VIEW_STUDIO:
+          this.viewStudio();
+          break;
+        default:
+          this.logOut();
       }
     },
   },
@@ -190,8 +214,8 @@ export default {
     menuItems() {
       if (this.isAdmin) return this.items;
       else
-        return this.items.filter(function (value, index, arr) {
-          return index != 2;
+        return this.items.filter(function (value, index) {
+          return value.action !== menuItemsActions.VIEW_USERS;
         });
     },
     avatarUrl() {

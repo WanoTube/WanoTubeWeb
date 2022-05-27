@@ -2,13 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
-import Editing from './views/Editing.vue'
 import Home from './views/Home.vue'
+import Studio from './views/Studio.vue'
 import Watch from './views/Watch.vue'
 import PageNotFound from './views/PageNotFound.vue'
 import Main from './Main.vue'
 
-import Upload from './components/video/upload-video/Upload.vue'
+import StudioDashboard from './components/studio/Dashboard.vue';
 import VideoManagement from './components/video/video-management/VideoManagement.vue'
 import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
@@ -21,9 +21,6 @@ import Follow from './components/home/Follow.vue'
 import UnderDeveloped from './components/home/UnderDeveloped.vue'
 import WatchLater from './components/home/WatchLater.vue'
 import Trending from './components/discover/Trending.vue'
-import Filter from './components/video/video-editing/filters/Filters.vue'
-import MyMedia from './components/video/video-editing/my-media/MyMedia.vue'
-import BrowseFile from './components/video/video-editing/browse-files/BrowseFile.vue'
 
 Vue.use(VueRouter)
 
@@ -46,12 +43,39 @@ export const routes = [
 				component: Watch
 			},
 			{
-				path: '/upload',
-				component: Upload,
-				meta: {
-					requireAuth: true,
-
-				}
+				path: '/studio',
+				redirect: '/studio/dashboard',
+				component: Studio,
+				children: [
+					{
+						path: '/studio/dashboard',
+						component: StudioDashboard,
+						meta: {
+							requireAuth: true,
+						}
+					},
+					{
+						path: '/studio/videos',
+						component: VideoManagement,
+						meta: {
+							requireAuth: true
+						}
+					},
+					{
+						path: '/studio/videos/uploads',
+						component: VideoManagement,
+						meta: {
+							requireAuth: true
+						}
+					},
+					{
+						path: '/studio/videos/:id',
+						component: VideoDetails,
+						meta: {
+							requireAuth: true
+						}
+					},
+				]
 			},
 			{
 				path: '/home',
@@ -104,25 +128,6 @@ export const routes = [
 				]
 			},
 			{
-				path: '/editing',
-				component: Editing,
-				redirect: '/editing/mymedia',
-				children: [
-					{
-						path: '/editing/filter',
-						component: Filter
-					},
-					{
-						path: '/editing/mymedia',
-						component: MyMedia
-					},
-					{
-						path: '/editing/browsefile',
-						component: BrowseFile
-					}
-				]
-			},
-			{
 				path: '/users',
 				component: UserManagement,
 				meta: {
@@ -130,27 +135,30 @@ export const routes = [
 					isAdmin: true
 				}
 			},
-			{
-				path: '/videos',
-				component: VideoManagement,
-				meta: {
-					requireAuth: true
-				}
-			},
-			{
-				path: '/videos/uploads',
-				component: VideoManagement,
-				meta: {
-					requireAuth: true
-				}
-			},
-			{
-				path: '/videos/:id',
-				component: VideoDetails,
-				meta: {
-					requireAuth: true
-				}
-			},
+			// {
+			// 	path: '/videos',
+			// 	component: VideoManagement,
+			// 	meta: {
+			// 		requireAuth: true
+			// 	},
+			// 	children: [
+
+			// 	]
+			// },
+			// {
+			// 	path: '/videos/uploads',
+			// 	component: VideoManagement,
+			// 	meta: {
+			// 		requireAuth: true
+			// 	}
+			// },
+			// {
+			// 	path: '/videos/:id',
+			// 	component: VideoDetails,
+			// 	meta: {
+			// 		requireAuth: true
+			// 	}
+			// },
 
 		]
 	},

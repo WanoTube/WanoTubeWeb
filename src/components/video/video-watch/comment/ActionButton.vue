@@ -59,13 +59,13 @@ export default {
       }
     },
     navigateToEditVideo() {
-      this.$router.push(`/videos/${this.videoId}`);
+      this.$router.push(`/studio/videos/${this.videoId}`);
     },
   },
   computed: {
     isCreator() {
       const userInfo = JSON.parse(localStorage.getItem("user"));
-      if (!this.channelId || userInfo) return;
+      if (!this.channelId || !userInfo) return false;
       return this.channelId === userInfo?.channelId;
     },
   },
