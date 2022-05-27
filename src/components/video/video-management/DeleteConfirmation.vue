@@ -76,26 +76,27 @@ export default {
       };
       try {
         const { data } = await VideoRepository.deleteVideo(deleteInfo);
-        if (data) {
-          const dataObject = convertJSONToObject(data);
-          if (!dataObject.details) {
-            if (dataObject.deletedCount === 0)
-              return alert("Cannot delete this video! ");
+        // if (data) {
+        // const dataObject = convertJSONToObject(data);
+        // if (!dataObject.details) {
+        //   if (dataObject.deletedCount === 0)
+        //     return alert("Cannot delete this video! ");
 
-            this.$toasted.show("Video deleted!", {
-              position: "top-center",
-              duration: 2000,
-              type: "success",
-            });
-            this.closeDialog();
-            this.onDeleteRow();
-          } else {
-            return alert(dataObject.details);
-          }
-        } else {
-          console.log("fjekwj");
-          alert("Cannot delete this video! ");
-        }
+        this.$toasted.show("Video deleted!", {
+          position: "top-center",
+          duration: 2000,
+          type: "success",
+        });
+        this.closeDialog();
+        this.onDeleteRow();
+        // }
+        // else {
+        //   return alert(dataObject.details);
+        // }
+        // } else {
+        //   console.log("fjekwj");
+        //   alert("Cannot delete this video! ");
+        // }
       } catch (error) {
         if (error.response) {
           alert(error.response.data);

@@ -156,12 +156,12 @@ export default {
         else navbarButtons.style.display = "block";
       } else navbarButtons.style.display = "block";
     },
-    // navigateToVideos(openDialog = false) {
-    //   if (this.user._id) {
-    //     const newRoute = `/videos${openDialog ? "/uploads" : ""}`;
-    //     this.$router.push(newRoute).catch((error) => {});
-    //   }
-    // },
+    navigateToVideos(openDialog = false) {
+      if (this.user._id) {
+        const newRoute = `/studio/videos${openDialog ? "/uploads" : ""}`;
+        this.$router.push(newRoute).catch((error) => {});
+      }
+    },
     logIn() {
       this.$router.push("/login");
     },

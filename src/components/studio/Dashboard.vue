@@ -1,13 +1,9 @@
 <template>
   <div
     class="row m-4 d-flex flex-column vertical-scrollable"
-    style="overflow-y: scroll; background-color: red"
+    style="overflow-y: scroll"
   >
-    <!-- <div style="width: 100%" class="posts-list">
-      <div v-for="video in videos" :key="generateFeedKey(video._id)">
-        <Post :video="video" />
-      </div>
-    </div> -->
+    <h3><b>Channel dashboard</b></h3>
   </div>
 </template>
 <script>

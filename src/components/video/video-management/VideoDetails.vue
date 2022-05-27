@@ -144,7 +144,7 @@
           <div class="card">
             <video
               v-if="video.status === 'COMPLETED'"
-              class="video-thumbnail"
+              class="finpuvideo-thumbnail"
               style="border: 1px solid lightgray"
               controls
               :src="video.url"
@@ -334,7 +334,10 @@ export default {
       };
     },
     getRestriction(video) {
-      this.restriction = video.recognition_result ? "Copyright claim" : "None";
+      this.restriction =
+        video.recognition_result?.status.code === 0
+          ? "Copyright claim"
+          : "None";
     },
     async fetchVideo() {
       this.video = await this.getVideo();
@@ -471,9 +474,6 @@ h6 {
   background-color: black;
   width: 100%;
   aspect-ratio: 16/9;
-}
-.thumbnail-input {
-  display: none;
 }
 .thumbnail-item {
   flex-basis: 0;

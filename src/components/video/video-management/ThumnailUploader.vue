@@ -130,3 +130,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.thumbnail-input {
+  display: none;
+}
+</style>

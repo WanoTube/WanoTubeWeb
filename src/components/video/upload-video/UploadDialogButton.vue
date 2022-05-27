@@ -7,6 +7,7 @@
         v-bind="attrs"
         v-on="on"
         @click="openCreateDialog"
+        :disable="false"
       >
         <v-icon left>mdi-plus</v-icon>
         UPLOAD VIDEO
@@ -163,7 +164,7 @@ export default {
       if (videoId) {
         this.removeUploadedVideo();
         this.$router.push({
-          path: `/videos/${videoId}`,
+          path: `/studio/videos/${videoId}`,
         });
       }
     },

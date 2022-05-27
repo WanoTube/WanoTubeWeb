@@ -194,7 +194,9 @@ export default {
       }
     },
     renderRestriction(item) {
-      return item.recognition_result ? "Copyright claim" : "None";
+      return item.recognition_result?.status.code === 0
+        ? "Copyright claim"
+        : "None";
     },
     renderStatusMessage(item) {
       if (this.processingVideos[item._id]) {

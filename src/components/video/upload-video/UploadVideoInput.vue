@@ -3,7 +3,15 @@
     <div class="drop drag-component" style="width: 100%; height: 500px">
       <div class="helper"></div>
       <div
-        class="drop display-inline align-center p-5"
+        class="
+          drop
+          display-inline
+          d-flex
+          justify-content-center
+          align-items-center
+          p-5
+        "
+        style="height: 100%"
         @dragover.prevent
         @drop="onDrop"
       >
@@ -20,6 +28,7 @@
               name="video"
               @change="onChange"
               accept="video/mp4,video/x-m4v,video/quicktime,video/*"
+              style="display: none"
             />
           </div>
           <div v-else>

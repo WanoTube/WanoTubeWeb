@@ -4,7 +4,7 @@
       <div class="col-12">
         <div :style="'display: flex; flex-direction: row; align-items: center'">
           <div class="col padding-left-right-15" style="margin-bottom: 10px">
-            <h1><b class="lato">Channel content</b></h1>
+            <h3><b class="lato">Channel content</b></h3>
           </div>
           <div
             style="

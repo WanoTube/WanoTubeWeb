@@ -9,6 +9,7 @@ import PageNotFound from './views/PageNotFound.vue'
 import Main from './Main.vue'
 
 import StudioDashboard from './components/studio/Dashboard.vue';
+import Customization from './components/studio/Customization.vue';
 import VideoManagement from './components/video/video-management/VideoManagement.vue'
 import VideoDetails from './components/video/video-management/VideoDetails.vue'
 import UserManagement from './components/user-management/ListUsers.vue'
@@ -59,6 +60,13 @@ export const routes = [
 						component: VideoManagement,
 						meta: {
 							requireAuth: true
+						}
+					},
+					{
+						path: '/studio/customisation',
+						component: Customization,
+						meta: {
+							requireAuth: true,
 						}
 					},
 					{

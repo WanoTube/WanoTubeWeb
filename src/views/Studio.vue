@@ -31,12 +31,12 @@ export default {
         //   to: "/feed/history",
         //   requireAuth: true,
         // },
-        // {
-        //   title: "Channel",
-        //   icon: "mdi-account-box-outline",
-        //   to: "/feed/watch-later",
-        //   requireAuth: true,
-        // },
+        {
+          title: "Channel",
+          icon: "mdi-account-box-outline",
+          to: "/studio/customisation",
+          requireAuth: true,
+        },
       ],
     };
   },
@@ -45,6 +45,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
