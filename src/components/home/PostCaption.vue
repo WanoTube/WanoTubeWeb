@@ -32,6 +32,11 @@
                 • {{ formatToChinaDate(video.created_at) }}</span
               >
             </div>
+            <div v-if="showTags" class="d-flex flex-row gap-2">
+              <span v-for="tag in video.tags" :key="tag">
+                <v-chip>{{tag}}</v-chip>
+              </span>
+            </div>
           </div>
         </div>
         <div
@@ -93,6 +98,10 @@ export default {
       default: 2,
     },
     showCreatedDate: {
+      type: Boolean,
+      default: false,
+    },
+    showTags: {
       type: Boolean,
       default: false,
     },

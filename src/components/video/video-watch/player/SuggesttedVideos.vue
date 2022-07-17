@@ -11,7 +11,7 @@
     <hr />
     <h5><b>Related videos</b></h5>
     <div v-for="video in relatedVideos" :key="video._id" class="col-md-4">
-      <Post :video="video" />
+      <Post :video="video" :showTags="true"/>
     </div>
   </div>
 </template>

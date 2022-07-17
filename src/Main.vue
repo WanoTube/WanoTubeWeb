@@ -1,7 +1,7 @@
 <template>
   <div>
     <TheNavBar ref="navbar" />
-    <div class="main-wrapper">
+    <div class="main-wrapper" v-if="!isLoading">
       <router-view></router-view>
     </div>
   </div>
@@ -26,10 +26,16 @@ export default {
 
     return { getWatchLaterVideos, getFollowInfo, getVideoTags, connectSocket };
   },
+  data() {
+    return {
+      isLoading: false
+    }
+  },
   components: {
     TheNavBar,
   },
   async created() {
+    this.isLoading = true;
     const { tags } = await getVideoTagsRequest();
     this.getVideoTags(tags);
 
@@ -37,11 +43,12 @@ export default {
     if (!token) return;
 
     const { followings, number_of_followers } = await getFollowInfoRequest();
-    this.getFollowInfo(followings, number_of_followers);
+    await this.getFollowInfo(followings, number_of_followers);
     const { videos } = await getWatchLaterVideosRequest();
-    this.getWatchLaterVideos(videos);
+    await this.getWatchLaterVideos(videos);
 
     this.connectSocket();
+    this.isLoading = false;
   },
 };
 </script>

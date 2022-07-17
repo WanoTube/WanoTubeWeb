@@ -19,6 +19,11 @@
         Edit Video
       </v-btn>
     </div>
+    <div class="d-flex flex-row mt-5 gap-2">
+      <div v-for="tag in video.tags" :key="tag">
+        <v-chip>{{tag}}</v-chip>
+    </div>
+    </div>
   </div>
 </template>
 <script>
@@ -39,7 +44,7 @@ export default {
       unfollowChannel,
     };
   },
-  props: ["channelId", "videoId"],
+  props: ["video"],
   data() {
     return {
       follow: false,
@@ -47,32 +52,34 @@ export default {
   },
   methods: {
     async toggleFollowButton() {
-      if (!this.channelId) return;
+      if (!this.video.user.channel_id) return;
       this.follow = !this.follow;
 
       if (this.follow) {
-        await followChannelRequest(this.channelId);
-        this.followChannel(this.channelId);
+        await followChannelRequest(this.video.user.channel_id);
+        this.followChannel(this.video.user.channel_id);
       } else {
-        await unfollowChannelRequest(this.channelId);
-        this.unfollowChannel(this.channelId);
+        await unfollowChannelRequest(this.video.user.channel_id);
+        this.unfollowChannel(this.video.user.channel_id);
       }
     },
     navigateToEditVideo() {
-      this.$router.push(`/studio/videos/${this.videoId}`);
+      this.$router.push(`/studio/videos/${this.video._id}`);
     },
   },
   computed: {
     isCreator() {
       const userInfo = JSON.parse(localStorage.getItem("user"));
-      if (!this.channelId || !userInfo) return false;
-      return this.channelId === userInfo?.channelId;
+      if (!this.video.user.channel_id || !userInfo) return false;
+      return this.video.user.channel_id === userInfo?.channelId;
     },
   },
   created() {
-    if (!this.channelId) return;
+    console.log(this.video)
+    if (!this.video.user.channel_id) return;
+    console.log(this.followingChannels);
     this.follow = !!this.followingChannels.find(
-      (chaId) => chaId === this.channelId
+      (chaId) => chaId === this.video.user.channel_id
     );
   },
 };

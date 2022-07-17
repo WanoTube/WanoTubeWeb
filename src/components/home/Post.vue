@@ -15,6 +15,7 @@
           :showChannelName="true"
           :showViews="true"
           :showCreatedDate="true"
+          :showTags="showTags"
         />
       </div>
     </div>
@@ -28,7 +29,7 @@ export default {
     PostCaption,
     ThumbnailVideo,
   },
-  props: ["video"],
+  props: ["video", "showTags"],
   data() {
     return {
       src: "",

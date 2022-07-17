@@ -15,7 +15,7 @@
         :descriptionLines="1"
         :canReadMoreDescription="true"
       />
-      <ActionButton :channelId="video.user.channel_id" :videoId="video._id" />
+      <ActionButton :video="video" />
     </div>
     <VideoInteration :video="video" />
     <br />
