@@ -13,11 +13,11 @@ export default {
   data() {
     return {
       menuItems: [
-        {
-          title: "Dashboard",
-          icon: "mdi-home-variant",
-          to: "/studio/dashboard",
-        },
+        // {
+        //   title: "Dashboard",
+        //   icon: "mdi-home-variant",
+        //   to: "/studio/dashboard",
+        // },
         { title: "Videos", icon: "mdi-video", to: "/studio/videos" },
         // {
         //   title: "Comments",

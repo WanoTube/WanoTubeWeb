@@ -65,3 +65,8 @@ export const getSearchResultRequest = (keyword) => {
   console.log("Get Search Result");
   return httpRequest({ endpoint: `/videos/search-results?keyword=${keyword}` });
 }
+
+export const getChannelOverview = () => {
+  console.log("Get channel overview");
+  return httpRequest({ endpoint: '/channels/overview', requireToken: true });
+}

@@ -289,24 +289,32 @@ export default {
           formData.append("thumbnailFile", this.selectedThumbnail.file);
         }
 
-        const { data } = await VideoRepository.updateVideo(formData);
-        const dataObject = convertJSONToObject(data);
-        if (!dataObject.details) {
-          this.isLoading = false;
-          this.snackbar = true;
-          this.snackbarText = "Updated successfully";
-          this.video = {
-            ...this.video,
-            title: this.title,
-            description: this.description,
-            visibility: this.privacy,
-            thumbnail_key_index: this.selectedThumbnail.index,
-            thumbnail_url:
-              this.selectedThumbnail.url ||
-              this.thumbnailList[this.selectedThumbnail.index - 1],
-          };
-        } else {
-          alert(JSON.stringify(dataObject.details));
+        try{
+          const { data } = await VideoRepository.updateVideo(formData);
+          const dataObject = convertJSONToObject(data);
+          if (!dataObject.details) {
+            this.isLoading = false;
+            this.snackbar = true;
+            this.snackbarText = "Updated successfully";
+            this.video = {
+              ...this.video,
+              title: this.title,
+              description: this.description,
+              visibility: this.privacy,
+              thumbnail_key_index: this.selectedThumbnail.index,
+              thumbnail_url:
+                this.selectedThumbnail.url ||
+                this.thumbnailList[this.selectedThumbnail.index - 1],
+            };
+          } else {
+            alert(JSON.stringify(dataObject.details));
+          }
+        }
+        catch(err){
+          this.$toasted.error('Your account was blocked so you cannot upload video', {
+            position: "top-center",
+            duration: 2000,
+          });
         }
       }
     },

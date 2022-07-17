@@ -122,6 +122,7 @@ export default {
     recognitionDialog: {
       handler: function (val) {
         const data = val.recognitionResult;
+        console.log(data)
         if (data) {
           this.recResult = this.generateRecognizedResults(data);
         }

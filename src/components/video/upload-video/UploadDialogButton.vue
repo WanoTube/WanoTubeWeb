@@ -7,7 +7,7 @@
         v-bind="attrs"
         v-on="on"
         @click="openCreateDialog"
-        :disable="false"
+        :disabled="blockUploading"
       >
         <v-icon left>mdi-plus</v-icon>
         UPLOAD VIDEO
@@ -24,7 +24,8 @@
         ></progress-bar>
         <div style="text-align: center">{{ uploadProgressStatus }}</div> -->
         <video id="video-drag" style="display: none"></video>
-        <UploadVideoInput @videoWasUpdated="videoFile = $event" />
+        
+        <UploadVideoInput @videoWasUpdated="videoFile = $event"/>
         <v-card-actions class="justify-end">
           <v-btn text @click="closeCreateDialog">Close</v-btn>
         </v-card-actions>
@@ -62,7 +63,6 @@ export default {
   },
   components: {
     UploadVideoInput,
-    // ProgressBar,
   },
   data() {
     return {
@@ -82,6 +82,10 @@ export default {
     },
     getUserInfo() {
       return JSON.parse(localStorage.getItem("user"));
+    },
+    blockUploading() {
+      const userInfo = JSON.parse(localStorage.getItem("user"));
+      return userInfo.is_blocked;
     },
   },
   methods: {

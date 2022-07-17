@@ -82,5 +82,9 @@ export default {
       return !!this.mutableVideo;
     },
   },
+  mounted(){
+    const info = JSON.parse(localStorage.getItem('user'));
+    console.log(info);
+  }
 };
 </script>

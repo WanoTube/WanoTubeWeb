@@ -14,7 +14,7 @@ export default {
     return {
       menuItems: [
         { title: "Home", icon: "mdi-home-variant", to: "/home" },
-        { title: "Shorts", icon: "mdi-video", to: "/feed/shorts" },
+        // { title: "Shorts", icon: "mdi-video", to: "/feed/shorts" },
         {
           title: "Follow",
           icon: "mdi-youtube-subscription",

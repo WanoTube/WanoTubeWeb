@@ -179,7 +179,7 @@ export default {
       this.$router.push("/users").catch(() => {});
     },
     viewStudio() {
-      this.$router.push("/studio").catch(() => {});
+      this.$router.push("/studio/videos").catch(() => {});
     },
     menuActionClick(action) {
       switch (action) {

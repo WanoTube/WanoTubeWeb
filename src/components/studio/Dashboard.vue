@@ -7,9 +7,13 @@
   </div>
 </template>
 <script>
-import { getFeedRequest } from "src/utils/http/videoRequest";
-// import Post from "./Post.vue";
-export default {};
+import { getChannelOverview } from "../../utils/http/videoRequest";
+export default {
+  async mounted(){
+    const overview = await getChannelOverview();
+    console.log({overview});
+  }
+};
 </script>
 <style>
 </style>
