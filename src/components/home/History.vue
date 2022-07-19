@@ -1,6 +1,6 @@
 <template>
   <div
-    class="row d-flex flex-column vertical-scrollable p-4 m-4"
+    class="row vertical-scrollable p-4 m-4"
     style="overflow-y: scroll"
   >
     <h5><b>Watch History</b></h5>
@@ -40,7 +40,7 @@ export default {
   created: async function () {
     this.watchedHistoryDates = (
       await getWatchHistoryRequest()
-    ).watchedHistoryDates;
+    ).history;
   },
 };
 </script>
