@@ -1,6 +1,6 @@
 <template>
   <div
-    class="row p-4 m-4 d-flex flex-column vertical-scrollable"
+    class="row p-4 m-4 vertical-scrollable"
     style="overflow-y: scroll"
   >
     <h5><b>Watch Laters</b></h5>

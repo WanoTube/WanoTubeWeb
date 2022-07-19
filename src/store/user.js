@@ -15,7 +15,7 @@ export const useUserStore = defineStore("user", {
 
     addToWatchLaterVideos(video) {
       if (this.watchLaterVideos.find(vid => vid._id === video._id)) return;
-      this.watchLaterVideos.push(video);
+      this.watchLaterVideos.unshift(video);
     },
 
     removeFromWatchLaterVideos(videoId) {
